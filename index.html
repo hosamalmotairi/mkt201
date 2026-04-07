@@ -1,0 +1,2954 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MKT 201 — HOSAM Study Hub</title>
+  <meta name="description" content="MKT 201 Principles of Marketing Interactive Study Guide — Chapters 1, 2, 3, 5. Practice Questions, Mock Exams, Flash Cards, and More.">
+  <meta name="author" content="Hosam Almotairi">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230d9488'/><text y='.9em' font-size='72' x='50%' dominant-baseline='auto' text-anchor='middle'>🛒</text></svg>">
+  <meta name="theme-color" content="#0d9488">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="mkt201_styles.css">
+  <style>
+    /* ── REPORT button on questions ── */
+    .report-q-btn {
+      float: left; background: none; border: 1px solid var(--line);
+      color: var(--muted); border-radius: 8px; padding: 3px 9px;
+      font-size: .75rem; cursor: pointer; margin-top: 4px;
+      transition: border-color .15s, color .15s;
+    }
+    .report-q-btn:hover { border-color: #ef4444; color: #ef4444; }
+
+    /* ── BADGE LOCKED — always readable, no cache dependency ── */
+    .badge-locked                { opacity:1 !important; filter:none !important; }
+    .badge-locked .badge-icon    { opacity:0.28 !important; filter:grayscale(1) !important; }
+    .badge-locked .badge-name    { color:#1f2937 !important; font-weight:700 !important; font-size:.85rem !important; }
+    body.dark .badge-locked .badge-name { color:#d1fae5 !important; }
+  </style>
+</head>
+<body>
+
+<!-- GAME HUD -->
+<div class="game-hud" id="game-hud">
+  <div class="hud-item" id="hud-level">🌱 مبتدئ</div>
+  <div class="hud-xp-wrap">
+    <div class="hud-xp-track"><div class="hud-xp-fill" id="hud-xp-bar" style="width:0%"></div></div>
+    <span id="hud-xp" style="font-size:.7rem;color:var(--muted);">0 XP</span>
+  </div>
+  <div class="hud-item" id="hud-streak">🔥 0</div>
+  <div class="hud-item hud-combo" id="hud-combo" style="display:none;">⚡ x1</div>
+</div>
+
+<!-- ── THEME PICKER OVERLAY ─────────────────── -->
+<div id="theme-picker" style="display:none;">
+  <div class="theme-picker-wrap">
+    <div style="font-size:2.8rem;margin-bottom:14px;">🎨</div>
+    <h2 class="theme-picker-title">Choose Your Theme</h2>
+    <p class="theme-picker-sub">Your preference is saved automatically — you can change it anytime from the sidebar</p>
+    <div class="theme-options-grid">
+
+      <!-- Teal Option -->
+      <div class="theme-option-card teal-card" onclick="pickTheme('teal')">
+        <div class="theme-mini-preview">
+          <div class="theme-mini-sidebar" style="background:linear-gradient(160deg,#0d2825,#0a1f1d);">
+            <div style="width:100%;height:7px;background:#14b8a6;border-radius:4px;"></div>
+            <div style="width:80%;height:5px;background:rgba(255,255,255,0.18);border-radius:3px;"></div>
+            <div style="width:80%;height:5px;background:rgba(255,255,255,0.18);border-radius:3px;"></div>
+            <div style="width:75%;height:5px;background:rgba(20,184,166,0.55);border-radius:3px;border-left:2px solid #14b8a6;"></div>
+            <div style="width:75%;height:5px;background:rgba(255,255,255,0.12);border-radius:3px;"></div>
+          </div>
+          <div class="theme-mini-content" style="background:linear-gradient(135deg,#062320,#0d9488,#0f766e);">
+            <div class="theme-mini-title">MKT 201</div>
+            <div class="theme-mini-bar">
+              <div class="theme-mini-fill" style="background:linear-gradient(90deg,#14b8a6,#34d399);"></div>
+            </div>
+            <div class="theme-mini-btns">
+              <div class="theme-mini-btn" style="background:#0d9488;"></div>
+              <div class="theme-mini-btn" style="background:rgba(13,148,136,0.4);"></div>
+            </div>
+          </div>
+        </div>
+        <div class="theme-option-info">
+          <div class="theme-option-name" style="color:#14b8a6;">● Teal</div>
+          <div class="theme-option-tags">Calm • Academic • Clean</div>
+        </div>
+      </div>
+
+      <!-- Rose Option -->
+      <div class="theme-option-card rose-card" onclick="pickTheme('rose')">
+        <div class="theme-mini-preview">
+          <div class="theme-mini-sidebar" style="background:linear-gradient(160deg,#2d0a14,#1f0610);">
+            <div style="width:100%;height:7px;background:#fb7185;border-radius:4px;"></div>
+            <div style="width:80%;height:5px;background:rgba(255,255,255,0.18);border-radius:3px;"></div>
+            <div style="width:80%;height:5px;background:rgba(255,255,255,0.18);border-radius:3px;"></div>
+            <div style="width:75%;height:5px;background:rgba(225,29,72,0.55);border-radius:3px;border-left:2px solid #fb7185;"></div>
+            <div style="width:75%;height:5px;background:rgba(255,255,255,0.12);border-radius:3px;"></div>
+          </div>
+          <div class="theme-mini-content" style="background:linear-gradient(135deg,#4c0519,#9f1239,#e11d48);">
+            <div class="theme-mini-title">MKT 201</div>
+            <div class="theme-mini-bar">
+              <div class="theme-mini-fill" style="background:linear-gradient(90deg,#e11d48,#fb7185);"></div>
+            </div>
+            <div class="theme-mini-btns">
+              <div class="theme-mini-btn" style="background:#e11d48;"></div>
+              <div class="theme-mini-btn" style="background:rgba(225,29,72,0.4);"></div>
+            </div>
+          </div>
+        </div>
+        <div class="theme-option-info">
+          <div class="theme-option-name" style="color:#fb7185;">✿ Rose</div>
+          <div class="theme-option-tags">Bold • Vibrant • Distinct</div>
+        </div>
+      </div>
+
+    </div>
+    <p class="theme-picker-later">You can switch themes anytime from the sidebar</p>
+  </div>
+</div>
+
+<!-- ── AUTH OVERLAY ─────────────────────────── -->
+<div id="auth-overlay" style="position:fixed;inset:0;background:rgba(8,8,12,0.94);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);z-index:99999;display:flex;align-items:center;justify-content:center;overflow-y:auto;">
+  <div id="auth-box" style="background:#111116;border:1px solid rgba(255,255,255,0.1);border-radius:24px;padding:32px 28px;width:90%;max-width:420px;box-shadow:0 40px 80px rgba(0,0,0,0.6),0 0 0 1px rgba(255,255,255,0.06);margin:16px auto;">
+    <div style="text-align:center;margin-bottom:20px;">
+      <div style="font-size:2.2rem;margin-bottom:6px;">🛒</div>
+      <h2 style="color:#fff;margin:0 0 4px;font-size:1.4rem;letter-spacing:-0.02em;">MKT 201 Study Hub</h2>
+      <p style="color:rgba(255,255,255,0.4);margin:0;font-size:.85rem;">سجّل دخولك لحفظ تقدمك من أي جهاز</p>
+    </div>
+    <div style="display:flex;gap:8px;margin-bottom:16px;background:rgba(255,255,255,0.06);border-radius:14px;padding:4px;">
+      <button id="tab-login"    onclick="authTab('login')"    style="flex:1;padding:10px;border-radius:10px;font-weight:700;cursor:pointer;font-size:.9rem;background:#fff;color:#111;border:none;transition:all .2s;">دخول</button>
+      <button id="tab-register" onclick="authTab('register')" style="flex:1;padding:10px;border-radius:10px;font-weight:700;cursor:pointer;font-size:.9rem;background:transparent;color:rgba(255,255,255,0.45);border:none;transition:all .2s;">حساب جديد</button>
+    </div>
+    <div id="auth-name-wrap" style="display:none;">
+      <input id="auth-name" type="text" placeholder="اسمك (مثال: Hosam)" style="width:100%;padding:12px 16px;border-radius:12px;border:1.5px solid rgba(255,255,255,0.12);font-size:.95rem;box-sizing:border-box;margin-bottom:10px;background:rgba(255,255,255,0.05);color:#fff;outline:none;transition:border-color .2s;">
+    </div>
+    <input id="auth-email" type="email"    placeholder="البريد الإلكتروني" style="width:100%;padding:12px 16px;border-radius:12px;border:1.5px solid rgba(255,255,255,0.12);font-size:.92rem;box-sizing:border-box;margin-bottom:10px;background:rgba(255,255,255,0.05);color:#fff;outline:none;transition:border-color .2s;">
+    <input id="auth-pass"  type="password" placeholder="كلمة السر"          style="width:100%;padding:12px 16px;border-radius:12px;border:1.5px solid rgba(255,255,255,0.12);font-size:.92rem;box-sizing:border-box;margin-bottom:10px;background:rgba(255,255,255,0.05);color:#fff;outline:none;transition:border-color .2s;">
+    <div id="auth-err" style="color:#f87171;font-size:.8rem;text-align:center;min-height:16px;margin-bottom:8px;"></div>
+    <button id="auth-submit" onclick="authSubmit()" data-mode="login" style="width:100%;padding:14px;border-radius:14px;border:none;background:#fff;color:#111;font-size:1rem;font-weight:700;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,0.3);transition:transform .15s,box-shadow .15s;">دخول</button>
+    <div style="text-align:center;margin-top:10px;">
+      <button onclick="forgotPassword()" id="auth-forgot" style="background:transparent;border:none;color:rgba(255,255,255,0.4);font-size:.8rem;cursor:pointer;padding:4px 8px;text-decoration:underline;display:none;">نسيت كلمة السر؟</button>
+    </div>
+    <div style="margin-top:6px;">
+      <button onclick="skipAuth()" style="width:100%;padding:12px;border-radius:14px;border:1.5px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.35);font-size:.85rem;cursor:pointer;transition:all .2s;">تصفح بدون حساب</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── SIDEBAR OVERLAY ───────────────────────── -->
+<div id="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+<!-- ── SIDEBAR ───────────────────────────────── -->
+<nav class="sidebar-nav" id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-logo">🛒 MKT 201</div>
+    <div class="sidebar-subtitle">HOSAM Study Hub</div>
+  </div>
+  <ul class="sidebar-menu">
+    <li><a href="#" onclick="showPage('page-home');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🏠</span> Home</a></li>
+    <li class="sidebar-divider"></li>
+    <li class="sidebar-label">📖 Chapters</li>
+    <li><a href="#" onclick="showPage('page-ch1');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🎯</span> Ch 1 — Customer Value</a></li>
+    <li><a href="#" onclick="showPage('page-ch2');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">📊</span> Ch 2 — Company Strategy</a></li>
+    <li><a href="#" onclick="showPage('page-ch3');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🌍</span> Ch 3 — Marketing Environment</a></li>
+    <li><a href="#" onclick="showPage('page-ch5');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🧠</span> Ch 5 — Consumer Behavior</a></li>
+    <li class="sidebar-divider"></li>
+    <li class="sidebar-label">🔍 Review</li>
+    <li><a href="#" onclick="showPage('page-quick');renderQuickReview('all');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">⚡</span> Quick Review</a></li>
+    <li><a href="#" onclick="showPage('page-flash');initFlashCards();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🃏</span> Flash Cards</a></li>
+    <li class="sidebar-divider"></li>
+    <li class="sidebar-label">✏️ Practice</li>
+    <li><a href="#" onclick="showPage('page-levels');renderLevels();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🎖️</span> المستويات</a></li>
+    <li><a href="#" onclick="showPage('page-quiz');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🎯</span> Quiz Mode</a></li>
+    <li><a href="#" onclick="showPage('page-mock');checkMockExamLock();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">📋</span> Mock Exam</a></li>
+    <li><a href="#" onclick="showPage('page-match');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🔗</span> لعبة الربط</a></li>
+    <li><a href="#" onclick="showPage('page-past');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">📋</span> تجميعات</a></li>
+    <li><a href="#" onclick="showPage('page-dashboard');renderDashboard();renderStreakCalendar();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">📈</span> Dashboard</a></li>
+    <li><a href="#" onclick="showPage('page-leaderboard');renderLeaderboard();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🏆</span> Leaderboard</a></li>
+    <li><a href="#" onclick="showPage('page-badges');renderBadgesPage();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🏅</span> الشارات</a></li>
+  </ul>
+  <div id="fb-user-info" class="fb-user-info" style="display:none;">
+    <div class="fb-user-name" id="fb-user-name"></div>
+    <button class="fb-signout-btn" onclick="signOutUser()">خروج</button>
+  </div>
+  <div class="sidebar-footer">
+    <button class="dark-toggle" onclick="toggleDark()" id="dark-btn">🌙 Dark Mode</button>
+    <button class="theme-switch-btn" id="theme-switch-btn" onclick="openThemePicker()">🎨 تغيير الهوية</button>
+  </div>
+</nav>
+
+<!-- ── SIDEBAR TOGGLE ─────────────────────────── -->
+<button class="sidebar-toggle" id="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+
+<!-- ── FLOATING BUTTONS ──────────────────────── -->
+<button id="dark-btn-float"   onclick="toggleDark()"   title="Dark / Light Mode"     aria-label="Toggle dark mode"   class="fab fab-dark-float">🌙</button>
+<button id="search-btn-float" onclick="openSearch()"    title="بحث / Search"          aria-label="Open search"        class="fab fab-search">🔍</button>
+<button id="ar-btn-float"     onclick="toggleArabic()"  title="Toggle Arabic"         aria-label="Toggle Arabic translation" class="fab fab-ar">ع</button>
+
+<!-- ── SEARCH OVERLAY ───────────────────────── -->
+<div id="search-overlay" onclick="if(event.target===this)closeSearch()" style="display:none;position:fixed;inset:0;background:rgba(5,19,18,0.65);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:9999;align-items:flex-start;justify-content:center;padding-top:72px;">
+  <div style="background:var(--paper,#fff);border-radius:22px;padding:20px 24px;width:90%;max-width:580px;box-shadow:0 32px 80px rgba(0,0,0,0.28),0 0 0 1px rgba(13,148,136,0.12);border:1px solid var(--line,#d1f0ec);">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--line,#d1f0ec);">
+      <span style="font-size:1.1rem;opacity:.6;">🔍</span>
+      <input id="search-input" type="text" placeholder="Search content... (ابحث في الفصول)" oninput="runSearch(this.value)" style="flex:1;border:none;outline:none;font-size:1rem;background:transparent;color:var(--ink,#0f1f1d);font-weight:500;" autofocus>
+      <button onclick="closeSearch()" style="border:none;background:rgba(0,0,0,0.06);border-radius:8px;font-size:1rem;cursor:pointer;color:var(--muted);width:30px;height:30px;display:flex;align-items:center;justify-content:center;">✕</button>
+    </div>
+    <div id="search-results" style="max-height:380px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;">
+      <p style="color:var(--muted);font-size:.85rem;text-align:center;margin:16px 0;opacity:.7;">اكتب للبحث في الفصول الأربعة</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     MAIN CONTENT
+═══════════════════════════════════════════ -->
+<div class="main-content" id="main-content">
+
+<!-- ═══════════ HOME PAGE ═══════════════════ -->
+<div id="page-home" class="page active">
+
+  <!-- Duaa / Intro Banner -->
+  <div class="duaa-banner" style="background:linear-gradient(135deg,#134e4a,#0f766e,#0d9488);color:#fff;text-align:center;border-radius:16px;padding:20px 24px;margin-bottom:12px;box-shadow:0 10px 30px rgba(13,148,136,0.25);">
+    <div style="font-size:1.05rem;font-weight:700;line-height:1.6;">
+      ✨ زكاة العِلم نشره، لا تنسوني من صالح دعائكم بالتوفيق والتيسير — حسام المطيري ✨
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="tag">MKT 201 • Midterm Study Hub</div>
+    <h1>🛒 MKT 201 — HOSAM Study Hub</h1>
+    <p>كل اللي تحتاجه للاختبار في مكان واحد — نوتس، فلاش كاردز، تدريب، واختبارات تفاعلية | Chapters 1, 2, 3, 5</p>
+    <div class="cover-meta">
+      <div class="cover-box"><span class="cover-label">Course</span><span class="cover-value">MKT 201</span></div>
+      <div class="cover-box"><span class="cover-label">Chapters</span><span class="cover-value">1, 2, 3, 5</span></div>
+      <div class="cover-box"><span class="cover-label">كل جلسة</span><span class="cover-value">20 سؤال ⚡</span></div>
+    </div>
+  </section>
+
+  <!-- Quick Nav -->
+  <div class="quick-nav-grid">
+    <button class="qn-card" onclick="showPage('page-ch1')"><div class="qn-icon">🎯</div><div class="qn-label">Chapter 1</div><div class="qn-sub">قيمة العميل — ⭐ الأكثر في الامتحانات</div></button>
+    <button class="qn-card" onclick="showPage('page-ch2')"><div class="qn-icon">📊</div><div class="qn-label">Chapter 2</div><div class="qn-sub">التخطيط الاستراتيجي — BCG & More</div></button>
+    <button class="qn-card" onclick="showPage('page-ch3')"><div class="qn-icon">🌍</div><div class="qn-label">Chapter 3</div><div class="qn-sub">البيئة التسويقية — Macro & Micro</div></button>
+    <button class="qn-card" onclick="showPage('page-ch5')"><div class="qn-icon">🧠</div><div class="qn-label">Chapter 5</div><div class="qn-sub">سلوك المستهلك — Buying Behavior</div></button>
+    <button class="qn-card" onclick="quickStart20()"><div class="qn-icon">⚡</div><div class="qn-label">جلسة سريعة</div><div class="qn-sub">20 سؤال · 10 دقائق</div></button>
+    <button class="qn-card" onclick="showPage('page-past')"><div class="qn-icon">⭐</div><div class="qn-label">التجميعات</div><div class="qn-sub">84 سؤال من التجميعات</div></button>
+    <button class="qn-card" onclick="showPage('page-mock');checkMockExamLock()"><div class="qn-icon">📋</div><div class="qn-label">اختبار تجريبي</div><div class="qn-sub">30 سؤال · 30 دقيقة</div></button>
+    <button class="qn-card" onclick="showPage('page-flash');initFlashCards()"><div class="qn-icon">🃏</div><div class="qn-label">Flash Cards</div><div class="qn-sub">60 مصطلح أساسي</div></button>
+    <button class="qn-card" onclick="showPage('page-levels');renderLevels()"><div class="qn-icon">🎖️</div><div class="qn-label">المستويات</div><div class="qn-sub">تدرّج من السهل للصعب</div></button>
+    <button class="qn-card" onclick="startCramSession()"><div class="qn-icon">🔥</div><div class="qn-label">Cram Mode</div><div class="qn-sub">آخر لحظة — الأسئلة الصعبة والأخطاء</div></button>
+  </div>
+
+
+  <!-- Today's Session Card -->
+  <section class="chapter" style="margin-top:0;margin-bottom:0;">
+    <div id="today-session-card" style="background:linear-gradient(135deg,#134e4a,#0f766e);border-radius:18px;padding:22px 24px;color:#fff;position:relative;overflow:hidden;">
+      <div style="position:absolute;right:-10px;top:-10px;font-size:6rem;opacity:.07;pointer-events:none;">✨</div>
+      <div style="position:relative;">
+        <div id="today-streak" style="font-size:.78rem;font-weight:700;opacity:.7;margin-bottom:8px;letter-spacing:.04em;"></div>
+        <div id="today-msg" style="font-size:1.2rem;font-weight:800;line-height:1.45;margin-bottom:14px;">جاهز تذاكر؟ 10 دقائق تكفي ⚡</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+          <button onclick="quickStart20()" class="today-start-btn" style="background:#fff;color:#0f766e;border:none;border-radius:12px;padding:12px 28px;font-weight:900;font-size:1rem;cursor:pointer;flex-shrink:0;box-shadow:0 4px 14px rgba(0,0,0,.15);">ابدأ الآن ←</button>
+          <div id="today-sessions-done" style="font-size:.82rem;opacity:.85;font-weight:600;"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+  <!-- Mastery Progress -->
+  <div class="chapter mastery-section" style="margin-top:24px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+      <h3 style="margin:0;font-size:1.1rem;font-weight:700;">📊 تقدمك</h3>
+      <button onclick="toggleMasteryDisplay()" id="mastery-toggle-btn"
+        style="font-size:.75rem;padding:3px 10px;border-radius:20px;border:1.5px solid var(--accent);
+               background:transparent;color:var(--accent);cursor:pointer;font-weight:600;transition:.2s;">
+        %
+      </button>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;" id="mastery-grid">
+
+      <div id="mastery-ch1" class="mastery-bar-card">
+        <div class="mb-header"><span>📖 Chapter 1</span><span class="mb-count" style="color:var(--accent);font-weight:700;font-size:.85rem;">0 / 137</span></div>
+        <div class="mastery-bar-track">
+          <div class="mb-mastered mastery-fill-green" style="width:0%"></div>
+          <div class="mb-review mastery-fill-red" style="width:0%"></div>
+        </div>
+        <div class="mb-review-count" style="font-size:.75rem;color:#e11d48;margin-top:4px;"></div>
+      </div>
+
+      <div id="mastery-ch2" class="mastery-bar-card">
+        <div class="mb-header"><span>📊 Chapter 2</span><span class="mb-count" style="color:var(--accent);font-weight:700;font-size:.85rem;">0 / 145</span></div>
+        <div class="mastery-bar-track">
+          <div class="mb-mastered mastery-fill-green" style="width:0%"></div>
+          <div class="mb-review mastery-fill-red" style="width:0%"></div>
+        </div>
+        <div class="mb-review-count" style="font-size:.75rem;color:#e11d48;margin-top:4px;"></div>
+      </div>
+
+      <div id="mastery-ch3" class="mastery-bar-card">
+        <div class="mb-header"><span>🌍 Chapter 3</span><span class="mb-count" style="color:var(--accent);font-weight:700;font-size:.85rem;">0 / 135</span></div>
+        <div class="mastery-bar-track">
+          <div class="mb-mastered mastery-fill-green" style="width:0%"></div>
+          <div class="mb-review mastery-fill-red" style="width:0%"></div>
+        </div>
+        <div class="mb-review-count" style="font-size:.75rem;color:#e11d48;margin-top:4px;"></div>
+      </div>
+
+      <div id="mastery-ch5" class="mastery-bar-card">
+        <div class="mb-header"><span>🧠 Chapter 5</span><span class="mb-count" style="color:var(--accent);font-weight:700;font-size:.85rem;">0 / 144</span></div>
+        <div class="mastery-bar-track">
+          <div class="mb-mastered mastery-fill-green" style="width:0%"></div>
+          <div class="mb-review mastery-fill-red" style="width:0%"></div>
+        </div>
+        <div class="mb-review-count" style="font-size:.75rem;color:#e11d48;margin-top:4px;"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Exam Readiness + Weak Spots (rendered by JS) -->
+  <div id="home-readiness" style="margin-top:16px;"></div>
+  <div id="home-weak-spots"></div>
+
+  <section class="chapter" style="margin-top:16px;">
+    <h2>📚 Course Overview</h2>
+    <p>MKT 201 — Principles of Marketing (Kotler &amp; Armstrong, 18th Edition). Midterm covers Chapters 1, 2, 3, and 5.</p>
+    <div class="master-grid" style="margin-top:14px;">
+      <div class="master-card"><strong>📖 Chapter 1</strong>Marketing — Creating Customer Value &amp; Engagement. Core concepts, 4Ps, CRM, Customer Equity.</div>
+      <div class="master-card"><strong>📊 Chapter 2</strong>Company &amp; Marketing Strategy. BCG Matrix, Ansoff Matrix, SWOT, Strategic Planning.</div>
+      <div class="master-card"><strong>🌍 Chapter 3</strong>Analyzing the Marketing Environment. Micro &amp; Macro environments, CDNPTC forces.</div>
+      <div class="master-card"><strong>🧠 Chapter 5</strong>Consumer Markets &amp; Buyer Behavior. Cultural, Social, Personal, Psychological factors.</div>
+    </div>
+    <div class="pro-tip" style="margin-top:16px;">
+      <div class="pro-tip-head">💡 Exam Tips</div>
+      <ul class="point-list">
+        <li>Know the difference between Needs, Wants, and Demands — very likely to appear.</li>
+        <li>Memorize all 4 BCG matrix quadrants and Ansoff's 4 growth strategies.</li>
+        <li>Distinguish Micro vs Macro environment actors — count them (6 each).</li>
+        <li>Know all 4 buying decision types and the 5 stages of the buyer decision process.</li>
+        <li>Selling Concept (inside-out) vs Marketing Concept (outside-in) — classic exam question.</li>
+      </ul>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════ CHAPTER 1 ═══════════════════ -->
+<div id="page-ch1" class="page">
+
+  <section class="hero">
+    <div class="tag">Chapter 1</div>
+    <h1>🎯 Marketing: Creating Customer Value &amp; Engagement</h1>
+    <p>Kotler &amp; Armstrong, 18th Edition • Chapter 1</p>
+  </section>
+
+  <!-- ── LEARNING OBJECTIVES ─────────────────────────────── -->
+  <div class="chapter">
+    <h2>📋 Learning Objectives <span class="ar-line" style="font-size:.85rem;">أهداف التعلم</span></h2>
+    <div class="process-flow">
+
+      <div class="process-step">
+        <div class="process-num">1-1</div>
+        <div class="process-content">
+          <strong>Define marketing and outline the steps in the marketing process.</strong>
+          <span class="ar-line">تعريف التسويق وتحديد خطوات عملية التسويق.</span>
+        </div>
+      </div>
+
+      <div class="process-step">
+        <div class="process-num">1-2</div>
+        <div class="process-content">
+          <strong>Explain the importance of understanding the marketplace and identify the five core marketplace concepts.</strong>
+          <span class="ar-line">شرح أهمية فهم السوق وتحديد المفاهيم الأساسية الخمسة للسوق.</span>
+        </div>
+      </div>
+
+      <div class="process-step">
+        <div class="process-num">1-3</div>
+        <div class="process-content">
+          <strong>Identify the key elements of a customer-driven marketing strategy and discuss the marketing management orientations.</strong>
+          <span class="ar-line">تحديد عناصر استراتيجية التسويق الموجهة للعميل ومناقشة التوجهات الإدارية التسويقية.</span>
+        </div>
+      </div>
+
+      <div class="process-step">
+        <div class="process-num">1-4</div>
+        <div class="process-content">
+          <strong>Discuss customer relationship management and strategies for creating and capturing value.</strong>
+          <span class="ar-line">مناقشة إدارة علاقات العملاء واستراتيجيات خلق القيمة واكتسابها.</span>
+        </div>
+      </div>
+
+      <div class="process-step">
+        <div class="process-num">1-5</div>
+        <div class="process-content">
+          <strong>Describe the major trends changing the marketing landscape.</strong>
+          <span class="ar-line">وصف الاتجاهات الكبرى التي تغير المشهد التسويقي.</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       LO 1-1 : WHAT IS MARKETING?
+  ══════════════════════════════════════════════════════════ -->
+  <div class="lo-section open">
+    <div class="lo-header" onclick="toggleLO(this)">
+      <span class="lo-badge">LO 1-1</span>
+      <span class="lo-title">What Is Marketing? <span style="font-weight:400;font-size:.9rem;">ما هو التسويق؟</span></span>
+      <span class="lo-arrow">▼</span>
+    </div>
+    <div class="lo-body">
+
+      <div class="def-spotlight">
+        <div class="def-term">📌 Marketing — التسويق</div>
+        <div class="def-body">A process by which companies <strong>create value for customers</strong> and build strong customer relationships in order to <strong>capture value from customers</strong> in return.</div>
+        <div class="ar-line">التسويق: عملية تخلق فيها الشركات قيمة للعملاء وتبني علاقات قوية معهم بهدف التقاط تلك القيمة منهم في المقابل.</div>
+      </div>
+
+      <div class="concept-row">
+        <div class="concept-card teal">
+          <strong>Goal 1 — Attract (جذب)</strong>
+          <p>Attract new customers by promising superior value.<span class="ar-line">جذب عملاء جدد بتقديم وعود بقيمة متفوقة.</span></p>
+        </div>
+        <div class="concept-card blue">
+          <strong>Goal 2 — Grow (تنمية)</strong>
+          <p>Grow current customers by delivering satisfaction and fostering loyalty.<span class="ar-line">تنمية العملاء الحاليين بتحقيق رضاهم وتعزيز ولائهم.</span></p>
+        </div>
+      </div>
+
+      <h3>The Five-Step Marketing Process <span class="ar-line" style="font-size:.85rem;">الخمس خطوات لعملية التسويق</span></h3>
+
+      <div class="process-flow">
+        <div class="process-step">
+          <div class="process-num">1</div>
+          <div class="process-content">
+            <strong>Understand the Marketplace &amp; Customer Needs/Wants</strong>
+            <span class="ar-line">فهم السوق واحتياجات ورغبات العملاء</span>
+            <p>Companies must understand what customers need, want, and demand before anything else.<span class="ar-line">يجب على الشركات فهم احتياجات العملاء ورغباتهم وطلباتهم قبل أي شيء آخر.</span></p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">2</div>
+          <div class="process-content">
+            <strong>Design a Customer Value-Driven Marketing Strategy</strong>
+            <span class="ar-line">تصميم استراتيجية تسويقية تعتمد على قيمة العميل</span>
+            <p>Choose which customers to serve and how to serve them best.<span class="ar-line">اختيار العملاء المراد خدمتهم وكيفية خدمتهم بأفضل طريقة.</span></p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">3</div>
+          <div class="process-content">
+            <strong>Construct an Integrated Marketing Program</strong>
+            <span class="ar-line">بناء برنامج تسويقي متكامل يقدم قيمة متفوقة</span>
+            <p>The marketing mix (4 Ps) that delivers the chosen value proposition.<span class="ar-line">المزيج التسويقي (4Ps) الذي يقدم القيمة المختارة للعملاء.</span></p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">4</div>
+          <div class="process-content">
+            <strong>Engage Customers &amp; Build Profitable Relationships</strong>
+            <span class="ar-line">إشراك العملاء وبناء علاقات مربحة وإيجاد البهجة لديهم</span>
+            <p>Build and maintain profitable customer relationships; create customer delight.<span class="ar-line">بناء علاقات مربحة مع العملاء والحفاظ عليها؛ إيجاد البهجة لديهم.</span></p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">5</div>
+          <div class="process-content">
+            <strong>Capture Value From Customers ⭐</strong>
+            <span class="ar-line">التقاط القيمة من العملاء (مبيعات، أرباح، حقوق عملاء)</span>
+            <p>The ONLY step that captures value — results in sales, profits, and long-term customer equity.<span class="ar-line">الخطوة الوحيدة التي تلتقط القيمة — تنتج مبيعات وأرباحاً وحقوق عملاء طويلة الأمد.</span></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="exam-tip">⭐ The final step (5) is the <strong>ONLY</strong> step that <em>captures</em> value — all others <em>create</em> value FOR customers.<span class="ar-line">الخطوة الخامسة هي الوحيدة التي تلتقط القيمة — كل الخطوات الأخرى تخلق قيمة للعميل.</span></div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       LO 1-2 : UNDERSTANDING THE MARKETPLACE — 5 CORE CONCEPTS
+  ══════════════════════════════════════════════════════════ -->
+  <div class="lo-section">
+    <div class="lo-header" onclick="toggleLO(this)">
+      <span class="lo-badge">LO 1-2</span>
+      <span class="lo-title">Understanding the Marketplace <span style="font-weight:400;font-size:.9rem;">فهم السوق — المفاهيم الأساسية الخمسة</span></span>
+      <span class="lo-arrow">▼</span>
+    </div>
+    <div class="lo-body">
+
+      <h3>5 Core Marketplace Concepts <span class="ar-line" style="font-size:.85rem;">المفاهيم الأساسية الخمسة للسوق</span></h3>
+
+      <div class="concept-row">
+        <div class="concept-card teal">
+          <strong>1. Needs (الاحتياجات)</strong>
+          <p>States of felt deprivation — physical (food, clothing, safety), social (belonging, affection), or individual (knowledge, self-expression).<span class="ar-line">حالات الحرمان المُحسوسة — جسدية (طعام، ملبس، أمان)، اجتماعية (انتماء، مودة)، أو فردية (معرفة، تعبير عن الذات).</span></p>
+        </div>
+        <div class="concept-card blue">
+          <strong>2. Wants (الرغبات)</strong>
+          <p>The form human needs take as shaped by culture and individual personality.<span class="ar-line">الشكل الذي تتخذه الاحتياجات تحت تأثير الثقافة والشخصية الفردية. مثال: الجوع احتياج، لكن الرغبة في البرغر أمريكية.</span></p>
+        </div>
+        <div class="concept-card purple">
+          <strong>3. Demands (الطلبات)</strong>
+          <p>Human wants backed by buying power. Wants + Buying Power = Demands.<span class="ar-line">الرغبات المدعومة بالقدرة الشرائية. رغبة + قدرة شرائية = طلب فعلي.</span></p>
+        </div>
+      </div>
+
+      <div class="concept-row">
+        <div class="concept-card amber">
+          <strong>4. Market Offerings (عروض السوق)</strong>
+          <p>Combination of products, services, information, or experiences offered to satisfy a need or want.<span class="ar-line">مزيج من المنتجات والخدمات والمعلومات أو التجارب المقدمة لإشباع حاجة أو رغبة.</span></p>
+        </div>
+        <div class="concept-card rose">
+          <strong>5. Exchange &amp; Markets (التبادل والأسواق)</strong>
+          <p><strong>Exchange:</strong> Obtaining a desired object by offering something in return.<br><strong>Markets:</strong> Set of actual and potential buyers sharing a need satisfiable through exchange.<span class="ar-line">التبادل: الحصول على شيء مرغوب مقابل تقديم شيء آخر. الأسواق: مجموعة المشترين الفعليين والمحتملين الذين تربطهم حاجة مشتركة.</span></p>
+        </div>
+      </div>
+
+      <div class="memory-box">ترتيب مهم: الاحتياجات → الرغبات (الثقافة تشكّلها) → الطلبات (تضاف القدرة الشرائية)<br>Needs → Wants (shaped by culture) → Demands (buying power added)</div>
+
+      <div class="def-spotlight">
+        <div class="def-term">⚠️ Marketing Myopia — قصر النظر التسويقي</div>
+        <div class="def-body">Paying more attention to <strong>specific products</strong> than to the benefits and experiences they produce — losing sight of underlying consumer needs.</div>
+        <div class="ar-line">الانشغال بالمنتجات أكثر من الاهتمام بالفوائد والاحتياجات الحقيقية للعميل. مثال: شركات السكك الحديدية ظنّت أنها في مجال "القطارات" لا في مجال "النقل"، فخسرت أمام الطيران والسيارات.</div>
+      </div>
+
+      <div class="exam-tip">Marketing Myopia = too product-focused, forgets consumer needs. Always ask: What NEED does this product satisfy?<span class="ar-line">قصر النظر التسويقي = تركيز على المنتج وإهمال احتياج العميل. دائماً اسأل: ما الحاجة التي يُشبعها هذا المنتج؟</span></div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       LO 1-3 : CUSTOMER-DRIVEN MARKETING STRATEGY
+  ══════════════════════════════════════════════════════════ -->
+  <div class="lo-section">
+    <div class="lo-header" onclick="toggleLO(this)">
+      <span class="lo-badge">LO 1-3</span>
+      <span class="lo-title">Customer-Driven Marketing Strategy <span style="font-weight:400;font-size:.9rem;">استراتيجية التسويق الموجهة للعميل</span></span>
+      <span class="lo-arrow">▼</span>
+    </div>
+    <div class="lo-body">
+
+      <div class="master-grid">
+        <div class="master-card">
+          <strong>Marketing Management (إدارة التسويق)</strong>
+          The art and science of choosing target markets and building profitable relationships with them.
+          <span class="ar-line">فن وعلم اختيار الأسواق المستهدفة وبناء علاقات مربحة معها.</span>
+        </div>
+        <div class="master-card">
+          <strong>Value Proposition (القيمة المقترحة)</strong>
+          Set of benefits a brand promises to deliver. Answers: "Why should I buy YOUR brand?"
+          <span class="ar-line">مجموعة الفوائد التي تعد بها العلامة التجارية. تجيب على: "لماذا أشتري منتجك بالذات؟" مثال: فيسبوك — "ربط الناس ومشاركة اللحظات المهمة."</span>
+        </div>
+      </div>
+
+      <h3>5 Marketing Management Orientations <span class="ar-line" style="font-size:.85rem;">التوجهات الإدارية الخمسة</span></h3>
+
+      <div class="ref-table-wrap">
+        <table class="ref-table">
+          <thead>
+            <tr>
+              <th>Orientation (التوجه)</th>
+              <th>Core Idea (الفكرة الأساسية)</th>
+              <th>Risk (الخطر)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Production (الإنتاج)</strong></td>
+              <td>Consumers favor available, affordable products → focus on efficiency &amp; distribution.<br><span class="ar-line">المستهلكون يفضلون المنتجات المتاحة والرخيصة → التركيز على الكفاءة والتوزيع.</span></td>
+              <td>Marketing Myopia<br><span class="ar-line">قصر النظر</span></td>
+            </tr>
+            <tr>
+              <td><strong>Product (المنتج)</strong></td>
+              <td>Consumers favor best quality/performance → focus on continuous improvement.<br><span class="ar-line">المستهلكون يفضلون أعلى جودة وأداء → التركيز على التطوير المستمر.</span></td>
+              <td>Marketing Myopia<br><span class="ar-line">قصر النظر</span></td>
+            </tr>
+            <tr>
+              <td><strong>Selling (البيع)</strong></td>
+              <td>Consumers won't buy enough unless heavily promoted → aggressive selling (inside-out). Used for <em>unsought goods</em>.<br><span class="ar-line">المستهلكون لن يشتروا بما يكفي إلا بترويج مكثف. يُستخدم للمنتجات غير المرغوب فيها (مثل التأمين).</span></td>
+              <td>Short-term only<br><span class="ar-line">قصير الأمد فقط</span></td>
+            </tr>
+            <tr>
+              <td><strong>Marketing (التسويق)</strong></td>
+              <td>Know &amp; satisfy target market needs BETTER than competitors; customer-centered (outside-in).<br><span class="ar-line">معرفة احتياجات السوق المستهدف وإشباعها أفضل من المنافسين. مرتكز على العميل.</span></td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td><strong>Societal Marketing (المجتمعي)</strong></td>
+              <td>Deliver value while maintaining consumer's AND society's long-run well-being. Sustainable marketing.<br><span class="ar-line">تقديم قيمة مع الحفاظ على رفاه المستهلك والمجتمع على المدى البعيد. التسويق المستدام.</span></td>
+              <td>—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Selling vs. Marketing Concept <span class="ar-line" style="font-size:.85rem;">مفهوم البيع مقابل مفهوم التسويق</span></h3>
+
+      <div class="vs-grid">
+        <div class="vs-side left">
+          <strong>Selling Concept (مفهوم البيع)</strong>
+          <ul class="slide-bullets">
+            <li>🏭 Inside-Out approach<span class="ar-line">من الداخل للخارج</span></li>
+            <li>Starts with the <strong>factory</strong><span class="ar-line">يبدأ من المصنع</span></li>
+            <li>Focuses on <strong>existing products</strong><span class="ar-line">يركز على المنتجات الموجودة</span></li>
+            <li>Heavy <strong>selling &amp; promoting</strong><span class="ar-line">بيع وترويج مكثف</span></li>
+            <li>Goal: <strong>short-term sales</strong><span class="ar-line">الهدف: مبيعات قصيرة المدى</span></li>
+          </ul>
+        </div>
+        <div class="vs-middle">VS</div>
+        <div class="vs-side right">
+          <strong>Marketing Concept (مفهوم التسويق)</strong>
+          <ul class="slide-bullets">
+            <li>🌍 Outside-In approach<span class="ar-line">من الخارج للداخل</span></li>
+            <li>Starts with the <strong>market</strong><span class="ar-line">يبدأ من السوق</span></li>
+            <li>Focuses on <strong>customer needs</strong><span class="ar-line">يركز على احتياجات العميل</span></li>
+            <li><strong>Integrated</strong> marketing activities<span class="ar-line">أنشطة تسويقية متكاملة</span></li>
+            <li>Goal: <strong>long-term profitable relationships</strong><span class="ar-line">الهدف: علاقات مربحة طويلة المدى</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>The 4 Ps of the Marketing Mix <span class="ar-line" style="font-size:.85rem;">المزيج التسويقي — الـ 4Ps</span></h3>
+
+      <div class="concept-row">
+        <div class="concept-card teal">
+          <strong>Product (المنتج)</strong>
+          <p>Goods-and-services combination offered to the target market.<span class="ar-line">مزيج السلع والخدمات المقدم للسوق المستهدف.</span></p>
+        </div>
+        <div class="concept-card blue">
+          <strong>Price (السعر)</strong>
+          <p>Amount customers pay for the product.<span class="ar-line">المبلغ الذي يدفعه العميل مقابل المنتج.</span></p>
+        </div>
+        <div class="concept-card purple">
+          <strong>Place (التوزيع)</strong>
+          <p>Activities that make the product available to target consumers.<span class="ar-line">الأنشطة التي تجعل المنتج متاحاً للمستهلكين المستهدفين.</span></p>
+        </div>
+        <div class="concept-card amber">
+          <strong>Promotion (الترويج)</strong>
+          <p>Activities communicating product merits and persuading customers to buy.<span class="ar-line">الأنشطة التي تعرّف بالمنتج وتُقنع بشرائه.</span></p>
+        </div>
+      </div>
+
+      <div class="memory-box">الـ 4Ps: Product, Price, Place, Promotion — تذكّر "4 بـ P" (نظرة الشركة للسوق)<br>الـ 4Cs من نظرة العميل: Customer Solution, Customer Cost, Convenience, Communication</div>
+
+      <div class="exam-tip">Selling = Inside-Out (factory first). Marketing = Outside-In (customer first). This is THE most tested concept in Ch1!<span class="ar-line">مفهوم البيع: من الداخل للخارج (المصنع أولاً). مفهوم التسويق: من الخارج للداخل (العميل أولاً). هذا هو المفهوم الأكثر اختباراً في الفصل الأول!</span></div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       LO 1-4 : CRM & CAPTURING CUSTOMER VALUE
+  ══════════════════════════════════════════════════════════ -->
+  <div class="lo-section">
+    <div class="lo-header" onclick="toggleLO(this)">
+      <span class="lo-badge">LO 1-4</span>
+      <span class="lo-title">CRM &amp; Capturing Customer Value <span style="font-weight:400;font-size:.9rem;">إدارة علاقات العملاء والتقاط القيمة</span></span>
+      <span class="lo-arrow">▼</span>
+    </div>
+    <div class="lo-body">
+
+      <div class="def-spotlight">
+        <div class="def-term">📌 CRM — إدارة علاقات العملاء</div>
+        <div class="def-body">The overall process of <strong>building and maintaining profitable customer relationships</strong> by delivering superior customer value and satisfaction.</div>
+        <div class="ar-line">العملية الشاملة لبناء علاقات مربحة مع العملاء والحفاظ عليها بتقديم قيمة عالية ورضا متفوق.</div>
+      </div>
+
+      <h3>Customer Satisfaction Levels <span class="ar-line" style="font-size:.85rem;">مستويات رضا العملاء</span></h3>
+
+      <div class="concept-row">
+        <div class="concept-card rose">
+          <strong>Performance &lt; Expectations → Dissatisfied 😞</strong>
+          <p>Customer is disappointed; likely to switch.<span class="ar-line">الأداء أقل من التوقعات → عميل غير راضٍ ومن المحتمل أن يتحول لمنافس.</span></p>
+        </div>
+        <div class="concept-card amber">
+          <strong>Performance = Expectations → Satisfied 😐</strong>
+          <p>Customer is content but not loyal.<span class="ar-line">الأداء يساوي التوقعات → عميل راضٍ لكن غير ملتزم بالضرورة.</span></p>
+        </div>
+        <div class="concept-card green">
+          <strong>Performance &gt; Expectations → Delighted ⭐😄</strong>
+          <p>Customer is highly satisfied and becomes loyal advocate.<span class="ar-line">الأداء يتجاوز التوقعات → عميل مبتهج يصبح مدافعاً وفياً عن العلامة التجارية.</span></p>
+        </div>
+      </div>
+
+      <h3>Types of Customer Relationships <span class="ar-line" style="font-size:.85rem;">أنواع علاقات العملاء</span></h3>
+
+      <ul class="slide-bullets">
+        <li><strong>Customer-Engagement Marketing</strong> — makes brand part of consumers' conversations and lives.<span class="ar-line">التسويق بالمشاركة — يجعل العلامة التجارية جزءاً من حياة المستهلكين وأحاديثهم.</span></li>
+        <li><strong>Consumer-Generated Marketing</strong> — consumers shape products/brand content via blogs, social media.<span class="ar-line">التسويق بمحتوى المستهلك — المستهلكون يشاركون في تشكيل المنتجات والمحتوى عبر المدونات والشبكات الاجتماعية.</span></li>
+        <li><strong>Partner Relationship Management</strong> — working with suppliers, channel partners, and others inside &amp; outside the company.<span class="ar-line">إدارة علاقات الشركاء — التعاون مع الموردين وشركاء القنوات والأطراف الأخرى داخل وخارج الشركة.</span></li>
+      </ul>
+
+      <h3>Capturing Value — Key Metrics <span class="ar-line" style="font-size:.85rem;">التقاط القيمة — المقاييس الأساسية</span></h3>
+
+      <div class="master-grid">
+        <div class="master-card">
+          <strong>Customer Lifetime Value (قيمة العميل مدى الحياة)</strong>
+          Value of the entire stream of purchases a customer makes over a lifetime of patronage.
+          <span class="ar-line">إجمالي قيمة مشتريات العميل طوال فترة تعامله مع الشركة — يكشف الربح الحقيقي من كل عميل.</span>
+        </div>
+        <div class="master-card">
+          <strong>Share of Customer (حصة العميل)</strong>
+          The portion of the customer's purchasing that the company captures in its product categories.
+          <span class="ar-line">النسبة التي تحصل عليها الشركة من إجمالي إنفاق العميل في فئتها. الهدف: زيادة هذه النسبة بالبيع الإضافي.</span>
+        </div>
+        <div class="master-card">
+          <strong>Customer Equity ⭐ (حقوق العملاء)</strong>
+          Total combined customer lifetime values of ALL customers — measures the FUTURE value of the company.
+          <span class="ar-line">مجموع قيم جميع العملاء مدى الحياة — يقيس القيمة المستقبلية للشركة (أفضل مقياس لصحة الشركة).</span>
+        </div>
+      </div>
+
+      <h3>4 Customer Relationship Types <span class="ar-line" style="font-size:.85rem;">أنواع العلاقات بالعملاء الأربعة</span></h3>
+
+      <div class="ref-table-wrap">
+        <table class="ref-table">
+          <thead>
+            <tr>
+              <th>Type (النوع)</th>
+              <th>Profitability (الربحية)</th>
+              <th>Loyalty (الولاء)</th>
+              <th>Strategy (الاستراتيجية)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Strangers (الغرباء)</strong></td>
+              <td>Low<br><span class="ar-line">منخفضة</span></td>
+              <td>Low<br><span class="ar-line">منخفض</span></td>
+              <td>Don't invest — no fit<br><span class="ar-line">لا تستثمر — لا يوجد توافق</span></td>
+            </tr>
+            <tr>
+              <td><strong>Butterflies 🦋 (الفراشات)</strong></td>
+              <td>High<br><span class="ar-line">عالية</span></td>
+              <td>Low<br><span class="ar-line">منخفض</span></td>
+              <td>Enjoy while it lasts; extract value quickly<br><span class="ar-line">استمتع بها مؤقتاً واستخرج القيمة بسرعة</span></td>
+            </tr>
+            <tr>
+              <td><strong>True Friends ⭐ (الأصدقاء الحقيقيون)</strong></td>
+              <td>High<br><span class="ar-line">عالية</span></td>
+              <td>High<br><span class="ar-line">عالٍ</span></td>
+              <td>Invest to delight — nurture &amp; retain<br><span class="ar-line">استثمر للإسعاد والاحتفاظ بهم</span></td>
+            </tr>
+            <tr>
+              <td><strong>Barnacles 🐚 (البرنقيل)</strong></td>
+              <td>Low<br><span class="ar-line">منخفضة</span></td>
+              <td>High<br><span class="ar-line">عالٍ</span></td>
+              <td>Manage costs carefully; try to upsell<br><span class="ar-line">أدر التكاليف بحذر؛ حاول زيادة مشترياتهم</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="exam-tip">Customer Equity measures the <strong>FUTURE</strong>. Sales &amp; market share measure the <strong>PAST</strong>.<span class="ar-line">حقوق العملاء تقيس المستقبل. المبيعات والحصة السوقية تقيس الماضي.</span></div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       LO 1-5 : CHANGING MARKETING LANDSCAPE
+  ══════════════════════════════════════════════════════════ -->
+  <div class="lo-section">
+    <div class="lo-header" onclick="toggleLO(this)">
+      <span class="lo-badge">LO 1-5</span>
+      <span class="lo-title">Changing Marketing Landscape <span style="font-weight:400;font-size:.9rem;">المشهد التسويقي المتغير</span></span>
+      <span class="lo-arrow">▼</span>
+    </div>
+    <div class="lo-body">
+
+      <div class="def-spotlight">
+        <div class="def-term">📱 Digital &amp; Social Media Marketing</div>
+        <div class="def-body">Using digital tools — websites, social media, mobile apps, online videos, email, blogs — to engage consumers <strong>anywhere, anytime</strong>.</div>
+        <div class="ar-line">استخدام الأدوات الرقمية (مواقع الإنترنت، شبكات التواصل الاجتماعي، التطبيقات، الفيديو، البريد الإلكتروني) للتواصل مع المستهلكين في أي وقت وأي مكان.</div>
+      </div>
+
+      <h3>4 Major Trends Reshaping Marketing <span class="ar-line" style="font-size:.85rem;">أربعة اتجاهات كبرى تُعيد تشكيل التسويق</span></h3>
+
+      <div class="concept-row">
+        <div class="concept-card teal">
+          <strong>1. The Digital Age (العصر الرقمي)</strong>
+          <p>Explosive growth of technology changed communication, entertainment, and shopping forever.<span class="ar-line">النمو المتفجر للتقنية غيّر التواصل والترفيه والتسوق إلى الأبد.</span></p>
+        </div>
+        <div class="concept-card blue">
+          <strong>2. Not-for-Profit Growth (نمو القطاع غير الربحي)</strong>
+          <p>Colleges, hospitals, museums, and charities now use marketing to attract donors, members, and support.<span class="ar-line">الجامعات والمستشفيات والمتاحف والجمعيات باتت تستخدم التسويق لجذب المتبرعين والأعضاء.</span></p>
+        </div>
+        <div class="concept-card purple">
+          <strong>3. Rapid Globalization (العولمة السريعة)</strong>
+          <p>Every company is touched by global competition — local brands compete with multinationals.<span class="ar-line">كل شركة تتأثر بالمنافسة العالمية — العلامات المحلية تتنافس مع الشركات متعددة الجنسيات.</span></p>
+        </div>
+        <div class="concept-card green">
+          <strong>4. Sustainable Marketing (التسويق المستدام)</strong>
+          <p>Environmental responsibility and social ethics are now core business practices, not optional extras.<span class="ar-line">المسؤولية البيئية والأخلاقيات الاجتماعية باتت من الممارسات التجارية الأساسية لا الاختيارية.</span></p>
+        </div>
+      </div>
+
+      <div class="memory-box">4 اتجاهات تغيير المشهد التسويقي:<br>1. العصر الرقمي (Digital Age) 2. القطاع غير الربحي (Not-for-Profit) 3. العولمة (Globalization) 4. الاستدامة (Sustainable Marketing)</div>
+
+    </div>
+  </div>
+
+  <!-- Notes -->
+  <div class="chapter">
+    <div class="ch-notes-box">
+      <div class="ch-notes-title">📌 أهم نقاط الفصل الأول</div>
+      <div class="ch-notes-grid">
+        <div class="ch-note-item">
+          <span class="ch-note-num">1</span>
+          <div><strong>Needs vs Wants vs Demands</strong><br>Needs = basic (food, shelter). Wants = shaped by culture. Demands = wants backed by buying power.</div>
+        </div>
+        <div class="ch-note-item">
+          <span class="ch-note-num">2</span>
+          <div><strong>5 Marketing Orientations</strong><br>Production → Product → Selling → <span style="color:var(--accent)">Marketing</span> → Societal. الامتحان يحب الفرق بين Selling (inside-out) و Marketing (outside-in).</div>
+        </div>
+        <div class="ch-note-item">
+          <span class="ch-note-num">3</span>
+          <div><strong>Customer Value = Benefits − Costs</strong><br>Customer-perceived value = الفرق بين كل المنافع وكل التكاليف مقارنةً بالمنافسين.</div>
+        </div>
+        <div class="ch-note-item">
+          <span class="ch-note-num">4</span>
+          <div><strong>4 Customer Groups</strong><br>Strangers (low profit, low loyalty) · Butterflies (high profit, low loyalty) · Barnacles (low profit, high loyalty) · <span style="color:var(--accent)">True Friends</span> (high profit, high loyalty) ← الهدف.</div>
+        </div>
+        <div class="ch-note-item">
+          <span class="ch-note-num">5</span>
+          <div><strong>Customer Equity</strong><br>مجموع القيمة الكاملة لكل العملاء الحاليين والمستقبليين. أفضل مقياس لأداء الشركة على المدى البعيد.</div>
+        </div>
+        <div class="ch-note-item">
+          <span class="ch-note-num">6</span>
+          <div><strong>Societal Marketing</strong><br>يوازن: رغبات المستهلك + أرباح الشركة + مصلحة المجتمع. مثال: شركة fast food تفكر في الصحة العامة.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="ch1-highlights"></div>
+
+</div>
+<!-- ═══════════ CHAPTER 2 ═══════════════════ -->
+<div id="page-ch2" class="page">
+
+  <section class="hero">
+    <div class="tag">Chapter 2</div>
+    <h1>🗺️ Company &amp; Marketing Strategy: Partnering to Build Customer Engagement</h1>
+    <p>Kotler &amp; Armstrong, 18th Edition • Chapter 2</p>
+  </section>
+
+  <!-- ── LEARNING OBJECTIVES ─────────────────────────────── -->
+  <div class="chapter">
+    <h2>📋 Learning Objectives <span class="ar-line" style="font-size:.85rem;">أهداف التعلم</span></h2>
+    <div class="process-flow">
+
+      <div class="process-step">
+        <div class="process-num">2-1</div>
+        <div class="process-content">
+          <strong>Explain company-wide strategic planning and its four steps.</strong>
+          <span class="ar-line">شرح التخطيط الاستراتيجي للشركة وخطواته الأربع.</span>
+        </div>
+      </div>
+
+      <div class="process-step">
+        <div class="process-num">2-2</div>
+        <div class="process-content">
+          <strong>Discuss how to design business portfolios and develop growth strategies.</strong>
+          <span class="ar-line">مناقشة تصميم محافظ الأعمال واستراتيجيات النمو.</span>
+        </div>
+      </div>
+
+      <div class="process-step">
+        <div class="process-num">2-3</div>
+        <div class="process-content">
+          <strong>Explain marketing's role in strategic planning and how marketing partners to create value.</strong>
+          <span class="ar-line">شرح دور التسويق في التخطيط الاستراتيجي وكيف يتعاون مع الشركاء لخلق القيمة.</span>
+        </div>
+      </div>
+
+      <div class="process-step">
+        <div class="process-num">2-4</div>
+        <div class="process-content">
+          <strong>Describe the elements of a customer value-driven marketing strategy and mix.</strong>
+          <span class="ar-line">وصف عناصر استراتيجية التسويق الموجهة للعميل والمزيج التسويقي.</span>
+        </div>
+      </div>
+
+      <div class="process-step">
+        <div class="process-num">2-5</div>
+        <div class="process-content">
+          <strong>List marketing management functions and discuss marketing ROI.</strong>
+          <span class="ar-line">سرد وظائف إدارة التسويق ومناقشة العائد على الاستثمار التسويقي.</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       LO 2-1 : COMPANY-WIDE STRATEGIC PLANNING
+  ══════════════════════════════════════════════════════════ -->
+  <div class="lo-section open">
+    <div class="lo-header" onclick="toggleLO(this)">
+      <span class="lo-badge">LO 2-1</span>
+      <span class="lo-title">Company-Wide Strategic Planning <span style="font-weight:400;font-size:.9rem;">التخطيط الاستراتيجي للشركة</span></span>
+      <span class="lo-arrow">▼</span>
+    </div>
+    <div class="lo-body">
+
+      <div class="def-spotlight">
+        <div class="def-term">📌 Strategic Planning — التخطيط الاستراتيجي</div>
+        <div class="def-body">The process of developing and maintaining a <strong>strategic fit</strong> between the organization's goals/capabilities and its changing marketing opportunities.</div>
+        <div class="ar-line">عملية تطوير والحفاظ على توافق استراتيجي بين أهداف الشركة وقدراتها من جهة، وفرص السوق المتغيرة من جهة أخرى.</div>
+      </div>
+
+      <h3>4 Steps of Strategic Planning <span class="ar-line" style="font-size:.85rem;">الخطوات الأربع للتخطيط الاستراتيجي</span></h3>
+
+      <div class="process-flow">
+        <div class="process-step">
+          <div class="process-num">1</div>
+          <div class="process-content">
+            <strong>Define the Company Mission</strong>
+            <span class="ar-line">تحديد مهمة الشركة</span>
+            <p>What does the organization want to accomplish in the larger environment? Must be MARKET-oriented, not product-oriented.<span class="ar-line">ما الذي تريد المنظمة تحقيقه؟ يجب أن يكون بيان المهمة موجهاً للسوق، وليس للمنتج.</span></p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">2</div>
+          <div class="process-content">
+            <strong>Set Company Objectives &amp; Goals</strong>
+            <span class="ar-line">وضع الأهداف التفصيلية للشركة</span>
+            <p>Turn the mission into detailed supporting objectives for each level of management.<span class="ar-line">تحويل المهمة إلى أهداف تفصيلية داعمة لكل مستوى إداري في الشركة.</span></p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">3</div>
+          <div class="process-content">
+            <strong>Design the Business Portfolio</strong>
+            <span class="ar-line">تصميم محفظة الأعمال</span>
+            <p>Analyze current portfolio; decide which businesses to invest in, grow, or eliminate.<span class="ar-line">تحليل المحفظة الحالية وتحديد الأعمال التي يُستثمر فيها أو تُنمَّى أو تُزال.</span></p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">4</div>
+          <div class="process-content">
+            <strong>Plan Marketing &amp; Other Functional Strategies</strong>
+            <span class="ar-line">التخطيط للتسويق والاستراتيجيات الوظيفية الأخرى</span>
+            <p>Develop functional strategies to accomplish the overall objectives (marketing, finance, HR, operations).<span class="ar-line">تطوير استراتيجيات تنفيذية لتحقيق الأهداف الشاملة (تسويق، مالية، موارد بشرية، عمليات).</span></p>
+          </div>
+        </div>
+      </div>
+
+      <h3>Mission Statement — بيان المهمة <span class="ar-line" style="font-size:.85rem;">موجّه للسوق أم للمنتج؟</span></h3>
+
+      <div class="ref-table-wrap">
+        <table class="ref-table">
+          <thead>
+            <tr>
+              <th>Company (الشركة)</th>
+              <th>❌ Product-Oriented (موجّه للمنتج)</th>
+              <th>✅ Market-Oriented (موجّه للسوق)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Facebook</strong></td>
+              <td>"We are an online social network."<br><span class="ar-line">نحن شبكة تواصل اجتماعية عبر الإنترنت.</span></td>
+              <td>"We connect people and help them share important moments in their lives."<br><span class="ar-line">نربط الناس ونساعدهم على مشاركة لحظاتهم المهمة.</span></td>
+            </tr>
+            <tr>
+              <td><strong>Railroad Co.</strong></td>
+              <td>"We run a railroad."<br><span class="ar-line">نحن نُشغّل خطوط سكك حديدية.</span></td>
+              <td>"We are in the transportation business."<br><span class="ar-line">نحن في مجال النقل والمواصلات.</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <ul class="slide-bullets">
+        <li>Mission should <strong>NOT</strong> be myopic in product terms.<span class="ar-line">يجب ألا يكون بيان المهمة قاصراً على وصف المنتج.</span></li>
+        <li>Must be <strong>meaningful, specific, and motivating</strong>.<span class="ar-line">يجب أن يكون ذا معنى ومحدداً ومحفزاً للموظفين والعملاء.</span></li>
+        <li>Should emphasize the company's <strong>strengths</strong>.<span class="ar-line">يجب أن يُبرز نقاط قوة الشركة الحقيقية.</span></li>
+        <li>Should <strong>NOT</strong> be stated as making sales or profits.<span class="ar-line">يجب ألا يُصاغ على هيئة تحقيق مبيعات أو أرباح.</span></li>
+      </ul>
+
+      <div class="exam-tip">Mission must be MARKET-oriented, not product-oriented. A product-oriented mission leads to marketing myopia!<span class="ar-line">بيان المهمة يجب أن يكون موجهاً للسوق، وليس للمنتج. التوجه للمنتج يُوقع الشركة في قصر النظر التسويقي!</span></div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       LO 2-2 : BUSINESS PORTFOLIO & GROWTH STRATEGIES
+  ══════════════════════════════════════════════════════════ -->
+  <div class="lo-section">
+    <div class="lo-header" onclick="toggleLO(this)">
+      <span class="lo-badge">LO 2-2</span>
+      <span class="lo-title">Business Portfolio &amp; Growth Strategies <span style="font-weight:400;font-size:.9rem;">محفظة الأعمال واستراتيجيات النمو</span></span>
+      <span class="lo-arrow">▼</span>
+    </div>
+    <div class="lo-body">
+
+      <div class="master-grid">
+        <div class="master-card">
+          <strong>Business Portfolio (محفظة الأعمال)</strong>
+          Collection of businesses and products making up the company. Best portfolio = fits company strengths/weaknesses to environmental opportunities.
+          <span class="ar-line">مجموعة الأعمال والمنتجات التي تتكون منها الشركة. أفضل محفظة هي التي تتناسب مع نقاط القوة والفرص البيئية.</span>
+        </div>
+        <div class="master-card">
+          <strong>SBU — Strategic Business Unit (الوحدة الاستراتيجية)</strong>
+          Can be: a company division / a product line / a single product or brand. Each SBU has its own mission and objectives.
+          <span class="ar-line">يمكن أن تكون: قسماً في الشركة أو خط منتجات أو منتجاً/علامة تجارية واحدة. لكل وحدة مهمتها وأهدافها.</span>
+        </div>
+      </div>
+
+      <h3>BCG Growth-Share Matrix <span class="ar-line" style="font-size:.85rem;">مصفوفة BCG للنمو والحصة</span></h3>
+
+      <div class="example-box">
+        <p>Evaluates SBUs on two axes: <strong>Market Growth Rate</strong> (vertical) and <strong>Relative Market Share</strong> (horizontal).<span class="ar-line">تُقيّم وحدات الأعمال على محورين: معدل نمو السوق (رأسي) والحصة السوقية النسبية (أفقي).</span></p>
+      </div>
+
+      <div class="ref-table-wrap">
+        <table class="ref-table">
+          <thead>
+            <tr>
+              <th>Quadrant (المربع)</th>
+              <th>Growth (النمو)</th>
+              <th>Share (الحصة)</th>
+              <th>Strategy (الاستراتيجية)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Stars ⭐</strong><br><span class="ar-line">النجوم</span></td>
+              <td>High<br><span class="ar-line">عالٍ</span></td>
+              <td>High<br><span class="ar-line">عالية</span></td>
+              <td>Invest heavily — will become cash cows<br><span class="ar-line">استثمر بكثافة — ستتحول إلى أبقار حلوب</span></td>
+            </tr>
+            <tr>
+              <td><strong>Cash Cows 🐄</strong><br><span class="ar-line">الأبقار الحلوب</span></td>
+              <td>Low<br><span class="ar-line">منخفض</span></td>
+              <td>High<br><span class="ar-line">عالية</span></td>
+              <td>Established; less investment needed; fund other SBUs<br><span class="ar-line">مستقرة؛ تحتاج استثماراً أقل؛ تموّل الوحدات الأخرى</span></td>
+            </tr>
+            <tr>
+              <td><strong>Question Marks ❓</strong><br><span class="ar-line">علامات الاستفهام</span></td>
+              <td>High<br><span class="ar-line">عالٍ</span></td>
+              <td>Low<br><span class="ar-line">منخفضة</span></td>
+              <td>Risky; need lots of cash to hold/build share<br><span class="ar-line">خطرة؛ تحتاج سيولة كبيرة للحفاظ على حصتها أو بنائها</span></td>
+            </tr>
+            <tr>
+              <td><strong>Dogs 🐕</strong><br><span class="ar-line">الكلاب</span></td>
+              <td>Low<br><span class="ar-line">منخفض</span></td>
+              <td>Low<br><span class="ar-line">منخفضة</span></td>
+              <td>May sustain themselves; usually divest<br><span class="ar-line">قد تكتفي بذاتها؛ عادةً يُفضّل التخلص منها</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Problems with the BCG Matrix <span class="ar-line" style="font-size:.85rem;">مشاكل مصفوفة BCG</span></h3>
+
+      <ul class="slide-bullets">
+        <li>Difficult to define SBUs and measure market share/growth accurately.<span class="ar-line">صعوبة تعريف الوحدات الاستراتيجية وقياس الحصة السوقية والنمو بدقة.</span></li>
+        <li>Time-consuming and expensive to implement.<span class="ar-line">تستهلك وقتاً وتكلف كثيراً عند التطبيق.</span></li>
+        <li>Focuses on <strong>current businesses</strong>, not future opportunities or planning.<span class="ar-line">تركز على الأعمال الحالية ولا تأخذ الفرص المستقبلية بعين الاعتبار.</span></li>
+      </ul>
+
+      <h3>Ansoff Product/Market Expansion Grid <span class="ar-line" style="font-size:.85rem;">مصفوفة أنسوف لاستراتيجيات النمو</span></h3>
+
+      <div class="ref-table-wrap">
+        <table class="ref-table">
+          <thead>
+            <tr>
+              <th>Strategy (الاستراتيجية)</th>
+              <th>Product</th>
+              <th>Market</th>
+              <th>Description &amp; Arabic</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Market Penetration (اختراق السوق)</strong></td>
+              <td>Current (حالي)</td>
+              <td>Current (حالي)</td>
+              <td>Increase sales to existing markets without product changes.<br><span class="ar-line">زيادة المبيعات في الأسواق الحالية دون تغيير المنتج — الأقل خطراً.</span></td>
+            </tr>
+            <tr>
+              <td><strong>Market Development (تطوير السوق)</strong></td>
+              <td>Current (حالي)</td>
+              <td>New (جديد)</td>
+              <td>Expand current products into new segments or regions.<br><span class="ar-line">توسيع المنتجات الحالية إلى شرائح أو مناطق جغرافية جديدة.</span></td>
+            </tr>
+            <tr>
+              <td><strong>Product Development (تطوير المنتج)</strong></td>
+              <td>New (جديد)</td>
+              <td>Current (حالي)</td>
+              <td>Offer new or modified products to existing markets.<br><span class="ar-line">تقديم منتجات جديدة أو معدّلة للأسواق الحالية.</span></td>
+            </tr>
+            <tr>
+              <td><strong>Diversification ⚠️ (التنويع)</strong></td>
+              <td>New (جديد)</td>
+              <td>New (جديد)</td>
+              <td>Start or acquire new businesses in new markets — MOST RISKY.<br><span class="ar-line">البدء أو اقتناء أعمال جديدة في أسواق جديدة — الأعلى خطراً.</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="def-spotlight">
+        <div class="def-term">✂️ Downsizing — التقليص</div>
+        <div class="def-body">Pruning, harvesting, or divesting businesses that are <strong>unprofitable</strong> or no longer fit the company strategy.</div>
+        <div class="ar-line">التخلص من الأعمال غير المربحة أو التي لا تتوافق مع استراتيجية الشركة — جزء طبيعي من تطوير المحفظة.</div>
+      </div>
+
+      <div class="memory-box">مصفوفة أنسوف — من الأقل خطراً للأكثر خطراً:<br>1. Penetration (اختراق) → 2. Market Development (تطوير السوق) → 3. Product Development (تطوير المنتج) → 4. Diversification (تنويع) ⚠️</div>
+
+      <div class="exam-tip">Market Penetration = NO product change, NO new market. Diversification = most RISKY strategy (new product + new market).<span class="ar-line">اختراق السوق = لا تغيير في المنتج ولا في السوق (الأأمن). التنويع = منتج جديد + سوق جديد (الأعلى خطراً).</span></div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       LO 2-3 : MARKETING'S ROLE IN STRATEGIC PLANNING
+  ══════════════════════════════════════════════════════════ -->
+  <div class="lo-section">
+    <div class="lo-header" onclick="toggleLO(this)">
+      <span class="lo-badge">LO 2-3</span>
+      <span class="lo-title">Marketing's Role in Strategic Planning <span style="font-weight:400;font-size:.9rem;">دور التسويق في التخطيط الاستراتيجي</span></span>
+      <span class="lo-arrow">▼</span>
+    </div>
+    <div class="lo-body">
+
+      <div class="concept-row">
+        <div class="concept-card teal">
+          <strong>Value Chain (سلسلة القيمة)</strong>
+          <p>Series of internal departments carrying out value-creating activities: design → produce → market → deliver → support.<span class="ar-line">سلسلة الأقسام الداخلية التي تؤدي أنشطة خلق القيمة: تصميم → إنتاج → تسويق → تسليم → دعم.</span></p>
+        </div>
+        <div class="concept-card blue">
+          <strong>Value Delivery Network (شبكة تسليم القيمة)</strong>
+          <p>Company + suppliers + distributors + customers partnering to improve the entire system's performance.<span class="ar-line">الشركة والموردون والموزعون والعملاء يتعاونون لتحسين أداء النظام بأكمله وتقديم قيمة أعلى.</span></p>
+        </div>
+      </div>
+
+      <h3>Marketing's 3 Key Roles in Strategic Planning <span class="ar-line" style="font-size:.85rem;">الأدوار الثلاثة للتسويق في التخطيط الاستراتيجي</span></h3>
+
+      <ul class="slide-bullets">
+        <li><strong>Role 1:</strong> Provides marketing philosophy (the customer concept) to guide the whole company.<span class="ar-line">الدور الأول: تقديم الفلسفة التسويقية (مفهوم العميل) لتوجيه الشركة بأكملها.</span></li>
+        <li><strong>Role 2:</strong> Provides strategic planners with inputs — market opportunities, threats, competitive intelligence.<span class="ar-line">الدور الثاني: تزويد المخططين الاستراتيجيين بمدخلات حول الفرص والتهديدات والمعلومات التنافسية.</span></li>
+        <li><strong>Role 3:</strong> Designs strategies for individual business units to help meet their objectives.<span class="ar-line">الدور الثالث: تصميم استراتيجيات لكل وحدة أعمال بما يساعدها على تحقيق أهدافها.</span></li>
+      </ul>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       LO 2-4 : MARKETING STRATEGY & THE MARKETING MIX
+  ══════════════════════════════════════════════════════════ -->
+  <div class="lo-section">
+    <div class="lo-header" onclick="toggleLO(this)">
+      <span class="lo-badge">LO 2-4</span>
+      <span class="lo-title">Marketing Strategy &amp; the Marketing Mix <span style="font-weight:400;font-size:.9rem;">استراتيجية التسويق والمزيج التسويقي</span></span>
+      <span class="lo-arrow">▼</span>
+    </div>
+    <div class="lo-body">
+
+      <div class="def-spotlight">
+        <div class="def-term">📌 Marketing Strategy — استراتيجية التسويق</div>
+        <div class="def-body">The marketing logic by which the company creates customer value and achieves profitable relationships. Decides: <strong>who to serve</strong> (segmentation &amp; targeting) + <strong>how to serve</strong> them (differentiation &amp; positioning).</div>
+        <div class="ar-line">المنطق التسويقي الذي تخلق به الشركة قيمة للعملاء وتحقق علاقات مربحة. تحدد: من تخدم (التجزئة والاستهداف) + كيف تخدمهم (التمييز والتموضع).</div>
+      </div>
+
+      <h3>The 4 Ps vs. The 4 Cs <span class="ar-line" style="font-size:.85rem;">نظرة الشركة مقابل نظرة العميل</span></h3>
+
+      <div class="vs-grid">
+        <div class="vs-side left">
+          <strong>4 Ps — نظرة الشركة</strong>
+          <ul class="slide-bullets">
+            <li><strong>Product</strong> — goods-and-services combination<span class="ar-line">المنتج — مزيج السلع والخدمات</span></li>
+            <li><strong>Price</strong> — amount customers pay<span class="ar-line">السعر — ما يدفعه العميل</span></li>
+            <li><strong>Place</strong> — making product available<span class="ar-line">المكان — إتاحة المنتج للعميل</span></li>
+            <li><strong>Promotion</strong> — communicating &amp; persuading<span class="ar-line">الترويج — التواصل والإقناع</span></li>
+          </ul>
+        </div>
+        <div class="vs-middle">↔</div>
+        <div class="vs-side right">
+          <strong>4 Cs — نظرة العميل</strong>
+          <ul class="slide-bullets">
+            <li><strong>Customer Solution</strong> — solves my problem<span class="ar-line">حل لمشكلة العميل</span></li>
+            <li><strong>Customer Cost</strong> — total cost to me<span class="ar-line">التكلفة الكاملة على العميل</span></li>
+            <li><strong>Convenience</strong> — ease of access<span class="ar-line">الراحة وسهولة الوصول</span></li>
+            <li><strong>Communication</strong> — two-way dialogue<span class="ar-line">التواصل الثنائي الاتجاه</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="memory-box">4Ps = نظرة الشركة للسوق<br>4Cs = نفس الـ 4Ps لكن من منظور العميل — Product→Solution, Price→Cost, Place→Convenience, Promotion→Communication</div>
+
+      <div class="example-box">
+        <h4>Segmentation, Targeting, Differentiation &amp; Positioning<br><span style="font-size:.9rem;">التجزئة، الاستهداف، التمييز، والتموضع</span></h4>
+        <ul class="slide-bullets">
+          <li><strong>Segmentation (التجزئة):</strong> Dividing the market into distinct groups with different needs.<span class="ar-line">تقسيم السوق إلى مجموعات متميزة ذات احتياجات مختلفة.</span></li>
+          <li><strong>Targeting (الاستهداف):</strong> Selecting which segments to pursue.<span class="ar-line">اختيار الشرائح التي ستستهدفها الشركة.</span></li>
+          <li><strong>Differentiation (التمييز):</strong> Creating superior customer value vs. competitors.<span class="ar-line">خلق قيمة متفوقة للعملاء مقارنةً بالمنافسين.</span></li>
+          <li><strong>Positioning (التموضع):</strong> Arranging for the brand to occupy a clear, distinctive place in target customers' minds.<span class="ar-line">وضع العلامة التجارية في مكانة واضحة ومميزة في أذهان العملاء المستهدفين.</span></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       LO 2-5 : MANAGING THE MARKETING EFFORT & ROI
+  ══════════════════════════════════════════════════════════ -->
+  <div class="lo-section">
+    <div class="lo-header" onclick="toggleLO(this)">
+      <span class="lo-badge">LO 2-5</span>
+      <span class="lo-title">Managing the Marketing Effort &amp; ROI <span style="font-weight:400;font-size:.9rem;">إدارة الجهد التسويقي والعائد على الاستثمار</span></span>
+      <span class="lo-arrow">▼</span>
+    </div>
+    <div class="lo-body">
+
+      <h3>4 Marketing Management Functions <span class="ar-line" style="font-size:.85rem;">وظائف إدارة التسويق الأربع</span></h3>
+
+      <div class="process-flow">
+        <div class="process-step">
+          <div class="process-num">1</div>
+          <div class="process-content">
+            <strong>Analysis — التحليل</strong>
+            <span class="ar-line">SWOT: نقاط القوة والضعف والفرص والتهديدات</span>
+            <p>SWOT Analysis — Strengths, Weaknesses (internal) + Opportunities, Threats (external).<span class="ar-line">تحليل SWOT: نقاط القوة ونقاط الضعف (داخلي) + الفرص والتهديدات (خارجي).</span></p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">2</div>
+          <div class="process-content">
+            <strong>Planning — التخطيط</strong>
+            <span class="ar-line">اختيار الاستراتيجيات؛ خطة تسويقية لكل منتج/علامة</span>
+            <p>Choose strategies; develop detailed marketing plan per product or brand.<span class="ar-line">اختيار الاستراتيجيات وتطوير خطة تسويقية تفصيلية لكل منتج أو علامة تجارية.</span></p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">3</div>
+          <div class="process-content">
+            <strong>Implementation — التنفيذ</strong>
+            <span class="ar-line">تحويل الاستراتيجيات إلى أفعال: من؟ أين؟ متى؟ كيف؟</span>
+            <p>Turn strategies and plans into marketing actions. Answers: WHO, WHERE, WHEN, and HOW.<span class="ar-line">تحويل الاستراتيجيات والخطط إلى أفعال تسويقية. يجيب على: من؟ وأين؟ ومتى؟ وكيف؟</span></p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">4</div>
+          <div class="process-content">
+            <strong>Control — الرقابة</strong>
+            <span class="ar-line">قياس النتائج وتقييمها واتخاذ إجراءات تصحيحية</span>
+            <p>Measure and evaluate results of marketing strategies; take corrective action when needed.<span class="ar-line">قياس نتائج الاستراتيجيات التسويقية وتقييمها واتخاذ إجراءات تصحيحية عند الحاجة.</span></p>
+          </div>
+        </div>
+      </div>
+
+      <h3>SWOT Analysis <span class="ar-line" style="font-size:.85rem;">تحليل SWOT</span></h3>
+
+      <div class="concept-row">
+        <div class="concept-card green">
+          <strong>Strengths ✅ (نقاط القوة) — Internal</strong>
+          <p>Positive internal factors the company can build on.<span class="ar-line">عوامل داخلية إيجابية يمكن للشركة البناء عليها واستغلالها.</span></p>
+        </div>
+        <div class="concept-card rose">
+          <strong>Weaknesses ❌ (نقاط الضعف) — Internal</strong>
+          <p>Negative internal factors that must be addressed or minimized.<span class="ar-line">عوامل داخلية سلبية يجب معالجتها أو تقليل أثرها.</span></p>
+        </div>
+        <div class="concept-card teal">
+          <strong>Opportunities 🌟 (الفرص) — External</strong>
+          <p>Positive external trends the company can exploit.<span class="ar-line">اتجاهات خارجية إيجابية يمكن للشركة استغلالها لتحقيق ميزة تنافسية.</span></p>
+        </div>
+        <div class="concept-card amber">
+          <strong>Threats ⚠️ (التهديدات) — External</strong>
+          <p>Negative external trends the company must defend against.<span class="ar-line">اتجاهات خارجية سلبية يجب على الشركة الدفاع في مواجهتها.</span></p>
+        </div>
+      </div>
+
+      <div class="example-box">
+        <strong>SWOT Goal:</strong> Match <em>strengths</em> to <em>opportunities</em>; eliminate <em>weaknesses</em>; minimize <em>threats</em>.
+        <span class="ar-line">هدف تحليل SWOT: مطابقة نقاط القوة مع الفرص؛ القضاء على نقاط الضعف؛ تقليل أثر التهديدات.</span>
+      </div>
+
+      <h3>Marketing ROI <span class="ar-line" style="font-size:.85rem;">العائد على الاستثمار التسويقي</span></h3>
+
+      <div class="def-spotlight">
+        <div class="def-term">📊 Marketing ROI — العائد على الاستثمار التسويقي</div>
+        <div class="def-body">Net return from a marketing investment divided by the costs of the marketing investment. Measures the <strong>profits generated by investments in marketing activities</strong>.</div>
+        <div class="ar-line">صافي العائد من الاستثمار التسويقي مقسوماً على تكاليف ذلك الاستثمار. يقيس الأرباح الناتجة عن الإنفاق التسويقي.</div>
+      </div>
+
+      <h3>The ROI Chain <span class="ar-line" style="font-size:.85rem;">سلسلة العائد على الاستثمار</span></h3>
+
+      <div class="process-flow">
+        <div class="process-step">
+          <div class="process-num">→</div>
+          <div class="process-content">
+            <strong>Marketing Investment (استثمار تسويقي)</strong>
+            <span class="ar-line">الإنفاق على الأنشطة والحملات التسويقية</span>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">→</div>
+          <div class="process-content">
+            <strong>Better Customer Value &amp; Satisfaction (قيمة ورضا أفضل)</strong>
+            <span class="ar-line">تقديم قيمة أعلى وتحقيق رضا أكبر للعملاء</span>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">→</div>
+          <div class="process-content">
+            <strong>More Attraction &amp; Retention (جذب واحتفاظ أكثر)</strong>
+            <span class="ar-line">جذب عملاء جدد والاحتفاظ بالعملاء الحاليين</span>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">→</div>
+          <div class="process-content">
+            <strong>Higher CLV &amp; Customer Equity (حقوق عملاء أعلى)</strong>
+            <span class="ar-line">قيمة عمر العميل وحقوق العملاء الإجمالية ترتفع</span>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">✅</div>
+          <div class="process-content">
+            <strong>Higher Marketing ROI (عائد استثمار تسويقي أعلى)</strong>
+            <span class="ar-line">النتيجة النهائية: عائد استثمار تسويقي مرتفع يثبت قيمة الإنفاق التسويقي</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="memory-box">وظائف إدارة التسويق الأربع: تحليل (Analysis) → تخطيط (Planning) → تنفيذ (Implementation) → رقابة (Control)<br>SWOT: داخلي (نقاط قوة + نقاط ضعف) + خارجي (فرص + تهديدات)</div>
+
+      <div class="exam-tip">ROI measures <strong>profitability</strong> of marketing — not just sales volume. Customer equity measures FUTURE; ROI measures current efficiency.<span class="ar-line">العائد على الاستثمار يقيس ربحية التسويق لا حجم المبيعات فقط. حقوق العملاء تقيس المستقبل؛ ROI يقيس الكفاءة الحالية.</span></div>
+
+    </div>
+  </div>
+
+  <!-- Notes -->
+  <div class="chapter">
+    <div class="ch-notes-box">
+      <div class="ch-notes-title">📌 أهم نقاط الفصل الثاني</div>
+      <div class="ch-notes-grid">
+        <div class="ch-note-item">
+          <span class="ch-note-num">1</span>
+          <div><strong>BCG Matrix — 4 أرباع</strong><br>Stars (high growth, high share) · Cash Cows (low growth, high share) · Question Marks (high growth, low share) · Dogs (low growth, low share).</div>
+        </div>
+        <div class="ch-note-item">
+          <span class="ch-note-num">2</span>
+          <div><strong>Ansoff Matrix — 4 استراتيجيات</strong><br>Market Penetration (نفس المنتج، نفس السوق) · Market Development (نفس المنتج، سوق جديد) · Product Development (منتج جديد، نفس السوق) · Diversification (كل شيء جديد).</div>
+        </div>
+        <div class="ch-note-item">
+          <span class="ch-note-num">3</span>
+          <div><strong>Marketing Mix — 4Ps</strong><br>Product · Price · Place · Promotion. من منظور المستهلك: 4Cs = Customer solution · Cost · Convenience · Communication.</div>
+        </div>
+        <div class="ch-note-item">
+          <span class="ch-note-num">4</span>
+          <div><strong>Marketing Control — 4 خطوات</strong><br>① Set goals → ② Measure performance → ③ Evaluate causes → ④ Take corrective action. لا يشمل زيادة الموظفين!</div>
+        </div>
+        <div class="ch-note-item">
+          <span class="ch-note-num">5</span>
+          <div><strong>ROI on Marketing</strong><br>= Net return من الاستثمار التسويقي ÷ تكاليف الاستثمار التسويقي. يقيس الربحية لا حجم المبيعات.</div>
+        </div>
+        <div class="ch-note-item">
+          <span class="ch-note-num">6</span>
+          <div><strong>Mission Statement</strong><br>يجب أن يكون: market-oriented (لا product-oriented) · وطويل الأمد · يحدد غرض الشركة. ليس عن الأرباح.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="ch2-highlights"></div>
+
+</div>
+<!-- ═══════════ CHAPTER 3 ═══════════════════ -->
+<div id="page-ch3" class="page">
+
+  <section class="hero">
+    <div class="tag">Chapter 3</div>
+    <h1>🌍 Analyzing the Marketing Environment</h1>
+    <p>Kotler &amp; Armstrong, 18th Edition &bull; Chapter 3
+      <span class="ar-line">تحليل البيئة التسويقية — الفصل الثالث</span>
+    </p>
+  </section>
+
+  <!-- Learning Objectives -->
+  <div class="chapter">
+    <h2>📋 Learning Objectives <span class="ar-line" style="font-size:.85rem;font-weight:600;">أهداف التعلم</span></h2>
+    <div class="process-flow">
+      <div class="process-step">
+        <div class="process-num">3-1</div>
+        <div class="process-content">
+          <strong>Microenvironment &amp; Macroenvironment <span class="ar-line">البيئة الدقيقة والبيئة الكلية</span></strong>
+          <p>Describe the environmental forces that affect the company's ability to serve its customers.<span class="ar-line">وصف القوى البيئية التي تؤثر على قدرة الشركة في خدمة عملائها.</span></p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="process-num">3-2</div>
+        <div class="process-content">
+          <strong>Demographic &amp; Economic Environments <span class="ar-line">البيئتان الديموغرافية والاقتصادية</span></strong>
+          <p>Explain how changes in the demographic and economic environments affect marketing decisions.<span class="ar-line">شرح كيف تؤثر التغيرات الديموغرافية والاقتصادية على قرارات التسويق.</span></p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="process-num">3-3</div>
+        <div class="process-content">
+          <strong>Natural &amp; Technological Environments <span class="ar-line">البيئتان الطبيعية والتكنولوجية</span></strong>
+          <p>Identify the major trends in the firm's natural and technological environments.<span class="ar-line">تحديد أبرز الاتجاهات في البيئتين الطبيعية والتكنولوجية للشركة.</span></p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="process-num">3-4</div>
+        <div class="process-content">
+          <strong>Political &amp; Cultural Environments <span class="ar-line">البيئتان السياسية والثقافية</span></strong>
+          <p>Explain the key changes in the political and cultural environments.<span class="ar-line">شرح التغيرات الرئيسية في البيئتين السياسية والثقافية.</span></p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="process-num">3-5</div>
+        <div class="process-content">
+          <strong>Responding to the Environment <span class="ar-line">الاستجابة للبيئة</span></strong>
+          <p>Discuss how companies can react to the marketing environment.<span class="ar-line">مناقشة كيفية استجابة الشركات للبيئة التسويقية.</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── LO 3-1 ── -->
+  <div class="lo-section open">
+    <div class="lo-header" onclick="toggleLO(this)">
+      <span class="lo-badge">LO 3-1</span>
+      <span class="lo-title">The Marketing Environment — Micro vs. Macro &nbsp;|&nbsp; البيئة التسويقية — ميكرو ومـاكرو</span>
+      <span class="lo-arrow">▼</span>
+    </div>
+    <div class="lo-body">
+
+      <div class="def-spotlight">
+        <div class="def-term">📌 Marketing Environment — البيئة التسويقية</div>
+        <div class="def-body">Actors and forces <strong>OUTSIDE marketing</strong> that affect marketing management's ability to build and maintain successful relationships with target customers.</div>
+        <div class="ar-line">الجهات والقوى <strong>الخارجية</strong> التي تؤثر على قدرة إدارة التسويق في بناء علاقات ناجحة مع العملاء المستهدفين والحفاظ عليها.</div>
+      </div>
+
+      <div class="vs-grid">
+        <div class="vs-side left">
+          <h4>🔬 Microenvironment (البيئة الدقيقة)</h4>
+          <ul>
+            <li>Actors <strong>CLOSE</strong> to the company<span class="ar-line">الجهات <strong>القريبة</strong> من الشركة</span></li>
+            <li>Directly affects ability to serve customers<span class="ar-line">تؤثر مباشرة على قدرة الشركة في خدمة العملاء</span></li>
+            <li><strong>6 actors:</strong> Company, Suppliers, Intermediaries, Customers, Competitors, Publics<span class="ar-line"><strong>6 عوامل:</strong> الشركة، الموردون، الوسطاء، العملاء، المنافسون، الجمهور</span></li>
+          </ul>
+        </div>
+        <div class="vs-middle">VS</div>
+        <div class="vs-side right">
+          <h4>🌐 Macroenvironment (البيئة الكلية)</h4>
+          <ul>
+            <li><strong>LARGER</strong> societal forces<span class="ar-line">قوى مجتمعية <strong>أكبر</strong></span></li>
+            <li>Affects the entire microenvironment<span class="ar-line">تؤثر على البيئة الدقيقة بأكملها</span></li>
+            <li><strong>6 forces:</strong> Demographic, Economic, Natural, Technological, Political, Cultural<span class="ar-line"><strong>6 قوى:</strong> ديموغرافية، اقتصادية، طبيعية، تكنولوجية، سياسية، ثقافية</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exam-tip">Micro = 6 actors CLOSE to company. Macro = 6 LARGER forces. Count them — both are 6!<span class="ar-line">ميكرو = 6 عوامل قريبة من الشركة. ماكرو = 6 قوى مجتمعية أكبر. كلاهما 6 — لا تخلط بينهما!</span></div>
+      <div class="memory-box">ميكرو = قريب (6 عوامل). ماكرو = بعيد/مجتمع (6 قوى). كلهم 6!</div>
+
+      <h3>The 6 Microenvironment Actors <span class="ar-line" style="font-size:.85rem;">العوامل الستة في البيئة الدقيقة</span></h3>
+
+      <div class="concept-row">
+        <div class="concept-card teal">
+          <strong>1. The Company (الشركة)</strong>
+          Internal departments ALL share responsibility for customer value: Top management, Finance, R&amp;D, Purchasing, Operations, Accounting.
+          <span class="ar-line">جميع الأقسام الداخلية تتشارك مسؤولية خلق قيمة للعميل: الإدارة العليا، المالية، البحث والتطوير، المشتريات، العمليات، المحاسبة.</span>
+        </div>
+        <div class="concept-card blue">
+          <strong>2. Suppliers (الموردون)</strong>
+          Provide resources; form important link in value delivery network. Problems → shortages, delays, rising costs → harm sales.
+          <span class="ar-line">يوفرون الموارد؛ يشكّلون حلقة مهمة في شبكة تسليم القيمة. مشاكلهم تؤدي إلى نقص في الإمدادات وارتفاع التكاليف مما يضر بالمبيعات.</span>
+        </div>
+        <div class="concept-card purple">
+          <strong>3. Marketing Intermediaries (الوسطاء التسويقيون)</strong>
+          Firms that help PROMOTE, SELL, and DISTRIBUTE goods to final buyers.
+          <span class="ar-line">شركات تساعد في ترويج المنتجات وبيعها وتوزيعها على المشترين النهائيين.</span>
+          <p><em>4 types / 4 أنواع:</em> Resellers, Physical distribution firms, Marketing services agencies, Financial intermediaries.<span class="ar-line">الموزعون، شركات التوزيع المادي، وكالات الخدمات التسويقية، الوسطاء الماليون.</span></p>
+        </div>
+        <div class="concept-card amber">
+          <strong>4. Competitors (المنافسون)</strong>
+          Must provide GREATER customer value. No single best strategy — depends on company size &amp; industry position.
+          <span class="ar-line">يجب تقديم قيمة أكبر من المنافسين. لا توجد استراتيجية منافسة مثلى واحدة — تعتمد على حجم الشركة وموقعها في الصناعة.</span>
+        </div>
+        <div class="concept-card rose">
+          <strong>5. Publics (الجماهير)</strong>
+          Any group with actual/potential interest in or impact on the organization's ability to achieve objectives.
+          <span class="ar-line">أي مجموعة لها مصلحة أو تأثير فعلي أو محتمل على قدرة المنظمة في تحقيق أهدافها.</span>
+        </div>
+        <div class="concept-card green">
+          <strong>6. Customers (العملاء)</strong>
+          5 types of customer markets: Consumer, Business, Reseller, Government, International.
+          <span class="ar-line">5 أنواع من أسواق العملاء: المستهلكون، التجارية، الموزعون، الحكومية، الدولية.</span>
+        </div>
+      </div>
+
+      <h3>Types of Marketing Intermediaries <span class="ar-line" style="font-size:.85rem;">أنواع الوسطاء التسويقيين</span></h3>
+      <ul class="slide-bullets">
+        <li><strong>Resellers</strong> — distribution channel firms that find customers (e.g., Walmart).<span class="ar-line">الموزعون — شركات قنوات التوزيع التي تجد العملاء؛ مثل وول مارت.</span></li>
+        <li><strong>Physical Distribution Firms</strong> — help stock and move goods from origin to destination.<span class="ar-line">شركات التوزيع المادي — تساعد في تخزين البضائع ونقلها من مصدرها إلى وجهتها.</span></li>
+        <li><strong>Marketing Services Agencies</strong> — research firms, advertising agencies, media companies, consulting firms.<span class="ar-line">وكالات الخدمات التسويقية — شركات بحوث، وكالات إعلان، شركات وسائل إعلام، شركات استشارات.</span></li>
+        <li><strong>Financial Intermediaries</strong> — banks, credit companies, insurance companies.<span class="ar-line">الوسطاء الماليون — البنوك وشركات الائتمان وشركات التأمين.</span></li>
+      </ul>
+
+      <h3>7 Types of Publics <span class="ar-line" style="font-size:.85rem;">أنواع الجماهير السبعة</span></h3>
+      <ul class="slide-bullets">
+        <li><strong>Financial Publics</strong> — influence ability to obtain funds (banks, investors, stockholders).<span class="ar-line">الجمهور المالي — يؤثر على قدرة الشركة على الحصول على التمويل (بنوك، مستثمرون، مساهمون).</span></li>
+        <li><strong>Media Publics</strong> — carry news, features, editorial opinion (newspapers, magazines, TV, online).<span class="ar-line">الجمهور الإعلامي — ينقل الأخبار والمقالات والآراء (صحف، مجلات، تلفزيون، إنترنت).</span></li>
+        <li><strong>Government Publics</strong> — management must consider government developments and laws.<span class="ar-line">الجمهور الحكومي — يجب على الإدارة مراعاة التطورات الحكومية والقوانين.</span></li>
+        <li><strong>Citizen-Action Publics</strong> — consumer organizations, environmental groups, minority groups.<span class="ar-line">جماعات المواطنين — منظمات المستهلكين، الجماعات البيئية، جماعات الأقليات.</span></li>
+        <li><strong>Local Publics</strong> — neighborhood residents, community organizations.<span class="ar-line">الجمهور المحلي — السكان المحليون ومنظمات المجتمع.</span></li>
+        <li><strong>General Public</strong> — company must care about attitude of the general public toward its products.<span class="ar-line">الجمهور العام — يجب على الشركة الاهتمام بموقف الرأي العام تجاه منتجاتها.</span></li>
+        <li><strong>Internal Publics</strong> — workers, managers, volunteers, board of directors.<span class="ar-line">الجمهور الداخلي — الموظفون والمديرون والمتطوعون ومجلس الإدارة.</span></li>
+      </ul>
+
+      <h3>5 Types of Customer Markets <span class="ar-line" style="font-size:.85rem;">أنواع أسواق العملاء الخمسة</span></h3>
+      <div class="master-grid">
+        <div class="master-card">
+          <strong>Consumer Markets (أسواق المستهلكين)</strong>
+          Individuals and households buying for personal consumption.
+          <span class="ar-line">الأفراد والأسر الذين يشترون للاستهلاك الشخصي.</span>
+        </div>
+        <div class="master-card">
+          <strong>Business Markets (الأسواق التجارية)</strong>
+          Buy for further processing or use in production.
+          <span class="ar-line">تشتري لإعادة المعالجة أو الاستخدام في الإنتاج.</span>
+        </div>
+        <div class="master-card">
+          <strong>Reseller Markets (أسواق الموزعين)</strong>
+          Buy to resell at a profit.
+          <span class="ar-line">تشتري لإعادة البيع بربح.</span>
+        </div>
+        <div class="master-card">
+          <strong>Government Markets (الأسواق الحكومية)</strong>
+          Buy to produce public services or transfer goods to those who need them.
+          <span class="ar-line">تشتري لإنتاج الخدمات العامة أو توزيع السلع على المحتاجين.</span>
+        </div>
+        <div class="master-card">
+          <strong>International Markets (الأسواق الدولية)</strong>
+          Buyers in other countries — consumers, producers, resellers, or governments.
+          <span class="ar-line">المشترون في دول أخرى — مستهلكون أو منتجون أو موزعون أو حكومات.</span>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /LO 3-1 -->
+
+  <!-- ── LO 3-2 ── -->
+  <div class="lo-section">
+    <div class="lo-header" onclick="toggleLO(this)">
+      <span class="lo-badge">LO 3-2</span>
+      <span class="lo-title">Demographic &amp; Economic Environments &nbsp;|&nbsp; البيئتان الديموغرافية والاقتصادية</span>
+      <span class="lo-arrow">▼</span>
+    </div>
+    <div class="lo-body">
+
+      <div class="def-spotlight">
+        <div class="def-term">📌 Demographic Environment — البيئة الديموغرافية</div>
+        <div class="def-body">Study of human populations in terms of size, density, location, age, gender, race, and occupation. <strong>People make up markets.</strong></div>
+        <div class="ar-line">دراسة السكان من حيث الحجم والكثافة والموقع والعمر والجنس والعرق والمهنة. <strong>الناس هم الذين يشكّلون الأسواق.</strong></div>
+      </div>
+
+      <h3>Key Demographic Trends <span class="ar-line" style="font-size:.85rem;">أبرز الاتجاهات الديموغرافية</span></h3>
+      <ul class="slide-bullets">
+        <li><strong>Changing Age Structures</strong> — shifting age mix of the population creates different market needs.<span class="ar-line">تغيّر هياكل الأعمار — تحول مزيج الأعمار السكانية يخلق احتياجات سوقية مختلفة.</span></li>
+        <li><strong>Changing Family Structures</strong> — more non-traditional households (single, cohabiting, same-sex couples).<span class="ar-line">تغيّر هياكل الأسر — تزايد الأسر غير التقليدية (عازبون، أزواج غير متزوجين، أزواج مثليون).</span></li>
+        <li><strong>Geographic Population Shifts</strong> — migration between regions and countries changes local demand.<span class="ar-line">التحولات الجغرافية للسكان — الهجرة بين المناطق والدول تغيّر الطلب المحلي.</span></li>
+        <li><strong>Educational Characteristics</strong> — better-educated consumers expect higher quality and more information.<span class="ar-line">الخصائص التعليمية — المستهلكون الأكثر تعليماً يتوقعون جودة أعلى ومعلومات أكثر.</span></li>
+        <li><strong>Population Diversity</strong> — cross-cultural marketing; growing ethnic/racial diversity.<span class="ar-line">التنوع السكاني — التسويق عبر الثقافات؛ تنوع عرقي وثقافي متنامٍ.</span></li>
+      </ul>
+
+      <div class="def-spotlight">
+        <div class="def-term">📌 Economic Environment — البيئة الاقتصادية</div>
+        <div class="def-body">Economic factors that affect <strong>consumer purchasing power and spending patterns</strong> — income, cost of living, interest rates, savings, and borrowing patterns.</div>
+        <div class="ar-line">العوامل الاقتصادية التي تؤثر على <strong>القوة الشرائية للمستهلكين وأنماط إنفاقهم</strong> — الدخل وتكلفة المعيشة وأسعار الفائدة والادخار والاقتراض.</div>
+      </div>
+
+      <div class="concept-row">
+        <div class="concept-card teal">
+          <strong>Value Marketing (التسويق بالقيمة)</strong>
+          Offering financially cautious buyers the right combination of quality and service at a fair price.
+          <span class="ar-line">تقديم التوليفة الصحيحة من الجودة والخدمة بسعر عادل للمشترين الحذرين مالياً.</span>
+        </div>
+        <div class="concept-card blue">
+          <strong>Income Distribution (توزيع الدخل)</strong>
+          Rich getting richer; middle class shrank; poor remained. Marketers must target income segments carefully.
+          <span class="ar-line">الأثرياء ازدادوا ثروة؛ الطبقة الوسطى تقلصت؛ الفقراء بقوا كما هم. على المسوقين استهداف شرائح الدخل بعناية.</span>
+        </div>
+        <div class="concept-card amber">
+          <strong>Key Economic Variables (المتغيرات الاقتصادية الرئيسية)</strong>
+          Income, cost of living, interest rates, savings patterns, borrowing patterns.
+          <span class="ar-line">الدخل، تكلفة المعيشة، أسعار الفائدة، أنماط الادخار، أنماط الاقتراض.</span>
+        </div>
+      </div>
+
+      <div class="exam-tip">The economic environment affects buying POWER and PATTERNS. Key term: Value Marketing = right quality + fair price.<span class="ar-line">البيئة الاقتصادية تؤثر على القدرة الشرائية والأنماط. المصطلح الرئيسي: التسويق بالقيمة = الجودة المناسبة + السعر العادل.</span></div>
+
+    </div>
+  </div><!-- /LO 3-2 -->
+
+  <!-- ── LO 3-3 ── -->
+  <div class="lo-section">
+    <div class="lo-header" onclick="toggleLO(this)">
+      <span class="lo-badge">LO 3-3</span>
+      <span class="lo-title">Natural &amp; Technological Environments &nbsp;|&nbsp; البيئتان الطبيعية والتكنولوجية</span>
+      <span class="lo-arrow">▼</span>
+    </div>
+    <div class="lo-body">
+
+      <div class="def-spotlight">
+        <div class="def-term">📌 Natural Environment — البيئة الطبيعية</div>
+        <div class="def-body">The physical environment and natural resources that are needed as inputs by marketers or that are affected by marketing activities.</div>
+        <div class="ar-line">البيئة المادية والموارد الطبيعية المطلوبة كمدخلات من قِبل المسوقين أو المتأثرة بالأنشطة التسويقية.</div>
+      </div>
+
+      <h3>4 Key Trends in the Natural Environment <span class="ar-line" style="font-size:.85rem;">أربعة اتجاهات رئيسية في البيئة الطبيعية</span></h3>
+      <div class="process-flow">
+        <div class="process-step">
+          <div class="process-num">1</div>
+          <div class="process-content">
+            <strong>Growing Shortages of Raw Materials <span class="ar-line">تزايد نقص المواد الخام</span></strong>
+            <p>Renewable resources (forests, food) must be used wisely; non-renewables (oil, coal) create serious problems.<span class="ar-line">الموارد المتجددة (الغابات، الغذاء) يجب استخدامها بحكمة؛ غير المتجددة (النفط، الفحم) تخلق مشاكل خطيرة.</span></p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">2</div>
+          <div class="process-content">
+            <strong>Increased Pollution <span class="ar-line">تزايد التلوث</span></strong>
+            <p>Air, water, and land pollution — companies creating environmental problems face backlash.<span class="ar-line">تلوث الهواء والماء والأرض — الشركات التي تسبب مشاكل بيئية تواجه ردود فعل عنيفة.</span></p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">3</div>
+          <div class="process-content">
+            <strong>Increased Government Intervention <span class="ar-line">تزايد التدخل الحكومي</span></strong>
+            <p>Governments in different countries vary in concern for environmental quality; more regulation needed.<span class="ar-line">تتفاوت الحكومات في اهتمامها بجودة البيئة؛ هناك حاجة متزايدة للتنظيم.</span></p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">4</div>
+          <div class="process-content">
+            <strong>Environmental Sustainability Strategies <span class="ar-line">استراتيجيات الاستدامة البيئية</span></strong>
+            <p>Companies developing strategies and practices to create a world economy the planet can support indefinitely.<span class="ar-line">الشركات تطور استراتيجيات وممارسات لدعم اقتصاد عالمي يمكن للكوكب استيعابه إلى أجل غير مسمى.</span></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="def-spotlight">
+        <div class="def-term">📌 Environmental Sustainability — الاستدامة البيئية</div>
+        <div class="def-body">Developing strategies and practices that create a world economy that the planet can support indefinitely — meeting present needs <strong>WITHOUT compromising</strong> the ability of future generations to meet their own needs.</div>
+        <div class="ar-line">تطوير استراتيجيات وممارسات تدعم اقتصاداً عالمياً يمكن للكوكب استيعابه إلى الأبد — تلبية احتياجات الحاضر <strong>دون المساس</strong> بحق الأجيال القادمة في تلبية احتياجاتها.</div>
+      </div>
+
+      <div class="def-spotlight">
+        <div class="def-term">📌 Technological Environment — البيئة التكنولوجية</div>
+        <div class="def-body">The most <strong>DRAMATIC</strong> force now shaping our destiny — creates new products and opportunities but also new problems.</div>
+        <div class="ar-line">أكثر القوى <strong>دراماتيكية</strong> في تشكيل مصيرنا حالياً — تخلق منتجات وفرصاً جديدة لكنها تخلق مشاكل جديدة أيضاً.</div>
+      </div>
+
+      <h3>Key Features of the Technological Environment <span class="ar-line" style="font-size:.85rem;">أبرز ملامح البيئة التكنولوجية</span></h3>
+      <ul class="slide-bullets">
+        <li>Creates new products and opportunities — opens new markets.<span class="ar-line">تخلق منتجات وفرصاً جديدة — تفتح أسواقاً جديدة.</span></li>
+        <li>Changes rapidly — companies not keeping up find products OUTDATED quickly.<span class="ar-line">تتغير بسرعة — الشركات التي لا تواكبها تجد منتجاتها قديمة بسرعة.</span></li>
+        <li>Concern for safety of new products and privacy of consumer data.<span class="ar-line">القلق حول سلامة المنتجات الجديدة وخصوصية بيانات المستهلكين.</span></li>
+        <li>Government regulations → higher research costs + longer time to market.<span class="ar-line">اللوائح الحكومية → تكاليف بحث أعلى + أوقات أطول للوصول إلى السوق.</span></li>
+      </ul>
+
+      <div class="exam-tip">Natural environment → sustainability &amp; green movement. Technology → most DRAMATIC force shaping the marketplace.<span class="ar-line">البيئة الطبيعية → استدامة وحركة خضراء. التكنولوجيا → أكثر القوى دراماتيكية في تشكيل السوق.</span></div>
+
+    </div>
+  </div><!-- /LO 3-3 -->
+
+  <!-- ── LO 3-4 ── -->
+  <div class="lo-section">
+    <div class="lo-header" onclick="toggleLO(this)">
+      <span class="lo-badge">LO 3-4</span>
+      <span class="lo-title">Political &amp; Cultural Environments &nbsp;|&nbsp; البيئتان السياسية والثقافية</span>
+      <span class="lo-arrow">▼</span>
+    </div>
+    <div class="lo-body">
+
+      <div class="def-spotlight">
+        <div class="def-term">📌 Political Environment — البيئة السياسية</div>
+        <div class="def-body">Laws, government agencies, and pressure groups that <strong>influence or limit</strong> various organizations and individuals in a given society.</div>
+        <div class="ar-line">القوانين والوكالات الحكومية والجماعات الضاغطة التي <strong>تؤثر أو تقيّد</strong> مختلف المنظمات والأفراد في المجتمع.</div>
+      </div>
+
+      <h3>What Legislation Protects <span class="ar-line" style="font-size:.85rem;">ما تحميه التشريعات</span></h3>
+      <div class="concept-row">
+        <div class="concept-card teal">
+          <strong>Companies from each other <br>(حماية الشركات من بعضها)</strong>
+          Fair competition laws prevent unfair competition.
+          <span class="ar-line">قوانين المنافسة العادلة تمنع المنافسة غير العادلة.</span>
+        </div>
+        <div class="concept-card blue">
+          <strong>Consumers from unfair business <br>(حماية المستهلكين)</strong>
+          Laws protect from deceptive pricing, misleading advertising, and unsafe products.
+          <span class="ar-line">قوانين تحمي من التسعير الخادع والإعلان المضلل والمنتجات غير الآمنة.</span>
+        </div>
+        <div class="concept-card purple">
+          <strong>Society's interests <br>(حماية مصالح المجتمع)</strong>
+          Laws against unrestrained business behavior that harms society.
+          <span class="ar-line">قوانين ضد التصرفات التجارية غير المنضبطة التي تضر بالمجتمع.</span>
+        </div>
+      </div>
+
+      <h3>Growing Emphasis on Ethics &amp; Social Responsibility <span class="ar-line" style="font-size:.85rem;">التركيز المتزايد على الأخلاقيات والمسؤولية الاجتماعية</span></h3>
+      <ul class="slide-bullets">
+        <li><strong>Ethics</strong> — companies face increasing pressure to be ethical in all operations.<span class="ar-line">الأخلاقيات — تواجه الشركات ضغطاً متزايداً لتكون أخلاقية في جميع عملياتها.</span></li>
+        <li><strong>Socially Responsible Behavior</strong> — caring about communities and the environment.<span class="ar-line">السلوك المسؤول اجتماعياً — الاهتمام بالمجتمعات والبيئة.</span></li>
+        <li><strong>Cause-Related Marketing</strong> — linking brand to a social cause to build goodwill.<span class="ar-line">التسويق المرتبط بالقضايا — ربط العلامة التجارية بقضية اجتماعية لبناء الحسن.</span></li>
+      </ul>
+
+      <div class="def-spotlight">
+        <div class="def-term">📌 Cultural Environment — البيئة الثقافية</div>
+        <div class="def-body">Institutions and other forces that affect a society's basic <strong>values, perceptions, preferences, and behaviors</strong>.</div>
+        <div class="ar-line">المؤسسات والقوى الأخرى التي تؤثر على <strong>القيم والتصورات والتفضيلات والسلوكيات</strong> الأساسية للمجتمع.</div>
+      </div>
+
+      <h3>Core Values vs. Secondary Values <span class="ar-line" style="font-size:.85rem;">القيم الجوهرية مقابل القيم الثانوية</span></h3>
+      <div class="vs-grid">
+        <div class="vs-side left">
+          <h4>🏛️ Core (Persistent) Beliefs — القيم الجوهرية</h4>
+          <ul>
+            <li>Passed from parent to child<span class="ar-line">تنتقل من الوالدين إلى الأبناء</span></li>
+            <li>Reinforced by schools, churches, businesses<span class="ar-line">تعززها المدارس والكنائس والشركات</span></li>
+            <li><strong>CANNOT be easily changed by marketers</strong><span class="ar-line"><strong>لا يمكن للمسوقين تغييرها بسهولة</strong></span></li>
+            <li>Examples: family, hard work, freedom<span class="ar-line">أمثلة: الأسرة، العمل الجاد، الحرية</span></li>
+          </ul>
+        </div>
+        <div class="vs-middle">VS</div>
+        <div class="vs-side right">
+          <h4>🔄 Secondary Beliefs — القيم الثانوية</h4>
+          <ul>
+            <li>More open to change<span class="ar-line">أكثر قابلية للتغيير</span></li>
+            <li>Views of themselves, others, organizations, society<span class="ar-line">النظرة للذات والآخرين والمنظمات والمجتمع</span></li>
+            <li><strong>Marketers CAN influence these</strong><span class="ar-line"><strong>يمكن للمسوقين التأثير فيها</strong></span></li>
+            <li>Examples: marriage age, gender roles<span class="ar-line">أمثلة: سن الزواج، أدوار الجنسين</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exam-tip">Marketers can influence SECONDARY values but NOT core values. Core = persistent, passed generation to generation.<span class="ar-line">يمكن للمسوقين التأثير في القيم الثانوية فقط، ليس في القيم الجوهرية. القيم الجوهرية راسخة وتنتقل عبر الأجيال.</span></div>
+
+    </div>
+  </div><!-- /LO 3-4 -->
+
+  <!-- ── LO 3-5 ── -->
+  <div class="lo-section">
+    <div class="lo-header" onclick="toggleLO(this)">
+      <span class="lo-badge">LO 3-5</span>
+      <span class="lo-title">Responding to the Marketing Environment &nbsp;|&nbsp; الاستجابة للبيئة التسويقية</span>
+      <span class="lo-arrow">▼</span>
+    </div>
+    <div class="lo-body">
+
+      <h3>2 Approaches to the Marketing Environment <span class="ar-line" style="font-size:.85rem;">نهجان للتعامل مع البيئة التسويقية</span></h3>
+
+      <div class="concept-row">
+        <div class="concept-card amber">
+          <strong>👀 Reactive Approach <br>(النهج التفاعلي)</strong>
+          View the environment as uncontrollable. Watch and react — accept the environment as given, avoid threats, and take advantage of opportunities as they arise. Settle for limited options.
+          <span class="ar-line">يرى البيئة غير قابلة للتحكم. يراقب ويتفاعل — يقبل البيئة كما هي، يتجنب التهديدات ويستغل الفرص عند ظهورها. يكتفي بخيارات محدودة.</span>
+        </div>
+        <div class="concept-card teal">
+          <strong>⭐ Proactive Approach <br>(النهج الاستباقي) — BEST</strong>
+          Develop strategies to CHANGE the environment. Take aggressive actions to affect publics and forces. Overcome "uncontrollable" forces.
+          <span class="ar-line">تطوير استراتيجيات لتغيير البيئة. اتخاذ إجراءات جريئة للتأثير في الجماهير والقوى. التغلب على القوى "غير المحكومة".</span>
+        </div>
+      </div>
+
+      <div class="example-box">Example: A company lobbying government to change regulations, or PR campaigns to shift public opinion, or partnering with suppliers to ensure supply chain stability.<span class="ar-line">مثال: شركة تضغط على الحكومة لتغيير اللوائح، أو حملات علاقات عامة لتغيير الرأي العام، أو الشراكة مع الموردين لضمان استقرار سلسلة التوريد.</span></div>
+
+      <div class="exam-tip">Smart marketers take a PROACTIVE approach — they don't just react, they ACT to shape the environment.<span class="ar-line">المسوقون الأذكياء يتبنون النهج الاستباقي — لا ينتظرون البيئة بل يؤثرون فيها ويشكّلونها.</span></div>
+      <div class="memory-box">استباقي (Proactive) = أفضل نهج. أنت من يؤثر في البيئة، بدلاً من أن تنتظرها أو تستجيب لها فقط.</div>
+
+    </div>
+  </div><!-- /LO 3-5 -->
+
+  <!-- Notes -->
+  <div class="chapter">
+    <div class="ch-notes-box">
+      <div class="ch-notes-title">📌 أهم نقاط الفصل الثالث</div>
+      <div class="ch-notes-grid">
+        <div class="ch-note-item">
+          <span class="ch-note-num">1</span>
+          <div><strong>Micro vs Macro Environment</strong><br><span style="color:var(--accent)">Micro</span> = قريبة (Suppliers, Intermediaries, Customers, Competitors, Publics, Company). <span style="color:#8b5cf6">Macro</span> = أوسع (DCTENP). الـ Macro لا تتحكم فيها الشركة.</div>
+        </div>
+        <div class="ch-note-item">
+          <span class="ch-note-num">2</span>
+          <div><strong>DCTENP — الـ 6 بيئات الكبرى</strong><br>Demographic · Cultural · Technological · Economic · Natural · Political/Legal. الامتحان يحب تحديد أي بيئة ينتمي إليها السيناريو.</div>
+        </div>
+        <div class="ch-note-item">
+          <span class="ch-note-num">3</span>
+          <div><strong>Demographic Environment</strong><br>يدرس: الحجم · الكثافة · الموقع · العمر · الجنس · العرق · المهنة. أهم متغير = Baby Boomers vs Millennials.</div>
+        </div>
+        <div class="ch-note-item">
+          <span class="ch-note-num">4</span>
+          <div><strong>Economic Environment</strong><br>يؤثر على قدرة المستهلك الشرائية. Industrial economies (أسواق غنية) vs Subsistence economies (أسواق فقيرة).</div>
+        </div>
+        <div class="ch-note-item">
+          <span class="ch-note-num">5</span>
+          <div><strong>Cultural Values</strong><br>Core values = صعبة التغيير. Secondary values = قابلة للتأثير. المسوق يستهدف الثانية. تعبّر عن كيف ينظر الناس لأنفسهم والمجتمع.</div>
+        </div>
+        <div class="ch-note-item">
+          <span class="ch-note-num">6</span>
+          <div><strong>Publics — 7 أنواع</strong><br>Financial · Media · Government · Citizen-action · Local · General · Internal. الامتحان يسأل عن تصنيف أي مجموعة.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="ch3-highlights"></div>
+
+</div>
+<!-- ═══════════ CHAPTER 5 ═══════════════════ -->
+<div id="page-ch5" class="page">
+
+  <section class="hero">
+    <div class="tag">Chapter 5</div>
+    <h1>🧠 Understanding Consumer Buyer Behavior</h1>
+    <p>Kotler &amp; Armstrong, 18th Edition &bull; Chapter 5
+      <span class="ar-line">فهم سلوك المشتري المستهلك — الفصل الخامس</span>
+    </p>
+  </section>
+
+  <!-- Learning Objectives -->
+  <div class="chapter">
+    <h2>📋 Learning Objectives <span class="ar-line" style="font-size:.85rem;font-weight:600;">أهداف التعلم</span></h2>
+    <div class="process-flow">
+      <div class="process-step">
+        <div class="process-num">5-1</div>
+        <div class="process-content">
+          <strong>Consumer Markets &amp; Buyer Behavior Model <span class="ar-line">أسواق المستهلكين ونموذج سلوك المشتري</span></strong>
+          <p>Define the consumer market and construct a simple model of consumer buyer behavior.<span class="ar-line">تعريف سوق المستهلك وبناء نموذج بسيط لسلوك المشتري.</span></p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="process-num">5-2</div>
+        <div class="process-content">
+          <strong>Four Factors Affecting Consumer Behavior <span class="ar-line">العوامل الأربعة المؤثرة على سلوك المستهلك</span></strong>
+          <p>Name the four major factors that influence consumer buyer behavior.<span class="ar-line">تسمية العوامل الأربعة الرئيسية المؤثرة على سلوك المشتري المستهلك.</span></p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="process-num">5-3</div>
+        <div class="process-content">
+          <strong>Buying Decision Behavior &amp; Process <span class="ar-line">سلوك قرار الشراء وعملية الشراء</span></strong>
+          <p>List and define the major types of buying decision behavior and the stages in the buyer decision process.<span class="ar-line">سرد أنواع سلوك قرار الشراء الرئيسية ومراحل عملية القرار وتعريفها.</span></p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="process-num">5-4</div>
+        <div class="process-content">
+          <strong>Adoption &amp; Diffusion of New Products <span class="ar-line">تبني المنتجات الجديدة وانتشارها</span></strong>
+          <p>Describe the adoption and diffusion process for new products.<span class="ar-line">وصف عملية تبني المنتجات الجديدة وانتشارها.</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── LO 5-1 ── -->
+  <div class="lo-section open">
+    <div class="lo-header" onclick="toggleLO(this)">
+      <span class="lo-badge">LO 5-1</span>
+      <span class="lo-title">Consumer Markets &amp; Buyer Behavior Model &nbsp;|&nbsp; أسواق المستهلكين ونموذج سلوك المشتري</span>
+      <span class="lo-arrow">▼</span>
+    </div>
+    <div class="lo-body">
+
+      <div class="def-spotlight">
+        <div class="def-term">📌 Consumer Buyer Behavior — سلوك المستهلك</div>
+        <div class="def-body">The buying behavior of final consumers — individuals and households who buy goods and services for <strong>PERSONAL CONSUMPTION</strong>.</div>
+        <div class="ar-line">سلوك الشراء للمستهلكين النهائيين — الأفراد والأسر الذين يشترون السلع والخدمات <strong>للاستهلاك الشخصي</strong>.</div>
+      </div>
+
+      <div class="def-spotlight">
+        <div class="def-term">📌 Consumer Markets — أسواق المستهلكين</div>
+        <div class="def-body">All individuals and households that buy or acquire goods and services for personal consumption.</div>
+        <div class="ar-line">جميع الأفراد والأسر الذين يشترون السلع والخدمات للاستهلاك الشخصي أو يحصلون عليها.</div>
+      </div>
+
+      <h3>The Stimulus-Response Model (Black Box) <span class="ar-line" style="font-size:.85rem;">نموذج المحفز-الاستجابة (الصندوق الأسود)</span></h3>
+
+      <div class="process-flow">
+        <div class="process-step">
+          <div class="process-num">1</div>
+          <div class="process-content">
+            <strong>Marketing Stimuli Enter (المحفزات التسويقية تدخل)</strong>
+            <p>4 Ps: Product, Price, Place, Promotion.<span class="ar-line">المزيج التسويقي: المنتج، السعر، المكان، الترويج.</span></p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">2</div>
+          <div class="process-content">
+            <strong>Other Environmental Stimuli (محفزات بيئية أخرى)</strong>
+            <p>Economic, Technological, Political, Cultural forces.<span class="ar-line">القوى الاقتصادية والتكنولوجية والسياسية والثقافية.</span></p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">3</div>
+          <div class="process-content">
+            <strong>Buyer's "Black Box" (الصندوق الأسود للمشتري)</strong>
+            <p>Buyer characteristics + buyer decision process — what happens INSIDE the buyer's mind.<span class="ar-line">خصائص المشتري + عملية قرار الشراء — ما يحدث داخل عقل المشتري.</span></p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">4</div>
+          <div class="process-content">
+            <strong>Buyer Responses Emerge (تصدر استجابات المشتري)</strong>
+            <p>Brand choice, dealer choice, purchase timing, purchase amount.<span class="ar-line">اختيار العلامة التجارية، اختيار الوكيل، توقيت الشراء، كمية الشراء.</span></p>
+          </div>
+        </div>
+      </div>
+
+      <h3>4 Major Factors Overview <span class="ar-line" style="font-size:.85rem;">نظرة عامة على العوامل الأربعة الرئيسية</span></h3>
+      <div class="concept-row">
+        <div class="concept-card teal">
+          <strong>Cultural (ثقافي)</strong>
+          Broadest, deepest influence on consumer behavior.
+          <span class="ar-line">أوسع العوامل وأعمقها تأثيراً على سلوك المستهلك.</span>
+        </div>
+        <div class="concept-card blue">
+          <strong>Social (اجتماعي)</strong>
+          Groups, family, social roles and status.
+          <span class="ar-line">الجماعات والأسرة والأدوار والمكانة الاجتماعية.</span>
+        </div>
+        <div class="concept-card purple">
+          <strong>Personal (شخصي)</strong>
+          Age, occupation, lifestyle, personality, economic situation.
+          <span class="ar-line">العمر والمهنة وأسلوب الحياة والشخصية والوضع الاقتصادي.</span>
+        </div>
+        <div class="concept-card amber">
+          <strong>Psychological (نفسي)</strong>
+          Motivation, perception, learning, beliefs &amp; attitudes.
+          <span class="ar-line">الدوافع والإدراك والتعلم والمعتقدات والاتجاهات.</span>
+        </div>
+      </div>
+
+      <div class="exam-tip">4 factors from broadest to narrowest: Cultural → Social → Personal → Psychological. Remember the order!<span class="ar-line">العوامل الأربعة من الأعم إلى الأخص: ثقافي → اجتماعي → شخصي → نفسي. تذكر الترتيب!</span></div>
+
+    </div>
+  </div><!-- /LO 5-1 -->
+
+  <!-- ── LO 5-2 ── -->
+  <div class="lo-section">
+    <div class="lo-header" onclick="toggleLO(this)">
+      <span class="lo-badge">LO 5-2</span>
+      <span class="lo-title">Four Factors Affecting Consumer Behavior &nbsp;|&nbsp; العوامل الأربعة المؤثرة على سلوك المستهلك</span>
+      <span class="lo-arrow">▼</span>
+    </div>
+    <div class="lo-body">
+
+      <!-- ─ FACTOR 1: CULTURAL ─ -->
+      <h3>1. Cultural Factors (العوامل الثقافية) <span class="ar-line" style="font-size:.85rem;">أوسع تأثيراً وأعمقها</span></h3>
+
+      <div class="def-spotlight">
+        <div class="def-term">📌 Culture — الثقافة</div>
+        <div class="def-body">The set of basic values, perceptions, wants, and behaviors learned by a member of society from family and other important institutions.</div>
+        <div class="ar-line">مجموعة القيم والتصورات والرغبات والسلوكيات الأساسية التي يكتسبها فرد المجتمع من الأسرة والمؤسسات المهمة الأخرى.</div>
+      </div>
+
+      <div class="def-spotlight">
+        <div class="def-term">📌 Subculture — الثقافة الفرعية</div>
+        <div class="def-body">Groups of people within a culture with shared value systems based on common life experiences and situations (nationalities, religions, racial groups, geographic regions).</div>
+        <div class="ar-line">مجموعات داخل الثقافة تتقاسم منظومة قيم مشتركة مبنية على تجارب حياتية مشتركة (الجنسيات، الأديان، الفئات العرقية، المناطق الجغرافية).</div>
+      </div>
+
+      <div class="def-spotlight">
+        <div class="def-term">📌 Cross-Cultural Marketing — التسويق عبر الثقافات</div>
+        <div class="def-body">Including ethnic themes and cross-cultural perspectives within mainstream marketing — appeals to <strong>SIMILARITIES</strong>, not differences.</div>
+        <div class="ar-line">تضمين موضوعات عرقية ومنظورات ثقافية متنوعة في التسويق السائد — يستهدف أوجه <strong>التشابه</strong> لا الاختلاف.</div>
+      </div>
+
+      <!-- ─ FACTOR 2: SOCIAL ─ -->
+      <h3>2. Social Factors (العوامل الاجتماعية)</h3>
+
+      <div class="master-grid">
+        <div class="master-card">
+          <strong>Reference Groups (الجماعات المرجعية)</strong>
+          Serve as direct or indirect points of comparison — expose person to new behaviors/lifestyles; create conformity pressures.
+          <span class="ar-line">نقاط مقارنة مباشرة أو غير مباشرة — تعرّض الشخص لأساليب حياة جديدة وتضغط على الامتثال.</span>
+          <ul style="margin-top:8px;font-size:.85rem;">
+            <li><strong>Membership groups</strong> — belong to directly (family, coworkers).<span class="ar-line">جماعات العضوية — ينتمي إليها مباشرة (الأسرة، الزملاء).</span></li>
+            <li><strong>Aspirational groups</strong> — WISH to belong to (celebrities).<span class="ar-line">الجماعات التطلعية — يتمنى الانتماء إليها (المشاهير).</span></li>
+            <li><strong>Dissociative groups</strong> — want to AVOID.<span class="ar-line">جماعات الرفض — يريد تجنبها.</span></li>
+          </ul>
+        </div>
+        <div class="master-card">
+          <strong>Opinion Leaders (قادة الرأي)</strong>
+          People who exert social influence on others due to special skills, knowledge, or personality. Also called "influentials" or "leading adopters."
+          <span class="ar-line">أشخاص يمارسون تأثيراً اجتماعياً على الآخرين بسبب مهاراتهم أو معرفتهم أو شخصيتهم. يُعرفون أيضاً بـ"المؤثرين" أو "المتبنين الأوائل".</span>
+        </div>
+        <div class="master-card">
+          <strong>Buzz Marketing (التسويق بالضجة)</strong>
+          Enlisting or creating opinion leaders to serve as "brand ambassadors" who spread the word about a company's products.
+          <span class="ar-line">تجنيد قادة الرأي أو إنشائهم ليكونوا "سفراء للعلامة التجارية" ينشرون الكلام عن منتجات الشركة.</span>
+        </div>
+        <div class="master-card">
+          <strong>Word-of-Mouth (التسويق الشفهي)</strong>
+          Personal recommendations from trusted friends, family, or associates — more credible than commercial sources.
+          <span class="ar-line">التوصيات الشخصية من الأصدقاء والعائلة والمعارف الموثوقين — أكثر مصداقية من المصادر التجارية.</span>
+        </div>
+        <div class="master-card">
+          <strong>Family (الأسرة)</strong>
+          The most important consumer buying organization in society. Family members strongly influence buying behavior.
+          <span class="ar-line">أهم منظمة شراء استهلاكي في المجتمع. يؤثر أفراد الأسرة بشكل كبير على سلوك الشراء.</span>
+        </div>
+        <div class="master-card">
+          <strong>Social Roles &amp; Status (الأدوار والمكانة الاجتماعية)</strong>
+          A person belongs to many groups; position in each group = role + status. People choose products that reflect their social roles.
+          <span class="ar-line">ينتمي الشخص إلى مجموعات عديدة؛ موقعه في كل مجموعة = دور + مكانة. يختار الناس منتجات تعكس أدوارهم الاجتماعية.</span>
+        </div>
+      </div>
+
+      <div class="exam-tip">Opinion leaders = most powerful social influencers. Word-of-mouth &gt; advertising in credibility!<span class="ar-line">قادة الرأي = أقوى المؤثرين الاجتماعيين. التسويق الشفهي أعلى مصداقيةً من الإعلان!</span></div>
+
+      <!-- ─ FACTOR 3: PERSONAL ─ -->
+      <h3>3. Personal Factors (العوامل الشخصية)</h3>
+
+      <div class="process-flow">
+        <div class="process-step">
+          <div class="process-num">1</div>
+          <div class="process-content">
+            <strong>Age &amp; Life-Cycle Stage (العمر ومرحلة دورة الحياة)</strong>
+            <p>People change goods/services bought over lifetime. Marketers define target markets in terms of life-cycle stage.<span class="ar-line">يتغير ما يشتريه الناس عبر مراحل حياتهم. يحدد المسوقون أسواقهم المستهدفة حسب مرحلة دورة الحياة.</span></p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">2</div>
+          <div class="process-content">
+            <strong>Occupation (المهنة)</strong>
+            <p>Affects the types of goods and services bought. Marketers try to identify occupational groups with above-average interest in their products.<span class="ar-line">تؤثر على أنواع السلع والخدمات المشتراة. يحاول المسوقون تحديد المجموعات المهنية ذات الاهتمام الأعلى من المتوسط بمنتجاتهم.</span></p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">3</div>
+          <div class="process-content">
+            <strong>Economic Situation (الوضع الاقتصادي)</strong>
+            <p>Income, savings, interest rates affect product and brand choices. Sensitive products = watch income trends.<span class="ar-line">يؤثر الدخل والمدخرات وأسعار الفائدة على اختيارات المنتجات والعلامات. المنتجات الحساسة للدخل = مراقبة اتجاهات الدخل.</span></p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">4</div>
+          <div class="process-content">
+            <strong>Lifestyle (أسلوب الحياة)</strong>
+            <p>Pattern of living expressed through psychographics — AIOs: Activities, Interests, Opinions.<span class="ar-line">نمط المعيشة كما يعبّر عنه علم النفسوغرافيا — الأنشطة والاهتمامات والآراء (AIOs).</span></p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">5</div>
+          <div class="process-content">
+            <strong>Personality &amp; Self-Concept (الشخصية ومفهوم الذات)</strong>
+            <p>Unique psychological characteristics (self-confidence, dominance, sociability, adaptability). Brand personality = human traits attributed to a brand.<span class="ar-line">الخصائص النفسية الفريدة (ثقة بالنفس، سيطرة، اجتماعية، قدرة على التكيف). شخصية العلامة = السمات الإنسانية المنسوبة للعلامة التجارية.</span></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="def-spotlight">
+        <div class="def-term">📌 Psychographics — علم النفسوغرافيا</div>
+        <div class="def-body">Measures a consumer's <strong>AIOs — Activities, Interests, and Opinions</strong> — to understand patterns of behavior and living.</div>
+        <div class="ar-line">يقيس <strong>الأنشطة والاهتمامات والآراء</strong> للمستهلك لفهم أنماط السلوك والمعيشة.</div>
+      </div>
+
+      <div class="memory-box">العوامل الشخصية الخمسة: العمر + المهنة + الوضع الاقتصادي + أسلوب الحياة + الشخصية</div>
+
+      <!-- ─ FACTOR 4: PSYCHOLOGICAL ─ -->
+      <h3>4. Psychological Factors (العوامل النفسية)</h3>
+
+      <div class="def-spotlight">
+        <div class="def-term">📌 Motivation — الدافع</div>
+        <div class="def-body">A need that is sufficiently pressing to direct a person to seek satisfaction. <strong>Maslow's Hierarchy:</strong> Physiological → Safety → Social → Esteem → Self-Actualization.</div>
+        <div class="ar-line">حاجة ضاغطة بما يكفي لتوجيه الشخص نحو إشباعها. <strong>هرم ماسلو:</strong> جسدية → أمان → اجتماعية → تقدير → تحقيق الذات.</div>
+      </div>
+
+      <div class="def-spotlight">
+        <div class="def-term">📌 Perception — الإدراك</div>
+        <div class="def-body">The process by which people <strong>SELECT, ORGANIZE, and INTERPRET</strong> information to form a meaningful picture of the world.</div>
+        <div class="ar-line">العملية التي <strong>يختار</strong> فيها الناس المعلومات <strong>وينظمونها ويفسرونها</strong> لتكوين صورة ذات معنى عن العالم.</div>
+      </div>
+
+      <h3>3 Selective Perceptual Processes <span class="ar-line" style="font-size:.85rem;">العمليات الإدراكية الانتقائية الثلاث</span></h3>
+      <div class="concept-row">
+        <div class="concept-card teal">
+          <strong>Selective Attention (الانتباه الانتقائي)</strong>
+          People screen out MOST information they encounter. Only pay attention to stimuli that are relevant or stand out.
+          <span class="ar-line">الناس يُقصون معظم المعلومات التي يواجهونها. ينتبهون فقط للمحفزات ذات الصلة أو اللافتة للنظر.</span>
+        </div>
+        <div class="concept-card blue">
+          <strong>Selective Distortion (التشويه الانتقائي)</strong>
+          Tendency to interpret information in a way that will SUPPORT what they already believe.
+          <span class="ar-line">الميل لتفسير المعلومات بطريقة تدعم ما يؤمنون به مسبقاً.</span>
+        </div>
+        <div class="concept-card purple">
+          <strong>Selective Retention (الاحتفاظ الانتقائي)</strong>
+          REMEMBER good points about favored brands; FORGET competitors' good points.
+          <span class="ar-line">تذكّر النقاط الجيدة في العلامة المفضلة؛ نسيان النقاط الجيدة لدى المنافسين.</span>
+        </div>
+      </div>
+
+      <div class="exam-tip">Perception's 3 selective processes: Attention → Distortion → Retention. Very testable!<span class="ar-line">العمليات الإدراكية الانتقائية الثلاث: الانتباه → التشويه → الاحتفاظ. مهمة جداً في الامتحان!</span></div>
+
+      <div class="def-spotlight">
+        <div class="def-term">📌 Learning — التعلم</div>
+        <div class="def-body">Changes in an individual's behavior arising from <strong>experience</strong>. Components: Drive → Cue → Response → Reinforcement.</div>
+        <div class="ar-line">تغييرات في سلوك الفرد ناتجة عن <strong>التجربة</strong>. المكونات: الدافع → الإشارة → الاستجابة → التعزيز.</div>
+      </div>
+
+      <ul class="slide-bullets">
+        <li><strong>Drive (الدافع)</strong> — strong internal stimulus calling for action.<span class="ar-line">محفز داخلي قوي يدفع للتصرف.</span></li>
+        <li><strong>Cues (الإشارات)</strong> — minor stimuli determining when, where, and how a person responds.<span class="ar-line">محفزات ثانوية تحدد متى وأين وكيف يستجيب الشخص.</span></li>
+        <li><strong>Reinforcement (التعزيز)</strong> — strengthens the stimulus-response connection.<span class="ar-line">يقوّي الرابط بين المحفز والاستجابة.</span></li>
+      </ul>
+
+      <div class="concept-row">
+        <div class="concept-card amber">
+          <strong>Belief (المعتقد)</strong>
+          Descriptive thought a person holds about something — based on knowledge, opinion, or faith.
+          <span class="ar-line">فكرة وصفية يحملها الشخص عن شيء ما — مبنية على المعرفة أو الرأي أو الإيمان.</span>
+        </div>
+        <div class="concept-card rose">
+          <strong>Attitude (الاتجاه)</strong>
+          A person's relatively consistent evaluations, feelings, and tendencies toward an object or idea. Hard to change — fit products into existing attitudes.
+          <span class="ar-line">التقييمات والمشاعر والميول المتسقة نسبياً للشخص تجاه شيء أو فكرة ما. يصعب تغييرها — كيّف المنتجات مع الاتجاهات القائمة.</span>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /LO 5-2 -->
+
+  <!-- ── LO 5-3 ── -->
+  <div class="lo-section">
+    <div class="lo-header" onclick="toggleLO(this)">
+      <span class="lo-badge">LO 5-3</span>
+      <span class="lo-title">Buying Decision Behavior &amp; Buyer Decision Process &nbsp;|&nbsp; سلوك قرار الشراء وعملية قرار المشتري</span>
+      <span class="lo-arrow">▼</span>
+    </div>
+    <div class="lo-body">
+
+      <h3>4 Types of Buying Decision Behavior <span class="ar-line" style="font-size:.85rem;">أنواع سلوك قرار الشراء الأربعة</span></h3>
+
+      <div class="ref-table-wrap">
+        <table class="ref-table">
+          <thead>
+            <tr>
+              <th>Type / النوع</th>
+              <th>Involvement / التورط</th>
+              <th>Brand Differences / الفروق بين العلامات</th>
+              <th>Description / الوصف</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Complex Buying Behavior</strong><br><span class="ar-line">سلوك الشراء المعقد</span></td>
+              <td><strong>High / عالٍ</strong></td>
+              <td>Significant / كبيرة<br><span class="ar-line">فروق كبيرة بين العلامات</span></td>
+              <td>Expensive, risky, infrequent, self-expressive purchases. Buyer learns a lot before buying.<br><span class="ar-line">مشتريات مكلفة وخطرة ونادرة وتعبّر عن الذات. يتعلم المشتري كثيراً قبل الشراء.</span></td>
+            </tr>
+            <tr>
+              <td><strong>Dissonance-Reducing Buying</strong><br><span class="ar-line">سلوك شراء تخفيض التنافر</span></td>
+              <td><strong>High / عالٍ</strong></td>
+              <td>Little / قليلة<br><span class="ar-line">فروق قليلة بين العلامات</span></td>
+              <td>Expensive but brands seem similar → buyer shops around → postpurchase doubt (dissonance).<br><span class="ar-line">مكلف لكن العلامات تبدو متشابهة → المشتري يبحث → شك وقلق بعد الشراء (تنافر معرفي).</span></td>
+            </tr>
+            <tr>
+              <td><strong>Habitual Buying Behavior</strong><br><span class="ar-line">سلوك الشراء الاعتيادي</span></td>
+              <td><strong>Low / منخفض</strong></td>
+              <td>Little / قليلة<br><span class="ar-line">فروق قليلة بين العلامات</span></td>
+              <td>Routine, low-cost, little brand comparison or deliberation. Habit, not loyalty.<br><span class="ar-line">روتيني ورخيص ومع تحليل بسيط للعلامات. عادة، وليس ولاءً.</span></td>
+            </tr>
+            <tr>
+              <td><strong>Variety-Seeking Buying</strong><br><span class="ar-line">سلوك الشراء بحثاً عن التنوع</span></td>
+              <td><strong>Low / منخفض</strong></td>
+              <td>Significant / كبيرة<br><span class="ar-line">فروق كبيرة بين العلامات</span></td>
+              <td>Low-cost but consumer switches brands for VARIETY — not dissatisfaction.<br><span class="ar-line">رخيص لكن العميل يبدّل العلامات للتنوع — وليس بسبب عدم الرضا.</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="memory-box">تورط عالٍ + فروق كبيرة = معقد. | تورط عالٍ + فروق قليلة = تخفيض تنافر. | تورط منخفض + فروق قليلة = اعتيادي. | تورط منخفض + فروق كبيرة = بحث عن تنوع.</div>
+
+      <h3>The 5-Stage Buyer Decision Process <span class="ar-line" style="font-size:.85rem;">عملية قرار الشراء من خمس مراحل</span></h3>
+
+      <div class="process-flow">
+        <div class="process-step">
+          <div class="process-num">1</div>
+          <div class="process-content">
+            <strong>Need Recognition (التعرف على الحاجة)</strong>
+            <span class="ar-line">المرحلة الأولى</span>
+            <p>Consumer recognizes a problem or need triggered by <em>internal stimuli</em> (hunger, thirst) or <em>external stimuli</em> (ad, friend's new car).<span class="ar-line">يتعرف المستهلك على مشكلة أو حاجة تنشأ عن محفزات <em>داخلية</em> (جوع، عطش) أو <em>خارجية</em> (إعلان، سيارة جديدة لصديق).</span></p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">2</div>
+          <div class="process-content">
+            <strong>Information Search (البحث عن المعلومات)</strong>
+            <span class="ar-line">المرحلة الثانية</span>
+            <p>Consumer searches for more information. Sources: Personal (most effective), Commercial (inform), Public, Experiential.<span class="ar-line">يبحث المستهلك عن معلومات أكثر. المصادر: شخصية (الأفعل)، تجارية (تُخبر)، عامة، تجريبية.</span></p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">3</div>
+          <div class="process-content">
+            <strong>Evaluation of Alternatives (تقييم البدائل)</strong>
+            <span class="ar-line">المرحلة الثالثة</span>
+            <p>Uses information to evaluate brands. May involve careful calculation OR impulse/intuition.<span class="ar-line">يستخدم المعلومات لتقييم العلامات التجارية. قد يكون تحليلاً دقيقاً أو بديهياً.</span></p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">4</div>
+          <div class="process-content">
+            <strong>Purchase Decision (قرار الشراء)</strong>
+            <span class="ar-line">المرحلة الرابعة</span>
+            <p>Buy the most preferred brand. May differ from intention due to: <em>attitudes of others</em> or <em>unexpected situational factors</em>.<span class="ar-line">شراء العلامة الأكثر تفضيلاً. قد يختلف عن النية بسبب: <em>آراء الآخرين</em> أو <em>عوامل موقفية مفاجئة</em>.</span></p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">5</div>
+          <div class="process-content">
+            <strong>Postpurchase Behavior (سلوك ما بعد الشراء)</strong>
+            <span class="ar-line">المرحلة الخامسة</span>
+            <p>Satisfied or dissatisfied → further actions. Marketer's job CONTINUES after the sale!<span class="ar-line">راضٍ أو غير راضٍ → أفعال إضافية. مهمة المسوق <strong>تستمر</strong> بعد البيع!</span></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="def-spotlight">
+        <div class="def-term">📌 Cognitive Dissonance — التنافر المعرفي</div>
+        <div class="def-body">Buyer discomfort caused by postpurchase conflict — feeling that maybe you made the wrong choice. Marketers should <strong>reinforce benefits</strong> of chosen brand to reduce dissonance.</div>
+        <div class="ar-line">انزعاج المشتري بعد الشراء — الشعور بأنه ربما اتخذ القرار الخاطئ. على المسوقين <strong>تعزيز مزايا</strong> العلامة المختارة لتقليل التنافر.</div>
+      </div>
+
+      <div class="exam-tip">The buying process starts BEFORE and continues AFTER the actual purchase. 5 stages: Need → Search → Evaluate → Purchase → Postpurchase.<span class="ar-line">عملية الشراء تبدأ قبل وتستمر بعد الشراء الفعلي. 5 مراحل: تعرف على الحاجة → بحث → تقييم → شراء → سلوك ما بعد الشراء.</span></div>
+      <div class="memory-box">الـ5 مراحل: تعرف على الحاجة ← بحث عن المعلومات ← تقييم البدائل ← قرار الشراء ← سلوك ما بعد الشراء</div>
+
+    </div>
+  </div><!-- /LO 5-3 -->
+
+  <!-- ── LO 5-4 ── -->
+  <div class="lo-section">
+    <div class="lo-header" onclick="toggleLO(this)">
+      <span class="lo-badge">LO 5-4</span>
+      <span class="lo-title">Adoption &amp; Diffusion of New Products &nbsp;|&nbsp; تبني المنتجات الجديدة وانتشارها</span>
+      <span class="lo-arrow">▼</span>
+    </div>
+    <div class="lo-body">
+
+      <h3>Product Adoption Process — 5 Stages <span class="ar-line" style="font-size:.85rem;">عملية تبني المنتج — خمس مراحل</span></h3>
+
+      <div class="process-flow">
+        <div class="process-step">
+          <div class="process-num">1</div>
+          <div class="process-content">
+            <strong>Awareness (الوعي)</strong>
+            <span class="ar-line">المرحلة الأولى</span>
+            <p>Consumer knows about product but lacks sufficient information.<span class="ar-line">يعرف المستهلك بوجود المنتج لكن تنقصه المعلومات الكافية.</span></p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">2</div>
+          <div class="process-content">
+            <strong>Interest (الاهتمام)</strong>
+            <span class="ar-line">المرحلة الثانية</span>
+            <p>Consumer is stimulated to seek information about the innovation.<span class="ar-line">يتحفّز المستهلك للبحث عن معلومات حول الابتكار.</span></p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">3</div>
+          <div class="process-content">
+            <strong>Evaluation (التقييم)</strong>
+            <span class="ar-line">المرحلة الثالثة</span>
+            <p>Consumer considers whether trying the innovation makes sense.<span class="ar-line">يفكر المستهلك فيما إذا كان تجربة الابتكار منطقية.</span></p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">4</div>
+          <div class="process-content">
+            <strong>Trial (التجربة)</strong>
+            <span class="ar-line">المرحلة الرابعة</span>
+            <p>Consumer tries the product on a small scale to improve the estimate of its value.<span class="ar-line">يجرب المستهلك المنتج على نطاق صغير لتحسين تقديره لقيمته.</span></p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">5</div>
+          <div class="process-content">
+            <strong>Adoption (التبني)</strong>
+            <span class="ar-line">المرحلة الخامسة</span>
+            <p>Consumer decides to make full and regular use of the new product.<span class="ar-line">يقرر المستهلك الاستخدام الكامل والمنتظم للمنتج الجديد.</span></p>
+          </div>
+        </div>
+      </div>
+
+      <h3>5 Adopter Categories <span class="ar-line" style="font-size:.85rem;">الفئات الخمس من المتبنين</span></h3>
+
+      <div class="concept-row">
+        <div class="concept-card teal">
+          <strong>Innovators (المبتكرون) — 2.5%</strong>
+          Risk takers; try new ideas eagerly; accept risks; venture outside usual environment.
+          <span class="ar-line">يتقبلون المخاطر؛ يجربون الأفكار الجديدة بحماس؛ يقبلون المخاطرة؛ يتجاوزون بيئتهم المعتادة.</span>
+        </div>
+        <div class="concept-card blue">
+          <strong>Early Adopters (المتبنون الأوائل) — 13.5%</strong>
+          Opinion leaders; careful but relatively early adopters; respected in their communities.
+          <span class="ar-line">قادة رأي؛ يتبنون بعناية لكن في وقت مبكر نسبياً؛ محترمون في مجتمعاتهم.</span>
+        </div>
+        <div class="concept-card purple">
+          <strong>Early Majority (الأغلبية المبكرة) — 34%</strong>
+          Deliberate; adopt new ideas before average person; rarely leaders.
+          <span class="ar-line">متأنّون؛ يتبنون أفكاراً جديدة قبل الشخص المتوسط؛ نادراً ما يكونون قادة.</span>
+        </div>
+        <div class="concept-card amber">
+          <strong>Late Majority (الأغلبية المتأخرة) — 34%</strong>
+          Skeptical; adopt after most people have tried it; economic or social pressure.
+          <span class="ar-line">متشككون؛ يتبنون بعد أن جرّبها معظم الناس؛ بسبب ضغط اقتصادي أو اجتماعي.</span>
+        </div>
+        <div class="concept-card rose">
+          <strong>Laggards (المتأخرون) — 16%</strong>
+          Tradition-bound; suspicious of change; adopt when product has become a tradition itself.
+          <span class="ar-line">متمسكون بالتقاليد؛ مشككون في التغيير؛ يتبنون فقط عندما يصبح المنتج تقليداً بحد ذاته.</span>
+        </div>
+      </div>
+
+      <h3>5 Product Characteristics Affecting Adoption Rate <span class="ar-line" style="font-size:.85rem;">الخصائص الخمس للمنتج المؤثرة على معدل التبني</span></h3>
+
+      <div class="ref-table-wrap">
+        <table class="ref-table">
+          <thead>
+            <tr>
+              <th>Characteristic / الخاصية</th>
+              <th>Description / الوصف</th>
+              <th>Effect on Adoption / التأثير على التبني</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Relative Advantage (الميزة النسبية)</strong></td>
+              <td>Degree innovation appears superior to existing products.<br><span class="ar-line">مدى تفوق الابتكار على المنتجات الحالية.</span></td>
+              <td>Higher advantage → <strong>FASTER</strong><br><span class="ar-line">ميزة أعلى → <strong>أسرع</strong></span></td>
+            </tr>
+            <tr>
+              <td><strong>Compatibility (التوافق)</strong></td>
+              <td>Fits values and experiences of potential consumers.<br><span class="ar-line">يتلاءم مع قيم وتجارب المستهلكين المحتملين.</span></td>
+              <td>More compatible → <strong>FASTER</strong><br><span class="ar-line">توافق أكبر → <strong>أسرع</strong></span></td>
+            </tr>
+            <tr>
+              <td><strong>Complexity (التعقيد)</strong></td>
+              <td>Difficult to understand or use.<br><span class="ar-line">صعب الفهم أو الاستخدام.</span></td>
+              <td>More complex → <strong>SLOWER</strong><br><span class="ar-line">تعقيد أكبر → <strong>أبطأ</strong></span></td>
+            </tr>
+            <tr>
+              <td><strong>Divisibility (القابلية للتجزئة)</strong></td>
+              <td>Can be tried on a limited basis before full adoption.<br><span class="ar-line">إمكانية التجربة على نطاق محدود قبل التبني الكامل.</span></td>
+              <td>More divisible → <strong>FASTER</strong><br><span class="ar-line">قابلية أكبر للتجزئة → <strong>أسرع</strong></span></td>
+            </tr>
+            <tr>
+              <td><strong>Communicability (القابلية للتواصل)</strong></td>
+              <td>Results can be observed or described to others easily.<br><span class="ar-line">إمكانية ملاحظة النتائج أو وصفها للآخرين بسهولة.</span></td>
+              <td>More communicable → <strong>FASTER</strong><br><span class="ar-line">قابلية أكبر للتواصل → <strong>أسرع</strong></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="exam-tip">Higher relative advantage + compatibility + divisibility + communicability = FASTER adoption. Higher complexity = SLOWER adoption.<span class="ar-line">ميزة نسبية + توافق + قابلية للتجزئة + قابلية للتواصل أعلى = تبنٍّ أسرع. تعقيد أعلى = تبنٍّ أبطأ.</span></div>
+      <div class="memory-box">4 خصائص تسرّع التبني: الميزة النسبية + التوافق + القابلية للتجزئة + القابلية للتواصل. خاصية واحدة تبطّئه: التعقيد.</div>
+
+    </div>
+  </div><!-- /LO 5-4 -->
+
+  <!-- Notes -->
+  <div class="chapter">
+    <div class="ch-notes-box">
+      <div class="ch-notes-title">📌 أهم نقاط الفصل الخامس</div>
+      <div class="ch-notes-grid">
+        <div class="ch-note-item">
+          <span class="ch-note-num">1</span>
+          <div><strong>4 عوامل تؤثر على سلوك المشتري</strong><br>Cultural (أقوى تأثير) · Social · Personal · Psychological. الثقافة = أشمل وأعمق مؤثر.</div>
+        </div>
+        <div class="ch-note-item">
+          <span class="ch-note-num">2</span>
+          <div><strong>Maslow's Hierarchy</strong><br>Physiological → Safety → Social → Esteem → Self-actualization. الشركات تستهدف المستوى الذي يسعى إليه العميل.</div>
+        </div>
+        <div class="ch-note-item">
+          <span class="ch-note-num">3</span>
+          <div><strong>Buyer Decision Process — 5 خطوات</strong><br>① Need Recognition → ② Info Search → ③ Evaluation of Alternatives → ④ Purchase Decision → ⑤ Post-purchase Behavior.</div>
+        </div>
+        <div class="ch-note-item">
+          <span class="ch-note-num">4</span>
+          <div><strong>4 أنواع سلوك الشراء</strong><br>Complex (غالي+مختلف) · Dissonance-reducing (غالي+متشابه) · Habitual (رخيص+متشابه) · Variety-seeking (رخيص+مختلف).</div>
+        </div>
+        <div class="ch-note-item">
+          <span class="ch-note-num">5</span>
+          <div><strong>Adoption Process — 5 مراحل</strong><br>Awareness → Interest → Evaluation → Trial → Adoption. يختلف عن Buyer Decision Process!</div>
+        </div>
+        <div class="ch-note-item">
+          <span class="ch-note-num">6</span>
+          <div><strong>5 فئات المتبنين</strong><br>Innovators (2.5%) · Early Adopters (13.5%) · Early Mainstream (34%) · Late Mainstream (34%) · Laggards (16%). الامتحان يحب النسب والخصائص.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="ch5-highlights"></div>
+
+</div>
+<!-- ═══════════ PAST EXAMS ═══════════════════ -->
+<div id="page-past" class="page">
+  <section class="hero">
+    <div class="tag">تجميعات</div>
+    <h1>📋 Past Exams — تجميعات</h1>
+    <p>Real questions from previous MKT 201 midterms — with correct answers ✅</p>
+  </section>
+
+  <div class="chapter">
+    <!-- Setup -->
+    <div class="past-setup">
+      <div class="past-intro-bar">
+        <div class="past-intro-stats">
+          <span class="past-intro-num">83</span><span class="past-intro-label">سؤال حقيقي</span>
+          <span class="past-intro-sep">·</span>
+          <span class="past-intro-num">2+</span><span class="past-intro-label">امتحان</span>
+          <span class="past-intro-sep">·</span>
+          <span class="past-intro-num">4</span><span class="past-intro-label">فصول</span>
+        </div>
+        <p class="past-intro-hint">🎯 الفصلين 1 و2 الأكثر تكراراً في الامتحانات الفعلية</p>
+      </div>
+
+      <!-- فلتر الفصول -->
+      <div class="past-filter-section">
+        <h3 style="margin:0 0 12px;font-size:1rem;">🎯 ابدأ من فصل محدد:</h3>
+        <div class="past-filter-btns">
+          <button class="past-filter-btn active" onclick="setPastFilter('all',this)">📚 الكل (84)</button>
+          <button class="past-filter-btn" onclick="setPastFilter('ch1',this)">الفصل 1 <span class="past-filter-count">21</span></button>
+          <button class="past-filter-btn" onclick="setPastFilter('ch2',this)">الفصل 2 <span class="past-filter-count">25</span></button>
+          <button class="past-filter-btn" onclick="setPastFilter('ch3',this)">الفصل 3 <span class="past-filter-count">21</span></button>
+          <button class="past-filter-btn" onclick="setPastFilter('ch5',this)">الفصل 5 <span class="past-filter-count">17</span></button>
+        </div>
+      </div>
+      <button class="quiz-start-btn" onclick="startPastExam()">ابدأ التجميعات →</button>
+    </div>
+
+    <!-- Running -->
+    <div class="past-run" style="display:none;">
+      <div class="quiz-progress-bar"><div class="past-progress-fill quiz-progress-fill" style="width:0%"></div></div>
+      <div class="past-run-header">
+        <span class="past-q-counter"></span>
+        <span class="past-ch-badge"></span>
+      </div>
+      <div class="past-q-text"></div>
+      <div class="past-opts"></div>
+      <div class="past-feedback" style="display:none;"></div>
+      <!-- شرح الإجابة -->
+      <div class="past-explanation" id="past-explanation" style="display:none;">
+        <div class="past-exp-inner" id="past-exp-inner"></div>
+      </div>
+      <div class="past-nav-row">
+        <button class="past-next-btn quiz-nav-btn primary" style="display:none;" onclick="nextPastQuestion()">التالي ←</button>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div class="past-results" style="display:none;">
+      <div class="past-res-hero">
+        <div class="past-res-icon">🎓</div>
+        <div class="past-score-num"></div>
+        <div class="past-score-pct"></div>
+        <div class="past-score-msg"></div>
+        <div class="past-best-row" id="past-best-row" style="display:none;">
+          <span>🏆 أفضل نتيجة: </span><span id="past-best-val"></span>
+        </div>
+      </div>
+      <!-- تفصيل بالفصل -->
+      <div class="past-ch-breakdown" id="past-ch-breakdown"></div>
+      <!-- أزرار -->
+      <div class="past-res-btns">
+        <button class="quiz-start-btn" onclick="resetPastExam()">↺ حاول مجدداً</button>
+        <button class="quiz-nav-btn past-review-btn" id="past-review-btn" style="display:none;" onclick="reviewWrongAnswers()">🔴 راجع أخطاءك</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ═══════════ BADGES PAGE ═══════════════════ -->
+<div id="page-badges" class="page">
+  <section class="hero">
+    <div class="tag">الإنجازات</div>
+    <h1>🏆 الشارات والإنجازات</h1>
+    <p>اجمع الشارات بالمذاكرة والمثابرة</p>
+  </section>
+  <div class="chapter">
+    <div id="badges-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:16px;"></div>
+  </div>
+</div>
+
+<!-- ═══════════ MATCHING GAME ════════════════ -->
+<div id="page-match" class="page">
+  <section class="hero">
+    <div class="tag">لعبة الربط</div>
+    <h1>🔗 ربط المصطلح بالتعريف</h1>
+    <p>اضغط مصطلحاً ثم اضغط تعريفه الصحيح — 8 أزواج عشوائية في كل جلسة</p>
+  </section>
+
+  <div class="chapter">
+
+    <!-- Setup -->
+    <div class="match-setup">
+      <h2 style="margin:0 0 16px;">اختر الفصل</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:500px;margin:0 auto 28px;">
+        <button class="quiz-start-btn" style="font-size:1rem;" onclick="startMatch('ch1')">📖 Chapter 1</button>
+        <button class="quiz-start-btn" style="font-size:1rem;" onclick="startMatch('ch2')">📊 Chapter 2</button>
+        <button class="quiz-start-btn" style="font-size:1rem;" onclick="startMatch('ch3')">🌍 Chapter 3</button>
+        <button class="quiz-start-btn" style="font-size:1rem;" onclick="startMatch('ch5')">🧠 Chapter 5</button>
+      </div>
+      <p style="text-align:center;color:var(--muted);font-size:.85rem;">كل جلسة = 8 أزواج عشوائية من 12 متاح لكل فصل</p>
+    </div>
+
+    <!-- Running -->
+    <div class="match-run" style="display:none;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <span class="match-score-live" style="font-weight:700;color:var(--accent);font-size:1rem;">0 / 8</span>
+        <button onclick="resetMatch()" style="background:none;border:1.5px solid var(--line);border-radius:8px;padding:4px 12px;cursor:pointer;color:var(--muted);font-size:.8rem;">← رجوع</button>
+      </div>
+      <div class="quiz-progress-bar" style="margin-bottom:24px;"><div class="match-progress-fill quiz-progress-fill" style="width:0%"></div></div>
+
+      <div class="match-columns">
+        <div>
+          <div style="font-size:.8rem;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:10px;text-align:center;">المصطلح</div>
+          <div class="match-terms" style="display:flex;flex-direction:column;gap:8px;"></div>
+        </div>
+        <div>
+          <div style="font-size:.8rem;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:10px;text-align:center;">التعريف</div>
+          <div class="match-defs" style="display:flex;flex-direction:column;gap:8px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div class="match-results" style="display:none;text-align:center;padding:40px 20px;">
+      <div style="font-size:4rem;margin-bottom:12px;">🔗</div>
+      <div class="match-res-score" style="font-size:3rem;font-weight:800;color:var(--accent);"></div>
+      <div class="match-res-pct" style="font-size:1.4rem;font-weight:700;color:var(--muted);margin-bottom:8px;"></div>
+      <div class="match-res-msg" style="font-size:1.05rem;margin-bottom:28px;"></div>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+        <button class="quiz-start-btn" style="font-size:1rem;" onclick="startMatch(matchState.ch)">إعادة نفس الفصل ↺</button>
+        <button class="quiz-start-btn" style="font-size:1rem;background:var(--paper);color:var(--ink);border:1.5px solid var(--line);" onclick="resetMatch()">اختر فصل آخر</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════ QUICK REVIEW ════════════════ -->
+<div id="page-quick" class="page">
+  <section class="hero">
+    <div class="tag">Quick Review</div>
+    <h1>⚡ All Key Terms — Quick Review</h1>
+    <p>60 key terms across all 4 chapters</p>
+  </section>
+  <div class="chapter">
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;">
+      <button class="flash-filter-btn quick-filter-btn active" data-ch="all" onclick="filterQuickReview('all')">All Chapters</button>
+      <button class="flash-filter-btn quick-filter-btn" data-ch="ch1" onclick="filterQuickReview('ch1')">Chapter 1</button>
+      <button class="flash-filter-btn quick-filter-btn" data-ch="ch2" onclick="filterQuickReview('ch2')">Chapter 2</button>
+      <button class="flash-filter-btn quick-filter-btn" data-ch="ch3" onclick="filterQuickReview('ch3')">Chapter 3</button>
+      <button class="flash-filter-btn quick-filter-btn" data-ch="ch5" onclick="filterQuickReview('ch5')">Chapter 5</button>
+    </div>
+    <div id="quick-terms-grid" class="quick-term-grid"></div>
+  </div>
+</div>
+
+<!-- ═══════════ FLASH CARDS ══════════════════ -->
+<div id="page-flash" class="page">
+  <section class="hero">
+    <div class="tag">Flash Cards</div>
+    <h1>🃏 Flash Cards — 60 Key Terms</h1>
+    <p>Click the card to flip it · Use arrow keys or buttons to navigate</p>
+  </section>
+  <div class="chapter">
+    <!-- Filter buttons -->
+    <div class="flash-controls">
+      <button class="flash-filter-btn active" data-ch="all" onclick="setFlashFilter('all')">All (60)</button>
+      <button class="flash-filter-btn" data-ch="ch1" onclick="setFlashFilter('ch1')">Ch 1 (15)</button>
+      <button class="flash-filter-btn" data-ch="ch2" onclick="setFlashFilter('ch2')">Ch 2 (15)</button>
+      <button class="flash-filter-btn" data-ch="ch3" onclick="setFlashFilter('ch3')">Ch 3 (15)</button>
+      <button class="flash-filter-btn" data-ch="ch5" onclick="setFlashFilter('ch5')">Ch 5 (15)</button>
+    </div>
+
+    <!-- Flash Card -->
+    <div class="flash-card-wrap">
+      <div class="flash-card" id="flash-card" onclick="flipCard()">
+        <div class="flash-front">
+          <div id="flash-front-chapter" class="flash-chapter-badge">CH1</div>
+          <div id="flash-term" class="flash-term">Marketing</div>
+          <div class="flash-hint">Click to reveal definition →</div>
+        </div>
+        <div class="flash-back">
+          <div id="flash-back-chapter" class="flash-chapter-badge">CH1</div>
+          <div id="flash-def" style="font-size:.95rem;line-height:1.6;color:rgba(255,255,255,0.95);"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="flash-nav" style="margin-top:16px;">
+      <button class="flash-nav-btn" onclick="flashPrev()">←</button>
+      <span id="flash-counter" class="flash-counter">1 / 60</span>
+      <button class="flash-nav-btn" onclick="flashNext()">→</button>
+    </div>
+    <p style="text-align:center;color:var(--muted);font-size:.82rem;margin-top:10px;">Keyboard: ← → to navigate, Space to flip</p>
+  </div>
+</div>
+
+<!-- ═══════════ QUIZ MODE ═════════════════════ -->
+<div id="page-quiz" class="page">
+  <section class="hero">
+    <div class="tag">Quiz Mode</div>
+    <h1>🎯 جلستك اليوم</h1>
+    <p>20 سؤال = 10 دقيقة = يوم مذاكرة ✅ — كل إجابة تُحفظ وتُبنى عليها جلستك القادمة 🧠</p>
+  </section>
+
+  <div class="chapter">
+    <!-- Setup -->
+    <div class="quiz-setup active">
+      <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;">
+        <button class="quiz-mode-btn active" id="qmode-normal" onclick="setQuizMode('normal',this)">🎲 عشوائي</button>
+        <button class="quiz-mode-btn" id="qmode-smart" onclick="setQuizMode('smart',this)">🧠 ذكي (الأصعب أولاً)</button>
+        <button class="quiz-mode-btn" id="qmode-review" onclick="setQuizMode('review',this)">🔴 مراجعة فقط</button>
+        <button class="quiz-mode-btn qmode-train-btn" id="qmode-train" onclick="setQuizMode('train',this)">🧘 وضع تدريب</button>
+      </div>
+      <input type="hidden" id="quiz-mode-select" value="normal">
+      <h2 style="margin:0 0 6px;">📖 اختار الفصل</h2>
+      <p style="color:var(--muted);margin:0 0 14px;font-size:.9rem;">ابدأ بفصل واحد أو اختار الكل — <strong>20 سؤال</strong> تكفي لجلسة ممتازة</p>
+      <div class="quiz-ch-grid">
+        <label class="quiz-ch-item">
+          <input type="checkbox" value="all" onchange="onChapterChange(this)">
+          <div class="quiz-ch-card"><div class="quiz-ch-icon">🎯</div><div class="quiz-ch-name">All Chapters</div><div class="quiz-ch-count">Full coverage</div></div>
+        </label>
+        <label class="quiz-ch-item">
+          <input type="checkbox" value="ch1" onchange="onChapterChange(this)">
+          <div class="quiz-ch-card"><div class="quiz-ch-icon">🎯</div><div class="quiz-ch-name">Chapter 1</div><div class="quiz-ch-count">Creating Value</div></div>
+        </label>
+        <label class="quiz-ch-item">
+          <input type="checkbox" value="ch2" onchange="onChapterChange(this)">
+          <div class="quiz-ch-card"><div class="quiz-ch-icon">📊</div><div class="quiz-ch-name">Chapter 2</div><div class="quiz-ch-count">Company Strategy</div></div>
+        </label>
+        <label class="quiz-ch-item">
+          <input type="checkbox" value="ch3" onchange="onChapterChange(this)">
+          <div class="quiz-ch-card"><div class="quiz-ch-icon">🌍</div><div class="quiz-ch-name">Chapter 3</div><div class="quiz-ch-count">Marketing Env.</div></div>
+        </label>
+        <label class="quiz-ch-item">
+          <input type="checkbox" value="ch5" onchange="onChapterChange(this)">
+          <div class="quiz-ch-card"><div class="quiz-ch-icon">🧠</div><div class="quiz-ch-name">Chapter 5</div><div class="quiz-ch-count">Consumer Behavior</div></div>
+        </label>
+      </div>
+      <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--line);">
+        <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-weight:600;">
+          <input type="checkbox" id="past-only-filter" style="width:18px;height:18px;accent-color:var(--accent);">
+          <span>⭐ أسئلة التجميعات</span>
+          <span style="font-size:.8rem;color:var(--accent);font-weight:700;">84 سؤال من التجميعات</span>
+        </label>
+      </div>
+
+      <!-- Difficulty Filter -->
+      <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--line);">
+        <label style="font-size:.85rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:10px;">مستوى الصعوبة</label>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button type="button" class="diff-btn active" id="diff-all"    onclick="setDiffFilter('all',this)"    style="flex:1;">الكل</button>
+          <button type="button" class="diff-btn"        id="diff-easy"   onclick="setDiffFilter('easy',this)"   style="flex:1;">🟢 سهل</button>
+          <button type="button" class="diff-btn"        id="diff-medium" onclick="setDiffFilter('medium',this)" style="flex:1;">🟡 متوسط</button>
+          <button type="button" class="diff-btn"        id="diff-hard"   onclick="setDiffFilter('hard',this)"   style="flex:1;">🔴 صعب</button>
+        </div>
+        <div id="diff-count-hint" style="margin-top:8px;font-size:.8rem;color:var(--muted);"></div>
+        <input type="hidden" id="quiz-diff-select" value="all">
+      </div>
+      <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--line);">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+          <label style="font-size:.85rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;">كم وقتك؟</label>
+          <span id="session-today-badge" style="font-size:.78rem;background:var(--accent-soft);color:var(--accent);padding:3px 10px;border-radius:20px;font-weight:700;"></span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <button class="quiz-count-btn active" onclick="setQuizCount(20,this)" style="padding:12px 8px;text-align:center;line-height:1.4;">
+            <div style="font-size:1.3rem;font-weight:900;">20</div>
+            <div style="font-size:.72rem;opacity:.8;">~10 دقيقة ✅</div>
+          </button>
+          <button class="quiz-count-btn" onclick="setQuizCount(50,this)" style="padding:12px 8px;text-align:center;line-height:1.4;">
+            <div style="font-size:1.3rem;font-weight:900;">50</div>
+            <div style="font-size:.72rem;opacity:.8;">~25 دقيقة 💪</div>
+          </button>
+          <button class="quiz-count-btn" onclick="setQuizCount(100,this)" style="padding:12px 8px;text-align:center;line-height:1.4;">
+            <div style="font-size:1.3rem;font-weight:900;">100</div>
+            <div style="font-size:.72rem;opacity:.8;">~50 دقيقة 🚀</div>
+          </button>
+          <button class="quiz-count-btn" onclick="setQuizCount(9999,this)" style="padding:12px 8px;text-align:center;line-height:1.4;">
+            <div style="font-size:1.3rem;font-weight:900;">الكل</div>
+            <div style="font-size:.72rem;opacity:.8;">كل شيء 🔥</div>
+          </button>
+        </div>
+        <input type="hidden" id="quiz-count-select" value="20">
+        <div id="quiz-setup-hint" style="margin-top:10px;padding:10px 14px;background:var(--accent-soft);border-radius:10px;font-size:.82rem;color:var(--muted);">
+          💡 جلسة واحدة تعلّمك أكثر من ساعة قراءة — كل سؤال تجاوب عليه يُحفظ في الذاكرة 🧠
+        </div>
+      </div>
+      <button class="quiz-start-btn" onclick="startQuiz()" style="width:100%;margin-top:8px;padding:16px;font-size:1.1rem;letter-spacing:.02em;">ابدأ الجلسة ⚡</button>
+    </div>
+
+    <!-- Running Quiz -->
+    <div class="quiz-run">
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" style="width:0%"></div></div>
+      <div id="quiz-mastery-dot" style="text-align:center;margin-bottom:8px;font-size:.8rem;"></div>
+      <div id="quiz-combo" style="display:none;text-align:center;background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;border-radius:20px;padding:4px 16px;font-weight:800;font-size:.9rem;margin-bottom:12px;"></div>
+      <div class="kw-legend">
+        <span><mark class="kw-concept">مصطلح</mark> كلمة مفتاحية</span>
+        <span><mark class="kw-danger">تحذير</mark> انتبه للسؤال</span>
+      </div>
+      <div class="quiz-q-card">
+        <div class="quiz-q-text"></div>
+        <div class="quiz-options"></div>
+        <div id="quiz-explanation" style="display:none;margin-top:14px;border-radius:14px;overflow:hidden;">
+          <div id="quiz-exp-inner"></div>
+        </div>
+      </div>
+      <div class="quiz-nav-row">
+        <button id="quiz-prev-btn" class="quiz-nav-btn" onclick="quizPrev()" style="display:none;">← Prev</button>
+        <span class="quiz-counter">1 / 20</span>
+        <button id="quiz-next-btn" class="quiz-nav-btn primary" onclick="quizNext()">Next →</button>
+      </div>
+      <div style="text-align:center;margin-top:16px;">
+        <button class="quiz-nav-btn" onclick="resetQuiz()" style="font-size:.85rem;padding:8px 16px;">✕ Quit Quiz</button>
+      </div>
+    </div>
+
+    <!-- Result -->
+    <div class="quiz-result">
+      <div class="result-circle">
+        <div id="result-pct" class="result-pct">—</div>
+        <div class="result-label">Score</div>
+      </div>
+      <div id="result-msg" style="text-align:center;font-size:1.1rem;font-weight:700;margin-bottom:16px;"></div>
+      <div class="result-stats">
+        <div class="result-stat"><div id="result-correct" class="result-stat-val">—</div><div class="result-stat-lbl">Correct</div></div>
+        <div class="result-stat"><div id="result-wrong"   class="result-stat-val">—</div><div class="result-stat-lbl">Wrong</div></div>
+        <div class="result-stat"><div id="result-time"    class="result-stat-val">—</div><div class="result-stat-lbl">Time</div></div>
+      </div>
+      <div id="result-progress-note" style="text-align:center;font-size:.85rem;color:var(--muted);margin-top:12px;font-weight:600;"></div>
+      <!-- Level session result panel (shown only when coming from a level) -->
+      <div id="result-level-panel" style="display:none;margin:16px 0;padding:16px;background:var(--accent-soft);border-radius:14px;border:1.5px solid var(--line);text-align:center;">
+        <div id="result-level-name" style="font-size:.8rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;"></div>
+        <div class="lc-progress-track" style="height:10px;margin-bottom:8px;">
+          <div id="result-level-bar" class="lc-progress-fill" style="width:0%;background:var(--accent);"></div>
+        </div>
+        <div id="result-level-msg" style="font-size:.9rem;font-weight:700;color:var(--ink);"></div>
+      </div>
+      <div style="display:flex;gap:12px;justify-content:center;margin-top:16px;flex-wrap:wrap;">
+        <button id="result-back-levels" class="quiz-nav-btn primary" style="display:none;" onclick="backToLevels()">🎖️ المستويات</button>
+        <button class="quiz-nav-btn primary" id="result-new-session-btn" onclick="resetQuiz()">🔄 جلسة جديدة</button>
+        <button class="quiz-nav-btn" id="quiz-review-btn" onclick="toggleQuizReview()">📋 مراجعة الإجابات</button>
+        <button class="quiz-nav-btn" onclick="showPage('page-home')">🏠 الرئيسية</button>
+      </div>
+      <div id="quiz-review-list" style="display:none;margin-top:24px;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ CONTENT LEVELS ════════════════ -->
+<div id="page-levels" class="page">
+  <section class="hero">
+    <div class="tag">Content Levels</div>
+    <h1>🎖️ المستويات</h1>
+    <p class="hero-sub">كل جلسة = 20 سؤال — تقدم خطوة خطوة</p>
+  </section>
+  <div class="content-wrap">
+    <!-- Streak banner -->
+    <div id="levels-streak-container"></div>
+    <!-- Summary bar -->
+    <div class="levels-summary" id="levels-summary"></div>
+    <!-- Level cards -->
+    <div class="levels-grid" id="levels-grid"></div>
+  </div>
+</div>
+
+<!-- ═══════════ MOCK EXAM ═════════════════════ -->
+<div id="page-mock" class="page">
+  <section class="hero">
+    <div class="tag">Mock Exam</div>
+    <h1>📋 Mock Exam</h1>
+    <p>30 questions · 30 minutes · All 4 chapters — simulated exam conditions</p>
+  </section>
+
+  <div class="chapter">
+    <!-- Lock state (shown when readiness < 30%) -->
+    <div id="mock-lock-state" style="display:none;"></div>
+    <!-- Setup -->
+    <div id="mock-setup">
+      <div style="text-align:center;padding:20px;">
+        <div style="font-size:3rem;margin-bottom:12px;">📋</div>
+        <h2 style="margin-bottom:8px;">Ready to Test Yourself?</h2>
+        <p style="color:var(--muted);margin-bottom:6px;">30 questions drawn from all 4 chapters (balanced)</p>
+        <p style="color:var(--muted);margin-bottom:24px;">Time limit: <strong>30 minutes</strong></p>
+        <div class="master-grid" style="margin-bottom:24px;">
+          <div class="master-card" style="text-align:center;"><strong>📖 Ch 1</strong>8 questions</div>
+          <div class="master-card" style="text-align:center;"><strong>📊 Ch 2</strong>7 questions</div>
+          <div class="master-card" style="text-align:center;"><strong>🌍 Ch 3</strong>8 questions</div>
+          <div class="master-card" style="text-align:center;"><strong>🧠 Ch 5</strong>7 questions</div>
+        </div>
+        <button class="quiz-start-btn" onclick="startMock()">Start Mock Exam →</button>
+      </div>
+    </div>
+
+    <!-- Running Mock -->
+    <div id="mock-run" style="display:none;">
+      <div class="mock-timer">
+        <div>
+          <div class="mock-timer-val" id="mock-timer-val">30:00</div>
+          <div class="mock-timer-lbl">Time Remaining</div>
+        </div>
+        <div style="text-align:right;">
+          <span id="mock-ch-badge" style="background:rgba(255,255,255,0.2);padding:4px 12px;border-radius:999px;font-size:.8rem;font-weight:700;"></span>
+        </div>
+      </div>
+      <div class="quiz-progress-bar"><div id="mock-progress-fill" class="quiz-progress-fill" style="width:0%"></div></div>
+      <div class="quiz-q-card">
+        <div id="mock-q-text" class="quiz-q-text"></div>
+        <div id="mock-options" class="quiz-options"></div>
+      </div>
+      <div class="quiz-nav-row">
+        <button id="mock-prev-btn" class="quiz-nav-btn" onclick="mockPrev()" style="display:none;">← Prev</button>
+        <span id="mock-counter" class="quiz-counter">1 / 30</span>
+        <button id="mock-next-btn" class="quiz-nav-btn primary" onclick="mockNext()">Next →</button>
+      </div>
+      <div style="text-align:center;margin-top:16px;">
+        <button class="quiz-nav-btn" onclick="if(confirm('Quit exam?'))resetMock()" style="font-size:.85rem;padding:8px 16px;">✕ Quit Exam</button>
+      </div>
+    </div>
+
+    <!-- Mock Result -->
+    <div id="mock-result" style="display:none;">
+      <div class="result-circle">
+        <div id="mock-result-pct" class="result-pct">—</div>
+        <div class="result-label">Mock Score</div>
+      </div>
+      <div id="mock-result-msg" style="text-align:center;font-size:1.1rem;font-weight:700;margin-bottom:16px;"></div>
+      <div class="result-stats">
+        <div class="result-stat"><div id="mock-result-correct" class="result-stat-val">—</div><div class="result-stat-lbl">Correct</div></div>
+        <div class="result-stat"><div id="mock-result-wrong"   class="result-stat-val">—</div><div class="result-stat-lbl">Wrong</div></div>
+        <div class="result-stat"><div id="mock-result-time"    class="result-stat-val">—</div><div class="result-stat-lbl">Time Used</div></div>
+      </div>
+      <div style="display:flex;gap:12px;justify-content:center;margin-top:20px;flex-wrap:wrap;">
+        <button class="quiz-nav-btn primary" onclick="resetMock()">Try Again</button>
+        <button class="quiz-nav-btn" id="mock-review-btn" onclick="toggleMockReview()">📋 Review Answers</button>
+        <button class="quiz-nav-btn" onclick="showPage('page-home')">Home</button>
+      </div>
+      <div id="mock-review-list" style="display:none;margin-top:24px;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ DASHBOARD ═════════════════════ -->
+<div id="page-dashboard" class="page">
+  <section class="hero">
+    <div class="tag">Dashboard</div>
+    <h1>📈 Your Progress Dashboard</h1>
+    <p>Track your performance across all chapters</p>
+  </section>
+  <div class="chapter">
+    <div class="dash-grid">
+      <div class="dash-card"><div id="dash-total-quizzes" class="dash-card-val">0</div><div class="dash-card-lbl">Quizzes Completed</div></div>
+      <div class="dash-card"><div id="dash-accuracy"      class="dash-card-val">—</div><div class="dash-card-lbl">Accuracy Rate</div></div>
+      <div class="dash-card"><div id="dash-best-all"      class="dash-card-val">—</div><div class="dash-card-lbl">Best Overall Score</div></div>
+    </div>
+    <h3 style="margin-top:24px;">Best Scores by Chapter</h3>
+    <div class="dash-grid">
+      <div class="dash-card"><div id="dash-best-ch1" class="dash-card-val">—</div><div class="dash-card-lbl">Chapter 1</div></div>
+      <div class="dash-card"><div id="dash-best-ch2" class="dash-card-val">—</div><div class="dash-card-lbl">Chapter 2</div></div>
+      <div class="dash-card"><div id="dash-best-ch3" class="dash-card-val">—</div><div class="dash-card-lbl">Chapter 3</div></div>
+      <div class="dash-card"><div id="dash-best-ch5" class="dash-card-val">—</div><div class="dash-card-lbl">Chapter 5</div></div>
+    </div>
+    <h3 style="margin-top:24px;">Mastery Progress</h3>
+    <div class="mastery-bar-wrap">
+      <div class="mastery-bar-label"><span>Chapter 1 — Creating Customer Value</span><span id="bar-lbl-ch1">0%</span></div>
+      <div class="mastery-bar-track"><div id="bar-ch1" class="mastery-bar-fill" style="width:0%"></div></div>
+    </div>
+    <div class="mastery-bar-wrap" style="margin-top:12px;">
+      <div class="mastery-bar-label"><span>Chapter 2 — Company Strategy</span><span id="bar-lbl-ch2">0%</span></div>
+      <div class="mastery-bar-track"><div id="bar-ch2" class="mastery-bar-fill" style="width:0%"></div></div>
+    </div>
+    <div class="mastery-bar-wrap" style="margin-top:12px;">
+      <div class="mastery-bar-label"><span>Chapter 3 — Marketing Environment</span><span id="bar-lbl-ch3">0%</span></div>
+      <div class="mastery-bar-track"><div id="bar-ch3" class="mastery-bar-fill" style="width:0%"></div></div>
+    </div>
+    <div class="mastery-bar-wrap" style="margin-top:12px;">
+      <div class="mastery-bar-label"><span>Chapter 5 — Consumer Behavior</span><span id="bar-lbl-ch5">0%</span></div>
+      <div class="mastery-bar-track"><div id="bar-ch5" class="mastery-bar-fill" style="width:0%"></div></div>
+    </div>
+    <!-- Streak Calendar -->
+    <div id="streak-calendar-container"></div>
+    <!-- Reset Progress -->
+    <div style="text-align:center;margin-top:24px;padding-bottom:4px;">
+      <button class="quiz-start-btn" style="max-width:280px;" onclick="showPage('page-quiz')">Start a Quiz →</button>
+    </div>
+    <div style="text-align:center;margin-top:12px;margin-bottom:8px;">
+      <button type="button" class="reset-progress-btn" onclick="confirmResetProgress()">🗑️ إعادة ضبط بيانات الإتقان</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ LEADERBOARD ════════════════════ -->
+<div id="page-leaderboard" class="page">
+  <section class="hero">
+    <div class="tag">Leaderboard</div>
+    <h1>🏆 Top Students Leaderboard</h1>
+    <p>سجّل دخولك لتظهر في الترتيب وتتنافس مع زملائك</p>
+  </section>
+  <div class="chapter">
+    <div id="leaderboard-list">
+      <div class="lb-signin">سجّل دخولك لترى الـ Leaderboard 🔒</div>
+    </div>
+    <div style="text-align:center;margin-top:20px;">
+      <button class="quiz-nav-btn" onclick="renderLeaderboard()">🔄 Refresh</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ FEEDBACK SECTION ════════════════ -->
+<div style="padding:24px 16px 40px;">
+  <div style="max-width:720px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:36px 40px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,0.06);">
+    <div style="font-size:1.3rem;font-weight:900;color:var(--ink);margin-bottom:6px;">تواصل مع المطوّر 👋</div>
+    <div style="font-size:.88rem;color:var(--muted);margin-bottom:20px;">
+      للاستفسارات، الملاحظات، أو الإبلاغ عن خطأ في سؤال
+    </div>
+    <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
+      <a href="https://wa.me/966594555022?text=مرحبا،+وصلت+من+تطبيق+MKT+214+ولدي+ملاحظة%3A+" target="_blank" rel="noopener"
+         style="display:inline-flex;align-items:center;gap:8px;padding:11px 22px;background:#25d366;color:#fff;font-weight:700;font-size:.95rem;border-radius:12px;text-decoration:none;">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        واتساب
+      </a>
+      <a href="https://t.me/p6_op" target="_blank" rel="noopener"
+         style="display:inline-flex;align-items:center;gap:8px;padding:11px 22px;background:#229ed9;color:#fff;font-weight:700;font-size:.95rem;border-radius:12px;text-decoration:none;">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18.717-.962 4.084-1.362 5.474-.168.587-.393.774-.6.793-.454.041-.795-.298-1.233-.584-.687-.449-1.074-.728-1.737-1.164-.766-.503-.27-.78.167-1.234.114-.118 2.105-1.932 2.144-2.103.005-.021.01-.1-.036-.14-.047-.04-.117-.027-.168-.016-.071.016-1.205.765-3.398 2.247-.321.22-.612.327-.872.321-.286-.006-.838-.162-1.248-.295-.503-.164-.903-.251-.868-.529.018-.145.218-.294.599-.447 2.34-.997 3.899-1.655 4.677-1.975 2.221-.908 2.684-1.066 2.984-1.071.066-.001.214.015.311.094.082.067.104.157.108.225.004.068-.001.218-.015.311z"/></svg>
+        تيليجرام
+      </a>
+    </div>
+  </div>
+</div>
+
+</div><!-- end main-content -->
+
+
+<!-- ═══════════ ONBOARDING OVERLAY ═══════════ -->
+<div id="onboarding-overlay" class="onboarding-overlay" style="display:none;">
+  <div id="onboarding-modal" class="onboarding-modal"></div>
+</div>
+
+<!-- ── FIREBASE SDK ───────────────────────────── -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="mkt201_scripts.js"></script>
+
+</body>
+</html>

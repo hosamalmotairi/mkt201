@@ -1,0 +1,16 @@
+*.pdf
+*.pptx
+*.docx
+*.bak
+backup_*/
+bilingual_*.html
+chapters_*.html
+new_ch1_*.html
+new_ch3_*.html
+color_swatches.html
+matched_past_qs.json
+tf_questions.json
+tf_js_block.txt
+.vercel
+.DS_Store
+.claude/
