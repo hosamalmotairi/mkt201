@@ -4594,13 +4594,10 @@ function exportChapterPDF(pageId, chapterName) {
         body { padding: 0; max-width: none; font-size: 11px; background: #fff !important; color: #1e293b !important; }
         .cover { border-radius: 0; padding: 24px 24px 20px; background: #fff !important; border-bottom: 4px solid ${p.c1}; }
         .cover svg { display: none !important; }
-        .cover, .cover h1, .cover .cover-tag, .cover .sub, .cover .info, .cover .info span {
-          color: ${p.c1} !important;
-        }
-        .cover h1 { color: ${isDark ? p.c1 : p.c3} !important; font-size: 1.3rem; }
-        .cover .cover-tag { background: ${p.bg1} !important; border-color: ${p.line} !important; color: ${p.c1} !important; }
-        .cover .sub { color: var(--muted) !important; }
-        .cover .info { color: var(--muted) !important; border-color: ${p.line} !important; }
+        .print-ct { color: ${isDark ? p.c1 : p.c3} !important; }
+        .cover .cover-tag.print-ct { background: ${p.bg1} !important; border-color: ${p.line} !important; color: ${p.c1} !important; }
+        .cover .sub.print-ct { color: #64748b !important; }
+        .cover .info.print-ct, .cover .info.print-ct span { color: #64748b !important; border-color: ${p.line} !important; }
         .content { padding: 16px 0 32px; background: #fff !important; }
         .def, .cpt, .step, .mcard, .hbox, .note { background: #fff !important; }
         .def, .cpt, .step, .mcard, .tip, .memo, .hbox, .ebox, .note {
@@ -4631,10 +4628,10 @@ function exportChapterPDF(pageId, chapterName) {
         <rect width="100%" height="100%" fill="url(#cg)"/>
       </svg>
       <div style="position:relative;z-index:1;">
-        <div class="cover-tag">MKT 201 — Principles of Marketing</div>
-        <h1>${chapterName}</h1>
-        <div class="sub">Kotler & Armstrong · Principles of Marketing · 18th Edition</div>
-        <div class="info">
+        <div class="cover-tag print-ct">MKT 201 — Principles of Marketing</div>
+        <h1 class="print-ct">${chapterName}</h1>
+        <div class="sub print-ct">Kotler & Armstrong · Principles of Marketing · 18th Edition</div>
+        <div class="info print-ct">
           <span>📅 ${dateStr}</span>
           <span>📖 ملخص شامل</span>
           <span>🌐 mkt201.vercel.app</span>
