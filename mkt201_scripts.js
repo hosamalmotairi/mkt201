@@ -4359,38 +4359,6 @@ function exportChapterPDF(pageId, chapterName) {
       .toolbar-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px ${isRose ? 'rgba(225,29,72,.35)' : 'rgba(13,148,136,.35)'}; }
       .toolbar .hint { color: var(--muted); font-size: .82rem; }
 
-      /* ═══ COVER PAGE ═══ */
-      .cover {
-        color: #fff !important; padding: 32px 30px 28px; position: relative; overflow: hidden;
-      }
-      .cover::before {
-        content: ''; position: absolute; top: -60px; right: -60px;
-        width: 280px; height: 280px; border-radius: 50%;
-        background: radial-gradient(circle, rgba(255,255,255,.08), transparent 70%);
-      }
-      .cover::after {
-        content: ''; position: absolute; bottom: -40px; left: 30%;
-        width: 180px; height: 180px; border-radius: 50%;
-        background: radial-gradient(circle, rgba(45,212,191,.12), transparent 70%);
-      }
-      .cover-tag {
-        display: inline-block; background: rgba(255,255,255,.15);
-        backdrop-filter: blur(6px); padding: 5px 16px; border-radius: 20px;
-        font-size: .72rem; font-weight: 700; letter-spacing: .08em;
-        text-transform: uppercase; margin-bottom: 16px;
-        border: 1px solid rgba(255,255,255,.12); color: #fff;
-      }
-      .cover h1 {
-        font-size: 1.4rem; font-weight: 900; line-height: 1.25;
-        margin-bottom: 8px; position: relative; color: #fff;
-      }
-      .cover .sub { font-size: .9rem; font-weight: 400; color: rgba(255,255,255,.75); }
-      .cover .info {
-        margin-top: 12px; padding-top: 10px;
-        border-top: 1px solid rgba(255,255,255,.12);
-        display: flex; gap: 24px; font-size: .78rem; color: rgba(255,255,255,.6);
-      }
-
       /* ═══ CONTENT AREA ═══ */
       .content { padding: 20px 24px 36px; }
 
@@ -4591,15 +4559,8 @@ function exportChapterPDF(pageId, chapterName) {
       /* ═══ PRINT STYLES ═══ */
       @media print {
         .toolbar { display: none !important; }
-        body { padding: 0; max-width: none; font-size: 11px; background: #fff !important; color: #1e293b !important; }
-        .cover { border-radius: 0; padding: 24px 24px 20px; background: #fff !important; border-bottom: 4px solid ${p.c1}; }
-        .cover svg { display: none !important; }
-        .print-ct { color: ${isDark ? p.c1 : p.c3} !important; }
-        .cover .cover-tag.print-ct { background: ${p.bg1} !important; border-color: ${p.line} !important; color: ${p.c1} !important; }
-        .cover .sub.print-ct { color: #64748b !important; }
-        .cover .info.print-ct, .cover .info.print-ct span { color: #64748b !important; border-color: ${p.line} !important; }
-        .content { padding: 16px 0 32px; background: #fff !important; }
-        .def, .cpt, .step, .mcard, .hbox, .note { background: #fff !important; }
+        body { padding: 0; max-width: none; font-size: 11px; }
+        .content { padding: 16px 0 32px; }
         .def, .cpt, .step, .mcard, .tip, .memo, .hbox, .ebox, .note {
           break-inside: avoid;
           box-shadow: none !important;
@@ -4617,25 +4578,14 @@ function exportChapterPDF(pageId, chapterName) {
       <span class="hint">اختر "Save as PDF" في خيارات الطابعة للحفظ كملف</span>
     </div>
 
-    <div class="cover">
-      <svg style="position:absolute;inset:0;width:100%;height:100%;z-index:0;" preserveAspectRatio="none">
-        <defs><linearGradient id="cg" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="${p.svgStops[0]}"/>
-          <stop offset="30%" stop-color="${p.svgStops[1]}"/>
-          <stop offset="70%" stop-color="${p.svgStops[2]}"/>
-          <stop offset="100%" stop-color="${p.svgStops[3]}"/>
-        </linearGradient></defs>
-        <rect width="100%" height="100%" fill="url(#cg)"/>
-      </svg>
-      <div style="position:relative;z-index:1;">
-        <div class="cover-tag print-ct">MKT 201 — Principles of Marketing</div>
-        <h1 class="print-ct">${chapterName}</h1>
-        <div class="sub print-ct">Kotler & Armstrong · Principles of Marketing · 18th Edition</div>
-        <div class="info print-ct">
-          <span>📅 ${dateStr}</span>
-          <span>📖 ملخص شامل</span>
-          <span>🌐 mkt201.vercel.app</span>
-        </div>
+    <div style="padding:28px 32px 20px;border-bottom:4px solid ${p.c1};margin-bottom:24px;">
+      <div style="display:inline-block;border:1.5px solid ${p.c1};color:${p.c1};padding:4px 14px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px;">MKT 201 — Principles of Marketing</div>
+      <h1 style="font-size:1.5rem;font-weight:900;color:${isDark ? p.c1 : p.c3};margin:0 0 6px;line-height:1.3;">${chapterName}</h1>
+      <div style="font-size:.88rem;color:#64748b;">Kotler & Armstrong · Principles of Marketing · 18th Edition</div>
+      <div style="margin-top:12px;padding-top:10px;border-top:1px solid ${p.line};display:flex;gap:20px;font-size:.78rem;color:#94a3b8;">
+        <span>📅 ${dateStr}</span>
+        <span>📖 ملخص شامل</span>
+        <span>🌐 mkt201.vercel.app</span>
       </div>
     </div>
 
