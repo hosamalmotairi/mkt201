@@ -4259,9 +4259,9 @@ function exportChapterPDF(pageId, chapterName) {
   const page = document.getElementById(pageId);
   if (!page) return;
 
-  // Detect current theme and mode
+  // Detect current theme — always use light mode for printing
   const isRose = document.body.classList.contains('theme-rose');
-  const isDark = document.body.classList.contains('dark');
+  const isDark = false; // PDF always light for clean printing
 
   // Color palettes for each combination
   const palettes = {
