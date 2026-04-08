@@ -270,6 +270,7 @@ body.theme-rose .fb-signout-btn:hover {
 .fab-dark-float:hover { box-shadow: 0 10px 28px rgba(0,0,0,0.45); }
 .fab-search { bottom: 84px; background: var(--accent); color: #fff; }
 .fab-ar     { bottom: 26px; background: #fff; color: var(--accent); border: 2px solid var(--accent); font-weight: 900; font-size: 0.95rem; }
+.fab-pomo   { bottom: 200px; }
 
 /* ── HERO ──────────────────────────── */
 .hero {
@@ -1172,6 +1173,7 @@ body.dark input[type=text] { background: #051312 !important; color: #e4f5f3 !imp
   .fab-dark-float { bottom: 154px; }
   .fab-search     { bottom: 104px; }
   .fab-ar         { bottom: 56px; }
+  .fab-pomo       { bottom: 212px; }
 
   /* Reduce page top padding on mobile */
   .page { padding-top: 16px; }
@@ -4341,7 +4343,5 @@ body.dark .form-input {
 
 @media (max-width: 768px) {
   .reminder-toast { bottom: 120px; font-size: .8rem; padding: 10px 14px; }
-  #pomo-fab { right: auto !important; left: 14px !important; bottom: 224px !important; width: 44px !important; height: 44px !important; font-size: 1.1rem !important; opacity: 0.35; transition: opacity 0.2s; }
-  #pomo-fab:hover, #pomo-fab:active { opacity: 1; }
-  #pomo-widget { right: auto !important; left: 50% !important; transform: translateX(-50%) !important; width: calc(100vw - 40px) !important; max-width: 280px !important; bottom: 280px !important; }
+  #pomo-widget { right: auto !important; left: 50% !important; transform: translateX(-50%) !important; width: calc(100vw - 40px) !important; max-width: 280px !important; bottom: 270px !important; }
 }
