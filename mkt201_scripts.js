@@ -4917,7 +4917,7 @@ function finishChallenge() {
 //  FEATURE: SMART REMINDERS
 // ═══════════════════════════════════════════════
 const LAST_VISIT_KEY  = 'mkt201_lastVisit';
-const EXAM_DATE_MKT   = new Date('2026-04-12T00:00:00');
+const EXAM_DATE_MKT   = new Date('2026-04-20T00:00:00');
 
 function checkReminders() {
   const lastVisit = parseInt(localStorage.getItem(LAST_VISIT_KEY) || '0');
