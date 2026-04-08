@@ -4357,9 +4357,11 @@ function exportChapterPDF(pageId, chapterName) {
 
       /* ═══ COVER PAGE ═══ */
       .cover {
-        background: ${p.coverGrad};
-        color: #fff; padding: 32px 30px 28px; position: relative; overflow: hidden;
+        background: ${p.coverGrad} !important;
+        color: #fff !important; padding: 32px 30px 28px; position: relative; overflow: hidden;
         box-shadow: 0 8px 32px rgba(0,0,0,.2), 0 2px 6px rgba(0,0,0,.1);
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
       }
       .cover::before {
         content: ''; position: absolute; top: -60px; right: -60px;
@@ -4372,21 +4374,21 @@ function exportChapterPDF(pageId, chapterName) {
         background: radial-gradient(circle, rgba(45,212,191,.12), transparent 70%);
       }
       .cover-tag {
-        display: inline-block; background: rgba(255,255,255,.15);
+        display: inline-block; background: rgba(255,255,255,.15) !important;
         backdrop-filter: blur(6px); padding: 5px 16px; border-radius: 20px;
         font-size: .72rem; font-weight: 700; letter-spacing: .08em;
         text-transform: uppercase; margin-bottom: 16px;
-        border: 1px solid rgba(255,255,255,.12);
+        border: 1px solid rgba(255,255,255,.12); color: #fff !important;
       }
       .cover h1 {
         font-size: 1.4rem; font-weight: 900; line-height: 1.25;
-        margin-bottom: 8px; position: relative;
+        margin-bottom: 8px; position: relative; color: #fff !important;
       }
-      .cover .sub { font-size: .9rem; opacity: .75; font-weight: 400; }
+      .cover .sub { font-size: .9rem; opacity: 1; font-weight: 400; color: rgba(255,255,255,.75) !important; }
       .cover .info {
         margin-top: 12px; padding-top: 10px;
         border-top: 1px solid rgba(255,255,255,.12);
-        display: flex; gap: 24px; font-size: .78rem; opacity: .6;
+        display: flex; gap: 24px; font-size: .78rem; color: rgba(255,255,255,.6) !important;
       }
 
       /* ═══ CONTENT AREA ═══ */
