@@ -4320,7 +4320,7 @@ function exportChapterPDF(pageId, chapterName) {
     <style>
       @page {
         size: A4;
-        margin: 20mm 18mm 22mm 18mm;
+        margin: 12mm 14mm 12mm 14mm;
       }
       :root {
         --c1: ${p.c1}; --c2: ${p.c2}; --c3: ${p.c3};
@@ -4330,7 +4330,7 @@ function exportChapterPDF(pageId, chapterName) {
       * { box-sizing: border-box; margin: 0; padding: 0; }
       body {
         font-family: 'Inter', -apple-system, system-ui, sans-serif;
-        color: var(--ink); line-height: 1.85; font-size: 13.5px;
+        color: var(--ink); line-height: 1.55; font-size: 11.5px;
         max-width: 780px; margin: 0 auto; padding: 0;
         -webkit-font-smoothing: antialiased;
         background: ${p.bodyBg};
@@ -4358,7 +4358,7 @@ function exportChapterPDF(pageId, chapterName) {
       /* ═══ COVER PAGE ═══ */
       .cover {
         background: ${p.coverGrad};
-        color: #fff; padding: 56px 44px 44px; position: relative; overflow: hidden;
+        color: #fff; padding: 32px 30px 28px; position: relative; overflow: hidden;
         box-shadow: 0 8px 32px rgba(0,0,0,.2), 0 2px 6px rgba(0,0,0,.1);
       }
       .cover::before {
@@ -4379,26 +4379,26 @@ function exportChapterPDF(pageId, chapterName) {
         border: 1px solid rgba(255,255,255,.12);
       }
       .cover h1 {
-        font-size: 1.8rem; font-weight: 900; line-height: 1.25;
+        font-size: 1.4rem; font-weight: 900; line-height: 1.25;
         margin-bottom: 8px; position: relative;
       }
       .cover .sub { font-size: .9rem; opacity: .75; font-weight: 400; }
       .cover .info {
-        margin-top: 20px; padding-top: 16px;
+        margin-top: 12px; padding-top: 10px;
         border-top: 1px solid rgba(255,255,255,.12);
         display: flex; gap: 24px; font-size: .78rem; opacity: .6;
       }
 
       /* ═══ CONTENT AREA ═══ */
-      .content { padding: 36px 36px 60px; }
+      .content { padding: 20px 24px 36px; }
 
       /* ═══ SECTION DIVIDER ═══ */
       .lo-section-pdf {
-        margin-bottom: 36px; page-break-inside: avoid;
+        margin-bottom: 20px; page-break-inside: avoid;
       }
       .lo-header-pdf {
         display: flex; align-items: center; gap: 12px;
-        padding: 14px 18px; margin-bottom: 18px;
+        padding: 8px 12px; margin-bottom: 10px;
         background: var(--bg1); border: 1.5px solid var(--line);
         border-radius: 12px; border-left: 5px solid var(--c1);
         box-shadow: 0 3px 12px ${isDark ? 'rgba(0,0,0,.25)' : 'rgba(0,0,0,.05)'};
@@ -4415,7 +4415,7 @@ function exportChapterPDF(pageId, chapterName) {
 
       /* ═══ CHAPTER SECTION (no LO header) ═══ */
       .ch-section-pdf {
-        margin-bottom: 28px;
+        margin-bottom: 14px;
       }
       .ch-section-pdf h2 {
         font-size: 1rem; font-weight: 800; color: var(--c2);
@@ -4424,14 +4424,14 @@ function exportChapterPDF(pageId, chapterName) {
       }
       .ch-section-pdf h3 {
         font-size: .92rem; font-weight: 700; color: var(--c3);
-        margin: 18px 0 10px;
+        margin: 10px 0 6px;
       }
 
       /* ═══ DEFINITION ═══ */
       .def {
         background: ${isDark ? p.paper : '#fff'}; border: 1.5px solid var(--line);
         border-left: 5px solid var(--c1); border-radius: 12px;
-        padding: 16px 20px; margin: 14px 0;
+        padding: 10px 14px; margin: 6px 0;
         page-break-inside: avoid;
         box-shadow: 0 4px 16px ${isDark ? 'rgba(0,0,0,.3)' : 'rgba(0,0,0,.06)'}, 0 1px 3px ${isDark ? 'rgba(0,0,0,.2)' : 'rgba(0,0,0,.04)'};
       }
@@ -4445,7 +4445,7 @@ function exportChapterPDF(pageId, chapterName) {
         direction: rtl; text-align: right;
         font-family: 'Cairo', sans-serif; color: var(--c2);
         font-size: .82rem; font-weight: 600; line-height: 1.8;
-        margin-top: 8px; padding: 8px 14px;
+        margin-top: 4px; padding: 4px 10px;
         background: var(--bg1); border-radius: 8px;
         border-right: 3px solid var(--c1);
       }
@@ -4453,7 +4453,7 @@ function exportChapterPDF(pageId, chapterName) {
       /* ═══ CONCEPT CARD ═══ */
       .cpt {
         background: var(--bg2); border: 1.5px solid var(--line);
-        border-radius: 12px; padding: 14px 18px; margin: 10px 0;
+        border-radius: 12px; padding: 8px 12px; margin: 5px 0;
         page-break-inside: avoid;
         box-shadow: 0 3px 12px ${isDark ? 'rgba(0,0,0,.25)' : 'rgba(0,0,0,.05)'}, 0 1px 2px ${isDark ? 'rgba(0,0,0,.15)' : 'rgba(0,0,0,.03)'};
       }
@@ -4464,7 +4464,7 @@ function exportChapterPDF(pageId, chapterName) {
       /* ═══ PROCESS STEPS (Learning Objectives list) ═══ */
       .step {
         display: flex; gap: 14px; align-items: flex-start;
-        padding: 12px 16px; margin: 8px 0;
+        padding: 7px 12px; margin: 4px 0;
         background: var(--bg2); border-radius: 12px;
         border-left: 4px solid var(--c1);
         page-break-inside: avoid;
@@ -4487,7 +4487,7 @@ function exportChapterPDF(pageId, chapterName) {
       /* ═══ MASTER CARD ═══ */
       .mcard {
         background: var(--bg1); border: 1.5px solid var(--line);
-        border-radius: 12px; padding: 14px 18px; margin: 10px 0;
+        border-radius: 12px; padding: 8px 12px; margin: 5px 0;
         page-break-inside: avoid;
         box-shadow: 0 3px 12px ${isDark ? 'rgba(0,0,0,.25)' : 'rgba(0,0,0,.05)'}, 0 1px 2px ${isDark ? 'rgba(0,0,0,.15)' : 'rgba(0,0,0,.03)'};
       }
@@ -4498,7 +4498,7 @@ function exportChapterPDF(pageId, chapterName) {
       .tip {
         background: ${p.tipBg}; border: 1.5px solid ${p.tipBorder};
         border-left: 5px solid ${p.tipAccent}; border-radius: 12px;
-        padding: 14px 18px; margin: 14px 0; font-size: .86rem;
+        padding: 8px 14px; margin: 6px 0; font-size: .86rem;
         page-break-inside: avoid; color: ${p.tipText};
         box-shadow: 0 4px 16px ${isDark ? 'rgba(0,0,0,.3)' : 'rgba(245,158,11,.1)'}, 0 1px 3px ${isDark ? 'rgba(0,0,0,.2)' : 'rgba(0,0,0,.04)'};
       }
@@ -4509,7 +4509,7 @@ function exportChapterPDF(pageId, chapterName) {
       .memo {
         background: ${p.memoBg}; border: 1.5px solid ${p.memoBorder};
         border-left: 5px solid ${p.memoAccent}; border-radius: 12px;
-        padding: 14px 18px; margin: 14px 0; font-size: .86rem;
+        padding: 8px 14px; margin: 6px 0; font-size: .86rem;
         page-break-inside: avoid; color: ${p.memoText};
         box-shadow: 0 4px 16px ${isDark ? 'rgba(0,0,0,.3)' : 'rgba(59,130,246,.08)'}, 0 1px 3px ${isDark ? 'rgba(0,0,0,.2)' : 'rgba(0,0,0,.04)'};
       }
@@ -4517,7 +4517,7 @@ function exportChapterPDF(pageId, chapterName) {
       /* ═══ HIGHLIGHT / SUMMARY BOX ═══ */
       .hbox {
         background: var(--bg1); border: 1.5px solid var(--line);
-        border-radius: 12px; padding: 16px 20px; margin: 14px 0;
+        border-radius: 12px; padding: 10px 14px; margin: 6px 0;
         page-break-inside: avoid;
         box-shadow: 0 3px 12px ${isDark ? 'rgba(0,0,0,.25)' : 'rgba(0,0,0,.05)'}, 0 1px 2px ${isDark ? 'rgba(0,0,0,.15)' : 'rgba(0,0,0,.03)'};
       }
@@ -4527,7 +4527,7 @@ function exportChapterPDF(pageId, chapterName) {
       .ebox {
         background: var(--bg3); border: 1.5px solid ${p.exBorder};
         border-left: 5px solid ${p.exAccent}; border-radius: 12px;
-        padding: 14px 18px; margin: 14px 0;
+        padding: 8px 14px; margin: 6px 0;
         page-break-inside: avoid;
         box-shadow: 0 4px 16px ${isDark ? 'rgba(0,0,0,.3)' : 'rgba(16,185,129,.08)'}, 0 1px 3px ${isDark ? 'rgba(0,0,0,.2)' : 'rgba(0,0,0,.04)'};
       }
@@ -4536,7 +4536,7 @@ function exportChapterPDF(pageId, chapterName) {
       /* ═══ NOTE ITEMS ═══ */
       .note {
         display: flex; gap: 14px; align-items: flex-start;
-        padding: 14px 16px; margin: 8px 0;
+        padding: 8px 12px; margin: 4px 0;
         background: ${isDark ? p.paper : '#fff'};
         border: 1.5px solid var(--line); border-radius: 12px;
         page-break-inside: avoid;
@@ -4554,7 +4554,7 @@ function exportChapterPDF(pageId, chapterName) {
       /* ═══ TABLES ═══ */
       table {
         width: 100%; border-collapse: separate; border-spacing: 0;
-        margin: 14px 0; font-size: .82rem;
+        margin: 6px 0; font-size: .82rem;
         border-radius: 12px; overflow: hidden;
         border: 1.5px solid var(--line);
         box-shadow: 0 4px 16px ${isDark ? 'rgba(0,0,0,.3)' : 'rgba(0,0,0,.06)'}, 0 1px 3px ${isDark ? 'rgba(0,0,0,.2)' : 'rgba(0,0,0,.04)'};
@@ -4583,14 +4583,14 @@ function exportChapterPDF(pageId, chapterName) {
       .footer {
         text-align: center; color: var(--muted); font-size: .72rem;
         padding: 24px 0; border-top: 1.5px solid ${isDark ? p.line : '#e2e8f0'};
-        margin-top: 48px;
+        margin-top: 24px;
       }
 
       /* ═══ PRINT STYLES ═══ */
       @media print {
         .toolbar { display: none !important; }
         body {
-          padding: 0; max-width: none; font-size: 12.5px;
+          padding: 0; max-width: none; font-size: 11px;
           -webkit-print-color-adjust: exact !important;
           print-color-adjust: exact !important;
           color-adjust: exact !important;
