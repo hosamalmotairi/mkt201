@@ -879,6 +879,8 @@ async function renderLeaderboard() {
 //  PAGE NAVIGATION
 // ══════════════════════════════════════════════
 function showPage(id) {
+  // Clear mock exam timer when navigating away
+  try { if (mockState && mockState.timer) { clearInterval(mockState.timer); mockState.timer = null; } } catch(e) {}
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   const target = document.getElementById(id);
   if (target) {
@@ -887,6 +889,7 @@ function showPage(id) {
   }
   if (id === 'page-home') { renderMasteryBars(); updateTodayCard(); renderReadinessCard(); renderWeakSpots(); }
   if (id === 'page-quiz') { updateSessionBadge(); }
+  if (id === 'page-flash') { initFlashCards(); }
   if (id === 'page-mock') { checkMockExamLock(); }
   if (id === 'page-dashboard') { renderStreakCalendar(); }
   if (id === 'page-ch1') { renderChapterHighlights('ch1'); }
@@ -2418,7 +2421,7 @@ function setQuizCount(count, btn) {
 // ══════════════════════════════════════════════
 let quizState = {
   questions: [], current: 0, answers: [], startTime: null, ch: 'all',
-  trainingMode: false
+  trainingMode: false, _levelIdx: undefined
 };
 
 // Heuristic baseline when no explicit diff tag exists yet
@@ -2523,19 +2526,25 @@ function renderQuizQuestion() {
     barEl.style.transition = 'background 0.4s ease';
   }
   // وضع تدريب: اخفي العدد الكلي — يخفف الضغط النفسي
-  if (quizState.trainingMode) {
-    document.querySelector('.quiz-counter').textContent = `سؤال ${ci + 1}`;
-  } else {
-    document.querySelector('.quiz-counter').textContent = retryCount > 0
-      ? `${ci + 1} / ${qs.length} (${retryCount} 🔁)`
-      : `${ci + 1} / ${originalCount}`;
+  const counterEl = document.querySelector('.quiz-counter');
+  if (counterEl) {
+    if (quizState.trainingMode) {
+      counterEl.textContent = `سؤال ${ci + 1}`;
+    } else {
+      counterEl.textContent = retryCount > 0
+        ? `${ci + 1} / ${qs.length} (${retryCount} 🔁)`
+        : `${ci + 1} / ${originalCount}`;
+    }
   }
   window._currentReportQ = q.q;
-  document.querySelector('.quiz-q-text').innerHTML =
-    highlightKeywords(q.q) +
-    `<button class="report-q-btn" onclick="reportQuestion(window._currentReportQ,'Quiz')">🚩 إبلاغ</button>`;
+  const qTextEl = document.querySelector('.quiz-q-text');
+  if (qTextEl) {
+    qTextEl.innerHTML =
+      highlightKeywords(q.q) +
+      `<button class="report-q-btn" onclick="reportQuestion(window._currentReportQ,'Quiz')">🚩 إبلاغ</button>`;
+  }
   const optWrap = document.querySelector('.quiz-options');
-  optWrap.innerHTML = q.opts.map((opt, i) =>
+  if (optWrap) optWrap.innerHTML = q.opts.map((opt, i) =>
     `<button class="quiz-opt-btn" onclick="selectQuizAnswer(${i})">${String.fromCharCode(65+i)}. ${opt}</button>`
   ).join('');
   const prevBtn = document.getElementById('quiz-prev-btn');

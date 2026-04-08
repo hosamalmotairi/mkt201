@@ -1121,19 +1121,7 @@ body.dark .concept-card.slate  { background:#0f172a; border-color:#334155; }
 .search-result-item strong { color: var(--accent); }
 
 /* ── DARK MODE ───────────────────────── */
-body.dark {
-  --bg: #051312;
-  --paper: #0b1f1d;
-  --ink: #e4f5f3;
-  --muted: #7ab5b0;
-  --accent: #2dd4bf;
-  --accent-soft: #072321;
-  --line: #0f3330;
-  --good: #4ade80;
-  background:
-    radial-gradient(circle at top right, rgba(13,148,136,0.07), transparent 28%),
-    linear-gradient(180deg, #051312 0%, #030e0d 100%);
-}
+/* NOTE: main body.dark variables are defined later in the file (line ~2518) */
 
 body.dark .hero { background: linear-gradient(135deg, #0d2f2c, #134e4a, #0f766e); }
 body.dark .toc, body.dark .notice, body.dark .chapter { background: #0b1f1d; border-color: #0f3330; }
@@ -1203,8 +1191,8 @@ body.dark input[type=text] { background: #051312 !important; color: #e4f5f3 !imp
   /* Chapter highlights: tighter gap on mobile */
   .ch-hl-item { padding: 13px 14px; gap: 10px; }
 
-  /* Result stats always 3 columns on mobile */
-  .result-stats { grid-template-columns: repeat(3, 1fr) !important; gap: 8px; }
+  /* Result stats: 3 columns on tablet, 2 columns on smaller screens (see @media 600px rule) */
+  .result-stats { grid-template-columns: repeat(3, 1fr); gap: 8px; }
   .result-stat-val { font-size: 1.3rem; }
 }
 
@@ -2522,7 +2510,9 @@ body.dark {
   --ink:        #e4f5f3;
   --muted:      #6aada8;
   --accent:     #14b8a6;
+  --accent2:    #2dd4bf;
   --accent-soft: #061714;
+  --good:       #4ade80;
   background:
     radial-gradient(ellipse at top, rgba(13,148,136,0.14), transparent 60%),
     radial-gradient(ellipse at bottom right, rgba(20,184,166,0.07), transparent 50%),
