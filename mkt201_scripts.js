@@ -4260,117 +4260,247 @@ function exportChapterPDF(pageId, chapterName) {
   if (!page) return;
 
   const w = window.open('', '_blank');
+  const dateStr = new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
+
   w.document.write(`<!DOCTYPE html><html dir="ltr"><head><meta charset="UTF-8">
-    <title>MKT 201 — ${chapterName} Summary</title>
+    <title>MKT 201 — ${chapterName}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Cairo:wght@600;700&display=swap" rel="stylesheet">
     <style>
+      :root { --teal: #0d9488; --teal-dark: #0f766e; --teal-bg: #f0fdfa; --teal-line: #ccfbf1; }
       * { box-sizing: border-box; margin: 0; padding: 0; }
-      body { font-family: 'Inter', sans-serif; padding: 28px 32px; color: #1a1a1a; max-width: 850px; margin: 0 auto; line-height: 1.7; }
-      h1 { font-size: 1.4rem; color: #0d9488; margin-bottom: 4px; }
-      h2 { font-size: 1.15rem; color: #0f766e; margin: 20px 0 10px; border-bottom: 2px solid #ccfbf1; padding-bottom: 4px; }
-      h3 { font-size: 1rem; color: #134e4a; margin: 16px 0 8px; }
-      .meta { color: #666; font-size: .8rem; margin-bottom: 20px; }
-      .section { margin-bottom: 18px; page-break-inside: avoid; }
-      .def-box { background: #f0fdfa; border-left: 3px solid #14b8a6; padding: 10px 14px; border-radius: 6px; margin: 8px 0; }
-      .def-term { font-weight: 800; color: #0d9488; font-size: .9rem; }
-      .def-body { font-size: .88rem; margin-top: 2px; }
-      .ar { direction: rtl; color: #0d9488; font-size: .82rem; font-weight: 600; margin-top: 4px; background: #f0fdfa; padding: 4px 8px; border-radius: 4px; }
-      .concept { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 10px 14px; margin: 6px 0; }
-      .concept strong { color: #0f766e; }
-      .note-item { display: flex; gap: 10px; margin: 6px 0; align-items: flex-start; }
-      .note-num { background: #0d9488; color: #fff; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .7rem; font-weight: 800; flex-shrink: 0; margin-top: 2px; }
-      .lo-item { margin: 8px 0; padding: 8px 12px; background: #f8fafc; border-radius: 6px; }
-      .lo-num { font-weight: 800; color: #0d9488; margin-left: 6px; }
-      table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: .85rem; }
-      th { background: #0d9488; color: #fff; padding: 8px 10px; text-align: left; }
-      td { padding: 7px 10px; border-bottom: 1px solid #e5e7eb; }
+      body { font-family: 'Inter', -apple-system, sans-serif; color: #1e293b; max-width: 820px; margin: 0 auto; line-height: 1.75; padding: 0; }
+
+      /* ── Cover Header ────────────────── */
+      .cover {
+        background: linear-gradient(135deg, #042f2e 0%, #0d9488 50%, #14b8a6 100%);
+        color: #fff; padding: 44px 40px 36px; margin-bottom: 32px;
+        border-radius: 0 0 24px 24px; position: relative; overflow: hidden;
+      }
+      .cover::after {
+        content: ''; position: absolute; top: -40px; right: -40px;
+        width: 200px; height: 200px; border-radius: 50%;
+        background: rgba(255,255,255,0.06);
+      }
+      .cover-badge { display: inline-block; background: rgba(255,255,255,0.18); padding: 4px 14px; border-radius: 20px; font-size: .75rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; margin-bottom: 12px; }
+      .cover h1 { font-size: 1.6rem; font-weight: 900; line-height: 1.3; margin-bottom: 6px; }
+      .cover .sub { font-size: .88rem; opacity: 0.8; font-weight: 500; }
+      .cover .date { font-size: .75rem; opacity: 0.55; margin-top: 10px; }
+
+      /* ── Print Toolbar ───────────────── */
+      .toolbar {
+        position: sticky; top: 0; z-index: 100; background: #fff;
+        padding: 12px 40px; border-bottom: 1px solid #e5e7eb;
+        display: flex; align-items: center; gap: 12px;
+      }
+      .toolbar-btn {
+        background: var(--teal); color: #fff; border: none; padding: 9px 22px;
+        border-radius: 8px; font-weight: 700; cursor: pointer; font-size: .9rem;
+        font-family: inherit; transition: background 0.2s;
+      }
+      .toolbar-btn:hover { background: var(--teal-dark); }
+      .toolbar span { color: #94a3b8; font-size: .82rem; }
+
+      /* ── Content Area ────────────────── */
+      .content { padding: 0 40px 60px; }
+
+      /* ── Section ─────────────────────── */
+      .section { margin-bottom: 28px; }
+      .section-header {
+        display: flex; align-items: center; gap: 10px;
+        margin-bottom: 14px; padding-bottom: 8px;
+        border-bottom: 2.5px solid var(--teal-line);
+      }
+      .section-badge {
+        background: var(--teal); color: #fff; font-size: .7rem; font-weight: 800;
+        padding: 3px 10px; border-radius: 6px; letter-spacing: .03em; white-space: nowrap;
+      }
+      .section-title { font-size: 1.1rem; font-weight: 800; color: var(--teal-dark); }
+
+      /* ── Definition Card ─────────────── */
+      .def-card {
+        background: #fff; border: 1.5px solid var(--teal-line); border-radius: 12px;
+        padding: 14px 18px; margin: 10px 0; page-break-inside: avoid;
+        box-shadow: 0 2px 8px rgba(13,148,136,0.06);
+      }
+      .def-card .term {
+        font-weight: 800; color: var(--teal); font-size: .92rem;
+        display: flex; align-items: center; gap: 6px; margin-bottom: 4px;
+      }
+      .def-card .term::before { content: ''; width: 4px; height: 16px; background: var(--teal); border-radius: 2px; flex-shrink: 0; }
+      .def-card .body { font-size: .88rem; color: #334155; }
+      .def-card .body strong { color: var(--teal-dark); }
+      .def-card .ar-text {
+        direction: rtl; font-family: 'Cairo', sans-serif; color: var(--teal);
+        font-size: .82rem; font-weight: 600; margin-top: 6px;
+        background: var(--teal-bg); padding: 6px 12px; border-radius: 8px;
+        border-right: 3px solid var(--teal);
+      }
+
+      /* ── Concept Card ────────────────── */
+      .concept-card-pdf {
+        background: linear-gradient(135deg, #fff 0%, #f0fdfa 100%);
+        border: 1px solid #d1f0ec; border-radius: 12px;
+        padding: 12px 16px; margin: 8px 0; page-break-inside: avoid;
+      }
+      .concept-card-pdf strong { color: var(--teal-dark); }
+      .concept-card-pdf .ar-text { direction: rtl; font-family: 'Cairo', sans-serif; color: var(--teal); font-size: .82rem; font-weight: 600; margin-top: 4px; }
+
+      /* ── LO Step ─────────────────────── */
+      .lo-step {
+        display: flex; gap: 12px; align-items: flex-start;
+        padding: 10px 14px; margin: 6px 0; background: #f8fffe;
+        border-radius: 10px; border-left: 3px solid var(--teal);
+        page-break-inside: avoid;
+      }
+      .lo-num {
+        background: var(--teal); color: #fff; min-width: 32px; height: 24px;
+        border-radius: 6px; display: flex; align-items: center; justify-content: center;
+        font-size: .72rem; font-weight: 800; flex-shrink: 0;
+      }
+      .lo-text { font-size: .9rem; }
+      .lo-text strong { color: #1e293b; }
+      .lo-text .ar-text { direction: rtl; font-family: 'Cairo', sans-serif; color: var(--teal); font-size: .8rem; font-weight: 600; display: block; margin-top: 2px; }
+
+      /* ── Note Item ───────────────────── */
+      .note-row {
+        display: flex; gap: 12px; align-items: flex-start;
+        padding: 10px 0; border-bottom: 1px solid #f1f5f9;
+        page-break-inside: avoid;
+      }
+      .note-circle {
+        background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+        color: #fff; width: 26px; height: 26px; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        font-size: .72rem; font-weight: 800; flex-shrink: 0; margin-top: 2px;
+      }
+      .note-content { font-size: .88rem; color: #334155; }
+      .note-content strong { color: #0f172a; }
+
+      /* ── Summary / Key Points Box ──── */
+      .highlight-box {
+        background: var(--teal-bg); border: 1.5px solid var(--teal-line);
+        border-radius: 12px; padding: 14px 18px; margin: 10px 0;
+        page-break-inside: avoid;
+      }
+      .highlight-box strong { color: var(--teal-dark); }
+
+      /* ── Tables ──────────────────────── */
+      table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: .85rem; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+      th { background: linear-gradient(135deg, #0f766e, #0d9488); color: #fff; padding: 10px 12px; text-align: left; font-weight: 700; font-size: .8rem; }
+      td { padding: 9px 12px; border-bottom: 1px solid #e5e7eb; color: #334155; }
       tr:nth-child(even) td { background: #f8fffe; }
-      .no-print { margin-bottom: 20px; }
+      tr:last-child td { border-bottom: none; }
+
+      /* ── Footer ──────────────────────── */
+      .pdf-footer {
+        text-align: center; color: #94a3b8; font-size: .75rem;
+        padding: 20px 0; border-top: 1px solid #e5e7eb; margin-top: 40px;
+      }
+
+      /* ── Print ───────────────────────── */
       @media print {
-        .no-print { display: none; }
-        body { padding: 16px; }
-        .def-box, .concept { break-inside: avoid; }
+        .toolbar { display: none; }
+        .cover { margin-bottom: 20px; border-radius: 0; }
+        .content { padding: 0 20px 40px; }
+        body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        .def-card, .concept-card-pdf, .lo-step, .note-row, .highlight-box { break-inside: avoid; }
       }
     </style>
   </head><body>
-    <div class="no-print">
-      <button onclick="window.print()" style="background:#0d9488;color:#fff;border:none;padding:10px 24px;border-radius:8px;font-weight:600;cursor:pointer;font-size:.95rem;">🖨️ Print / Save as PDF</button>
+
+    <div class="toolbar">
+      <button class="toolbar-btn" onclick="window.print()">🖨️ طباعة / حفظ PDF</button>
+      <span>اختر "Save as PDF" من خيارات الطابعة</span>
     </div>
-    <h1>MKT 201 — ${chapterName} Summary</h1>
-    <p class="meta">Generated from MKT 201 Study Hub · ${new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' })}</p>
+
+    <div class="cover">
+      <div class="cover-badge">MKT 201 — Principles of Marketing</div>
+      <h1>${chapterName}</h1>
+      <div class="sub">Kotler & Armstrong, 18th Edition</div>
+      <div class="date">${dateStr} · mkt201.vercel.app</div>
+    </div>
+
+    <div class="content">
   `);
 
   // Extract content from the page
   const sections = page.querySelectorAll('.lo-section, .chapter');
   sections.forEach(section => {
-    // Get LO header if exists
     const loHeader = section.querySelector('.lo-header');
     if (loHeader) {
       const badge = loHeader.querySelector('.lo-badge')?.textContent || '';
       const title = loHeader.querySelector('.lo-title')?.textContent || '';
       w.document.write('<div class="section">');
-      w.document.write('<h2>' + badge + ' — ' + title.trim() + '</h2>');
+      w.document.write('<div class="section-header"><span class="section-badge">' + badge + '</span><span class="section-title">' + title.trim() + '</span></div>');
     } else {
       w.document.write('<div class="section">');
     }
 
-    // Process definitions
+    // Learning Objectives (process steps)
+    section.querySelectorAll('.process-step').forEach(step => {
+      const num = step.querySelector('.process-num')?.textContent || '';
+      const strong = step.querySelector('.process-content strong')?.innerHTML || '';
+      const ar = step.querySelector('.process-content .ar-line')?.textContent || '';
+      w.document.write('<div class="lo-step"><span class="lo-num">' + num + '</span><div class="lo-text"><strong>' + strong + '</strong>');
+      if (ar) w.document.write('<span class="ar-text">' + ar + '</span>');
+      w.document.write('</div></div>');
+    });
+
+    // Definitions
     section.querySelectorAll('.def-spotlight').forEach(def => {
       const term = def.querySelector('.def-term')?.textContent || '';
       const body = def.querySelector('.def-body')?.innerHTML || '';
       const ar   = def.querySelector('.ar-line')?.textContent || '';
-      w.document.write('<div class="def-box">');
-      w.document.write('<div class="def-term">' + term + '</div>');
-      w.document.write('<div class="def-body">' + body + '</div>');
-      if (ar) w.document.write('<div class="ar">' + ar + '</div>');
+      w.document.write('<div class="def-card"><div class="term">' + term + '</div><div class="body">' + body + '</div>');
+      if (ar) w.document.write('<div class="ar-text">' + ar + '</div>');
       w.document.write('</div>');
     });
 
-    // Process concept cards
+    // Concept cards
     section.querySelectorAll('.concept-card').forEach(card => {
-      const html = card.innerHTML;
-      w.document.write('<div class="concept">' + html + '</div>');
+      const strong = card.querySelector('strong')?.innerHTML || '';
+      const pEl = card.querySelector('p');
+      const pHtml = pEl?.innerHTML || '';
+      const ar = card.querySelector('.ar-line')?.textContent || '';
+      w.document.write('<div class="concept-card-pdf"><strong>' + strong + '</strong>');
+      if (pHtml) w.document.write('<p style="font-size:.88rem;color:#475569;margin-top:4px;">' + pHtml + '</p>');
+      w.document.write('</div>');
     });
 
-    // Process concept rows with items
+    // Concept items
     section.querySelectorAll('.concept-item').forEach(item => {
-      w.document.write('<div class="concept">' + item.innerHTML + '</div>');
+      w.document.write('<div class="concept-card-pdf">' + item.innerHTML + '</div>');
     });
 
-    // Process summary boxes
-    section.querySelectorAll('.summary-box').forEach(box => {
-      w.document.write('<div class="def-box">' + box.innerHTML + '</div>');
+    // Summary and key points boxes
+    section.querySelectorAll('.summary-box, .key-points-box').forEach(box => {
+      w.document.write('<div class="highlight-box">' + box.innerHTML + '</div>');
     });
 
-    // Process key points
-    section.querySelectorAll('.key-points-box').forEach(box => {
-      w.document.write('<div class="def-box">' + box.innerHTML + '</div>');
-    });
-
-    // Process tables
+    // Tables
     section.querySelectorAll('.ref-table').forEach(table => {
       w.document.write(table.outerHTML);
     });
 
-    // Process notes grid items
+    // Notes grid items
     section.querySelectorAll('.ch-note-item').forEach(note => {
       const num = note.querySelector('.ch-note-num')?.textContent || '';
       const content = note.querySelector('div')?.innerHTML || note.innerHTML;
-      w.document.write('<div class="note-item"><span class="note-num">' + num + '</span><div>' + content + '</div></div>');
+      w.document.write('<div class="note-row"><span class="note-circle">' + num + '</span><div class="note-content">' + content + '</div></div>');
     });
 
-    // Process process steps (Learning Objectives)
-    section.querySelectorAll('.process-step').forEach(step => {
-      const num = step.querySelector('.process-num')?.textContent || '';
-      const content = step.querySelector('.process-content')?.innerHTML || '';
-      w.document.write('<div class="lo-item"><span class="lo-num">' + num + '</span> ' + content + '</div>');
+    // Example boxes
+    section.querySelectorAll('.example-box').forEach(box => {
+      w.document.write('<div class="highlight-box" style="border-color:#bbf7d0;background:#f0fdf4;">' + box.innerHTML + '</div>');
     });
 
     w.document.write('</div>');
   });
 
-  w.document.write('</body></html>');
+  w.document.write(`
+    <div class="pdf-footer">MKT 201 Study Hub · mkt201.vercel.app · ${dateStr}</div>
+    </div></body></html>`);
   w.document.close();
 }
 

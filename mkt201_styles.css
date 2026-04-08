@@ -4245,6 +4245,30 @@ body.dark .review-item { background:rgba(255,255,255,0.03); }
    NEW FEATURES STYLES
 ══════════════════════════════════════════════ */
 
+/* ── Chapter PDF Export Button ──────────────── */
+.ch-pdf-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(8px);
+  border: 1.5px solid rgba(255,255,255,0.25);
+  color: #fff;
+  padding: 9px 22px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: .88rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  font-family: inherit;
+}
+.ch-pdf-btn:hover {
+  background: rgba(255,255,255,0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
 /* ── Reminder Toast ────────────────────────── */
 .reminder-toast {
   position: fixed;
