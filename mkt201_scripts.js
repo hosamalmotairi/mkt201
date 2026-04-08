@@ -4259,9 +4259,9 @@ function exportChapterPDF(pageId, chapterName) {
   const page = document.getElementById(pageId);
   if (!page) return;
 
-  // Detect current theme — always use light mode for printing
+  // Detect current theme and mode
   const isRose = document.body.classList.contains('theme-rose');
-  const isDark = false; // PDF always light for clean printing
+  const isDark = document.body.classList.contains('dark');
 
   // Color palettes for each combination
   const palettes = {
@@ -4587,56 +4587,22 @@ function exportChapterPDF(pageId, chapterName) {
       }
 
       /* ═══ PRINT STYLES ═══ */
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        color-adjust: exact !important;
+      }
       @media print {
         .toolbar { display: none !important; }
-        body {
-          padding: 0; max-width: none; font-size: 11px;
-          -webkit-print-color-adjust: exact !important;
-          print-color-adjust: exact !important;
-          color-adjust: exact !important;
-          ${isDark ? `
-          background: #fff !important;
-          color: #1e293b !important;
-          ` : ''}
-        }
-        ${isDark ? `
-        /* Force light colors when printing from dark mode */
-        .content { background: #fff !important; color: #1e293b !important; }
-        .def { background: #fff !important; color: #1e293b !important; border-color: #d1e7e4 !important; }
-        .def-t { color: ${p.c1} !important; }
-        .def-b { color: #334155 !important; }
-        .def-ar { background: ${isRose ? '#fff1f2' : '#f0fdfa'} !important; color: ${p.c1} !important; }
-        .cpt { background: ${isRose ? '#fff5f7' : '#f8fffe'} !important; color: #1e293b !important; }
-        .cpt p { color: #475569 !important; }
-        .step { background: ${isRose ? '#fff5f7' : '#f8fffe'} !important; color: #1e293b !important; }
-        .step-body { color: #1e293b !important; }
-        .step-body strong { color: #1e293b !important; }
-        .mcard { background: ${isRose ? '#fff1f2' : '#f0fdfa'} !important; color: #1e293b !important; }
-        .mcard div { color: #475569 !important; }
-        .tip { background: #fffbeb !important; color: #92400e !important; border-color: #fde68a !important; }
-        .memo { background: #eff6ff !important; color: #1e40af !important; border-color: #bfdbfe !important; }
-        .hbox { background: ${isRose ? '#fff1f2' : '#f0fdfa'} !important; color: #1e293b !important; }
-        .ebox { background: ${isRose ? '#fff1f2' : '#ecfdf5'} !important; color: #1e293b !important; }
-        .note { background: #fff !important; color: #334155 !important; }
-        .note-b { color: #334155 !important; }
-        .note-b strong { color: #1e293b !important; }
-        .lo-header-pdf { background: ${isRose ? '#fff1f2' : '#f0fdfa'} !important; }
-        .lo-title-pdf { color: ${isRose ? '#9f1239' : '#134e4a'} !important; }
-        .ch-section-pdf h2 { color: ${isRose ? '#be185d' : '#0f766e'} !important; }
-        .ch-section-pdf h3 { color: ${isRose ? '#9f1239' : '#134e4a'} !important; }
-        td { color: #334155 !important; }
-        .ar-inline { color: ${p.c1} !important; }
-        .footer { color: #94a3b8 !important; border-color: #e2e8f0 !important; }
-        ` : ''}
-        .cover { border-radius: 0; padding: 40px 32px 32px; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-        .content { padding: 24px 0 40px; }
+        body { padding: 0; max-width: none; font-size: 11px; }
+        .cover { border-radius: 0; padding: 28px 24px 24px; }
+        .content { padding: 16px 0 32px; }
         .def, .cpt, .step, .mcard, .tip, .memo, .hbox, .ebox, .note {
           break-inside: avoid;
           box-shadow: none !important;
         }
         .lo-section-pdf { break-inside: avoid; }
-        table { box-shadow: none !important; }
-        .lo-header-pdf { box-shadow: none !important; }
+        table, .lo-header-pdf { box-shadow: none !important; }
       }
     </style>
   </head><body>
