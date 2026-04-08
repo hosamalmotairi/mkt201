@@ -4259,6 +4259,57 @@ function exportChapterPDF(pageId, chapterName) {
   const page = document.getElementById(pageId);
   if (!page) return;
 
+  // Detect current theme and mode
+  const isRose = document.body.classList.contains('theme-rose');
+  const isDark = document.body.classList.contains('dark');
+
+  // Color palettes for each combination
+  const palettes = {
+    tealLight: {
+      c1: '#0d9488', c2: '#0f766e', c3: '#134e4a',
+      bg1: '#f0fdfa', bg2: '#f8fffe', bg3: '#ecfdf5',
+      line: '#d1e7e4', ink: '#1e293b', muted: '#64748b',
+      paper: '#ffffff', tipBg: '#fffbeb', tipBorder: '#fde68a', tipAccent: '#f59e0b', tipText: '#92400e',
+      memoBg: '#eff6ff', memoBorder: '#bfdbfe', memoAccent: '#3b82f6', memoText: '#1e40af',
+      exBg: '#ecfdf5', exBorder: '#a7f3d0', exAccent: '#10b981',
+      coverGrad: 'linear-gradient(160deg, #042f2e 0%, #0a3d39 30%, #0d9488 70%, #2dd4bf 100%)',
+      bodyBg: '#ffffff',
+    },
+    tealDark: {
+      c1: '#14b8a6', c2: '#2dd4bf', c3: '#5eead4',
+      bg1: '#0a1c1a', bg2: '#0d2521', bg3: '#071f1c',
+      line: '#0d2c29', ink: '#e4f5f3', muted: '#6aada8',
+      paper: '#0a1c1a', tipBg: '#1a1506', tipBorder: '#78350f', tipAccent: '#fbbf24', tipText: '#fde68a',
+      memoBg: '#0c1929', memoBorder: '#1e3a5f', memoAccent: '#60a5fa', memoText: '#93c5fd',
+      exBg: '#071f1c', exBorder: '#064e3b', exAccent: '#34d399',
+      coverGrad: 'linear-gradient(160deg, #021a19 0%, #042f2e 30%, #0d9488 70%, #14b8a6 100%)',
+      bodyBg: '#030d0c',
+    },
+    roseLight: {
+      c1: '#e11d48', c2: '#be185d', c3: '#9f1239',
+      bg1: '#fff1f2', bg2: '#fff5f7', bg3: '#fce7f3',
+      line: '#fecdd3', ink: '#1a0208', muted: '#8b6070',
+      paper: '#ffffff', tipBg: '#fffbeb', tipBorder: '#fde68a', tipAccent: '#f59e0b', tipText: '#92400e',
+      memoBg: '#fdf2f8', memoBorder: '#fbcfe8', memoAccent: '#ec4899', memoText: '#9d174d',
+      exBg: '#fff1f2', exBorder: '#fda4af', exAccent: '#fb7185',
+      coverGrad: 'linear-gradient(160deg, #4c0519 0%, #881337 30%, #e11d48 70%, #fb7185 100%)',
+      bodyBg: '#ffffff',
+    },
+    roseDark: {
+      c1: '#fb7185', c2: '#f43f5e', c3: '#fda4af',
+      bg1: '#1a0510', bg2: '#210815', bg3: '#2d0a14',
+      line: 'rgba(225,29,72,0.22)', ink: '#fde8ec', muted: '#c08090',
+      paper: '#1a0510', tipBg: '#1a1506', tipBorder: '#78350f', tipAccent: '#fbbf24', tipText: '#fde68a',
+      memoBg: '#1f0618', memoBorder: '#831843', memoAccent: '#f472b6', memoText: '#fbcfe8',
+      exBg: '#2d0a14', exBorder: '#9f1239', exAccent: '#fb7185',
+      coverGrad: 'linear-gradient(160deg, #1a0005 0%, #4c0519 30%, #9f1239 70%, #fb7185 100%)',
+      bodyBg: '#0d0308',
+    }
+  };
+
+  const key = (isRose ? 'rose' : 'teal') + (isDark ? 'Dark' : 'Light');
+  const p = palettes[key];
+
   const w = window.open('', '_blank');
   const dateStr = new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
 
@@ -4272,9 +4323,9 @@ function exportChapterPDF(pageId, chapterName) {
         margin: 20mm 18mm 22mm 18mm;
       }
       :root {
-        --c1: #0d9488; --c2: #0f766e; --c3: #134e4a;
-        --bg1: #f0fdfa; --bg2: #f8fffe; --bg3: #ecfdf5;
-        --line: #d1e7e4; --ink: #1e293b; --muted: #64748b;
+        --c1: ${p.c1}; --c2: ${p.c2}; --c3: ${p.c3};
+        --bg1: ${p.bg1}; --bg2: ${p.bg2}; --bg3: ${p.bg3};
+        --line: ${p.line}; --ink: ${p.ink}; --muted: ${p.muted};
       }
       * { box-sizing: border-box; margin: 0; padding: 0; }
       body {
@@ -4282,30 +4333,31 @@ function exportChapterPDF(pageId, chapterName) {
         color: var(--ink); line-height: 1.85; font-size: 13.5px;
         max-width: 780px; margin: 0 auto; padding: 0;
         -webkit-font-smoothing: antialiased;
+        background: ${p.bodyBg};
       }
 
       /* ═══ TOOLBAR (screen only) ═══ */
       .toolbar {
         position: sticky; top: 0; z-index: 100;
-        background: #fff; padding: 14px 32px;
-        border-bottom: 1px solid #e2e8f0;
+        background: ${isDark ? p.paper : '#fff'}; padding: 14px 32px;
+        border-bottom: 1px solid ${isDark ? p.line : '#e2e8f0'};
         display: flex; align-items: center; gap: 14px;
-        box-shadow: 0 2px 12px rgba(0,0,0,.04);
+        box-shadow: 0 2px 12px rgba(0,0,0,${isDark ? '.15' : '.04'});
       }
       .toolbar-btn {
         background: linear-gradient(135deg, var(--c1), var(--c2));
         color: #fff; border: none; padding: 10px 28px;
         border-radius: 10px; font-weight: 700; cursor: pointer;
         font-size: .92rem; font-family: inherit;
-        box-shadow: 0 4px 14px rgba(13,148,136,.25);
+        box-shadow: 0 4px 14px ${isRose ? 'rgba(225,29,72,.25)' : 'rgba(13,148,136,.25)'};
         transition: transform .15s, box-shadow .15s;
       }
-      .toolbar-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(13,148,136,.35); }
+      .toolbar-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px ${isRose ? 'rgba(225,29,72,.35)' : 'rgba(13,148,136,.35)'}; }
       .toolbar .hint { color: var(--muted); font-size: .82rem; }
 
       /* ═══ COVER PAGE ═══ */
       .cover {
-        background: linear-gradient(160deg, #042f2e 0%, #0a3d39 30%, #0d9488 70%, #2dd4bf 100%);
+        background: ${p.coverGrad};
         color: #fff; padding: 56px 44px 44px; position: relative; overflow: hidden;
       }
       .cover::before {
@@ -4374,7 +4426,7 @@ function exportChapterPDF(pageId, chapterName) {
 
       /* ═══ DEFINITION ═══ */
       .def {
-        background: #fff; border: 1px solid var(--line);
+        background: ${isDark ? p.paper : '#fff'}; border: 1px solid var(--line);
         border-left: 4px solid var(--c1); border-radius: 10px;
         padding: 14px 18px; margin: 12px 0;
         page-break-inside: avoid;
@@ -4383,7 +4435,7 @@ function exportChapterPDF(pageId, chapterName) {
         font-weight: 800; color: var(--c1); font-size: .88rem;
         margin-bottom: 3px; letter-spacing: -.01em;
       }
-      .def-b { font-size: .86rem; color: #334155; line-height: 1.7; }
+      .def-b { font-size: .86rem; color: ${isDark ? p.muted : '#334155'}; line-height: 1.7; }
       .def-b strong { color: var(--c2); font-weight: 700; }
       .def-ar {
         direction: rtl; text-align: right;
@@ -4401,7 +4453,7 @@ function exportChapterPDF(pageId, chapterName) {
         page-break-inside: avoid;
       }
       .cpt strong { color: var(--c2); font-size: .88rem; }
-      .cpt p { font-size: .84rem; color: #475569; margin-top: 3px; line-height: 1.7; }
+      .cpt p { font-size: .84rem; color: ${isDark ? p.muted : '#475569'}; margin-top: 3px; line-height: 1.7; }
       .cpt .ar { direction: rtl; text-align: right; font-family: 'Cairo', sans-serif; color: var(--c2); font-size: .8rem; font-weight: 600; margin-top: 4px; }
 
       /* ═══ PROCESS STEPS (Learning Objectives list) ═══ */
@@ -4437,20 +4489,20 @@ function exportChapterPDF(pageId, chapterName) {
 
       /* ═══ EXAM TIP ═══ */
       .tip {
-        background: #fffbeb; border: 1px solid #fde68a;
-        border-left: 4px solid #f59e0b; border-radius: 10px;
+        background: ${p.tipBg}; border: 1px solid ${p.tipBorder};
+        border-left: 4px solid ${p.tipAccent}; border-radius: 10px;
         padding: 12px 16px; margin: 12px 0; font-size: .86rem;
-        page-break-inside: avoid; color: #92400e;
+        page-break-inside: avoid; color: ${p.tipText};
       }
-      .tip strong { color: #b45309; }
-      .tip .ar { direction: rtl; text-align: right; font-family: 'Cairo', sans-serif; color: #b45309; font-size: .8rem; font-weight: 600; display: block; margin-top: 4px; }
+      .tip strong { color: ${p.tipAccent}; }
+      .tip .ar { direction: rtl; text-align: right; font-family: 'Cairo', sans-serif; color: ${p.tipAccent}; font-size: .8rem; font-weight: 600; display: block; margin-top: 4px; }
 
       /* ═══ MEMORY BOX ═══ */
       .memo {
-        background: #eff6ff; border: 1px solid #bfdbfe;
-        border-left: 4px solid #3b82f6; border-radius: 10px;
+        background: ${p.memoBg}; border: 1px solid ${p.memoBorder};
+        border-left: 4px solid ${p.memoAccent}; border-radius: 10px;
         padding: 12px 16px; margin: 12px 0; font-size: .86rem;
-        page-break-inside: avoid; color: #1e40af;
+        page-break-inside: avoid; color: ${p.memoText};
       }
 
       /* ═══ HIGHLIGHT / SUMMARY BOX ═══ */
@@ -4463,17 +4515,17 @@ function exportChapterPDF(pageId, chapterName) {
 
       /* ═══ EXAMPLE BOX ═══ */
       .ebox {
-        background: var(--bg3); border: 1px solid #a7f3d0;
-        border-left: 4px solid #10b981; border-radius: 10px;
+        background: var(--bg3); border: 1px solid ${p.exBorder};
+        border-left: 4px solid ${p.exAccent}; border-radius: 10px;
         padding: 12px 16px; margin: 12px 0;
         page-break-inside: avoid;
       }
-      .ebox strong { color: #059669; }
+      .ebox strong { color: ${p.exAccent}; }
 
       /* ═══ NOTE ITEMS ═══ */
       .note {
         display: flex; gap: 14px; align-items: flex-start;
-        padding: 12px 0; border-bottom: 1px solid #f1f5f9;
+        padding: 12px 0; border-bottom: 1px solid ${isDark ? p.line : '#f1f5f9'};
         page-break-inside: avoid;
       }
       .note:last-child { border-bottom: none; }
@@ -4483,7 +4535,7 @@ function exportChapterPDF(pageId, chapterName) {
         display: flex; align-items: center; justify-content: center;
         font-size: .72rem; font-weight: 800; flex-shrink: 0; margin-top: 1px;
       }
-      .note-b { font-size: .86rem; color: #334155; line-height: 1.7; }
+      .note-b { font-size: .86rem; color: ${isDark ? p.muted : '#334155'}; line-height: 1.7; }
       .note-b strong { color: var(--ink); }
 
       /* ═══ TABLES ═══ */
@@ -4500,8 +4552,8 @@ function exportChapterPDF(pageId, chapterName) {
         letter-spacing: .02em;
       }
       td {
-        padding: 9px 14px; border-bottom: 1px solid #e5e7eb;
-        color: #334155; vertical-align: top;
+        padding: 9px 14px; border-bottom: 1px solid ${isDark ? p.line : '#e5e7eb'};
+        color: ${isDark ? p.muted : '#334155'}; vertical-align: top;
       }
       tr:nth-child(even) td { background: var(--bg2); }
       tr:last-child td { border-bottom: none; }
@@ -4515,8 +4567,8 @@ function exportChapterPDF(pageId, chapterName) {
 
       /* ═══ FOOTER ═══ */
       .footer {
-        text-align: center; color: #94a3b8; font-size: .72rem;
-        padding: 24px 0; border-top: 1.5px solid #e2e8f0;
+        text-align: center; color: var(--muted); font-size: .72rem;
+        padding: 24px 0; border-top: 1.5px solid ${isDark ? p.line : '#e2e8f0'};
         margin-top: 48px;
       }
 
@@ -4636,7 +4688,7 @@ function exportChapterPDF(pageId, chapterName) {
           }
           w.document.write('<div class="step"><span class="step-n">' + num + '</span><div class="step-body"><strong>' + strong + '</strong>');
           if (arMain) w.document.write('<span class="ar">' + arMain + '</span>');
-          if (pText) w.document.write('<div style="margin-top:4px;font-size:.84rem;color:#475569;">' + pText + '</div>');
+          if (pText) w.document.write('<div style="margin-top:4px;font-size:.84rem;color:var(--muted);">' + pText + '</div>');
           if (pAr) w.document.write('<span class="ar">' + pAr + '</span>');
           w.document.write('</div></div>');
         });
@@ -4665,7 +4717,7 @@ function exportChapterPDF(pageId, chapterName) {
           const arSpan = card.querySelector('.ar-line');
           const arText = arSpan ? arSpan.textContent : '';
           let bodyText = card.textContent.replace(strong, '').replace(arText, '').trim();
-          w.document.write('<div class="mcard"><strong>' + strong + '</strong><div style="font-size:.84rem;color:#475569;margin-top:2px;">' + bodyText + '</div>');
+          w.document.write('<div class="mcard"><strong>' + strong + '</strong><div style="font-size:.84rem;color:var(--muted);margin-top:2px;">' + bodyText + '</div>');
           if (arText) w.document.write('<span class="ar">' + arText + '</span>');
           w.document.write('</div>');
         });
@@ -4677,7 +4729,7 @@ function exportChapterPDF(pageId, chapterName) {
         const arSpan = el.querySelector('.ar-line');
         const arText = arSpan ? arSpan.textContent : '';
         let bodyText = el.textContent.replace(strong, '').replace(arText, '').trim();
-        w.document.write('<div class="mcard"><strong>' + strong + '</strong><div style="font-size:.84rem;color:#475569;margin-top:2px;">' + bodyText + '</div>');
+        w.document.write('<div class="mcard"><strong>' + strong + '</strong><div style="font-size:.84rem;color:var(--muted);margin-top:2px;">' + bodyText + '</div>');
         if (arText) w.document.write('<span class="ar">' + arText + '</span>');
         w.document.write('</div>');
       }
@@ -4698,8 +4750,8 @@ function exportChapterPDF(pageId, chapterName) {
         const arText = arSpan ? arSpan.textContent : '';
         let mainHTML = el.innerHTML;
         if (arSpan) mainHTML = mainHTML.replace(arSpan.outerHTML, '');
-        w.document.write('<div class="tip" style="background:#f0fdf4;border-color:#a7f3d0;border-left-color:#10b981;color:#065f46;">' + mainHTML);
-        if (arText) w.document.write('<span class="ar" style="color:#059669;">' + arText + '</span>');
+        w.document.write('<div class="ebox">' + mainHTML);
+        if (arText) w.document.write('<span class="ar" style="color:' + p.exAccent + ';">' + arText + '</span>');
         w.document.write('</div>');
       }
 
