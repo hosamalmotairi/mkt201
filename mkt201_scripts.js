@@ -4265,242 +4265,475 @@ function exportChapterPDF(pageId, chapterName) {
   w.document.write(`<!DOCTYPE html><html dir="ltr"><head><meta charset="UTF-8">
     <title>MKT 201 — ${chapterName}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Cairo:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-      :root { --teal: #0d9488; --teal-dark: #0f766e; --teal-bg: #f0fdfa; --teal-line: #ccfbf1; }
+      @page {
+        size: A4;
+        margin: 20mm 18mm 22mm 18mm;
+      }
+      :root {
+        --c1: #0d9488; --c2: #0f766e; --c3: #134e4a;
+        --bg1: #f0fdfa; --bg2: #f8fffe; --bg3: #ecfdf5;
+        --line: #d1e7e4; --ink: #1e293b; --muted: #64748b;
+      }
       * { box-sizing: border-box; margin: 0; padding: 0; }
-      body { font-family: 'Inter', -apple-system, sans-serif; color: #1e293b; max-width: 820px; margin: 0 auto; line-height: 1.75; padding: 0; }
-
-      /* ── Cover Header ────────────────── */
-      .cover {
-        background: linear-gradient(135deg, #042f2e 0%, #0d9488 50%, #14b8a6 100%);
-        color: #fff; padding: 44px 40px 36px; margin-bottom: 32px;
-        border-radius: 0 0 24px 24px; position: relative; overflow: hidden;
+      body {
+        font-family: 'Inter', -apple-system, system-ui, sans-serif;
+        color: var(--ink); line-height: 1.85; font-size: 13.5px;
+        max-width: 780px; margin: 0 auto; padding: 0;
+        -webkit-font-smoothing: antialiased;
       }
-      .cover::after {
-        content: ''; position: absolute; top: -40px; right: -40px;
-        width: 200px; height: 200px; border-radius: 50%;
-        background: rgba(255,255,255,0.06);
-      }
-      .cover-badge { display: inline-block; background: rgba(255,255,255,0.18); padding: 4px 14px; border-radius: 20px; font-size: .75rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; margin-bottom: 12px; }
-      .cover h1 { font-size: 1.6rem; font-weight: 900; line-height: 1.3; margin-bottom: 6px; }
-      .cover .sub { font-size: .88rem; opacity: 0.8; font-weight: 500; }
-      .cover .date { font-size: .75rem; opacity: 0.55; margin-top: 10px; }
 
-      /* ── Print Toolbar ───────────────── */
+      /* ═══ TOOLBAR (screen only) ═══ */
       .toolbar {
-        position: sticky; top: 0; z-index: 100; background: #fff;
-        padding: 12px 40px; border-bottom: 1px solid #e5e7eb;
-        display: flex; align-items: center; gap: 12px;
+        position: sticky; top: 0; z-index: 100;
+        background: #fff; padding: 14px 32px;
+        border-bottom: 1px solid #e2e8f0;
+        display: flex; align-items: center; gap: 14px;
+        box-shadow: 0 2px 12px rgba(0,0,0,.04);
       }
       .toolbar-btn {
-        background: var(--teal); color: #fff; border: none; padding: 9px 22px;
-        border-radius: 8px; font-weight: 700; cursor: pointer; font-size: .9rem;
-        font-family: inherit; transition: background 0.2s;
+        background: linear-gradient(135deg, var(--c1), var(--c2));
+        color: #fff; border: none; padding: 10px 28px;
+        border-radius: 10px; font-weight: 700; cursor: pointer;
+        font-size: .92rem; font-family: inherit;
+        box-shadow: 0 4px 14px rgba(13,148,136,.25);
+        transition: transform .15s, box-shadow .15s;
       }
-      .toolbar-btn:hover { background: var(--teal-dark); }
-      .toolbar span { color: #94a3b8; font-size: .82rem; }
+      .toolbar-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(13,148,136,.35); }
+      .toolbar .hint { color: var(--muted); font-size: .82rem; }
 
-      /* ── Content Area ────────────────── */
-      .content { padding: 0 40px 60px; }
-
-      /* ── Section ─────────────────────── */
-      .section { margin-bottom: 28px; }
-      .section-header {
-        display: flex; align-items: center; gap: 10px;
-        margin-bottom: 14px; padding-bottom: 8px;
-        border-bottom: 2.5px solid var(--teal-line);
+      /* ═══ COVER PAGE ═══ */
+      .cover {
+        background: linear-gradient(160deg, #042f2e 0%, #0a3d39 30%, #0d9488 70%, #2dd4bf 100%);
+        color: #fff; padding: 56px 44px 44px; position: relative; overflow: hidden;
       }
-      .section-badge {
-        background: var(--teal); color: #fff; font-size: .7rem; font-weight: 800;
-        padding: 3px 10px; border-radius: 6px; letter-spacing: .03em; white-space: nowrap;
+      .cover::before {
+        content: ''; position: absolute; top: -60px; right: -60px;
+        width: 280px; height: 280px; border-radius: 50%;
+        background: radial-gradient(circle, rgba(255,255,255,.08), transparent 70%);
       }
-      .section-title { font-size: 1.1rem; font-weight: 800; color: var(--teal-dark); }
-
-      /* ── Definition Card ─────────────── */
-      .def-card {
-        background: #fff; border: 1.5px solid var(--teal-line); border-radius: 12px;
-        padding: 14px 18px; margin: 10px 0; page-break-inside: avoid;
-        box-shadow: 0 2px 8px rgba(13,148,136,0.06);
+      .cover::after {
+        content: ''; position: absolute; bottom: -40px; left: 30%;
+        width: 180px; height: 180px; border-radius: 50%;
+        background: radial-gradient(circle, rgba(45,212,191,.12), transparent 70%);
       }
-      .def-card .term {
-        font-weight: 800; color: var(--teal); font-size: .92rem;
-        display: flex; align-items: center; gap: 6px; margin-bottom: 4px;
+      .cover-tag {
+        display: inline-block; background: rgba(255,255,255,.15);
+        backdrop-filter: blur(6px); padding: 5px 16px; border-radius: 20px;
+        font-size: .72rem; font-weight: 700; letter-spacing: .08em;
+        text-transform: uppercase; margin-bottom: 16px;
+        border: 1px solid rgba(255,255,255,.12);
       }
-      .def-card .term::before { content: ''; width: 4px; height: 16px; background: var(--teal); border-radius: 2px; flex-shrink: 0; }
-      .def-card .body { font-size: .88rem; color: #334155; }
-      .def-card .body strong { color: var(--teal-dark); }
-      .def-card .ar-text {
-        direction: rtl; font-family: 'Cairo', sans-serif; color: var(--teal);
-        font-size: .82rem; font-weight: 600; margin-top: 6px;
-        background: var(--teal-bg); padding: 6px 12px; border-radius: 8px;
-        border-right: 3px solid var(--teal);
+      .cover h1 {
+        font-size: 1.8rem; font-weight: 900; line-height: 1.25;
+        margin-bottom: 8px; position: relative;
+      }
+      .cover .sub { font-size: .9rem; opacity: .75; font-weight: 400; }
+      .cover .info {
+        margin-top: 20px; padding-top: 16px;
+        border-top: 1px solid rgba(255,255,255,.12);
+        display: flex; gap: 24px; font-size: .78rem; opacity: .6;
       }
 
-      /* ── Concept Card ────────────────── */
-      .concept-card-pdf {
-        background: linear-gradient(135deg, #fff 0%, #f0fdfa 100%);
-        border: 1px solid #d1f0ec; border-radius: 12px;
-        padding: 12px 16px; margin: 8px 0; page-break-inside: avoid;
-      }
-      .concept-card-pdf strong { color: var(--teal-dark); }
-      .concept-card-pdf .ar-text { direction: rtl; font-family: 'Cairo', sans-serif; color: var(--teal); font-size: .82rem; font-weight: 600; margin-top: 4px; }
+      /* ═══ CONTENT AREA ═══ */
+      .content { padding: 36px 36px 60px; }
 
-      /* ── LO Step ─────────────────────── */
-      .lo-step {
-        display: flex; gap: 12px; align-items: flex-start;
-        padding: 10px 14px; margin: 6px 0; background: #f8fffe;
-        border-radius: 10px; border-left: 3px solid var(--teal);
+      /* ═══ SECTION DIVIDER ═══ */
+      .lo-section-pdf {
+        margin-bottom: 36px; page-break-inside: avoid;
+      }
+      .lo-header-pdf {
+        display: flex; align-items: center; gap: 12px;
+        padding: 12px 0; margin-bottom: 16px;
+        border-bottom: 2px solid var(--c1);
+      }
+      .lo-badge-pdf {
+        background: var(--c1); color: #fff;
+        font-size: .68rem; font-weight: 800; padding: 4px 12px;
+        border-radius: 6px; letter-spacing: .04em; white-space: nowrap;
+      }
+      .lo-title-pdf {
+        font-size: 1.05rem; font-weight: 800; color: var(--c3);
+        line-height: 1.3;
+      }
+
+      /* ═══ CHAPTER SECTION (no LO header) ═══ */
+      .ch-section-pdf {
+        margin-bottom: 28px;
+      }
+      .ch-section-pdf h2 {
+        font-size: 1rem; font-weight: 800; color: var(--c2);
+        margin-bottom: 12px; padding-bottom: 6px;
+        border-bottom: 1.5px solid var(--line);
+      }
+      .ch-section-pdf h3 {
+        font-size: .92rem; font-weight: 700; color: var(--c3);
+        margin: 18px 0 10px;
+      }
+
+      /* ═══ DEFINITION ═══ */
+      .def {
+        background: #fff; border: 1px solid var(--line);
+        border-left: 4px solid var(--c1); border-radius: 10px;
+        padding: 14px 18px; margin: 12px 0;
         page-break-inside: avoid;
       }
-      .lo-num {
-        background: var(--teal); color: #fff; min-width: 32px; height: 24px;
-        border-radius: 6px; display: flex; align-items: center; justify-content: center;
-        font-size: .72rem; font-weight: 800; flex-shrink: 0;
+      .def-t {
+        font-weight: 800; color: var(--c1); font-size: .88rem;
+        margin-bottom: 3px; letter-spacing: -.01em;
       }
-      .lo-text { font-size: .9rem; }
-      .lo-text strong { color: #1e293b; }
-      .lo-text .ar-text { direction: rtl; font-family: 'Cairo', sans-serif; color: var(--teal); font-size: .8rem; font-weight: 600; display: block; margin-top: 2px; }
+      .def-b { font-size: .86rem; color: #334155; line-height: 1.7; }
+      .def-b strong { color: var(--c2); font-weight: 700; }
+      .def-ar {
+        direction: rtl; text-align: right;
+        font-family: 'Cairo', sans-serif; color: var(--c2);
+        font-size: .82rem; font-weight: 600; line-height: 1.8;
+        margin-top: 8px; padding: 8px 14px;
+        background: var(--bg1); border-radius: 8px;
+        border-right: 3px solid var(--c1);
+      }
 
-      /* ── Note Item ───────────────────── */
-      .note-row {
-        display: flex; gap: 12px; align-items: flex-start;
-        padding: 10px 0; border-bottom: 1px solid #f1f5f9;
+      /* ═══ CONCEPT CARD ═══ */
+      .cpt {
+        background: var(--bg2); border: 1px solid var(--line);
+        border-radius: 10px; padding: 12px 16px; margin: 8px 0;
         page-break-inside: avoid;
       }
-      .note-circle {
-        background: linear-gradient(135deg, var(--teal), var(--teal-dark));
-        color: #fff; width: 26px; height: 26px; border-radius: 50%;
+      .cpt strong { color: var(--c2); font-size: .88rem; }
+      .cpt p { font-size: .84rem; color: #475569; margin-top: 3px; line-height: 1.7; }
+      .cpt .ar { direction: rtl; text-align: right; font-family: 'Cairo', sans-serif; color: var(--c2); font-size: .8rem; font-weight: 600; margin-top: 4px; }
+
+      /* ═══ PROCESS STEPS (Learning Objectives list) ═══ */
+      .step {
+        display: flex; gap: 14px; align-items: flex-start;
+        padding: 10px 14px; margin: 6px 0;
+        background: var(--bg2); border-radius: 10px;
+        border-left: 3px solid var(--c1);
+        page-break-inside: avoid;
+      }
+      .step-n {
+        background: var(--c1); color: #fff;
+        min-width: 30px; height: 22px; border-radius: 5px;
         display: flex; align-items: center; justify-content: center;
-        font-size: .72rem; font-weight: 800; flex-shrink: 0; margin-top: 2px;
+        font-size: .7rem; font-weight: 800; flex-shrink: 0; margin-top: 2px;
       }
-      .note-content { font-size: .88rem; color: #334155; }
-      .note-content strong { color: #0f172a; }
+      .step-body { font-size: .86rem; line-height: 1.7; }
+      .step-body strong { color: var(--ink); }
+      .step-body .ar {
+        display: block; direction: rtl; text-align: right;
+        font-family: 'Cairo', sans-serif; color: var(--c1);
+        font-size: .8rem; font-weight: 600; margin-top: 2px;
+      }
 
-      /* ── Summary / Key Points Box ──── */
-      .highlight-box {
-        background: var(--teal-bg); border: 1.5px solid var(--teal-line);
-        border-radius: 12px; padding: 14px 18px; margin: 10px 0;
+      /* ═══ MASTER CARD ═══ */
+      .mcard {
+        background: var(--bg1); border: 1px solid var(--line);
+        border-radius: 10px; padding: 12px 16px; margin: 8px 0;
         page-break-inside: avoid;
       }
-      .highlight-box strong { color: var(--teal-dark); }
+      .mcard strong { color: var(--c2); font-size: .88rem; }
+      .mcard .ar { direction: rtl; text-align: right; font-family: 'Cairo', sans-serif; color: var(--c2); font-size: .8rem; font-weight: 600; margin-top: 4px; display: block; }
 
-      /* ── Tables ──────────────────────── */
-      table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: .85rem; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
-      th { background: linear-gradient(135deg, #0f766e, #0d9488); color: #fff; padding: 10px 12px; text-align: left; font-weight: 700; font-size: .8rem; }
-      td { padding: 9px 12px; border-bottom: 1px solid #e5e7eb; color: #334155; }
-      tr:nth-child(even) td { background: #f8fffe; }
+      /* ═══ EXAM TIP ═══ */
+      .tip {
+        background: #fffbeb; border: 1px solid #fde68a;
+        border-left: 4px solid #f59e0b; border-radius: 10px;
+        padding: 12px 16px; margin: 12px 0; font-size: .86rem;
+        page-break-inside: avoid; color: #92400e;
+      }
+      .tip strong { color: #b45309; }
+      .tip .ar { direction: rtl; text-align: right; font-family: 'Cairo', sans-serif; color: #b45309; font-size: .8rem; font-weight: 600; display: block; margin-top: 4px; }
+
+      /* ═══ MEMORY BOX ═══ */
+      .memo {
+        background: #eff6ff; border: 1px solid #bfdbfe;
+        border-left: 4px solid #3b82f6; border-radius: 10px;
+        padding: 12px 16px; margin: 12px 0; font-size: .86rem;
+        page-break-inside: avoid; color: #1e40af;
+      }
+
+      /* ═══ HIGHLIGHT / SUMMARY BOX ═══ */
+      .hbox {
+        background: var(--bg1); border: 1.5px solid var(--line);
+        border-radius: 10px; padding: 14px 18px; margin: 12px 0;
+        page-break-inside: avoid;
+      }
+      .hbox strong { color: var(--c2); }
+
+      /* ═══ EXAMPLE BOX ═══ */
+      .ebox {
+        background: var(--bg3); border: 1px solid #a7f3d0;
+        border-left: 4px solid #10b981; border-radius: 10px;
+        padding: 12px 16px; margin: 12px 0;
+        page-break-inside: avoid;
+      }
+      .ebox strong { color: #059669; }
+
+      /* ═══ NOTE ITEMS ═══ */
+      .note {
+        display: flex; gap: 14px; align-items: flex-start;
+        padding: 12px 0; border-bottom: 1px solid #f1f5f9;
+        page-break-inside: avoid;
+      }
+      .note:last-child { border-bottom: none; }
+      .note-n {
+        background: linear-gradient(135deg, var(--c1), var(--c2));
+        color: #fff; width: 28px; height: 28px; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        font-size: .72rem; font-weight: 800; flex-shrink: 0; margin-top: 1px;
+      }
+      .note-b { font-size: .86rem; color: #334155; line-height: 1.7; }
+      .note-b strong { color: var(--ink); }
+
+      /* ═══ TABLES ═══ */
+      table {
+        width: 100%; border-collapse: separate; border-spacing: 0;
+        margin: 14px 0; font-size: .82rem;
+        border-radius: 10px; overflow: hidden;
+        border: 1px solid var(--line);
+      }
+      th {
+        background: var(--c2); color: #fff;
+        padding: 10px 14px; text-align: left;
+        font-weight: 700; font-size: .78rem;
+        letter-spacing: .02em;
+      }
+      td {
+        padding: 9px 14px; border-bottom: 1px solid #e5e7eb;
+        color: #334155; vertical-align: top;
+      }
+      tr:nth-child(even) td { background: var(--bg2); }
       tr:last-child td { border-bottom: none; }
 
-      /* ── Footer ──────────────────────── */
-      .pdf-footer {
-        text-align: center; color: #94a3b8; font-size: .75rem;
-        padding: 20px 0; border-top: 1px solid #e5e7eb; margin-top: 40px;
+      /* ═══ ARABIC INLINE ═══ */
+      .ar-inline {
+        direction: rtl; text-align: right;
+        font-family: 'Cairo', sans-serif;
+        color: var(--c1); font-size: .8rem; font-weight: 600;
       }
 
-      /* ── Print ───────────────────────── */
+      /* ═══ FOOTER ═══ */
+      .footer {
+        text-align: center; color: #94a3b8; font-size: .72rem;
+        padding: 24px 0; border-top: 1.5px solid #e2e8f0;
+        margin-top: 48px;
+      }
+
+      /* ═══ PRINT STYLES ═══ */
       @media print {
-        .toolbar { display: none; }
-        .cover { margin-bottom: 20px; border-radius: 0; }
-        .content { padding: 0 20px 40px; }
-        body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-        .def-card, .concept-card-pdf, .lo-step, .note-row, .highlight-box { break-inside: avoid; }
+        .toolbar { display: none !important; }
+        body { padding: 0; max-width: none; font-size: 12.5px; }
+        .cover { border-radius: 0; padding: 40px 32px 32px; }
+        .content { padding: 24px 0 40px; }
+        .def, .cpt, .step, .mcard, .tip, .memo, .hbox, .ebox, .note {
+          break-inside: avoid;
+        }
+        .lo-section-pdf { break-inside: avoid; }
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
       }
     </style>
   </head><body>
 
     <div class="toolbar">
-      <button class="toolbar-btn" onclick="window.print()">🖨️ طباعة / حفظ PDF</button>
-      <span>اختر "Save as PDF" من خيارات الطابعة</span>
+      <button class="toolbar-btn" onclick="window.print()">🖨️ طباعة / حفظ كـ PDF</button>
+      <span class="hint">اختر "Save as PDF" في خيارات الطابعة للحفظ كملف</span>
     </div>
 
     <div class="cover">
-      <div class="cover-badge">MKT 201 — Principles of Marketing</div>
+      <div class="cover-tag">MKT 201 — Principles of Marketing</div>
       <h1>${chapterName}</h1>
-      <div class="sub">Kotler & Armstrong, 18th Edition</div>
-      <div class="date">${dateStr} · mkt201.vercel.app</div>
+      <div class="sub">Kotler & Armstrong · Principles of Marketing · 18th Edition</div>
+      <div class="info">
+        <span>📅 ${dateStr}</span>
+        <span>📖 ملخص شامل</span>
+        <span>🌐 mkt201.vercel.app</span>
+      </div>
     </div>
 
     <div class="content">
   `);
 
-  // Extract content from the page
+  // ── Process each section ──
   const sections = page.querySelectorAll('.lo-section, .chapter');
   sections.forEach(section => {
     const loHeader = section.querySelector('.lo-header');
+
     if (loHeader) {
       const badge = loHeader.querySelector('.lo-badge')?.textContent || '';
       const title = loHeader.querySelector('.lo-title')?.textContent || '';
-      w.document.write('<div class="section">');
-      w.document.write('<div class="section-header"><span class="section-badge">' + badge + '</span><span class="section-title">' + title.trim() + '</span></div>');
+      w.document.write('<div class="lo-section-pdf">');
+      w.document.write('<div class="lo-header-pdf"><span class="lo-badge-pdf">' + badge + '</span><span class="lo-title-pdf">' + title.trim() + '</span></div>');
     } else {
-      w.document.write('<div class="section">');
+      w.document.write('<div class="ch-section-pdf">');
     }
 
-    // Learning Objectives (process steps)
-    section.querySelectorAll('.process-step').forEach(step => {
-      const num = step.querySelector('.process-num')?.textContent || '';
-      const strong = step.querySelector('.process-content strong')?.innerHTML || '';
-      const ar = step.querySelector('.process-content .ar-line')?.textContent || '';
-      w.document.write('<div class="lo-step"><span class="lo-num">' + num + '</span><div class="lo-text"><strong>' + strong + '</strong>');
-      if (ar) w.document.write('<span class="ar-text">' + ar + '</span>');
-      w.document.write('</div></div>');
-    });
+    // Process ALL children in order to maintain document flow
+    const body = section.querySelector('.lo-body') || section;
+    const children = body.children;
 
-    // Definitions
-    section.querySelectorAll('.def-spotlight').forEach(def => {
-      const term = def.querySelector('.def-term')?.textContent || '';
-      const body = def.querySelector('.def-body')?.innerHTML || '';
-      const ar   = def.querySelector('.ar-line')?.textContent || '';
-      w.document.write('<div class="def-card"><div class="term">' + term + '</div><div class="body">' + body + '</div>');
-      if (ar) w.document.write('<div class="ar-text">' + ar + '</div>');
-      w.document.write('</div>');
-    });
+    for (let i = 0; i < children.length; i++) {
+      const el = children[i];
+      const cls = el.className || '';
 
-    // Concept cards
-    section.querySelectorAll('.concept-card').forEach(card => {
-      const strong = card.querySelector('strong')?.innerHTML || '';
-      const pEl = card.querySelector('p');
-      const pHtml = pEl?.innerHTML || '';
-      const ar = card.querySelector('.ar-line')?.textContent || '';
-      w.document.write('<div class="concept-card-pdf"><strong>' + strong + '</strong>');
-      if (pHtml) w.document.write('<p style="font-size:.88rem;color:#475569;margin-top:4px;">' + pHtml + '</p>');
-      w.document.write('</div>');
-    });
+      // ── H2 / H3 headings ──
+      if (el.tagName === 'H2' || el.tagName === 'H3') {
+        const arSpan = el.querySelector('.ar-line');
+        const arText = arSpan ? arSpan.textContent : '';
+        const mainText = el.textContent.replace(arText, '').trim();
+        const tag = el.tagName === 'H2' ? 'h2' : 'h3';
+        w.document.write('<' + tag + '>' + mainText);
+        if (arText) w.document.write(' <span class="ar-inline">' + arText + '</span>');
+        w.document.write('</' + tag + '>');
+      }
 
-    // Concept items
-    section.querySelectorAll('.concept-item').forEach(item => {
-      w.document.write('<div class="concept-card-pdf">' + item.innerHTML + '</div>');
-    });
+      // ── Definitions ──
+      else if (cls.includes('def-spotlight')) {
+        const term = el.querySelector('.def-term')?.textContent || '';
+        const bodyHTML = el.querySelector('.def-body')?.innerHTML || '';
+        const ar = el.querySelector('.ar-line')?.textContent || '';
+        w.document.write('<div class="def"><div class="def-t">' + term + '</div><div class="def-b">' + bodyHTML + '</div>');
+        if (ar) w.document.write('<div class="def-ar">' + ar + '</div>');
+        w.document.write('</div>');
+      }
 
-    // Summary and key points boxes
-    section.querySelectorAll('.summary-box, .key-points-box').forEach(box => {
-      w.document.write('<div class="highlight-box">' + box.innerHTML + '</div>');
-    });
+      // ── Concept rows (multiple concept cards) ──
+      else if (cls.includes('concept-row')) {
+        el.querySelectorAll('.concept-card').forEach(card => {
+          const strong = card.querySelector('strong')?.textContent || '';
+          const pEl = card.querySelector('p');
+          let pText = '', arText = '';
+          if (pEl) {
+            const arSpan = pEl.querySelector('.ar-line');
+            arText = arSpan ? arSpan.textContent : '';
+            pText = pEl.innerHTML;
+            if (arSpan) pText = pText.replace(arSpan.outerHTML, '');
+          }
+          w.document.write('<div class="cpt"><strong>' + strong + '</strong>');
+          if (pText) w.document.write('<p>' + pText.trim() + '</p>');
+          if (arText) w.document.write('<div class="ar">' + arText + '</div>');
+          w.document.write('</div>');
+        });
+      }
 
-    // Tables
-    section.querySelectorAll('.ref-table').forEach(table => {
-      w.document.write(table.outerHTML);
-    });
+      // ── Process flow (numbered steps) ──
+      else if (cls.includes('process-flow')) {
+        el.querySelectorAll('.process-step').forEach(step => {
+          const num = step.querySelector('.process-num')?.textContent || '';
+          const contentEl = step.querySelector('.process-content');
+          if (!contentEl) return;
+          const strong = contentEl.querySelector('strong')?.textContent || '';
+          const arLines = contentEl.querySelectorAll('.ar-line');
+          const arMain = arLines[0]?.textContent || '';
+          // Get paragraph text
+          const pEl = contentEl.querySelector('p');
+          let pText = '', pAr = '';
+          if (pEl) {
+            const pArSpan = pEl.querySelector('.ar-line');
+            pAr = pArSpan ? pArSpan.textContent : '';
+            pText = pEl.textContent.replace(pAr, '').trim();
+          }
+          w.document.write('<div class="step"><span class="step-n">' + num + '</span><div class="step-body"><strong>' + strong + '</strong>');
+          if (arMain) w.document.write('<span class="ar">' + arMain + '</span>');
+          if (pText) w.document.write('<div style="margin-top:4px;font-size:.84rem;color:#475569;">' + pText + '</div>');
+          if (pAr) w.document.write('<span class="ar">' + pAr + '</span>');
+          w.document.write('</div></div>');
+        });
+      }
 
-    // Notes grid items
-    section.querySelectorAll('.ch-note-item').forEach(note => {
-      const num = note.querySelector('.ch-note-num')?.textContent || '';
-      const content = note.querySelector('div')?.innerHTML || note.innerHTML;
-      w.document.write('<div class="note-row"><span class="note-circle">' + num + '</span><div class="note-content">' + content + '</div></div>');
-    });
+      // ── Exam tip ──
+      else if (cls.includes('exam-tip')) {
+        const arSpan = el.querySelector('.ar-line');
+        const arText = arSpan ? arSpan.textContent : '';
+        let mainHTML = el.innerHTML;
+        if (arSpan) mainHTML = mainHTML.replace(arSpan.outerHTML, '');
+        w.document.write('<div class="tip">' + mainHTML);
+        if (arText) w.document.write('<span class="ar">' + arText + '</span>');
+        w.document.write('</div>');
+      }
 
-    // Example boxes
-    section.querySelectorAll('.example-box').forEach(box => {
-      w.document.write('<div class="highlight-box" style="border-color:#bbf7d0;background:#f0fdf4;">' + box.innerHTML + '</div>');
-    });
+      // ── Memory box ──
+      else if (cls.includes('memory-box')) {
+        w.document.write('<div class="memo">' + el.innerHTML + '</div>');
+      }
+
+      // ── Master grid / Master cards ──
+      else if (cls.includes('master-grid')) {
+        el.querySelectorAll('.master-card').forEach(card => {
+          const strong = card.querySelector('strong')?.textContent || '';
+          const arSpan = card.querySelector('.ar-line');
+          const arText = arSpan ? arSpan.textContent : '';
+          let bodyText = card.textContent.replace(strong, '').replace(arText, '').trim();
+          w.document.write('<div class="mcard"><strong>' + strong + '</strong><div style="font-size:.84rem;color:#475569;margin-top:2px;">' + bodyText + '</div>');
+          if (arText) w.document.write('<span class="ar">' + arText + '</span>');
+          w.document.write('</div>');
+        });
+      }
+
+      // ── Standalone master card ──
+      else if (cls.includes('master-card')) {
+        const strong = el.querySelector('strong')?.textContent || '';
+        const arSpan = el.querySelector('.ar-line');
+        const arText = arSpan ? arSpan.textContent : '';
+        let bodyText = el.textContent.replace(strong, '').replace(arText, '').trim();
+        w.document.write('<div class="mcard"><strong>' + strong + '</strong><div style="font-size:.84rem;color:#475569;margin-top:2px;">' + bodyText + '</div>');
+        if (arText) w.document.write('<span class="ar">' + arText + '</span>');
+        w.document.write('</div>');
+      }
+
+      // ── Summary / Key points boxes ──
+      else if (cls.includes('summary-box') || cls.includes('key-points-box')) {
+        w.document.write('<div class="hbox">' + el.innerHTML + '</div>');
+      }
+
+      // ── Example box ──
+      else if (cls.includes('example-box')) {
+        w.document.write('<div class="ebox">' + el.innerHTML + '</div>');
+      }
+
+      // ── Pro tip ──
+      else if (cls.includes('pro-tip')) {
+        const arSpan = el.querySelector('.ar-line');
+        const arText = arSpan ? arSpan.textContent : '';
+        let mainHTML = el.innerHTML;
+        if (arSpan) mainHTML = mainHTML.replace(arSpan.outerHTML, '');
+        w.document.write('<div class="tip" style="background:#f0fdf4;border-color:#a7f3d0;border-left-color:#10b981;color:#065f46;">' + mainHTML);
+        if (arText) w.document.write('<span class="ar" style="color:#059669;">' + arText + '</span>');
+        w.document.write('</div>');
+      }
+
+      // ── Tables ──
+      else if (cls.includes('ref-table') || el.tagName === 'TABLE') {
+        w.document.write(el.outerHTML);
+      }
+
+      // ── Notes grid ──
+      else if (cls.includes('ch-notes-grid')) {
+        el.querySelectorAll('.ch-note-item').forEach(note => {
+          const num = note.querySelector('.ch-note-num')?.textContent || '';
+          const div = note.querySelector('div');
+          const content = div ? div.innerHTML : note.innerHTML;
+          w.document.write('<div class="note"><span class="note-n">' + num + '</span><div class="note-b">' + content + '</div></div>');
+        });
+      }
+
+      // ── Slide bullets ──
+      else if (cls.includes('slide-bullets')) {
+        w.document.write('<div class="hbox">' + el.innerHTML + '</div>');
+      }
+
+      // ── Bilingual box ──
+      else if (cls.includes('bilingual')) {
+        w.document.write('<div class="hbox">' + el.innerHTML + '</div>');
+      }
+    }
 
     w.document.write('</div>');
   });
 
-  w.document.write(`
-    <div class="pdf-footer">MKT 201 Study Hub · mkt201.vercel.app · ${dateStr}</div>
-    </div></body></html>`);
+  w.document.write('<div class="footer">MKT 201 Study Hub — ملخص شامل · mkt201.vercel.app · ' + dateStr + '</div>');
+  w.document.write('</div></body></html>');
   w.document.close();
 }
 
