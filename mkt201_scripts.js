@@ -5501,6 +5501,11 @@ function pomoToggleWidget() {
 // ═══════════════════════════════════════════════
 //  INIT HOOK — call new features on load
 // ═══════════════════════════════════════════════
+// Register Service Worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(() => {});
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   renderReadinessCard();
   renderWeakSpots();
