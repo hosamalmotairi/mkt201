@@ -235,6 +235,40 @@
     </div>
   </section>
 
+  <!-- Install App Banner -->
+  <div id="install-banner" style="background:linear-gradient(135deg,#0f766e,#0d9488);border-radius:14px;padding:16px 20px;margin-bottom:14px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;box-shadow:0 4px 16px rgba(13,148,136,.2);cursor:pointer;" onclick="document.getElementById('install-guide').style.display=document.getElementById('install-guide').style.display==='none'?'block':'none'">
+    <span style="font-size:1.8rem;">📲</span>
+    <div style="flex:1;min-width:180px;">
+      <div style="font-weight:800;color:#fff;font-size:.92rem;">حمّل التطبيق على جوالك!</div>
+      <div style="color:rgba(255,255,255,.7);font-size:.78rem;">يشتغل بدون نت — اضغط هنا للشرح</div>
+    </div>
+    <span style="color:rgba(255,255,255,.5);font-size:1.2rem;">▼</span>
+  </div>
+  <div id="install-guide" style="display:none;background:var(--paper);border:1.5px solid var(--line);border-radius:14px;padding:20px;margin-bottom:14px;">
+    <h3 style="color:var(--accent);font-size:.95rem;margin-bottom:14px;">📲 طريقة التحميل</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div style="background:var(--accent-soft);border-radius:12px;padding:14px;">
+        <div style="font-weight:800;font-size:.85rem;margin-bottom:8px;">🍎 آيفون / آيباد</div>
+        <ol style="font-size:.78rem;color:var(--muted);padding-right:16px;margin:0;line-height:1.8;direction:rtl;">
+          <li>افتح الموقع في <strong>Safari</strong></li>
+          <li>اضغط زر المشاركة <strong>(⬆️)</strong></li>
+          <li>اختر <strong>"Add to Home Screen"</strong></li>
+          <li>اضغط <strong>"Add"</strong> ✅</li>
+        </ol>
+      </div>
+      <div style="background:var(--accent-soft);border-radius:12px;padding:14px;">
+        <div style="font-weight:800;font-size:.85rem;margin-bottom:8px;">🤖 أندرويد</div>
+        <ol style="font-size:.78rem;color:var(--muted);padding-right:16px;margin:0;line-height:1.8;direction:rtl;">
+          <li>افتح الموقع في <strong>Chrome</strong></li>
+          <li>اضغط النقاط الثلاث <strong>(⋮)</strong></li>
+          <li>اختر <strong>"Install App"</strong> أو <strong>"Add to Home Screen"</strong></li>
+          <li>اضغط <strong>"Install"</strong> ✅</li>
+        </ol>
+      </div>
+    </div>
+    <p style="text-align:center;font-size:.75rem;color:var(--muted);margin-top:12px;">بعد التحميل يشتغل بدون انترنت 🔥</p>
+  </div>
+
   <!-- Quick Nav -->
   <div class="quick-nav-grid">
     <button class="qn-card" onclick="showPage('page-ch1')"><div class="qn-icon">🎯</div><div class="qn-label">Chapter 1</div><div class="qn-sub">قيمة العميل — ⭐ الأكثر في الامتحانات</div></button>
