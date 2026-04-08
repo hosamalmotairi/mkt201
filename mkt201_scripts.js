@@ -5374,6 +5374,123 @@ saveQuizResult = async function(ch, score, correct, wrong, elapsed) {
 };
 
 // ═══════════════════════════════════════════════
+//  FEATURE: POMODORO TIMER
+// ═══════════════════════════════════════════════
+const POMO_KEY = 'mkt201_pomo';
+const POMO_DURATIONS = { work: 25*60, short: 5*60, long: 15*60 };
+let pomoState = { mode: 'work', timeLeft: POMO_DURATIONS.work, running: false, timer: null, session: 1, totalSessions: 4 };
+
+function pomoGetStats() {
+  try { return JSON.parse(localStorage.getItem(POMO_KEY)) || { today: '', sessions: 0, minutes: 0, total: 0 }; } catch { return { today: '', sessions: 0, minutes: 0, total: 0 }; }
+}
+function pomoSaveStats(s) { localStorage.setItem(POMO_KEY, JSON.stringify(s)); }
+
+function pomoRenderStats() {
+  const s = pomoGetStats();
+  const today = new Date().toDateString();
+  if (s.today !== today) { s.sessions = 0; s.minutes = 0; s.today = today; pomoSaveStats(s); }
+  const el = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = v; };
+  el('pomo-today-sessions', s.sessions);
+  el('pomo-today-minutes', s.minutes);
+  el('pomo-total-sessions', s.total);
+  // Render dots
+  const dotsEl = document.getElementById('pomo-dots');
+  if (dotsEl) {
+    dotsEl.innerHTML = Array.from({length: pomoState.totalSessions}, (_, i) =>
+      `<div style="width:12px;height:12px;border-radius:50%;${i < pomoState.session - 1 ? 'background:var(--accent);' : 'background:var(--line);'}"></div>`
+    ).join('');
+  }
+}
+
+function pomoUpdateDisplay() {
+  const m = Math.floor(pomoState.timeLeft / 60);
+  const s = pomoState.timeLeft % 60;
+  const el = document.getElementById('pomo-time');
+  if (el) el.textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+  const btn = document.getElementById('pomo-start-btn');
+  if (btn) btn.textContent = pomoState.running ? '⏸️ إيقاف' : '▶️ ابدأ';
+  const statusEl = document.getElementById('pomo-status');
+  if (statusEl) {
+    if (pomoState.mode === 'work') statusEl.textContent = pomoState.running ? '🎯 وقت الدراسة' : 'جاهز للدراسة';
+    else if (pomoState.mode === 'short') statusEl.textContent = pomoState.running ? '☕ استراحة قصيرة' : 'استراحة قصيرة';
+    else statusEl.textContent = pomoState.running ? '🌴 استراحة طويلة' : 'استراحة طويلة';
+  }
+  const countEl = document.getElementById('pomo-session-count');
+  if (countEl) countEl.textContent = `الجلسة ${pomoState.session} من ${pomoState.totalSessions}`;
+}
+
+function pomoToggle() {
+  if (pomoState.running) {
+    clearInterval(pomoState.timer);
+    pomoState.running = false;
+  } else {
+    pomoState.running = true;
+    pomoState.timer = setInterval(pomoTick, 1000);
+  }
+  pomoUpdateDisplay();
+}
+
+function pomoTick() {
+  pomoState.timeLeft--;
+  if (pomoState.timeLeft <= 0) {
+    clearInterval(pomoState.timer);
+    pomoState.running = false;
+    // Play notification sound
+    try { const a = new AudioContext(); const o = a.createOscillator(); const g = a.createGain(); o.connect(g); g.connect(a.destination); o.frequency.value = 800; g.gain.value = 0.3; o.start(); setTimeout(() => { o.stop(); a.close(); }, 300); } catch(e) {}
+    if (pomoState.mode === 'work') {
+      // Complete a work session
+      const s = pomoGetStats();
+      const today = new Date().toDateString();
+      if (s.today !== today) { s.sessions = 0; s.minutes = 0; s.today = today; }
+      s.sessions++;
+      s.minutes += 25;
+      s.total++;
+      pomoSaveStats(s);
+      pomoRenderStats();
+      // Auto switch to break
+      if (pomoState.session >= pomoState.totalSessions) {
+        pomoSetMode('long');
+        pomoState.session = 1;
+      } else {
+        pomoSetMode('short');
+        pomoState.session++;
+      }
+      alert('🎉 أحسنت! خلص وقت الدراسة — خذ استراحة');
+    } else {
+      // Break finished
+      pomoSetMode('work');
+      alert('⏰ خلصت الاستراحة — يلا نرجع ندرس!');
+    }
+    pomoRenderStats();
+  }
+  pomoUpdateDisplay();
+}
+
+function pomoSetMode(mode) {
+  clearInterval(pomoState.timer);
+  pomoState.running = false;
+  pomoState.mode = mode;
+  pomoState.timeLeft = POMO_DURATIONS[mode];
+  pomoUpdateDisplay();
+  // Update button styles
+  ['work','short','long'].forEach(m => {
+    const btn = document.getElementById('pomo-btn-' + m);
+    if (btn) {
+      if (m === mode) { btn.style.borderColor = 'var(--accent)'; btn.style.color = 'var(--accent)'; }
+      else { btn.style.borderColor = ''; btn.style.color = ''; }
+    }
+  });
+}
+
+function pomoReset() {
+  clearInterval(pomoState.timer);
+  pomoState = { mode: 'work', timeLeft: POMO_DURATIONS.work, running: false, timer: null, session: 1, totalSessions: 4 };
+  pomoUpdateDisplay();
+  pomoRenderStats();
+  pomoSetMode('work');
+}
+
+// ═══════════════════════════════════════════════
 //  INIT HOOK — call new features on load
 // ═══════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {

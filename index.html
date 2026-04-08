@@ -168,6 +168,7 @@
     <li><a href="#" onclick="showPage('page-past');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">📋</span> تجميعات</a></li>
     <li><a href="#" onclick="showPage('page-spaced');renderSpacedPage();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🧠</span> مراجعة ذكية</a></li>
     <li><a href="#" onclick="showPage('page-challenge');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">⚔️</span> تحدّي زميلك</a></li>
+    <li><a href="#" onclick="showPage('page-pomodoro');pomoRenderStats();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🍅</span> بومودورو</a></li>
     <li><a href="#" onclick="showPage('page-dashboard');renderDashboard();renderStreakCalendar();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">📈</span> Dashboard</a></li>
     <li><a href="#" onclick="showPage('page-performance');renderPerformancePage();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">📊</span> تحليل الأداء</a></li>
     <li><a href="#" onclick="showPage('page-leaderboard');renderLeaderboard();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🏆</span> Leaderboard</a></li>
@@ -3010,6 +3011,49 @@
         <button class="quiz-nav-btn primary" onclick="createChallenge()">⚔️ تحدي جديد</button>
         <button class="quiz-nav-btn" onclick="shareResult('challenge')">📤 مشاركة النتيجة</button>
         <button class="quiz-nav-btn" onclick="showPage('page-home')">🏠 الرئيسية</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ POMODORO TIMER ═════════════════ -->
+<div id="page-pomodoro" class="page">
+  <section class="hero">
+    <div class="tag">مؤقت الدراسة</div>
+    <h1>🍅 بومودورو</h1>
+    <p>ادرس 25 دقيقة + استراحة 5 دقائق — أفضل طريقة للتركيز</p>
+  </section>
+  <div class="chapter" style="max-width:480px;margin:0 auto;">
+    <div id="pomo-display" style="text-align:center;">
+      <div id="pomo-status" style="font-size:.85rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;">جاهز للدراسة</div>
+      <div id="pomo-time" style="font-size:4.5rem;font-weight:900;color:var(--ink);font-variant-numeric:tabular-nums;line-height:1;">25:00</div>
+      <div id="pomo-session-count" style="font-size:.82rem;color:var(--muted);margin-top:8px;">الجلسة 1 من 4</div>
+      <div style="display:flex;justify-content:center;gap:6px;margin-top:14px;" id="pomo-dots"></div>
+      <div style="display:flex;gap:12px;justify-content:center;margin-top:24px;">
+        <button class="quiz-start-btn" style="max-width:160px;" id="pomo-start-btn" onclick="pomoToggle()">▶️ ابدأ</button>
+        <button class="quiz-nav-btn" onclick="pomoReset()">🔄 إعادة</button>
+      </div>
+      <div style="margin-top:24px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+        <button class="quiz-nav-btn" onclick="pomoSetMode('work')" id="pomo-btn-work" style="border-color:var(--accent);color:var(--accent);">🎯 دراسة 25د</button>
+        <button class="quiz-nav-btn" onclick="pomoSetMode('short')" id="pomo-btn-short">☕ استراحة 5د</button>
+        <button class="quiz-nav-btn" onclick="pomoSetMode('long')" id="pomo-btn-long">🌴 استراحة 15د</button>
+      </div>
+    </div>
+    <div style="margin-top:32px;padding-top:20px;border-top:1px solid var(--line);">
+      <h3 style="font-size:.9rem;color:var(--muted);margin-bottom:12px;">📊 إحصائيات اليوم</h3>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+        <div style="background:var(--accent-soft);border-radius:12px;padding:14px;text-align:center;">
+          <div id="pomo-today-sessions" style="font-size:1.5rem;font-weight:900;color:var(--accent);">0</div>
+          <div style="font-size:.75rem;color:var(--muted);">جلسات</div>
+        </div>
+        <div style="background:var(--accent-soft);border-radius:12px;padding:14px;text-align:center;">
+          <div id="pomo-today-minutes" style="font-size:1.5rem;font-weight:900;color:var(--accent);">0</div>
+          <div style="font-size:.75rem;color:var(--muted);">دقيقة</div>
+        </div>
+        <div style="background:var(--accent-soft);border-radius:12px;padding:14px;text-align:center;">
+          <div id="pomo-total-sessions" style="font-size:1.5rem;font-weight:900;color:var(--accent);">0</div>
+          <div style="font-size:.75rem;color:var(--muted);">إجمالي</div>
+        </div>
       </div>
     </div>
   </div>
