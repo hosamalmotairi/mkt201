@@ -5490,6 +5490,14 @@ function pomoReset() {
   pomoSetMode('work');
 }
 
+function pomoToggleWidget() {
+  const w = document.getElementById('pomo-widget');
+  if (!w) return;
+  const visible = w.style.display !== 'none';
+  w.style.display = visible ? 'none' : 'block';
+  if (!visible) { pomoUpdateDisplay(); pomoRenderStats(); }
+}
+
 // ═══════════════════════════════════════════════
 //  INIT HOOK — call new features on load
 // ═══════════════════════════════════════════════
