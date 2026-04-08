@@ -4374,21 +4374,21 @@ function exportChapterPDF(pageId, chapterName) {
         background: radial-gradient(circle, rgba(45,212,191,.12), transparent 70%);
       }
       .cover-tag {
-        display: inline-block; background: rgba(255,255,255,.15) !important;
+        display: inline-block; background: rgba(255,255,255,.15);
         backdrop-filter: blur(6px); padding: 5px 16px; border-radius: 20px;
         font-size: .72rem; font-weight: 700; letter-spacing: .08em;
         text-transform: uppercase; margin-bottom: 16px;
-        border: 1px solid rgba(255,255,255,.12); color: #fff !important;
+        border: 1px solid rgba(255,255,255,.12); color: #fff;
       }
       .cover h1 {
         font-size: 1.4rem; font-weight: 900; line-height: 1.25;
-        margin-bottom: 8px; position: relative; color: #fff !important;
+        margin-bottom: 8px; position: relative; color: #fff;
       }
-      .cover .sub { font-size: .9rem; opacity: 1; font-weight: 400; color: rgba(255,255,255,.75) !important; }
+      .cover .sub { font-size: .9rem; font-weight: 400; color: rgba(255,255,255,.75); }
       .cover .info {
         margin-top: 12px; padding-top: 10px;
         border-top: 1px solid rgba(255,255,255,.12);
-        display: flex; gap: 24px; font-size: .78rem; color: rgba(255,255,255,.6) !important;
+        display: flex; gap: 24px; font-size: .78rem; color: rgba(255,255,255,.6);
       }
 
       /* ═══ CONTENT AREA ═══ */
