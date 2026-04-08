@@ -166,7 +166,10 @@
     <li><a href="#" onclick="showPage('page-mock');checkMockExamLock();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">📋</span> Mock Exam</a></li>
     <li><a href="#" onclick="showPage('page-match');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🔗</span> لعبة الربط</a></li>
     <li><a href="#" onclick="showPage('page-past');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">📋</span> تجميعات</a></li>
+    <li><a href="#" onclick="showPage('page-spaced');renderSpacedPage();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🧠</span> مراجعة ذكية</a></li>
+    <li><a href="#" onclick="showPage('page-challenge');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">⚔️</span> تحدّي زميلك</a></li>
     <li><a href="#" onclick="showPage('page-dashboard');renderDashboard();renderStreakCalendar();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">📈</span> Dashboard</a></li>
+    <li><a href="#" onclick="showPage('page-performance');renderPerformancePage();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">📊</span> تحليل الأداء</a></li>
     <li><a href="#" onclick="showPage('page-leaderboard');renderLeaderboard();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🏆</span> Leaderboard</a></li>
     <li><a href="#" onclick="showPage('page-badges');renderBadgesPage();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🏅</span> الشارات</a></li>
   </ul>
@@ -2749,6 +2752,8 @@
         <button id="result-back-levels" class="quiz-nav-btn primary" style="display:none;" onclick="backToLevels()">🎖️ المستويات</button>
         <button class="quiz-nav-btn primary" id="result-new-session-btn" onclick="resetQuiz()">🔄 جلسة جديدة</button>
         <button class="quiz-nav-btn" id="quiz-review-btn" onclick="toggleQuizReview()">📋 مراجعة الإجابات</button>
+        <button class="quiz-nav-btn" onclick="shareResult('quiz')">📤 مشاركة النتيجة</button>
+        <button class="quiz-nav-btn" onclick="exportWrongAnswersPDF('quiz')">📄 تصدير PDF</button>
         <button class="quiz-nav-btn" onclick="showPage('page-home')">🏠 الرئيسية</button>
       </div>
       <div id="quiz-review-list" style="display:none;margin-top:24px;"></div>
@@ -2842,6 +2847,8 @@
       <div style="display:flex;gap:12px;justify-content:center;margin-top:20px;flex-wrap:wrap;">
         <button class="quiz-nav-btn primary" onclick="resetMock()">Try Again</button>
         <button class="quiz-nav-btn" id="mock-review-btn" onclick="toggleMockReview()">📋 Review Answers</button>
+        <button class="quiz-nav-btn" onclick="shareResult('mock')">📤 مشاركة النتيجة</button>
+        <button class="quiz-nav-btn" onclick="exportWrongAnswersPDF('mock')">📄 تصدير PDF</button>
         <button class="quiz-nav-btn" onclick="showPage('page-home')">Home</button>
       </div>
       <div id="mock-review-list" style="display:none;margin-top:24px;"></div>
@@ -2898,6 +2905,112 @@
   </div>
 </div>
 
+<!-- ═══════════ PERFORMANCE ANALYSIS ══════════ -->
+<div id="page-performance" class="page">
+  <section class="hero">
+    <div class="tag">تحليل الأداء</div>
+    <h1>📊 تحليل أعمق للأداء</h1>
+    <p>تطور مستواك مع الوقت وأضعف المفاهيم عندك</p>
+  </section>
+  <div class="chapter">
+    <h3>📈 تطور الدرجات</h3>
+    <canvas id="perf-chart" width="700" height="300" style="width:100%;max-width:700px;margin:0 auto;display:block;border-radius:12px;background:var(--paper);border:1px solid var(--line);"></canvas>
+    <h3 style="margin-top:32px;">🎯 أضعف المفاهيم</h3>
+    <div id="perf-weak-concepts"></div>
+    <h3 style="margin-top:32px;">📋 سجل الجلسات</h3>
+    <div id="perf-session-log"></div>
+  </div>
+</div>
+
+<!-- ═══════════ SPACED REPETITION ═════════════ -->
+<div id="page-spaced" class="page">
+  <section class="hero">
+    <div class="tag">المراجعة الذكية</div>
+    <h1>🧠 التكرار المتباعد</h1>
+    <p>أسئلة تحتاج مراجعة بناءً على أدائك السابق</p>
+  </section>
+  <div class="chapter">
+    <div id="spaced-due-count" style="text-align:center;margin-bottom:20px;font-size:1.1rem;font-weight:700;color:var(--accent);"></div>
+    <div id="spaced-cards" style="display:flex;flex-direction:column;gap:12px;"></div>
+    <div id="spaced-empty" style="display:none;text-align:center;padding:40px 20px;color:var(--muted);">
+      <div style="font-size:3rem;margin-bottom:12px;">✅</div>
+      <p style="font-size:1.1rem;font-weight:600;">لا يوجد أسئلة للمراجعة حالياً</p>
+      <p style="font-size:.9rem;">أجب على كويزات وستظهر هنا الأسئلة اللي تحتاج تراجعها</p>
+    </div>
+    <div style="text-align:center;margin-top:20px;">
+      <button class="quiz-start-btn" style="max-width:300px;" onclick="startSpacedQuiz()" id="spaced-start-btn">🚀 ابدأ مراجعة الأسئلة المستحقة</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ CHALLENGE MODE ════════════════ -->
+<div id="page-challenge" class="page">
+  <section class="hero">
+    <div class="tag">وضع المنافسة</div>
+    <h1>⚔️ تحدّي زميلك</h1>
+    <p>أرسل رابط لزميلك وشوفوا مين يجيب أعلى درجة</p>
+  </section>
+  <div class="chapter">
+    <div id="challenge-setup">
+      <h3>⚙️ إعدادات التحدي</h3>
+      <div style="display:grid;gap:16px;max-width:400px;margin:0 auto;">
+        <div>
+          <label style="font-weight:600;font-size:.9rem;color:var(--muted);display:block;margin-bottom:6px;">عدد الأسئلة</label>
+          <select id="challenge-count" class="form-input" style="padding:10px 14px;border-radius:10px;">
+            <option value="10">10 أسئلة</option>
+            <option value="15" selected>15 سؤال</option>
+            <option value="20">20 سؤال</option>
+            <option value="30">30 سؤال</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-weight:600;font-size:.9rem;color:var(--muted);display:block;margin-bottom:6px;">الوقت (دقائق)</label>
+          <select id="challenge-time" class="form-input" style="padding:10px 14px;border-radius:10px;">
+            <option value="5">5 دقائق</option>
+            <option value="10" selected>10 دقائق</option>
+            <option value="15">15 دقيقة</option>
+            <option value="0">بدون وقت</option>
+          </select>
+        </div>
+        <button class="quiz-start-btn" onclick="createChallenge()">🔗 إنشاء رابط التحدي</button>
+      </div>
+      <div id="challenge-link-box" style="display:none;margin-top:20px;text-align:center;">
+        <p style="font-weight:700;color:var(--accent);margin-bottom:8px;">🔗 رابط التحدي جاهز!</p>
+        <input type="text" id="challenge-link-input" readonly class="form-input" style="text-align:center;font-size:.85rem;direction:ltr;">
+        <div style="display:flex;gap:8px;justify-content:center;margin-top:12px;">
+          <button class="quiz-nav-btn primary" onclick="copyChallengeLink()">📋 نسخ الرابط</button>
+          <button class="quiz-nav-btn" onclick="shareChallengeLink()">📤 مشاركة</button>
+        </div>
+      </div>
+    </div>
+    <div id="challenge-run" style="display:none;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+        <span id="challenge-counter" style="font-weight:700;color:var(--accent);"></span>
+        <span id="challenge-timer" style="font-weight:700;font-size:1.2rem;color:var(--accent);"></span>
+      </div>
+      <div id="challenge-q-text" style="font-size:1.05rem;font-weight:600;line-height:1.7;margin-bottom:16px;padding:20px;background:var(--paper);border:1px solid var(--line);border-radius:14px;"></div>
+      <div id="challenge-options"></div>
+    </div>
+    <div id="challenge-result" style="display:none;text-align:center;">
+      <div class="result-circle" id="challenge-result-circle">
+        <div id="challenge-result-pct" class="result-pct">—</div>
+        <div class="result-label">Score</div>
+      </div>
+      <div id="challenge-result-msg" style="font-size:1.1rem;font-weight:700;margin:16px 0;"></div>
+      <div class="result-stats">
+        <div class="result-stat"><div id="challenge-result-correct" class="result-stat-val">—</div><div class="result-stat-lbl">Correct</div></div>
+        <div class="result-stat"><div id="challenge-result-wrong" class="result-stat-val">—</div><div class="result-stat-lbl">Wrong</div></div>
+        <div class="result-stat"><div id="challenge-result-time" class="result-stat-val">—</div><div class="result-stat-lbl">Time</div></div>
+      </div>
+      <div style="display:flex;gap:12px;justify-content:center;margin-top:16px;flex-wrap:wrap;">
+        <button class="quiz-nav-btn primary" onclick="createChallenge()">⚔️ تحدي جديد</button>
+        <button class="quiz-nav-btn" onclick="shareResult('challenge')">📤 مشاركة النتيجة</button>
+        <button class="quiz-nav-btn" onclick="showPage('page-home')">🏠 الرئيسية</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ═══════════ LEADERBOARD ════════════════════ -->
 <div id="page-leaderboard" class="page">
   <section class="hero">
@@ -2944,6 +3057,15 @@
 <div id="onboarding-overlay" class="onboarding-overlay" style="display:none;">
   <div id="onboarding-modal" class="onboarding-modal"></div>
 </div>
+
+<!-- ── REMINDER TOAST ─────────────────────────── -->
+<div id="reminder-toast" class="reminder-toast" style="display:none;">
+  <div id="reminder-toast-text"></div>
+  <button onclick="document.getElementById('reminder-toast').style.display='none'" style="background:none;border:none;color:inherit;font-size:1.2rem;cursor:pointer;padding:4px;">✕</button>
+</div>
+
+<!-- ── SHARE CANVAS (hidden) ─────────────────── -->
+<canvas id="share-canvas" width="600" height="400" style="display:none;"></canvas>
 
 <!-- ── FIREBASE SDK ───────────────────────────── -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>

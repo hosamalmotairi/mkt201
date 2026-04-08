@@ -4194,11 +4194,674 @@ function closeOnboarding() {
 
 
 // ═══════════════════════════════════════════════
+//  FEATURE: PDF EXPORT (wrong answers summary)
+// ═══════════════════════════════════════════════
+function exportWrongAnswersPDF(mode) {
+  let questions, answers;
+  if (mode === 'mock') {
+    questions = mockState.questions;
+    answers   = mockState.answers;
+  } else {
+    questions = quizState.questions;
+    answers   = quizState.answers;
+  }
+  const wrong = questions.map((q, i) => ({ q, chosen: answers[i] }))
+    .filter(({ q, chosen }) => chosen !== q.ans && !q._retry);
+  const chNames = { ch1:'Chapter 1', ch2:'Chapter 2', ch3:'Chapter 3', ch5:'Chapter 5' };
+  const w = window.open('', '_blank');
+  w.document.write(`<!DOCTYPE html><html dir="ltr"><head><meta charset="UTF-8">
+    <title>MKT 201 — Wrong Answers Review</title>
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body { font-family: 'Inter', sans-serif; padding: 32px; color: #1a1a1a; max-width: 800px; margin: 0 auto; }
+      h1 { font-size: 1.5rem; margin-bottom: 4px; color: #0d9488; }
+      .meta { color: #666; font-size: .85rem; margin-bottom: 24px; }
+      .card { border: 1px solid #e5e7eb; border-radius: 12px; padding: 16px; margin-bottom: 14px; page-break-inside: avoid; }
+      .q-text { font-weight: 600; margin-bottom: 8px; line-height: 1.6; }
+      .opts { list-style: none; padding: 0; }
+      .opts li { padding: 4px 8px; border-radius: 6px; margin: 3px 0; font-size: .9rem; }
+      .opts li.correct { background: #dcfce7; color: #166534; font-weight: 700; }
+      .opts li.wrong   { background: #fee2e2; color: #991b1b; text-decoration: line-through; }
+      .exp { background: #f0fdfa; border-right: 3px solid #14b8a6; padding: 8px 12px; margin-top: 8px; font-size: .85rem; color: #334155; direction: rtl; border-radius: 6px; }
+      .ch-tag { display: inline-block; background: #f0fdfa; color: #0d9488; font-size: .75rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; margin-bottom: 8px; }
+      .no-print { margin-bottom: 20px; }
+      @media print { .no-print { display: none; } }
+    </style></head><body>
+    <div class="no-print"><button onclick="window.print()" style="background:#0d9488;color:#fff;border:none;padding:10px 24px;border-radius:8px;font-weight:600;cursor:pointer;font-size:.95rem;">🖨️ Print / Save as PDF</button></div>
+    <h1>MKT 201 — Wrong Answers Review</h1>
+    <p class="meta">${wrong.length} wrong answers · ${new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' })}</p>`);
+  if (wrong.length === 0) {
+    w.document.write('<p style="text-align:center;padding:40px;color:#16a34a;font-size:1.2rem;font-weight:700;">🎉 No wrong answers — Perfect score!</p>');
+  } else {
+    wrong.forEach(({ q, chosen }, idx) => {
+      const optsHtml = q.opts.map((opt, i) => {
+        let cls = '';
+        if (i === q.ans) cls = 'correct';
+        else if (i === chosen) cls = 'wrong';
+        return `<li class="${cls}">${String.fromCharCode(65+i)}. ${opt}</li>`;
+      }).join('');
+      w.document.write(`<div class="card">
+        <span class="ch-tag">${chNames[q.ch] || q.ch || 'Mixed'}</span>
+        <div class="q-text">${idx+1}. ${q.q}</div>
+        <ul class="opts">${optsHtml}</ul>
+        ${q.exp ? `<div class="exp">${q.exp}</div>` : ''}
+      </div>`);
+    });
+  }
+  w.document.write('</body></html>');
+  w.document.close();
+}
+
+// ═══════════════════════════════════════════════
+//  FEATURE: SHARE RESULT AS IMAGE
+// ═══════════════════════════════════════════════
+function shareResult(mode) {
+  const canvas = document.getElementById('share-canvas');
+  const ctx    = canvas.getContext('2d');
+  const W = 600, H = 400;
+  canvas.width = W; canvas.height = H;
+
+  // Get data
+  let score, correct, wrong, timeText;
+  if (mode === 'mock') {
+    score   = document.getElementById('mock-result-pct')?.textContent || '—';
+    correct = document.getElementById('mock-result-correct')?.textContent || '—';
+    wrong   = document.getElementById('mock-result-wrong')?.textContent || '—';
+    timeText = document.getElementById('mock-result-time')?.textContent || '—';
+  } else if (mode === 'challenge') {
+    score   = document.getElementById('challenge-result-pct')?.textContent || '—';
+    correct = document.getElementById('challenge-result-correct')?.textContent || '—';
+    wrong   = document.getElementById('challenge-result-wrong')?.textContent || '—';
+    timeText = document.getElementById('challenge-result-time')?.textContent || '—';
+  } else {
+    score   = document.getElementById('result-pct')?.textContent || '—';
+    correct = document.getElementById('result-correct')?.textContent || '—';
+    wrong   = document.getElementById('result-wrong')?.textContent || '—';
+    timeText = document.getElementById('result-time')?.textContent || '—';
+  }
+  const scoreNum = parseInt(score) || 0;
+
+  // Background gradient
+  const grad = ctx.createLinearGradient(0, 0, W, H);
+  grad.addColorStop(0, '#062320');
+  grad.addColorStop(1, '#0d3d38');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, W, H);
+
+  // Decorative circles
+  ctx.globalAlpha = 0.08;
+  ctx.fillStyle = '#14b8a6';
+  ctx.beginPath(); ctx.arc(500, 80, 120, 0, Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.arc(100, 350, 80, 0, Math.PI*2); ctx.fill();
+  ctx.globalAlpha = 1;
+
+  // Title
+  ctx.fillStyle = '#14b8a6';
+  ctx.font = 'bold 18px Inter, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('MKT 201 Study Hub', W/2, 45);
+
+  const modeLabel = mode === 'mock' ? 'Mock Exam' : mode === 'challenge' ? 'Challenge' : 'Quiz';
+  ctx.fillStyle = '#5eead4';
+  ctx.font = '14px Inter, sans-serif';
+  ctx.fillText(modeLabel + ' Result', W/2, 70);
+
+  // Score circle
+  const cx = W/2, cy = 175, r = 65;
+  const scoreColor = scoreNum >= 85 ? '#16a34a' : scoreNum >= 70 ? '#d97706' : scoreNum >= 55 ? '#ea580c' : '#dc2626';
+  ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2);
+  ctx.fillStyle = scoreColor; ctx.globalAlpha = 0.2; ctx.fill();
+  ctx.globalAlpha = 1;
+  ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2);
+  ctx.strokeStyle = scoreColor; ctx.lineWidth = 4; ctx.stroke();
+  ctx.fillStyle = '#fff';
+  ctx.font = 'bold 42px Inter, sans-serif';
+  ctx.fillText(score, cx, cy + 12);
+  ctx.font = '13px Inter, sans-serif';
+  ctx.fillStyle = '#94a3b8';
+  ctx.fillText('Score', cx, cy + 32);
+
+  // Stats
+  const stats = [
+    { label: 'Correct', value: correct, color: '#4ade80' },
+    { label: 'Wrong', value: wrong, color: '#f87171' },
+    { label: 'Time', value: timeText, color: '#67e8f9' },
+  ];
+  stats.forEach((s, i) => {
+    const sx = 120 + i * 180;
+    ctx.fillStyle = s.color;
+    ctx.font = 'bold 28px Inter, sans-serif';
+    ctx.fillText(s.value, sx, 300);
+    ctx.fillStyle = '#94a3b8';
+    ctx.font = '12px Inter, sans-serif';
+    ctx.fillText(s.label, sx, 320);
+  });
+
+  // Footer
+  ctx.fillStyle = '#475569';
+  ctx.font = '11px Inter, sans-serif';
+  ctx.fillText('mkt201.vercel.app', W/2, 375);
+
+  // Download or share
+  canvas.toBlob(async (blob) => {
+    const file = new File([blob], 'mkt201-result.png', { type: 'image/png' });
+    if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({ files: [file], title: 'MKT 201 Result', text: `حصلت على ${score} في MKT 201! 🎓` });
+      } catch (e) { downloadShareImage(blob); }
+    } else {
+      downloadShareImage(blob);
+    }
+  }, 'image/png');
+}
+
+function downloadShareImage(blob) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'mkt201-result.png';
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+// ═══════════════════════════════════════════════
+//  FEATURE: PERFORMANCE ANALYSIS (Charts)
+// ═══════════════════════════════════════════════
+const SESSION_LOG_KEY = 'mkt201_sessionLog';
+
+function logSession(ch, score, correct, wrong) {
+  const log = JSON.parse(localStorage.getItem(SESSION_LOG_KEY) || '[]');
+  log.push({ ch, score, correct, wrong, date: Date.now() });
+  if (log.length > 100) log.splice(0, log.length - 100);
+  localStorage.setItem(SESSION_LOG_KEY, JSON.stringify(log));
+}
+
+function renderPerformancePage() {
+  renderPerformanceChart();
+  renderWeakConcepts();
+  renderSessionLog();
+}
+
+function renderPerformanceChart() {
+  const canvas = document.getElementById('perf-chart');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const log = JSON.parse(localStorage.getItem(SESSION_LOG_KEY) || '[]');
+  const dpr = window.devicePixelRatio || 1;
+  const W = canvas.clientWidth, H = 300;
+  canvas.width = W * dpr; canvas.height = H * dpr;
+  ctx.scale(dpr, dpr);
+
+  const isDark = document.documentElement.classList.contains('dark') || document.body.classList.contains('dark');
+  ctx.fillStyle = isDark ? '#0a1c1a' : '#fff';
+  ctx.fillRect(0, 0, W, H);
+
+  if (log.length < 2) {
+    ctx.fillStyle = isDark ? '#6aada8' : '#666';
+    ctx.font = '14px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('أكمل كويزين على الأقل لترى الرسم البياني', W/2, H/2);
+    return;
+  }
+
+  const pad = { top: 30, right: 20, bottom: 40, left: 45 };
+  const cw = W - pad.left - pad.right;
+  const ch = H - pad.top - pad.bottom;
+  const last20 = log.slice(-20);
+
+  // Grid lines
+  ctx.strokeStyle = isDark ? '#0d2c29' : '#e5e7eb';
+  ctx.lineWidth = 1;
+  for (let i = 0; i <= 4; i++) {
+    const y = pad.top + (ch / 4) * i;
+    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(pad.left + cw, y); ctx.stroke();
+    ctx.fillStyle = isDark ? '#6aada8' : '#999';
+    ctx.font = '11px Inter, sans-serif';
+    ctx.textAlign = 'right';
+    ctx.fillText((100 - i * 25) + '%', pad.left - 6, y + 4);
+  }
+
+  // Line chart
+  ctx.beginPath();
+  ctx.strokeStyle = '#14b8a6'; ctx.lineWidth = 2.5;
+  last20.forEach((s, i) => {
+    const x = pad.left + (cw / (last20.length - 1)) * i;
+    const y = pad.top + ch - (s.score / 100) * ch;
+    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+  });
+  ctx.stroke();
+
+  // Dots
+  last20.forEach((s, i) => {
+    const x = pad.left + (cw / (last20.length - 1)) * i;
+    const y = pad.top + ch - (s.score / 100) * ch;
+    ctx.beginPath(); ctx.arc(x, y, 4, 0, Math.PI*2);
+    ctx.fillStyle = s.score >= 85 ? '#16a34a' : s.score >= 70 ? '#d97706' : '#dc2626';
+    ctx.fill();
+  });
+
+  // X axis labels
+  ctx.fillStyle = isDark ? '#6aada8' : '#999';
+  ctx.font = '10px Inter, sans-serif';
+  ctx.textAlign = 'center';
+  last20.forEach((s, i) => {
+    if (last20.length <= 10 || i % 2 === 0) {
+      const x = pad.left + (cw / (last20.length - 1)) * i;
+      const d = new Date(s.date);
+      ctx.fillText(`${d.getMonth()+1}/${d.getDate()}`, x, H - 10);
+    }
+  });
+}
+
+function renderWeakConcepts() {
+  const el = document.getElementById('perf-weak-concepts');
+  if (!el) return;
+  const m = getMastery();
+  const weak = [];
+  allQuestions.forEach(q => {
+    const key = q.q.slice(0, 60);
+    const rec = m[key];
+    if (rec && rec.wrong > 0) {
+      weak.push({ q: q.q, ch: q.ch, wrong: rec.wrong, correct: rec.correct, exp: q.exp });
+    }
+  });
+  weak.sort((a, b) => b.wrong - a.wrong);
+  const top10 = weak.slice(0, 10);
+  const chNames = { ch1:'Ch1', ch2:'Ch2', ch3:'Ch3', ch5:'Ch5' };
+  if (top10.length === 0) {
+    el.innerHTML = '<p style="color:var(--muted);text-align:center;padding:20px;">لا يوجد أسئلة غلطت فيها بعد 👏</p>';
+    return;
+  }
+  el.innerHTML = top10.map((w, i) => `
+    <div style="background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:10px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+        <span style="font-size:.75rem;font-weight:700;color:var(--accent);background:var(--accent-soft);padding:2px 8px;border-radius:6px;">${chNames[w.ch]||w.ch}</span>
+        <span style="font-size:.8rem;color:#dc2626;font-weight:700;">✗ ${w.wrong} مرة</span>
+      </div>
+      <p style="font-size:.9rem;font-weight:600;line-height:1.6;">${w.q.substring(0,120)}${w.q.length>120?'...':''}</p>
+      ${w.exp ? `<p style="font-size:.8rem;color:var(--muted);margin-top:6px;direction:rtl;">${w.exp.substring(0,150)}...</p>` : ''}
+    </div>
+  `).join('');
+}
+
+function renderSessionLog() {
+  const el = document.getElementById('perf-session-log');
+  if (!el) return;
+  const log = JSON.parse(localStorage.getItem(SESSION_LOG_KEY) || '[]');
+  if (log.length === 0) {
+    el.innerHTML = '<p style="color:var(--muted);text-align:center;padding:20px;">لا يوجد جلسات مسجلة بعد</p>';
+    return;
+  }
+  const chNames = { ch1:'الفصل 1', ch2:'الفصل 2', ch3:'الفصل 3', ch5:'الفصل 5', all:'الكل' };
+  el.innerHTML = '<div style="display:flex;flex-direction:column;gap:8px;">' +
+    log.slice().reverse().slice(0, 20).map(s => {
+      const d = new Date(s.date);
+      const dateStr = d.toLocaleDateString('ar-SA', { month:'short', day:'numeric' }) + ' · ' + d.toLocaleTimeString('en', { hour:'2-digit', minute:'2-digit' });
+      const col = s.score >= 85 ? '#16a34a' : s.score >= 70 ? '#d97706' : '#dc2626';
+      return `<div style="display:flex;justify-content:space-between;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 14px;">
+        <div><span style="font-weight:700;color:${col};">${s.score}%</span> <span style="color:var(--muted);font-size:.8rem;">· ${chNames[s.ch]||s.ch}</span></div>
+        <div style="font-size:.8rem;color:var(--muted);">${dateStr}</div>
+      </div>`;
+    }).join('') + '</div>';
+}
+
+// ═══════════════════════════════════════════════
+//  FEATURE: SPACED REPETITION
+// ═══════════════════════════════════════════════
+const SPACED_KEY = 'mkt201_spaced';
+
+function getSpacedData() {
+  try { return JSON.parse(localStorage.getItem(SPACED_KEY)) || {}; } catch { return {}; }
+}
+
+function saveSpacedData(data) {
+  localStorage.setItem(SPACED_KEY, JSON.stringify(data));
+}
+
+function markSpacedQuestion(qText, correct) {
+  const data = getSpacedData();
+  const key  = qText.slice(0, 60);
+  const now  = Date.now();
+  if (!data[key]) data[key] = { interval: 1, nextReview: now, correct: 0, wrong: 0 };
+  if (correct) {
+    data[key].correct++;
+    data[key].interval = Math.min(data[key].interval * 2, 30);
+    data[key].nextReview = now + data[key].interval * 24 * 60 * 60 * 1000;
+  } else {
+    data[key].wrong++;
+    data[key].interval = 1;
+    data[key].nextReview = now + 24 * 60 * 60 * 1000;
+  }
+  saveSpacedData(data);
+}
+
+function getDueQuestions() {
+  const data = getSpacedData();
+  const now  = Date.now();
+  const due  = [];
+  allQuestions.forEach(q => {
+    const key = q.q.slice(0, 60);
+    const rec = data[key];
+    if (rec && rec.nextReview <= now && rec.wrong > 0) {
+      due.push(q);
+    }
+  });
+  return due;
+}
+
+function getNewWrongQuestions() {
+  const data = getSpacedData();
+  const m    = getMastery();
+  const newWrong = [];
+  allQuestions.forEach(q => {
+    const key = q.q.slice(0, 60);
+    const rec = m[key];
+    if (rec && rec.wrong > 0 && !data[key]) {
+      newWrong.push(q);
+    }
+  });
+  return newWrong;
+}
+
+function renderSpacedPage() {
+  const due     = getDueQuestions();
+  const newWrong = getNewWrongQuestions();
+  const all     = [...due, ...newWrong];
+  const countEl = document.getElementById('spaced-due-count');
+  const cardsEl = document.getElementById('spaced-cards');
+  const emptyEl = document.getElementById('spaced-empty');
+  const startBtn = document.getElementById('spaced-start-btn');
+
+  if (countEl) countEl.textContent = all.length > 0 ? `📋 ${all.length} سؤال يحتاج مراجعة` : '';
+  if (all.length === 0) {
+    if (cardsEl) cardsEl.style.display = 'none';
+    if (emptyEl) emptyEl.style.display = 'block';
+    if (startBtn) startBtn.style.display = 'none';
+    return;
+  }
+  if (emptyEl) emptyEl.style.display = 'none';
+  if (cardsEl) cardsEl.style.display = 'flex';
+  if (startBtn) startBtn.style.display = '';
+
+  const chNames = { ch1:'Ch1', ch2:'Ch2', ch3:'Ch3', ch5:'Ch5' };
+  const spacedData = getSpacedData();
+  if (cardsEl) cardsEl.innerHTML = all.slice(0, 10).map(q => {
+    const key = q.q.slice(0, 60);
+    const rec = spacedData[key];
+    const interval = rec ? `كل ${rec.interval} يوم` : 'جديد';
+    return `<div style="background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px;">
+      <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+        <span style="font-size:.75rem;font-weight:700;color:var(--accent);background:var(--accent-soft);padding:2px 8px;border-radius:6px;">${chNames[q.ch]||q.ch}</span>
+        <span style="font-size:.75rem;color:var(--muted);">🔄 ${interval}</span>
+      </div>
+      <p style="font-size:.9rem;font-weight:600;line-height:1.6;">${q.q.substring(0,100)}${q.q.length>100?'...':''}</p>
+    </div>`;
+  }).join('');
+}
+
+function startSpacedQuiz() {
+  const due     = getDueQuestions();
+  const newWrong = getNewWrongQuestions();
+  const all     = shuffle([...due, ...newWrong]);
+  if (all.length === 0) { alert('لا يوجد أسئلة للمراجعة حالياً!'); return; }
+  const pick = all.slice(0, Math.min(20, all.length));
+  quizState.questions    = pick;
+  quizState.current      = 0;
+  quizState.answers      = new Array(pick.length).fill(null);
+  quizState.startTime    = Date.now();
+  quizState.ch           = 'all';
+  quizState.trainingMode = false;
+  quizState._levelIdx    = undefined;
+  showPage('page-quiz');
+  document.querySelector('.quiz-setup')?.classList.remove('active');
+  document.querySelector('.quiz-run')?.classList.add('active');
+  document.querySelector('.quiz-result')?.classList.remove('active');
+  renderQuizQuestion();
+}
+
+// ═══════════════════════════════════════════════
+//  FEATURE: CHALLENGE MODE
+// ═══════════════════════════════════════════════
+let challengeState = {
+  questions: [], current: 0, answers: [], startTime: null,
+  timeLimit: 0, timer: null, seed: 0
+};
+
+function seededRandom(seed) {
+  return function() {
+    seed = (seed * 16807 + 0) % 2147483647;
+    return (seed - 1) / 2147483646;
+  };
+}
+
+function seededShuffle(arr, seed) {
+  const rng = seededRandom(seed);
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function createChallenge() {
+  const count = parseInt(document.getElementById('challenge-count')?.value || '15');
+  const time  = parseInt(document.getElementById('challenge-time')?.value || '10');
+  const seed  = Math.floor(Math.random() * 999999) + 1;
+  const questions = seededShuffle(allQuestions, seed).slice(0, count);
+
+  challengeState = {
+    questions, current: 0, answers: new Array(questions.length).fill(null),
+    startTime: null, timeLimit: time * 60, timer: null, seed
+  };
+
+  const params = `seed=${seed}&count=${count}&time=${time}`;
+  const url = window.location.origin + window.location.pathname + '?' + params;
+
+  const linkInput = document.getElementById('challenge-link-input');
+  const linkBox   = document.getElementById('challenge-link-box');
+  if (linkInput) linkInput.value = url;
+  if (linkBox) linkBox.style.display = 'block';
+  document.getElementById('challenge-setup').style.display = '';
+  document.getElementById('challenge-run').style.display = 'none';
+  document.getElementById('challenge-result').style.display = 'none';
+}
+
+function copyChallengeLink() {
+  const input = document.getElementById('challenge-link-input');
+  if (input) {
+    navigator.clipboard.writeText(input.value).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ تم النسخ!';
+      setTimeout(() => btn.textContent = '📋 نسخ الرابط', 2000);
+    });
+  }
+}
+
+function shareChallengeLink() {
+  const input = document.getElementById('challenge-link-input');
+  if (navigator.share && input) {
+    navigator.share({ title: 'MKT 201 Challenge', text: 'تحداني في MKT 201! 🎓⚔️', url: input.value });
+  } else {
+    copyChallengeLink();
+  }
+}
+
+function startChallengeFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  const seed  = parseInt(params.get('seed'));
+  const count = parseInt(params.get('count'));
+  const time  = parseInt(params.get('time'));
+  if (!seed || !count) return false;
+
+  const questions = seededShuffle(allQuestions, seed).slice(0, count);
+  challengeState = {
+    questions, current: 0, answers: new Array(questions.length).fill(null),
+    startTime: Date.now(), timeLimit: time * 60, timer: null, seed
+  };
+
+  showPage('page-challenge');
+  document.getElementById('challenge-setup').style.display = 'none';
+  document.getElementById('challenge-run').style.display = '';
+  document.getElementById('challenge-result').style.display = 'none';
+
+  if (time > 0) {
+    challengeState.timer = setInterval(challengeTick, 1000);
+  }
+  renderChallengeQuestion();
+  return true;
+}
+
+function challengeTick() {
+  const elapsed = Math.round((Date.now() - challengeState.startTime) / 1000);
+  const remaining = challengeState.timeLimit - elapsed;
+  const timerEl = document.getElementById('challenge-timer');
+  if (timerEl) {
+    if (remaining <= 0) {
+      finishChallenge();
+    } else {
+      const m = Math.floor(remaining / 60);
+      const s = remaining % 60;
+      timerEl.textContent = `⏱️ ${m}:${String(s).padStart(2,'0')}`;
+      if (remaining <= 30) timerEl.style.color = '#dc2626';
+    }
+  }
+}
+
+function renderChallengeQuestion() {
+  const q  = challengeState.questions[challengeState.current];
+  const ci = challengeState.current;
+  const total = challengeState.questions.length;
+
+  const counterEl = document.getElementById('challenge-counter');
+  if (counterEl) counterEl.textContent = `سؤال ${ci+1} / ${total}`;
+
+  const qTextEl = document.getElementById('challenge-q-text');
+  if (qTextEl) qTextEl.innerHTML = q.q;
+
+  const optEl = document.getElementById('challenge-options');
+  if (optEl) optEl.innerHTML = q.opts.map((opt, i) =>
+    `<button class="quiz-opt-btn" onclick="selectChallengeAnswer(${i})" style="margin-bottom:8px;">${String.fromCharCode(65+i)}. ${opt}</button>`
+  ).join('');
+}
+
+function selectChallengeAnswer(idx) {
+  if (challengeState.answers[challengeState.current] !== null) return;
+  challengeState.answers[challengeState.current] = idx;
+  const q = challengeState.questions[challengeState.current];
+  const btns = document.querySelectorAll('#challenge-options .quiz-opt-btn');
+  btns.forEach((btn, i) => {
+    btn.onclick = null;
+    if (i === q.ans) btn.classList.add('correct');
+    else if (i === idx && idx !== q.ans) btn.classList.add('wrong');
+  });
+  setTimeout(() => {
+    challengeState.current++;
+    if (challengeState.current >= challengeState.questions.length) {
+      finishChallenge();
+    } else {
+      renderChallengeQuestion();
+    }
+  }, 800);
+}
+
+function finishChallenge() {
+  if (challengeState.timer) { clearInterval(challengeState.timer); challengeState.timer = null; }
+  const qs = challengeState.questions;
+  let correct = 0;
+  qs.forEach((q, i) => { if (challengeState.answers[i] === q.ans) correct++; });
+  const wrong = qs.length - correct;
+  const score = Math.round((correct / qs.length) * 100);
+  const elapsed = Math.round((Date.now() - challengeState.startTime) / 1000);
+
+  document.getElementById('challenge-run').style.display = 'none';
+  document.getElementById('challenge-result').style.display = '';
+  document.getElementById('challenge-result-pct').textContent = score + '%';
+  document.getElementById('challenge-result-correct').textContent = correct;
+  document.getElementById('challenge-result-wrong').textContent = wrong;
+  document.getElementById('challenge-result-time').textContent = formatTime(elapsed);
+
+  const col = score >= 85 ? '#16a34a' : score >= 70 ? '#d97706' : score >= 55 ? '#ea580c' : '#dc2626';
+  const circle = document.getElementById('challenge-result-circle');
+  if (circle) {
+    circle.style.background = `linear-gradient(135deg, ${col}dd, ${col})`;
+    circle.style.boxShadow = `0 12px 32px ${col}44`;
+  }
+  const msg = score >= 85 ? '🌟 أداء ممتاز!' : score >= 70 ? '✅ أداء جيد!' : score >= 55 ? '📚 لا بأس، راجع أكثر' : '💪 حاول مرة ثانية';
+  document.getElementById('challenge-result-msg').textContent = msg;
+}
+
+// ═══════════════════════════════════════════════
+//  FEATURE: SMART REMINDERS
+// ═══════════════════════════════════════════════
+const LAST_VISIT_KEY  = 'mkt201_lastVisit';
+const EXAM_DATE_MKT   = new Date('2026-04-12T00:00:00');
+
+function checkReminders() {
+  const lastVisit = parseInt(localStorage.getItem(LAST_VISIT_KEY) || '0');
+  const now = Date.now();
+  localStorage.setItem(LAST_VISIT_KEY, now);
+  if (!lastVisit) return;
+
+  const daysSince = Math.floor((now - lastVisit) / (1000 * 60 * 60 * 24));
+  const daysToExam = Math.ceil((EXAM_DATE_MKT.getTime() - now) / (1000 * 60 * 60 * 24));
+
+  let msg = '';
+  if (daysToExam <= 0) return;
+  if (daysSince >= 3) {
+    msg = `⏰ ما راجعت من ${daysSince} أيام! باقي ${daysToExam} يوم على الاختبار`;
+  } else if (daysToExam <= 3) {
+    msg = `🔥 باقي ${daysToExam} يوم فقط على الاختبار! وقت المراجعة النهائية`;
+  } else if (daysToExam <= 7) {
+    msg = `📚 باقي ${daysToExam} أيام على الاختبار — استمر بالمراجعة!`;
+  }
+
+  if (msg) {
+    const toast = document.getElementById('reminder-toast');
+    const textEl = document.getElementById('reminder-toast-text');
+    if (toast && textEl) {
+      textEl.textContent = msg;
+      toast.style.display = 'flex';
+      setTimeout(() => { toast.style.display = 'none'; }, 10000);
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════
+//  FEATURE: "EXPLAIN MORE" BUTTON ON WRONG ANSWERS
+// ═══════════════════════════════════════════════
+// Enhance showExplanation to include expW (wrong explanations)
+const _origShowExplanation = typeof showExplanation === 'function' ? showExplanation : null;
+
+// ═══════════════════════════════════════════════
+//  HOOK: Log sessions for performance tracking
+// ═══════════════════════════════════════════════
+const _origSaveQuizResult = saveQuizResult;
+saveQuizResult = async function(ch, score, correct, wrong, elapsed) {
+  logSession(ch, score, correct, wrong);
+  // Update spaced repetition data
+  const qs = quizState.questions || [];
+  const ans = quizState.answers || [];
+  qs.forEach((q, i) => {
+    if (q._retry) return;
+    if (ans[i] !== null && ans[i] !== undefined) {
+      markSpacedQuestion(q.q, ans[i] === q.ans);
+    }
+  });
+  return _origSaveQuizResult(ch, score, correct, wrong, elapsed);
+};
+
+// ═══════════════════════════════════════════════
 //  INIT HOOK — call new features on load
 // ═══════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
   renderReadinessCard();
   renderWeakSpots();
+  checkReminders();
+  // Check if URL has challenge params
+  if (window.location.search.includes('seed=')) {
+    setTimeout(() => startChallengeFromURL(), 500);
+  }
   // initOnboarding() is called from pickTheme() after theme selection
   // so new users see: login → theme → onboarding
 });
