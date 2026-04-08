@@ -4273,6 +4273,7 @@ function exportChapterPDF(pageId, chapterName) {
       memoBg: '#eff6ff', memoBorder: '#bfdbfe', memoAccent: '#3b82f6', memoText: '#1e40af',
       exBg: '#ecfdf5', exBorder: '#a7f3d0', exAccent: '#10b981',
       coverGrad: 'linear-gradient(160deg, #042f2e 0%, #0a3d39 30%, #0d9488 70%, #2dd4bf 100%)',
+      svgStops: ['#042f2e','#0a3d39','#0d9488','#2dd4bf'],
       bodyBg: '#ffffff',
     },
     tealDark: {
@@ -4283,6 +4284,7 @@ function exportChapterPDF(pageId, chapterName) {
       memoBg: '#0c1929', memoBorder: '#1e3a5f', memoAccent: '#60a5fa', memoText: '#93c5fd',
       exBg: '#071f1c', exBorder: '#064e3b', exAccent: '#34d399',
       coverGrad: 'linear-gradient(160deg, #021a19 0%, #042f2e 30%, #0d9488 70%, #14b8a6 100%)',
+      svgStops: ['#021a19','#042f2e','#0d9488','#14b8a6'],
       bodyBg: '#030d0c',
     },
     roseLight: {
@@ -4293,6 +4295,7 @@ function exportChapterPDF(pageId, chapterName) {
       memoBg: '#fdf2f8', memoBorder: '#fbcfe8', memoAccent: '#ec4899', memoText: '#9d174d',
       exBg: '#fff1f2', exBorder: '#fda4af', exAccent: '#fb7185',
       coverGrad: 'linear-gradient(160deg, #4c0519 0%, #881337 30%, #e11d48 70%, #fb7185 100%)',
+      svgStops: ['#4c0519','#881337','#e11d48','#fb7185'],
       bodyBg: '#ffffff',
     },
     roseDark: {
@@ -4303,6 +4306,7 @@ function exportChapterPDF(pageId, chapterName) {
       memoBg: '#1f0618', memoBorder: '#831843', memoAccent: '#f472b6', memoText: '#fbcfe8',
       exBg: '#2d0a14', exBorder: '#9f1239', exAccent: '#fb7185',
       coverGrad: 'linear-gradient(160deg, #1a0005 0%, #4c0519 30%, #9f1239 70%, #fb7185 100%)',
+      svgStops: ['#1a0005','#4c0519','#9f1239','#fb7185'],
       bodyBg: '#0d0308',
     }
   };
@@ -4357,11 +4361,7 @@ function exportChapterPDF(pageId, chapterName) {
 
       /* ═══ COVER PAGE ═══ */
       .cover {
-        background: ${p.coverGrad} !important;
         color: #fff !important; padding: 32px 30px 28px; position: relative; overflow: hidden;
-        box-shadow: 0 8px 32px rgba(0,0,0,.2), 0 2px 6px rgba(0,0,0,.1);
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
       }
       .cover::before {
         content: ''; position: absolute; top: -60px; right: -60px;
@@ -4615,13 +4615,24 @@ function exportChapterPDF(pageId, chapterName) {
     </div>
 
     <div class="cover">
-      <div class="cover-tag">MKT 201 — Principles of Marketing</div>
-      <h1>${chapterName}</h1>
-      <div class="sub">Kotler & Armstrong · Principles of Marketing · 18th Edition</div>
-      <div class="info">
-        <span>📅 ${dateStr}</span>
-        <span>📖 ملخص شامل</span>
-        <span>🌐 mkt201.vercel.app</span>
+      <svg style="position:absolute;inset:0;width:100%;height:100%;z-index:0;" preserveAspectRatio="none">
+        <defs><linearGradient id="cg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="${p.svgStops[0]}"/>
+          <stop offset="30%" stop-color="${p.svgStops[1]}"/>
+          <stop offset="70%" stop-color="${p.svgStops[2]}"/>
+          <stop offset="100%" stop-color="${p.svgStops[3]}"/>
+        </linearGradient></defs>
+        <rect width="100%" height="100%" fill="url(#cg)"/>
+      </svg>
+      <div style="position:relative;z-index:1;">
+        <div class="cover-tag">MKT 201 — Principles of Marketing</div>
+        <h1>${chapterName}</h1>
+        <div class="sub">Kotler & Armstrong · Principles of Marketing · 18th Edition</div>
+        <div class="info">
+          <span>📅 ${dateStr}</span>
+          <span>📖 ملخص شامل</span>
+          <span>🌐 mkt201.vercel.app</span>
+        </div>
       </div>
     </div>
 
