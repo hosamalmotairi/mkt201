@@ -4359,6 +4359,7 @@ function exportChapterPDF(pageId, chapterName) {
       .cover {
         background: ${p.coverGrad};
         color: #fff; padding: 56px 44px 44px; position: relative; overflow: hidden;
+        box-shadow: 0 8px 32px rgba(0,0,0,.2), 0 2px 6px rgba(0,0,0,.1);
       }
       .cover::before {
         content: ''; position: absolute; top: -60px; right: -60px;
@@ -4397,8 +4398,10 @@ function exportChapterPDF(pageId, chapterName) {
       }
       .lo-header-pdf {
         display: flex; align-items: center; gap: 12px;
-        padding: 12px 0; margin-bottom: 16px;
-        border-bottom: 2px solid var(--c1);
+        padding: 14px 18px; margin-bottom: 18px;
+        background: var(--bg1); border: 1.5px solid var(--line);
+        border-radius: 12px; border-left: 5px solid var(--c1);
+        box-shadow: 0 3px 12px ${isDark ? 'rgba(0,0,0,.25)' : 'rgba(0,0,0,.05)'};
       }
       .lo-badge-pdf {
         background: var(--c1); color: #fff;
@@ -4426,10 +4429,11 @@ function exportChapterPDF(pageId, chapterName) {
 
       /* ═══ DEFINITION ═══ */
       .def {
-        background: ${isDark ? p.paper : '#fff'}; border: 1px solid var(--line);
-        border-left: 4px solid var(--c1); border-radius: 10px;
-        padding: 14px 18px; margin: 12px 0;
+        background: ${isDark ? p.paper : '#fff'}; border: 1.5px solid var(--line);
+        border-left: 5px solid var(--c1); border-radius: 12px;
+        padding: 16px 20px; margin: 14px 0;
         page-break-inside: avoid;
+        box-shadow: 0 4px 16px ${isDark ? 'rgba(0,0,0,.3)' : 'rgba(0,0,0,.06)'}, 0 1px 3px ${isDark ? 'rgba(0,0,0,.2)' : 'rgba(0,0,0,.04)'};
       }
       .def-t {
         font-weight: 800; color: var(--c1); font-size: .88rem;
@@ -4448,9 +4452,10 @@ function exportChapterPDF(pageId, chapterName) {
 
       /* ═══ CONCEPT CARD ═══ */
       .cpt {
-        background: var(--bg2); border: 1px solid var(--line);
-        border-radius: 10px; padding: 12px 16px; margin: 8px 0;
+        background: var(--bg2); border: 1.5px solid var(--line);
+        border-radius: 12px; padding: 14px 18px; margin: 10px 0;
         page-break-inside: avoid;
+        box-shadow: 0 3px 12px ${isDark ? 'rgba(0,0,0,.25)' : 'rgba(0,0,0,.05)'}, 0 1px 2px ${isDark ? 'rgba(0,0,0,.15)' : 'rgba(0,0,0,.03)'};
       }
       .cpt strong { color: var(--c2); font-size: .88rem; }
       .cpt p { font-size: .84rem; color: ${isDark ? p.muted : '#475569'}; margin-top: 3px; line-height: 1.7; }
@@ -4459,10 +4464,11 @@ function exportChapterPDF(pageId, chapterName) {
       /* ═══ PROCESS STEPS (Learning Objectives list) ═══ */
       .step {
         display: flex; gap: 14px; align-items: flex-start;
-        padding: 10px 14px; margin: 6px 0;
-        background: var(--bg2); border-radius: 10px;
-        border-left: 3px solid var(--c1);
+        padding: 12px 16px; margin: 8px 0;
+        background: var(--bg2); border-radius: 12px;
+        border-left: 4px solid var(--c1);
         page-break-inside: avoid;
+        box-shadow: 0 3px 12px ${isDark ? 'rgba(0,0,0,.25)' : 'rgba(0,0,0,.05)'}, 0 1px 2px ${isDark ? 'rgba(0,0,0,.15)' : 'rgba(0,0,0,.03)'};
       }
       .step-n {
         background: var(--c1); color: #fff;
@@ -4480,55 +4486,62 @@ function exportChapterPDF(pageId, chapterName) {
 
       /* ═══ MASTER CARD ═══ */
       .mcard {
-        background: var(--bg1); border: 1px solid var(--line);
-        border-radius: 10px; padding: 12px 16px; margin: 8px 0;
+        background: var(--bg1); border: 1.5px solid var(--line);
+        border-radius: 12px; padding: 14px 18px; margin: 10px 0;
         page-break-inside: avoid;
+        box-shadow: 0 3px 12px ${isDark ? 'rgba(0,0,0,.25)' : 'rgba(0,0,0,.05)'}, 0 1px 2px ${isDark ? 'rgba(0,0,0,.15)' : 'rgba(0,0,0,.03)'};
       }
       .mcard strong { color: var(--c2); font-size: .88rem; }
       .mcard .ar { direction: rtl; text-align: right; font-family: 'Cairo', sans-serif; color: var(--c2); font-size: .8rem; font-weight: 600; margin-top: 4px; display: block; }
 
       /* ═══ EXAM TIP ═══ */
       .tip {
-        background: ${p.tipBg}; border: 1px solid ${p.tipBorder};
-        border-left: 4px solid ${p.tipAccent}; border-radius: 10px;
-        padding: 12px 16px; margin: 12px 0; font-size: .86rem;
+        background: ${p.tipBg}; border: 1.5px solid ${p.tipBorder};
+        border-left: 5px solid ${p.tipAccent}; border-radius: 12px;
+        padding: 14px 18px; margin: 14px 0; font-size: .86rem;
         page-break-inside: avoid; color: ${p.tipText};
+        box-shadow: 0 4px 16px ${isDark ? 'rgba(0,0,0,.3)' : 'rgba(245,158,11,.1)'}, 0 1px 3px ${isDark ? 'rgba(0,0,0,.2)' : 'rgba(0,0,0,.04)'};
       }
       .tip strong { color: ${p.tipAccent}; }
       .tip .ar { direction: rtl; text-align: right; font-family: 'Cairo', sans-serif; color: ${p.tipAccent}; font-size: .8rem; font-weight: 600; display: block; margin-top: 4px; }
 
       /* ═══ MEMORY BOX ═══ */
       .memo {
-        background: ${p.memoBg}; border: 1px solid ${p.memoBorder};
-        border-left: 4px solid ${p.memoAccent}; border-radius: 10px;
-        padding: 12px 16px; margin: 12px 0; font-size: .86rem;
+        background: ${p.memoBg}; border: 1.5px solid ${p.memoBorder};
+        border-left: 5px solid ${p.memoAccent}; border-radius: 12px;
+        padding: 14px 18px; margin: 14px 0; font-size: .86rem;
         page-break-inside: avoid; color: ${p.memoText};
+        box-shadow: 0 4px 16px ${isDark ? 'rgba(0,0,0,.3)' : 'rgba(59,130,246,.08)'}, 0 1px 3px ${isDark ? 'rgba(0,0,0,.2)' : 'rgba(0,0,0,.04)'};
       }
 
       /* ═══ HIGHLIGHT / SUMMARY BOX ═══ */
       .hbox {
         background: var(--bg1); border: 1.5px solid var(--line);
-        border-radius: 10px; padding: 14px 18px; margin: 12px 0;
+        border-radius: 12px; padding: 16px 20px; margin: 14px 0;
         page-break-inside: avoid;
+        box-shadow: 0 3px 12px ${isDark ? 'rgba(0,0,0,.25)' : 'rgba(0,0,0,.05)'}, 0 1px 2px ${isDark ? 'rgba(0,0,0,.15)' : 'rgba(0,0,0,.03)'};
       }
       .hbox strong { color: var(--c2); }
 
       /* ═══ EXAMPLE BOX ═══ */
       .ebox {
-        background: var(--bg3); border: 1px solid ${p.exBorder};
-        border-left: 4px solid ${p.exAccent}; border-radius: 10px;
-        padding: 12px 16px; margin: 12px 0;
+        background: var(--bg3); border: 1.5px solid ${p.exBorder};
+        border-left: 5px solid ${p.exAccent}; border-radius: 12px;
+        padding: 14px 18px; margin: 14px 0;
         page-break-inside: avoid;
+        box-shadow: 0 4px 16px ${isDark ? 'rgba(0,0,0,.3)' : 'rgba(16,185,129,.08)'}, 0 1px 3px ${isDark ? 'rgba(0,0,0,.2)' : 'rgba(0,0,0,.04)'};
       }
       .ebox strong { color: ${p.exAccent}; }
 
       /* ═══ NOTE ITEMS ═══ */
       .note {
         display: flex; gap: 14px; align-items: flex-start;
-        padding: 12px 0; border-bottom: 1px solid ${isDark ? p.line : '#f1f5f9'};
+        padding: 14px 16px; margin: 8px 0;
+        background: ${isDark ? p.paper : '#fff'};
+        border: 1.5px solid var(--line); border-radius: 12px;
         page-break-inside: avoid;
+        box-shadow: 0 3px 10px ${isDark ? 'rgba(0,0,0,.25)' : 'rgba(0,0,0,.04)'}, 0 1px 2px ${isDark ? 'rgba(0,0,0,.15)' : 'rgba(0,0,0,.03)'};
       }
-      .note:last-child { border-bottom: none; }
       .note-n {
         background: linear-gradient(135deg, var(--c1), var(--c2));
         color: #fff; width: 28px; height: 28px; border-radius: 50%;
@@ -4542,8 +4555,9 @@ function exportChapterPDF(pageId, chapterName) {
       table {
         width: 100%; border-collapse: separate; border-spacing: 0;
         margin: 14px 0; font-size: .82rem;
-        border-radius: 10px; overflow: hidden;
-        border: 1px solid var(--line);
+        border-radius: 12px; overflow: hidden;
+        border: 1.5px solid var(--line);
+        box-shadow: 0 4px 16px ${isDark ? 'rgba(0,0,0,.3)' : 'rgba(0,0,0,.06)'}, 0 1px 3px ${isDark ? 'rgba(0,0,0,.2)' : 'rgba(0,0,0,.04)'};
       }
       th {
         background: var(--c2); color: #fff;
