@@ -4253,6 +4253,128 @@ function exportWrongAnswersPDF(mode) {
 }
 
 // ═══════════════════════════════════════════════
+//  FEATURE: EXPORT CHAPTER SUMMARY AS PDF
+// ═══════════════════════════════════════════════
+function exportChapterPDF(pageId, chapterName) {
+  const page = document.getElementById(pageId);
+  if (!page) return;
+
+  const w = window.open('', '_blank');
+  w.document.write(`<!DOCTYPE html><html dir="ltr"><head><meta charset="UTF-8">
+    <title>MKT 201 — ${chapterName} Summary</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body { font-family: 'Inter', sans-serif; padding: 28px 32px; color: #1a1a1a; max-width: 850px; margin: 0 auto; line-height: 1.7; }
+      h1 { font-size: 1.4rem; color: #0d9488; margin-bottom: 4px; }
+      h2 { font-size: 1.15rem; color: #0f766e; margin: 20px 0 10px; border-bottom: 2px solid #ccfbf1; padding-bottom: 4px; }
+      h3 { font-size: 1rem; color: #134e4a; margin: 16px 0 8px; }
+      .meta { color: #666; font-size: .8rem; margin-bottom: 20px; }
+      .section { margin-bottom: 18px; page-break-inside: avoid; }
+      .def-box { background: #f0fdfa; border-left: 3px solid #14b8a6; padding: 10px 14px; border-radius: 6px; margin: 8px 0; }
+      .def-term { font-weight: 800; color: #0d9488; font-size: .9rem; }
+      .def-body { font-size: .88rem; margin-top: 2px; }
+      .ar { direction: rtl; color: #0d9488; font-size: .82rem; font-weight: 600; margin-top: 4px; background: #f0fdfa; padding: 4px 8px; border-radius: 4px; }
+      .concept { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 10px 14px; margin: 6px 0; }
+      .concept strong { color: #0f766e; }
+      .note-item { display: flex; gap: 10px; margin: 6px 0; align-items: flex-start; }
+      .note-num { background: #0d9488; color: #fff; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .7rem; font-weight: 800; flex-shrink: 0; margin-top: 2px; }
+      .lo-item { margin: 8px 0; padding: 8px 12px; background: #f8fafc; border-radius: 6px; }
+      .lo-num { font-weight: 800; color: #0d9488; margin-left: 6px; }
+      table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: .85rem; }
+      th { background: #0d9488; color: #fff; padding: 8px 10px; text-align: left; }
+      td { padding: 7px 10px; border-bottom: 1px solid #e5e7eb; }
+      tr:nth-child(even) td { background: #f8fffe; }
+      .no-print { margin-bottom: 20px; }
+      @media print {
+        .no-print { display: none; }
+        body { padding: 16px; }
+        .def-box, .concept { break-inside: avoid; }
+      }
+    </style>
+  </head><body>
+    <div class="no-print">
+      <button onclick="window.print()" style="background:#0d9488;color:#fff;border:none;padding:10px 24px;border-radius:8px;font-weight:600;cursor:pointer;font-size:.95rem;">🖨️ Print / Save as PDF</button>
+    </div>
+    <h1>MKT 201 — ${chapterName} Summary</h1>
+    <p class="meta">Generated from MKT 201 Study Hub · ${new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' })}</p>
+  `);
+
+  // Extract content from the page
+  const sections = page.querySelectorAll('.lo-section, .chapter');
+  sections.forEach(section => {
+    // Get LO header if exists
+    const loHeader = section.querySelector('.lo-header');
+    if (loHeader) {
+      const badge = loHeader.querySelector('.lo-badge')?.textContent || '';
+      const title = loHeader.querySelector('.lo-title')?.textContent || '';
+      w.document.write('<div class="section">');
+      w.document.write('<h2>' + badge + ' — ' + title.trim() + '</h2>');
+    } else {
+      w.document.write('<div class="section">');
+    }
+
+    // Process definitions
+    section.querySelectorAll('.def-spotlight').forEach(def => {
+      const term = def.querySelector('.def-term')?.textContent || '';
+      const body = def.querySelector('.def-body')?.innerHTML || '';
+      const ar   = def.querySelector('.ar-line')?.textContent || '';
+      w.document.write('<div class="def-box">');
+      w.document.write('<div class="def-term">' + term + '</div>');
+      w.document.write('<div class="def-body">' + body + '</div>');
+      if (ar) w.document.write('<div class="ar">' + ar + '</div>');
+      w.document.write('</div>');
+    });
+
+    // Process concept cards
+    section.querySelectorAll('.concept-card').forEach(card => {
+      const html = card.innerHTML;
+      w.document.write('<div class="concept">' + html + '</div>');
+    });
+
+    // Process concept rows with items
+    section.querySelectorAll('.concept-item').forEach(item => {
+      w.document.write('<div class="concept">' + item.innerHTML + '</div>');
+    });
+
+    // Process summary boxes
+    section.querySelectorAll('.summary-box').forEach(box => {
+      w.document.write('<div class="def-box">' + box.innerHTML + '</div>');
+    });
+
+    // Process key points
+    section.querySelectorAll('.key-points-box').forEach(box => {
+      w.document.write('<div class="def-box">' + box.innerHTML + '</div>');
+    });
+
+    // Process tables
+    section.querySelectorAll('.ref-table').forEach(table => {
+      w.document.write(table.outerHTML);
+    });
+
+    // Process notes grid items
+    section.querySelectorAll('.ch-note-item').forEach(note => {
+      const num = note.querySelector('.ch-note-num')?.textContent || '';
+      const content = note.querySelector('div')?.innerHTML || note.innerHTML;
+      w.document.write('<div class="note-item"><span class="note-num">' + num + '</span><div>' + content + '</div></div>');
+    });
+
+    // Process process steps (Learning Objectives)
+    section.querySelectorAll('.process-step').forEach(step => {
+      const num = step.querySelector('.process-num')?.textContent || '';
+      const content = step.querySelector('.process-content')?.innerHTML || '';
+      w.document.write('<div class="lo-item"><span class="lo-num">' + num + '</span> ' + content + '</div>');
+    });
+
+    w.document.write('</div>');
+  });
+
+  w.document.write('</body></html>');
+  w.document.close();
+}
+
+// ═══════════════════════════════════════════════
 //  FEATURE: SHARE RESULT AS IMAGE
 // ═══════════════════════════════════════════════
 function shareResult(mode) {
