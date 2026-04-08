@@ -4589,22 +4589,28 @@ function exportChapterPDF(pageId, chapterName) {
       }
 
       /* ═══ PRINT STYLES ═══ */
-      * {
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-        color-adjust: exact !important;
-      }
       @media print {
         .toolbar { display: none !important; }
-        body { padding: 0; max-width: none; font-size: 11px; }
-        .cover { border-radius: 0; padding: 28px 24px 24px; }
-        .content { padding: 16px 0 32px; }
+        body { padding: 0; max-width: none; font-size: 11px; background: #fff !important; color: #1e293b !important; }
+        .cover { border-radius: 0; padding: 24px 24px 20px; background: #fff !important; border-bottom: 4px solid ${p.c1}; }
+        .cover svg { display: none !important; }
+        .cover, .cover h1, .cover .cover-tag, .cover .sub, .cover .info, .cover .info span {
+          color: ${p.c1} !important;
+        }
+        .cover h1 { color: ${isDark ? p.c1 : p.c3} !important; font-size: 1.3rem; }
+        .cover .cover-tag { background: ${p.bg1} !important; border-color: ${p.line} !important; color: ${p.c1} !important; }
+        .cover .sub { color: var(--muted) !important; }
+        .cover .info { color: var(--muted) !important; border-color: ${p.line} !important; }
+        .content { padding: 16px 0 32px; background: #fff !important; }
+        .def, .cpt, .step, .mcard, .hbox, .note { background: #fff !important; }
         .def, .cpt, .step, .mcard, .tip, .memo, .hbox, .ebox, .note {
           break-inside: avoid;
           box-shadow: none !important;
         }
         .lo-section-pdf { break-inside: avoid; }
-        table, .lo-header-pdf { box-shadow: none !important; }
+        .lo-header-pdf { background: ${isRose ? '#fff1f2' : '#f0fdfa'} !important; box-shadow: none !important; }
+        table { box-shadow: none !important; }
+        td { color: #334155 !important; }
       }
     </style>
   </head><body>
