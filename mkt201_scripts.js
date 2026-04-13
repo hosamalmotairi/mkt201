@@ -5544,6 +5544,103 @@ function pomoToggleWidget() {
 }
 
 // ═══════════════════════════════════════════════
+//  CHAPTER BINDER PDF EXPORT
+// ═══════════════════════════════════════════════
+function exportChapterBinder(pageId, chapterTitle) {
+  const page = document.getElementById(pageId);
+  if (!page) return;
+
+  // Clone full chapter content
+  const clone = page.cloneNode(true);
+
+  // Expand all collapsed LO sections
+  clone.querySelectorAll('.lo-body').forEach(function(el) { el.style.display = 'block'; });
+  clone.querySelectorAll('.lo-arrow').forEach(function(el) { el.remove(); });
+
+  // Show all Arabic text
+  clone.querySelectorAll('.note-ar, .ar-line').forEach(function(el) { el.style.display = ''; });
+
+  // Remove interactive elements
+  ['button', '.notes-translate-btn', '.ch-pdf-btn', '.quiz-container',
+   '.quiz-controls', '.page-nav', 'input', 'select'].forEach(function(sel) {
+    clone.querySelectorAll(sel).forEach(function(el) { el.remove(); });
+  });
+
+  // Replace hero with clean print header
+  const hero = clone.querySelector('.hero');
+  if (hero) {
+    const hdr = document.createElement('div');
+    hdr.className = 'print-hero';
+    hdr.innerHTML = hero.innerHTML;
+    hero.parentNode.replaceChild(hdr, hero);
+  }
+
+  const isDark = document.documentElement.classList.contains('dark');
+  const cssBase = window.location.origin + '/mkt201_styles.css';
+  const dateStr = new Date().toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'});
+
+  const html = '<!DOCTYPE html><html dir="ltr"><head>'
+    + '<meta charset="UTF-8">'
+    + '<title>MKT 201 — ' + chapterTitle + '</title>'
+    + '<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap" rel="stylesheet">'
+    + '<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"><\/script>'
+    + '<link rel="stylesheet" href="' + cssBase + '">'
+    + '<style>'
+    + 'body{font-family:"Plus Jakarta Sans",system-ui,sans-serif!important;background:#fff!important;color:#1C1917!important;padding:0;margin:0;}'
+    + '.toolbar{position:sticky;top:0;z-index:100;background:#fff;border-bottom:2px solid #0F766E;padding:10px 24px;display:flex;align-items:center;gap:12px;}'
+    + '.print-btn{background:#0F766E;color:#fff;border:none;padding:8px 22px;border-radius:8px;font-weight:700;font-size:.88rem;cursor:pointer;font-family:inherit;}'
+    + '.print-btn:hover{opacity:.88;}'
+    + '.toolbar-hint{color:#78716C;font-size:.78rem;}'
+    + '.binder-cover{padding:24px 32px 20px;border-bottom:3px solid #0F766E;margin-bottom:24px;}'
+    + '.binder-label{display:inline-block;border:1.5px solid #0F766E;color:#0F766E;padding:3px 12px;border-radius:20px;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px;}'
+    + '.binder-cover h1{font-size:1.5rem;font-weight:800;color:#0F766E;margin:0 0 4px;}'
+    + '.binder-cover .sub{font-size:.85rem;color:#78716C;}'
+    + '.binder-meta{display:flex;gap:16px;font-size:.72rem;color:#A8A29E;margin-top:10px;padding-top:8px;border-top:1px solid #E7E5E4;}'
+    + '.print-hero{display:none;}'
+    + '.page{display:block!important;padding:0 32px 32px!important;}'
+    + '.sidebar,.topbar,.fab,.dark-toggle{display:none!important;}'
+    + '.lo-section{margin-bottom:12px;border:1.5px solid #E7E5E4;border-radius:12px;overflow:hidden;page-break-inside:avoid;}'
+    + '.lo-header{cursor:default;}'
+    + '.lo-body{display:block!important;}'
+    + '.memory-box{page-break-inside:avoid;}'
+    + '.exam-tip{page-break-inside:avoid;}'
+    + '.master-card{page-break-inside:avoid;}'
+    + '.ch-notes-box{page-break-inside:avoid;}'
+    + '.ch-notes-grid{grid-template-columns:1fr 1fr;}'
+    + '.concept-card{page-break-inside:avoid;}'
+    + '.chapter{margin-bottom:20px;}'
+    + '.note-ar{display:block!important;}'
+    + '.ar-line{display:inline!important;}'
+    + 'table{page-break-inside:avoid;}'
+    + '@media print{'
+    + '.toolbar{display:none!important;}'
+    + 'body{font-size:10.5px;}'
+    + '.chapter{margin-bottom:14px;}'
+    + '.page{padding:0!important;}'
+    + '}'
+    + '</style></head><body' + (isDark ? '' : '') + '>'
+    + '<div class="toolbar">'
+    + '<button class="print-btn" onclick="window.print()">🖨️ طباعة / حفظ كـ PDF</button>'
+    + '<span class="toolbar-hint">اختر "Save as PDF" في خيارات الطابعة</span>'
+    + '</div>'
+    + '<div class="binder-cover">'
+    + '<div class="binder-label">MKT 201 — Principles of Marketing</div>'
+    + '<h1>' + chapterTitle + '</h1>'
+    + '<div class="sub">Kotler &amp; Armstrong, 19th Edition</div>'
+    + '<div class="binder-meta"><span>📅 ' + dateStr + '</span><span>📖 ملخص شامل</span><span>🌐 mkt201.vercel.app</span></div>'
+    + '</div>'
+    + clone.outerHTML
+    + '<script>if(window.lucide) lucide.createIcons();<\/script>'
+    + '</body></html>';
+
+  const blob = new Blob([html], {type: 'text/html'});
+  const url = URL.createObjectURL(blob);
+  const w = window.open(url, '_blank');
+  if (!w) alert('السماح بالنوافذ المنبثقة لتصدير PDF');
+  setTimeout(function(){ URL.revokeObjectURL(url); }, 60000);
+}
+
+// ═══════════════════════════════════════════════
 //  INIT HOOK — call new features on load
 // ═══════════════════════════════════════════════
 // Register Service Worker

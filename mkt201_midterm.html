@@ -237,42 +237,75 @@
     </div>
   </section>
 
+  <!-- ── REFERENCE SLIDES (PDFs) ──────────────── -->
+  <section class="reference-section" style="margin-top:16px;">
+    <div class="ref-header"><i data-lucide="monitor" aria-hidden="true"></i> <span>Course Slides</span> <span class="ar-line">سلايدات المادة — المرجع الأساسي</span></div>
+    <div class="ref-list">
+      <a class="ref-row ref-row--featured" href="chapter%201.pdf" target="_blank" rel="noopener">
+        <div class="ref-book ref-book--1">📘</div>
+        <div class="ref-body">
+          <div class="ref-title">Chapter 1 — Creating Customer Value &amp; Engagement</div>
+          <div class="ref-sub">Kotler 19e · Ch. 1 Slides</div>
+        </div>
+        <span class="ref-pill"><i data-lucide="download" aria-hidden="true"></i> PDF</span>
+      </a>
+      <a class="ref-row" href="chapter%202.pdf" target="_blank" rel="noopener">
+        <div class="ref-book ref-book--2">📗</div>
+        <div class="ref-body">
+          <div class="ref-title">Chapter 2 — Company &amp; Marketing Strategy</div>
+          <div class="ref-sub">Kotler 19e · Ch. 2 Slides</div>
+        </div>
+        <span class="ref-pill"><i data-lucide="download" aria-hidden="true"></i> PDF</span>
+      </a>
+      <a class="ref-row" href="chapter%203.pdf" target="_blank" rel="noopener">
+        <div class="ref-book ref-book--3">📙</div>
+        <div class="ref-body">
+          <div class="ref-title">Chapter 3 — Analyzing the Marketing Environment</div>
+          <div class="ref-sub">Kotler 19e · Ch. 3 Slides</div>
+        </div>
+        <span class="ref-pill"><i data-lucide="download" aria-hidden="true"></i> PDF</span>
+      </a>
+      <a class="ref-row" href="chapter%205.pdf" target="_blank" rel="noopener">
+        <div class="ref-book ref-book--5">📕</div>
+        <div class="ref-body">
+          <div class="ref-title">Chapter 5 — Consumer Markets &amp; Buyer Behavior</div>
+          <div class="ref-sub">Kotler 19e · Ch. 5 Slides</div>
+        </div>
+        <span class="ref-pill"><i data-lucide="download" aria-hidden="true"></i> PDF</span>
+      </a>
+    </div>
+  </section>
+
   <!-- Quick Nav -->
   <div class="quick-nav-grid">
     <button class="qn-card" onclick="showPage('page-ch1')"><div class="qn-icon"><i data-lucide="target" aria-hidden="true"></i></div><div class="qn-label">Chapter 1</div><div class="qn-sub">قيمة العميل — الأكثر في الامتحانات</div></button>
     <button class="qn-card" onclick="showPage('page-ch2')"><div class="qn-icon"><i data-lucide="bar-chart-2" aria-hidden="true"></i></div><div class="qn-label">Chapter 2</div><div class="qn-sub">التخطيط الاستراتيجي — BCG & More</div></button>
     <button class="qn-card" onclick="showPage('page-ch3')"><div class="qn-icon"><i data-lucide="globe" aria-hidden="true"></i></div><div class="qn-label">Chapter 3</div><div class="qn-sub">البيئة التسويقية — Macro & Micro</div></button>
     <button class="qn-card" onclick="showPage('page-ch5')"><div class="qn-icon"><i data-lucide="brain" aria-hidden="true"></i></div><div class="qn-label">Chapter 5</div><div class="qn-sub">سلوك المستهلك — Buying Behavior</div></button>
-    <button class="qn-card" onclick="quickStart20()"><div class="qn-icon"><i data-lucide="zap" aria-hidden="true"></i></div><div class="qn-label">جلسة سريعة</div><div class="qn-sub">20 سؤال · 10 دقائق</div></button>
-    <button class="qn-card" onclick="showPage('page-past')"><div class="qn-icon"><i data-lucide="star" aria-hidden="true"></i></div><div class="qn-label">التجميعات</div><div class="qn-sub">84 سؤال من التجميعات</div></button>
-    <button class="qn-card" onclick="showPage('page-mock');checkMockExamLock()"><div class="qn-icon"><i data-lucide="clipboard" aria-hidden="true"></i></div><div class="qn-label">اختبار تجريبي</div><div class="qn-sub">30 سؤال · 30 دقيقة</div></button>
     <button class="qn-card" onclick="showPage('page-flash');initFlashCards()"><div class="qn-icon"><i data-lucide="layers" aria-hidden="true"></i></div><div class="qn-label">Flash Cards</div><div class="qn-sub">60 مصطلح أساسي</div></button>
-    <button class="qn-card" onclick="showPage('page-levels');renderLevels()"><div class="qn-icon"><i data-lucide="award" aria-hidden="true"></i></div><div class="qn-label">المستويات</div><div class="qn-sub">تدرّج من السهل للصعب</div></button>
+    <button class="qn-card" onclick="showPage('page-mock');checkMockExamLock()"><div class="qn-icon"><i data-lucide="clipboard" aria-hidden="true"></i></div><div class="qn-label">اختبار تجريبي</div><div class="qn-sub">30 سؤال · 30 دقيقة</div></button>
     <button class="qn-card" onclick="startCramSession()"><div class="qn-icon"><i data-lucide="flame" aria-hidden="true"></i></div><div class="qn-label">Cram Mode</div><div class="qn-sub">آخر لحظة — الأسئلة الصعبة والأخطاء</div></button>
   </div>
 
 
-  <!-- Today's Session Card -->
-  <section class="chapter" style="margin-top:0;margin-bottom:0;">
-    <div id="today-session-card" style="background:linear-gradient(135deg,#134e4a,#0f766e);border-radius:18px;padding:22px 24px;color:#fff;position:relative;overflow:hidden;">
-      <div style="position:absolute;right:-10px;top:-10px;font-size:6rem;opacity:.07;pointer-events:none;">✨</div>
-      <div style="position:relative;">
-        <div id="today-streak" style="font-size:.78rem;font-weight:700;opacity:.7;margin-bottom:8px;letter-spacing:.04em;"></div>
-        <div id="today-msg" style="font-size:1.2rem;font-weight:800;line-height:1.45;margin-bottom:14px;">جاهز تذاكر؟ 10 دقائق تكفي ⚡</div>
-        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
-          <button onclick="quickStart20()" class="today-start-btn" style="background:#fff;color:#0f766e;border:none;border-radius:12px;padding:12px 28px;font-weight:900;font-size:1rem;cursor:pointer;flex-shrink:0;box-shadow:0 4px 14px rgba(0,0,0,.15);">ابدأ الآن ←</button>
-          <div id="today-sessions-done" style="font-size:.82rem;opacity:.85;font-weight:600;"></div>
-        </div>
-      </div>
+  <!-- Today's Session Card (compact inline CTA) -->
+  <div id="today-session-card" style="display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px 20px;background:rgba(15,118,110,0.06);border:1px solid rgba(15,118,110,0.18);border-radius:14px;margin:24px 0;flex-wrap:wrap;">
+    <div style="flex:1;min-width:200px;">
+      <div id="today-streak" style="font-size:.72rem;font-weight:700;color:var(--accent);letter-spacing:.04em;margin-bottom:4px;"></div>
+      <div id="today-msg" style="font-size:1rem;font-weight:700;color:var(--ink,#0f1f1d);line-height:1.4;">جاهز تذاكر؟ 10 دقائق تكفي</div>
+      <div id="today-sessions-done" style="font-size:.75rem;color:var(--muted);font-weight:500;margin-top:3px;"></div>
     </div>
-  </section>
+    <button onclick="quickStart20()" class="today-start-btn" style="background:var(--accent);color:#fff;border:none;border-radius:10px;padding:11px 22px;font-weight:800;font-size:.92rem;cursor:pointer;flex-shrink:0;">ابدأ الآن ←</button>
+  </div>
 
 
 
 
 
-  <!-- Mastery Progress -->
-  <div class="chapter mastery-section" style="margin-top:24px;">
+  <!-- Progress (collapsible) -->
+  <details class="progress-details" style="margin-top:8px;">
+    <summary class="progress-summary"><i data-lucide="bar-chart-3" aria-hidden="true"></i> <span>Progress</span> <span class="ar-line">تقدمك في المادة</span><span class="progress-chev"><i data-lucide="chevron-down" aria-hidden="true"></i></span></summary>
+  <div class="chapter mastery-section" style="margin-top:14px;">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
       <h3 style="margin:0;font-size:1.1rem;font-weight:700;"><i data-lucide="bar-chart-3" aria-hidden="true"></i> تقدمك</h3>
       <button onclick="toggleMasteryDisplay()" id="mastery-toggle-btn"
@@ -284,7 +317,7 @@
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;" id="mastery-grid">
 
       <div id="mastery-ch1" class="mastery-bar-card">
-        <div class="mb-header"><span>📖 Chapter 1</span><span class="mb-count" style="color:var(--accent);font-weight:700;font-size:.85rem;">0 / 137</span></div>
+        <div class="mb-header"><span>Chapter 1</span><span class="mb-count" style="color:var(--accent);font-weight:700;font-size:.85rem;">0 / 137</span></div>
         <div class="mastery-bar-track">
           <div class="mb-mastered mastery-fill-green" style="width:0%"></div>
           <div class="mb-review mastery-fill-red" style="width:0%"></div>
@@ -293,7 +326,7 @@
       </div>
 
       <div id="mastery-ch2" class="mastery-bar-card">
-        <div class="mb-header"><span>📊 Chapter 2</span><span class="mb-count" style="color:var(--accent);font-weight:700;font-size:.85rem;">0 / 145</span></div>
+        <div class="mb-header"><span>Chapter 2</span><span class="mb-count" style="color:var(--accent);font-weight:700;font-size:.85rem;">0 / 145</span></div>
         <div class="mastery-bar-track">
           <div class="mb-mastered mastery-fill-green" style="width:0%"></div>
           <div class="mb-review mastery-fill-red" style="width:0%"></div>
@@ -302,7 +335,7 @@
       </div>
 
       <div id="mastery-ch3" class="mastery-bar-card">
-        <div class="mb-header"><span>🌍 Chapter 3</span><span class="mb-count" style="color:var(--accent);font-weight:700;font-size:.85rem;">0 / 135</span></div>
+        <div class="mb-header"><span>Chapter 3</span><span class="mb-count" style="color:var(--accent);font-weight:700;font-size:.85rem;">0 / 135</span></div>
         <div class="mastery-bar-track">
           <div class="mb-mastered mastery-fill-green" style="width:0%"></div>
           <div class="mb-review mastery-fill-red" style="width:0%"></div>
@@ -311,7 +344,7 @@
       </div>
 
       <div id="mastery-ch5" class="mastery-bar-card">
-        <div class="mb-header"><span>🧠 Chapter 5</span><span class="mb-count" style="color:var(--accent);font-weight:700;font-size:.85rem;">0 / 144</span></div>
+        <div class="mb-header"><span>Chapter 5</span><span class="mb-count" style="color:var(--accent);font-weight:700;font-size:.85rem;">0 / 144</span></div>
         <div class="mastery-bar-track">
           <div class="mb-mastered mastery-fill-green" style="width:0%"></div>
           <div class="mb-review mastery-fill-red" style="width:0%"></div>
@@ -325,18 +358,11 @@
   <!-- Exam Readiness + Weak Spots (rendered by JS) -->
   <div id="home-readiness" style="margin-top:16px;"></div>
   <div id="home-weak-spots"></div>
+  </details>
 
   <section class="chapter" style="margin-top:16px;">
-    <h2><i data-lucide="library" aria-hidden="true"></i> Course Overview</h2>
-    <p>MKT 201 — Principles of Marketing (Kotler &amp; Armstrong, 19th Edition). Midterm covers Chapters 1, 2, 3, and 5.</p>
-    <div class="master-grid" style="margin-top:14px;">
-      <div class="master-card"><strong>📖 Chapter 1</strong>Marketing — Creating Customer Value &amp; Engagement. Core concepts, 4Ps, CRM, Customer Equity.</div>
-      <div class="master-card"><strong>📊 Chapter 2</strong>Company &amp; Marketing Strategy. BCG Matrix, Ansoff Matrix, SWOT, Strategic Planning.</div>
-      <div class="master-card"><strong>🌍 Chapter 3</strong>Analyzing the Marketing Environment. Micro &amp; Macro environments, CDNPTC forces.</div>
-      <div class="master-card"><strong>🧠 Chapter 5</strong>Consumer Markets &amp; Buyer Behavior. Cultural, Social, Personal, Psychological factors.</div>
-    </div>
-    <div class="pro-tip" style="margin-top:16px;">
-      <div class="pro-tip-head"><i data-lucide="lightbulb" aria-hidden="true"></i> Exam Tips</div>
+    <div class="pro-tip">
+      <div class="pro-tip-head"><i data-lucide="lightbulb" aria-hidden="true"></i> Exam Tips <span class="ar-line">أهم النقاط للامتحان</span></div>
       <ul class="point-list">
         <li>Know the difference between Needs, Wants, and Demands — very likely to appear.</li>
         <li>Memorize all 4 BCG matrix quadrants and Ansoff's 4 growth strategies.</li>
@@ -807,6 +833,7 @@
 
   <!-- Notes -->
   <div class="chapter">
+    <button class="notes-binder-btn" onclick="exportChapterBinder('page-ch1','Ch1 — Marketing: Creating Customer Value &amp; Engagement')">📚 طباعة الفصل كاملاً — PDF</button>
     <div class="ch-notes-box">
       <div class="ch-notes-header">
         <div class="ch-notes-title">📌 Key Takeaways — Ch1</div>
@@ -1343,6 +1370,7 @@
 
   <!-- Notes -->
   <div class="chapter">
+    <button class="notes-binder-btn" onclick="exportChapterBinder('page-ch2','Ch2 — Company &amp; Marketing Strategy')">📚 طباعة الفصل كاملاً — PDF</button>
     <div class="ch-notes-box">
       <div class="ch-notes-header">
         <div class="ch-notes-title">📌 Key Takeaways — Ch2</div>
@@ -1791,6 +1819,7 @@
 
   <!-- Notes -->
   <div class="chapter">
+    <button class="notes-binder-btn" onclick="exportChapterBinder('page-ch3','Ch3 — Analyzing the Marketing Environment')">📚 طباعة الفصل كاملاً — PDF</button>
     <div class="ch-notes-box">
       <div class="ch-notes-header">
         <div class="ch-notes-title">📌 Key Takeaways — Ch3</div>
@@ -2384,6 +2413,7 @@
 
   <!-- Notes -->
   <div class="chapter">
+    <button class="notes-binder-btn" onclick="exportChapterBinder('page-ch5','Ch5 — Consumer Behavior')">📚 طباعة الفصل كاملاً — PDF</button>
     <div class="ch-notes-box">
       <div class="ch-notes-header">
         <div class="ch-notes-title">📌 Key Takeaways — Ch5</div>
