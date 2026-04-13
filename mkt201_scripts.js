@@ -5547,95 +5547,167 @@ function pomoToggleWidget() {
 //  CHAPTER BINDER PDF EXPORT
 // ═══════════════════════════════════════════════
 function exportChapterBinder(pageId, chapterTitle) {
-  const page = document.getElementById(pageId);
+  var page = document.getElementById(pageId);
   if (!page) return;
 
-  // Clone full chapter content
-  const clone = page.cloneNode(true);
+  // Clone and prepare DOM
+  var clone = page.cloneNode(true);
+  clone.querySelectorAll('.lo-body').forEach(function(el){ el.style.display='block'; });
+  clone.querySelectorAll('.lo-arrow, button, input, select, .notes-binder-btn').forEach(function(el){ el.remove(); });
+  clone.querySelectorAll('.note-ar').forEach(function(el){ el.style.display='block'; });
+  clone.querySelectorAll('.ar-line').forEach(function(el){ el.style.display='inline'; });
+  clone.querySelectorAll('.hero, section.hero').forEach(function(el){ el.remove(); });
 
-  // Expand all collapsed LO sections
-  clone.querySelectorAll('.lo-body').forEach(function(el) { el.style.display = 'block'; });
-  clone.querySelectorAll('.lo-arrow').forEach(function(el) { el.remove(); });
+  var dateStr = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
 
-  // Show all Arabic text
-  clone.querySelectorAll('.note-ar, .ar-line').forEach(function(el) { el.style.display = ''; });
+  var css = [
+    '@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap");',
+    '@page{size:A4;margin:16mm 18mm;}',
+    '*{box-sizing:border-box;margin:0;padding:0;}',
 
-  // Remove interactive elements
-  ['button', '.notes-translate-btn', '.ch-pdf-btn', '.quiz-container',
-   '.quiz-controls', '.page-nav', 'input', 'select'].forEach(function(sel) {
-    clone.querySelectorAll(sel).forEach(function(el) { el.remove(); });
-  });
+    /* ── Base ── */
+    'body{font-family:"Plus Jakarta Sans",system-ui,sans-serif;color:#1C1917;background:#fff;font-size:11px;line-height:1.65;-webkit-font-smoothing:antialiased;}',
+    'strong{font-weight:700;}',
+    'em{font-style:italic;color:#78716C;}',
+    'p{margin:4px 0;}',
+    'ul,ol{padding-right:0;padding-left:18px;margin:4px 0;}',
+    'li{margin:2px 0;font-size:.9em;}',
 
-  // Replace hero with clean print header
-  const hero = clone.querySelector('.hero');
-  if (hero) {
-    const hdr = document.createElement('div');
-    hdr.className = 'print-hero';
-    hdr.innerHTML = hero.innerHTML;
-    hero.parentNode.replaceChild(hdr, hero);
-  }
+    /* ── Toolbar ── */
+    '.toolbar{position:sticky;top:0;z-index:100;background:#fff;border-bottom:2px solid #0F766E;padding:10px 20px;display:flex;align-items:center;gap:12px;}',
+    '.print-btn{background:#0F766E;color:#fff;border:none;padding:8px 20px;border-radius:8px;font-weight:700;font-size:.85rem;cursor:pointer;font-family:inherit;}',
+    '.print-btn:hover{background:#0D9488;}',
+    '.toolbar-hint{color:#78716C;font-size:.75rem;}',
 
-  const isDark = document.documentElement.classList.contains('dark');
-  const cssBase = window.location.origin + '/mkt201_styles.css';
-  const dateStr = new Date().toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'});
+    /* ── Cover ── */
+    '.binder-cover{padding:22px 0 18px;border-bottom:3px solid #0F766E;margin-bottom:22px;}',
+    '.binder-tag{display:inline-block;background:#0F766E;color:#fff;padding:3px 12px;border-radius:4px;font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;}',
+    '.binder-cover h1{font-size:1.4rem;font-weight:800;color:#1C1917;margin:0 0 3px;line-height:1.3;}',
+    '.binder-sub{font-size:.82rem;color:#78716C;}',
+    '.binder-meta{display:flex;gap:20px;font-size:.7rem;color:#A8A29E;margin-top:10px;padding-top:8px;border-top:1px solid #E7E5E4;}',
 
-  const html = '<!DOCTYPE html><html dir="ltr"><head>'
-    + '<meta charset="UTF-8">'
-    + '<title>MKT 201 — ' + chapterTitle + '</title>'
-    + '<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap" rel="stylesheet">'
-    + '<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"><\/script>'
-    + '<link rel="stylesheet" href="' + cssBase + '">'
-    + '<style>'
-    + 'body{font-family:"Plus Jakarta Sans",system-ui,sans-serif!important;background:#fff!important;color:#1C1917!important;padding:0;margin:0;}'
-    + '.toolbar{position:sticky;top:0;z-index:100;background:#fff;border-bottom:2px solid #0F766E;padding:10px 24px;display:flex;align-items:center;gap:12px;}'
-    + '.print-btn{background:#0F766E;color:#fff;border:none;padding:8px 22px;border-radius:8px;font-weight:700;font-size:.88rem;cursor:pointer;font-family:inherit;}'
-    + '.print-btn:hover{opacity:.88;}'
-    + '.toolbar-hint{color:#78716C;font-size:.78rem;}'
-    + '.binder-cover{padding:24px 32px 20px;border-bottom:3px solid #0F766E;margin-bottom:24px;}'
-    + '.binder-label{display:inline-block;border:1.5px solid #0F766E;color:#0F766E;padding:3px 12px;border-radius:20px;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px;}'
-    + '.binder-cover h1{font-size:1.5rem;font-weight:800;color:#0F766E;margin:0 0 4px;}'
-    + '.binder-cover .sub{font-size:.85rem;color:#78716C;}'
-    + '.binder-meta{display:flex;gap:16px;font-size:.72rem;color:#A8A29E;margin-top:10px;padding-top:8px;border-top:1px solid #E7E5E4;}'
-    + '.print-hero{display:none;}'
-    + '.page{display:block!important;padding:0 32px 32px!important;}'
-    + '.sidebar,.topbar,.fab,.dark-toggle{display:none!important;}'
-    + '.lo-section{margin-bottom:12px;border:1.5px solid #E7E5E4;border-radius:12px;overflow:hidden;page-break-inside:avoid;}'
-    + '.lo-header{cursor:default;}'
-    + '.lo-body{display:block!important;}'
-    + '.memory-box{page-break-inside:avoid;}'
-    + '.exam-tip{page-break-inside:avoid;}'
-    + '.master-card{page-break-inside:avoid;}'
-    + '.ch-notes-box{page-break-inside:avoid;}'
-    + '.ch-notes-grid{grid-template-columns:1fr 1fr;}'
-    + '.concept-card{page-break-inside:avoid;}'
-    + '.chapter{margin-bottom:20px;}'
-    + '.note-ar{display:block!important;}'
-    + '.ar-line{display:inline!important;}'
-    + 'table{page-break-inside:avoid;}'
-    + '@media print{'
-    + '.toolbar{display:none!important;}'
-    + 'body{font-size:10.5px;}'
-    + '.chapter{margin-bottom:14px;}'
-    + '.page{padding:0!important;}'
-    + '}'
-    + '</style></head><body' + (isDark ? '' : '') + '>'
+    /* ── Wrapper ── */
+    '.wrap{padding:0 20px 32px;}',
+    '.page{display:block!important;}',
+
+    /* ── Chapter sections ── */
+    '.chapter{margin-bottom:22px;}',
+    '.chapter>h2{font-size:1rem;font-weight:800;color:#0F766E;border-bottom:2px solid #0F766E;padding-bottom:6px;margin-bottom:14px;display:flex;align-items:center;gap:8px;}',
+    '.chapter>h2 i,.chapter>h2 svg{display:none;}',
+    '.chapter>h3{font-size:.88rem;font-weight:700;color:#1C1917;margin:14px 0 7px;padding-left:10px;border-left:3px solid #0F766E;}',
+
+    /* ── AR line ── */
+    '.ar-line{display:inline!important;font-family:"Noto Naskh Arabic",serif;color:#78716C;font-size:.88em;margin-right:4px;}',
+
+    /* ── LO sections ── */
+    '.lo-section{border:1.5px solid #E7E5E4;border-radius:8px;margin-bottom:7px;page-break-inside:avoid;overflow:hidden;}',
+    '.lo-header{display:flex;align-items:flex-start;gap:10px;padding:9px 12px;background:#F9F9F8;border-bottom:1px solid #E7E5E4;}',
+    '.lo-badge{background:#0F766E;color:#fff;font-size:.65rem;font-weight:800;padding:2px 8px;border-radius:4px;white-space:nowrap;flex-shrink:0;margin-top:2px;}',
+    '.lo-title{font-weight:600;font-size:.85rem;color:#1C1917;flex:1;}',
+    '.lo-arrow{display:none!important;}',
+    '.lo-body{display:block!important;padding:9px 12px;font-size:.82rem;color:#44403C;}',
+
+    /* ── Process flow ── */
+    '.process-flow{display:flex;flex-direction:column;gap:5px;margin:8px 0;}',
+    '.process-step{display:flex;gap:10px;align-items:flex-start;padding:8px 11px;background:#F9F9F8;border-left:4px solid #0F766E;border-radius:0 7px 7px 0;page-break-inside:avoid;}',
+    '.process-num{background:#0F766E;color:#fff;min-width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.68rem;flex-shrink:0;margin-top:1px;}',
+    '.process-content{flex:1;font-size:.83rem;line-height:1.6;}',
+    '.process-content strong{color:#0F766E;display:block;margin-bottom:1px;}',
+
+    /* ── Memory box ── */
+    '.memory-box{background:#FFFBEB;border:1.5px solid #FDE68A;border-left:4px solid #D97706;border-radius:8px;padding:9px 13px;margin:9px 0;page-break-inside:avoid;font-size:.83rem;line-height:1.65;color:#1C1917;}',
+
+    /* ── Exam tip ── */
+    '.exam-tip{background:#F0FDFA;border:1.5px solid #99F6E4;border-left:4px solid #0F766E;border-radius:8px;padding:9px 13px;margin:9px 0;page-break-inside:avoid;font-size:.83rem;}',
+    '.exam-tip strong,.exam-tip b{color:#0F766E;}',
+
+    /* ── Master card ── */
+    '.master-card{background:#F5F5F4;border:1.5px solid #E7E5E4;border-left:4px solid #0F766E;border-radius:8px;padding:10px 13px;margin:7px 0;page-break-inside:avoid;}',
+
+    /* ── Concept cards ── */
+    '.concept-row{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:8px 0;}',
+    '.concept-card{border:1.5px solid #E7E5E4;border-radius:8px;padding:9px 12px;page-break-inside:avoid;font-size:.82rem;}',
+    '.concept-card strong{display:block;font-weight:700;margin-bottom:3px;}',
+    '.concept-card p{color:#44403C;}',
+    '.concept-card.teal{border-left:4px solid #0F766E;}',
+    '.concept-card.teal strong{color:#0F766E;}',
+    '.concept-card.blue{border-left:4px solid #3B82F6;}',
+    '.concept-card.blue strong{color:#1D4ED8;}',
+    '.concept-card.amber{border-left:4px solid #D97706;}',
+    '.concept-card.amber strong{color:#92400E;}',
+    '.concept-card.purple{border-left:4px solid #7C3AED;}',
+    '.concept-card.purple strong{color:#5B21B6;}',
+
+    /* ── Definition spotlight ── */
+    '.def-spotlight{border-left:4px solid #0F766E;background:#F9FAFB;border-radius:0 8px 8px 0;padding:9px 13px;margin:7px 0;page-break-inside:avoid;}',
+    '.def-term{font-weight:800;color:#0F766E;font-size:.83rem;margin-bottom:3px;}',
+    '.def-body{font-size:.82rem;color:#44403C;line-height:1.6;}',
+
+    /* ── Tables ── */
+    'table{width:100%;border-collapse:collapse;margin:8px 0;font-size:.78rem;page-break-inside:avoid;table-layout:fixed;word-wrap:break-word;}',
+    'th{background:#0F766E;color:#fff;padding:7px 10px;text-align:left;font-weight:700;font-size:.75rem;word-wrap:break-word;}',
+    'td{padding:6px 10px;border-bottom:1px solid #E7E5E4;border-right:1px solid #F0F0EF;color:#44403C;vertical-align:top;word-wrap:break-word;line-height:1.5;}',
+    'td:last-child{border-right:none;}',
+    'tr:nth-child(even) td{background:#F9F9F8;}',
+    'tr:last-child td{border-bottom:none;}',
+
+    /* ── Slide bullets ── */
+    '.slide-bullets{margin:6px 0;padding-left:16px;}',
+    '.slide-bullets li{font-size:.82rem;color:#44403C;margin:3px 0;}',
+
+    /* ── Key Takeaways ── */
+    '.ch-notes-box{border:2px solid #0F766E;border-radius:10px;padding:16px;margin-top:14px;background:#F0FDFA;}',
+    '.ch-notes-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}',
+    '.ch-notes-title{font-weight:800;color:#0F766E;font-size:.95rem;}',
+    '.ch-notes-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}',
+    '.ch-note-item{display:flex;gap:8px;background:#fff;border:1.5px solid #D1FAE5;border-left:4px solid #0F766E;border-radius:8px;padding:9px 11px;page-break-inside:avoid;}',
+    '.ch-note-num{background:#0F766E;color:#fff;min-width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:800;flex-shrink:0;margin-top:2px;}',
+    '.ch-note-item>div{flex:1;font-size:.82rem;}',
+    '.ch-note-item strong{display:block;font-weight:700;color:#1C1917;margin-bottom:2px;}',
+    '.note-ar{display:block!important;direction:rtl;text-align:right;font-family:"Noto Naskh Arabic",serif;font-size:.8rem;font-weight:600;color:#0F766E;background:#CCFBF1;border-radius:5px;padding:3px 8px;margin-top:4px;line-height:1.8;}',
+
+    /* ── BCG / SWOT / matrices ── */
+    '.bcg-grid,.swot-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0;}',
+    '.bcg-cell,.swot-cell{border:1.5px solid #E7E5E4;border-radius:8px;padding:10px 12px;page-break-inside:avoid;}',
+    '.bcg-cell strong,.swot-cell strong{display:block;font-weight:700;margin-bottom:4px;}',
+
+    /* ── Footer ── */
+    '.binder-footer{text-align:center;color:#A8A29E;font-size:.68rem;padding:16px 0;border-top:1px solid #E7E5E4;margin-top:20px;}',
+
+    /* ── Hide everything not needed ── */
+    '.sidebar,.topbar,.fab,.dark-toggle,.hero,section.hero,.notes-binder-btn,[data-lucide]{display:none!important;}',
+
+    /* ── Print ── */
+    '@media print{',
+    '.toolbar{display:none!important;}',
+    'body{font-size:10.5px;}',
+    '.binder-cover{padding:0 0 14px;}',
+    '}'
+  ].join('\n');
+
+  var html = '<!DOCTYPE html><html dir="ltr"><head>'
+    + '<meta charset="UTF-8"><title>MKT 201 — ' + chapterTitle + '</title>'
+    + '<style>' + css + '</style>'
+    + '</head><body>'
     + '<div class="toolbar">'
     + '<button class="print-btn" onclick="window.print()">🖨️ طباعة / حفظ كـ PDF</button>'
     + '<span class="toolbar-hint">اختر "Save as PDF" في خيارات الطابعة</span>'
     + '</div>'
+    + '<div class="wrap">'
     + '<div class="binder-cover">'
-    + '<div class="binder-label">MKT 201 — Principles of Marketing</div>'
+    + '<div class="binder-tag">MKT 201 — Principles of Marketing</div>'
     + '<h1>' + chapterTitle + '</h1>'
-    + '<div class="sub">Kotler &amp; Armstrong, 19th Edition</div>'
+    + '<div class="binder-sub">Kotler &amp; Armstrong, 19th Edition</div>'
     + '<div class="binder-meta"><span>📅 ' + dateStr + '</span><span>📖 ملخص شامل</span><span>🌐 mkt201.vercel.app</span></div>'
     + '</div>'
-    + clone.outerHTML
-    + '<script>if(window.lucide) lucide.createIcons();<\/script>'
+    + clone.innerHTML
+    + '<div class="binder-footer">MKT 201 Study Hub &nbsp;·&nbsp; mkt201.vercel.app &nbsp;·&nbsp; ' + dateStr + '</div>'
+    + '</div>'
     + '</body></html>';
 
-  const blob = new Blob([html], {type: 'text/html'});
-  const url = URL.createObjectURL(blob);
-  const w = window.open(url, '_blank');
+  var blob = new Blob([html], {type:'text/html'});
+  var url = URL.createObjectURL(blob);
+  var w = window.open(url, '_blank');
   if (!w) alert('السماح بالنوافذ المنبثقة لتصدير PDF');
   setTimeout(function(){ URL.revokeObjectURL(url); }, 60000);
 }
