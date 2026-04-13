@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Deployment
 
-This is a static HTML/CSS/JS site — no build step required.
+Static HTML/CSS/JS site. Vercel runs `npm run build` on deploy, which minifies JS+CSS into `dist/` and serves that.
 
 ```bash
 # Deploy to production
@@ -12,7 +12,15 @@ git add -A
 git commit -m "description"
 git push
 # Vercel auto-deploys on push to main → https://mkt201.vercel.app
+# Build: npm run build → outputs to dist/ (minified JS+CSS, redirect index.html)
 ```
+
+**Local build test:**
+```bash
+npm run build   # outputs to dist/
+```
+
+**Edit source files, not dist/** — dist/ is gitignored and rebuilt on every deploy.
 
 ## Architecture
 

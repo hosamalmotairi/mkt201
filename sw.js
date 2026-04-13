@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mkt201-v1';
+const CACHE_NAME = 'mkt201-v2';
 const ASSETS = [
   '/',
   '/mkt201_midterm.html',

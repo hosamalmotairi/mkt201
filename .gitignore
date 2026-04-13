@@ -14,3 +14,6 @@ tf_js_block.txt
 .vercel
 .DS_Store
 .claude/
+.gstack/
+node_modules/
+dist/
