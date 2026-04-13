@@ -807,10 +807,14 @@
 
   <!-- Notes -->
   <div class="chapter">
+    <button class="notes-binder-btn" onclick="exportNotesPDF([{id:'page-ch1',ch:'Ch1',title:'Customer Value — Creating Value for Customers'},{id:'page-ch2',ch:'Ch2',title:'Company &amp; Marketing Strategy'},{id:'page-ch3',ch:'Ch3',title:'Analyzing the Marketing Environment'},{id:'page-ch5',ch:'Ch5',title:'Consumer Behavior'}])">📚 تصدير الملزمة الكاملة — PDF</button>
     <div class="ch-notes-box">
       <div class="ch-notes-header">
         <div class="ch-notes-title">📌 Key Takeaways — Ch1</div>
-        <button class="notes-translate-btn" onclick="toggleNotesTranslation(this)">🌐 ترجمة</button>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <button class="notes-translate-btn" onclick="toggleNotesTranslation(this)">🌐 ترجمة</button>
+          <button class="notes-translate-btn" onclick="exportNotesPDF([{id:'page-ch1',ch:'Ch1',title:'Customer Value — Creating Value for Customers'}])">🖨️ PDF</button>
+        </div>
       </div>
       <div class="ch-notes-grid">
         <div class="ch-note-item">
@@ -1346,7 +1350,10 @@
     <div class="ch-notes-box">
       <div class="ch-notes-header">
         <div class="ch-notes-title">📌 Key Takeaways — Ch2</div>
-        <button class="notes-translate-btn" onclick="toggleNotesTranslation(this)">🌐 ترجمة</button>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <button class="notes-translate-btn" onclick="toggleNotesTranslation(this)">🌐 ترجمة</button>
+          <button class="notes-translate-btn" onclick="exportNotesPDF([{id:'page-ch2',ch:'Ch2',title:'Company &amp; Marketing Strategy'}])">🖨️ PDF</button>
+        </div>
       </div>
       <div class="ch-notes-grid">
         <div class="ch-note-item">
@@ -1794,7 +1801,10 @@
     <div class="ch-notes-box">
       <div class="ch-notes-header">
         <div class="ch-notes-title">📌 Key Takeaways — Ch3</div>
-        <button class="notes-translate-btn" onclick="toggleNotesTranslation(this)">🌐 ترجمة</button>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <button class="notes-translate-btn" onclick="toggleNotesTranslation(this)">🌐 ترجمة</button>
+          <button class="notes-translate-btn" onclick="exportNotesPDF([{id:'page-ch3',ch:'Ch3',title:'Analyzing the Marketing Environment'}])">🖨️ PDF</button>
+        </div>
       </div>
       <div class="ch-notes-grid">
         <div class="ch-note-item">
@@ -2387,7 +2397,10 @@
     <div class="ch-notes-box">
       <div class="ch-notes-header">
         <div class="ch-notes-title">📌 Key Takeaways — Ch5</div>
-        <button class="notes-translate-btn" onclick="toggleNotesTranslation(this)">🌐 ترجمة</button>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <button class="notes-translate-btn" onclick="toggleNotesTranslation(this)">🌐 ترجمة</button>
+          <button class="notes-translate-btn" onclick="exportNotesPDF([{id:'page-ch5',ch:'Ch5',title:'Consumer Behavior'}])">🖨️ PDF</button>
+        </div>
       </div>
       <div class="ch-notes-grid">
         <div class="ch-note-item">

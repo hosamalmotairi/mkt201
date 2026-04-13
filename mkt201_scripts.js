@@ -5544,6 +5544,99 @@ function pomoToggleWidget() {
 }
 
 // ═══════════════════════════════════════════════
+//  NOTES PDF EXPORT
+// ═══════════════════════════════════════════════
+function exportNotesPDF(chapters) {
+  const isDark = document.documentElement.classList.contains('dark');
+  const primary = '#0F766E', accent = '#D97706';
+  const ink = isDark ? '#FAFAF9' : '#1C1917';
+  const muted = isDark ? '#A8A29E' : '#78716C';
+  const paper = isDark ? '#292524' : '#FFFFFF';
+  const bg = isDark ? '#1C1917' : '#FAFAF9';
+  const border = isDark ? '#44403C' : '#E7E5E4';
+  const arBg = isDark ? 'rgba(15,118,110,0.15)' : '#F0FDFA';
+  const dateStr = new Date().toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'});
+  const isAll = chapters.length > 1;
+
+  let bodyHtml = '';
+  chapters.forEach((ch, ci) => {
+    const page = document.getElementById(ch.id);
+    if (!page) return;
+    const notesGrid = page.querySelector('.ch-notes-grid');
+    if (!notesGrid) return;
+    let notesHtml = '';
+    notesGrid.querySelectorAll('.ch-note-item').forEach(item => {
+      const num = item.querySelector('.ch-note-num') ? item.querySelector('.ch-note-num').textContent : '';
+      const contentDiv = item.querySelector('div');
+      if (!contentDiv) return;
+      const strong = contentDiv.querySelector('strong');
+      const titleHtml = strong ? strong.innerHTML : '';
+      const arSpan = contentDiv.querySelector('.note-ar');
+      const arText = arSpan ? arSpan.textContent.trim() : '';
+      const clone = contentDiv.cloneNode(true);
+      clone.querySelectorAll('strong, .note-ar').forEach(function(e){ e.remove(); });
+      const bodyText = clone.innerHTML.replace(/^\s*<br\s*\/?>\s*/i, '').trim();
+      notesHtml += '<div class="note-card"><div class="note-num">' + num + '</div><div class="note-body">'
+        + '<div class="note-title">' + titleHtml + '</div>'
+        + (bodyText ? '<div class="note-text">' + bodyText + '</div>' : '')
+        + (arText ? '<div class="note-ar">' + arText + '</div>' : '')
+        + '</div></div>';
+    });
+    const brk = ci > 0 ? 'style="page-break-before:always;"' : '';
+    bodyHtml += '<div class="chapter-section" ' + brk + '>'
+      + '<div class="ch-header"><span class="ch-badge">' + ch.ch + '</span><h2>' + ch.title + '</h2></div>'
+      + '<div class="notes-grid">' + notesHtml + '</div></div>';
+  });
+
+  const pageTitle = isAll ? 'MKT 201 — الملزمة الكاملة' : 'MKT 201 — ' + chapters[0].title;
+  const coverTitle = isAll ? 'الملزمة الكاملة — Key Takeaways' : chapters[0].title;
+  const coverSub = isAll ? 'Ch1 &nbsp;·&nbsp; Ch2 &nbsp;·&nbsp; Ch3 &nbsp;·&nbsp; Ch5' : 'Key Takeaways';
+
+  const html = '<!DOCTYPE html><html dir="ltr"><head><meta charset="UTF-8"><title>' + pageTitle + '</title>'
+    + '<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap" rel="stylesheet">'
+    + '<style>'
+    + '@page{size:A4;margin:14mm 16mm;}'
+    + '*{box-sizing:border-box;margin:0;padding:0;}'
+    + 'body{font-family:\'Plus Jakarta Sans\',system-ui,sans-serif;color:' + ink + ';background:' + bg + ';font-size:11.5px;line-height:1.6;-webkit-font-smoothing:antialiased;}'
+    + '.toolbar{position:sticky;top:0;z-index:100;background:' + paper + ';border-bottom:1px solid ' + border + ';padding:12px 24px;display:flex;align-items:center;gap:12px;}'
+    + '.print-btn{background:' + primary + ';color:#fff;border:none;padding:9px 24px;border-radius:8px;font-weight:700;font-size:.88rem;cursor:pointer;font-family:inherit;}'
+    + '.hint{color:' + muted + ';font-size:.78rem;}'
+    + '.wrap{padding:20px 24px 0;}'
+    + '.cover{padding:24px 0 18px;border-bottom:3px solid ' + primary + ';margin-bottom:20px;}'
+    + '.cover-label{display:inline-block;border:1.5px solid ' + primary + ';color:' + primary + ';padding:3px 12px;border-radius:20px;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px;}'
+    + '.cover h1{font-size:1.35rem;font-weight:800;color:' + primary + ';margin:0 0 4px;}'
+    + '.cover-sub{font-size:.82rem;color:' + muted + ';}'
+    + '.cover-meta{display:flex;gap:16px;font-size:.72rem;color:' + muted + ';margin-top:10px;padding-top:8px;border-top:1px solid ' + border + ';}'
+    + '.chapter-section{margin-bottom:22px;}'
+    + '.ch-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid ' + primary + ';}'
+    + '.ch-badge{background:' + primary + ';color:#fff;font-size:.65rem;font-weight:800;padding:3px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap;}'
+    + '.ch-header h2{font-size:.95rem;font-weight:700;color:' + ink + ';}'
+    + '.notes-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;}'
+    + '.note-card{display:flex;gap:9px;background:' + paper + ';border:1.5px solid ' + border + ';border-left:4px solid ' + primary + ';border-radius:10px;padding:9px 11px;page-break-inside:avoid;}'
+    + '.note-num{background:' + primary + ';color:#fff;width:21px;height:21px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;flex-shrink:0;margin-top:2px;}'
+    + '.note-body{flex:1;}'
+    + '.note-title{font-weight:700;font-size:.86rem;color:' + ink + ';margin-bottom:2px;}'
+    + '.note-text{font-size:.78rem;color:' + muted + ';line-height:1.5;}'
+    + '.note-ar{direction:rtl;text-align:right;font-family:\'Noto Naskh Arabic\',serif;font-size:.8rem;font-weight:600;color:' + primary + ';background:' + arBg + ';border-radius:6px;padding:4px 8px;margin-top:4px;line-height:1.8;border-right:3px solid ' + primary + ';}'
+    + '.footer{text-align:center;color:' + muted + ';font-size:.68rem;padding:18px 0;border-top:1px solid ' + border + ';margin-top:18px;}'
+    + '@media print{.toolbar{display:none!important;}body{background:#fff!important;color:#1C1917!important;font-size:11px;}.note-card{background:#fff!important;border-color:#E7E5E4!important;}.note-ar{background:#F0FDFA!important;}}'
+    + '</style></head><body>'
+    + '<div class="toolbar"><button class="print-btn" onclick="window.print()">🖨️ طباعة / حفظ كـ PDF</button><span class="hint">اختر "Save as PDF" في خيارات الطابعة</span></div>'
+    + '<div class="wrap">'
+    + '<div class="cover"><div class="cover-label">MKT 201 — Principles of Marketing</div><h1>' + coverTitle + '</h1><div class="cover-sub">Kotler &amp; Armstrong, 19th Edition</div>'
+    + '<div class="cover-meta"><span>📅 ' + dateStr + '</span><span>📌 ' + coverSub + '</span><span>🌐 mkt201.vercel.app</span></div></div>'
+    + bodyHtml
+    + '<div class="footer">MKT 201 Study Hub &nbsp;•&nbsp; mkt201.vercel.app &nbsp;•&nbsp; ' + dateStr + '</div>'
+    + '</div></body></html>';
+
+  const blob = new Blob([html], {type: 'text/html'});
+  const url = URL.createObjectURL(blob);
+  const w = window.open(url, '_blank');
+  if (!w) alert('السماح بالنوافذ المنبثقة لتصدير PDF');
+  setTimeout(function(){ URL.revokeObjectURL(url); }, 60000);
+}
+
+// ═══════════════════════════════════════════════
 //  INIT HOOK — call new features on load
 // ═══════════════════════════════════════════════
 // Register Service Worker

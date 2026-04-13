@@ -1511,6 +1511,8 @@ body.dark select.filter-select { background: #1c1209; border-color: #3a2010; col
 .notes-area::placeholder { color:var(--muted); }
 
 /* ── CHAPTER NOTES ── */
+.notes-binder-btn { display:flex; align-items:center; justify-content:center; gap:8px; width:100%; background:var(--accent); color:#fff; border:none; border-radius:12px; padding:12px 20px; font-size:.92rem; font-weight:700; cursor:pointer; margin-bottom:12px; transition:opacity .15s; font-family:var(--font-body); }
+.notes-binder-btn:hover { opacity:.88; }
 .ch-notes-box { background:linear-gradient(135deg,#f0fdfa,#e0f2fe); border:2px solid var(--accent); border-radius:20px; padding:28px; margin-top:8px; }
 .dark .ch-notes-box { background:linear-gradient(135deg,rgba(13,148,136,.1),rgba(14,165,233,.1)); border-color:var(--accent); }
 .ch-notes-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; }
