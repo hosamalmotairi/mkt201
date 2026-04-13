@@ -5597,7 +5597,7 @@ function exportChapterBinder(pageId, chapterTitle) {
     '.chapter>h3{font-size:.8rem;font-weight:700;color:#1C1917;margin:8px 0 4px;padding-left:8px;border-left:3px solid #0F766E;}',
 
     /* ── AR line ── */
-    '.ar-line{display:inline!important;font-family:"Noto Naskh Arabic",serif;color:#78716C;font-size:.85em;margin-right:3px;}',
+    '.ar-line{display:block!important;font-family:"Noto Naskh Arabic",serif;color:#0F766E;font-size:.82em;font-weight:600;direction:rtl;text-align:right;margin-top:2px;line-height:1.6;}',
 
     /* ── LO sections ── */
     '.lo-section{border:1px solid #E7E5E4;border-radius:6px;margin-bottom:5px;overflow:hidden;}',
