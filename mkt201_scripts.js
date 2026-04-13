@@ -5600,7 +5600,7 @@ function exportChapterBinder(pageId, chapterTitle) {
     '.ar-line{display:inline!important;font-family:"Noto Naskh Arabic",serif;color:#78716C;font-size:.85em;margin-right:3px;}',
 
     /* ── LO sections ── */
-    '.lo-section{border:1px solid #E7E5E4;border-radius:6px;margin-bottom:5px;page-break-inside:avoid;overflow:hidden;}',
+    '.lo-section{border:1px solid #E7E5E4;border-radius:6px;margin-bottom:5px;overflow:hidden;}',
     '.lo-header{display:flex;align-items:flex-start;gap:8px;padding:6px 10px;background:#F9F9F8;border-bottom:1px solid #E7E5E4;}',
     '.lo-badge{background:#0F766E;color:#fff;font-size:.6rem;font-weight:800;padding:1px 7px;border-radius:3px;white-space:nowrap;flex-shrink:0;margin-top:2px;}',
     '.lo-title{font-weight:600;font-size:.8rem;color:#1C1917;flex:1;line-height:1.4;}',
@@ -5626,7 +5626,7 @@ function exportChapterBinder(pageId, chapterTitle) {
 
     /* ── Concept cards ── */
     '.concept-row{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin:5px 0;}',
-    '.concept-card{border:1px solid #E7E5E4;border-radius:6px;padding:6px 9px;page-break-inside:avoid;font-size:.77rem;}',
+    '.concept-card{border:1px solid #E7E5E4;border-radius:6px;padding:6px 9px;font-size:.77rem;}',
     '.concept-card strong{display:block;font-weight:700;margin-bottom:2px;font-size:.78rem;}',
     '.concept-card p{color:#44403C;margin:0;}',
     '.concept-card.teal{border-left:3px solid #0F766E;}',
