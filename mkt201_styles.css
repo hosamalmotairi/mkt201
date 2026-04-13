@@ -190,7 +190,7 @@ body {
   font-weight: 600;
   cursor: pointer;
   transition: background 0.2s, border-color 0.2s;
-  font-family: 'Inter', inherit;
+  font-family: inherit;
 }
 .dark-toggle:hover {
   background: rgba(13,148,136,0.18);
@@ -370,7 +370,7 @@ body.dark .fab-dark-float .icon-moon { display: none; }
   text-align: center;
   box-shadow: 0 2px 8px rgba(13,148,136,0.06);
   transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), border-color 0.18s, box-shadow 0.18s;
-  font-family: 'Inter', inherit;
+  font-family: inherit;
 }
 .qn-card:hover {
   transform: translateY(-5px) scale(1.02);
@@ -394,6 +394,7 @@ body.dark .fab-dark-float .icon-moon { display: none; }
   margin-bottom: 16px;
 }
 
+h1, h2, h3, h4, h5, h6 { font-family: 'Satoshi', "Segoe UI", Tahoma, sans-serif; }
 h2 { margin: 0 0 10px; line-height: 1.25; color: var(--accent); font-size: 1.5rem; }
 h3 { font-size: 1.12rem; margin: 16px 0 8px; line-height: 1.25; }
 h4 { font-size: 1rem; margin: 12px 0 6px; color: var(--accent-dark); }
@@ -447,7 +448,7 @@ p  { margin: 0 0 10px; }
   margin-bottom: 2px;
   padding: 8px 12px 8px 10px;
   font-size: 0.95em;
-  font-family: 'Cairo', 'Noto Kufi Arabic', 'Arabic UI Text', system-ui, sans-serif;
+  font-family: 'Noto Naskh Arabic', 'Arabic UI Text', serif;
   font-weight: 500;
   line-height: 1.7;
   letter-spacing: 0;
@@ -486,7 +487,7 @@ p .ar-line {
   color: #ffffff;
   margin-top: 10px;
   font-size: 0.97em;
-  font-family: 'Cairo', 'Noto Kufi Arabic', 'Arabic UI Text', system-ui, sans-serif;
+  font-family: 'Noto Naskh Arabic', 'Arabic UI Text', serif;
   font-weight: 600;
 }
 
@@ -890,7 +891,7 @@ body.dark .concept-card.slate  { background:#0f172a; border-color:#334155; }
   cursor: pointer;
   text-align: left;
   font-size: 0.95rem;
-  font-family: 'Inter', inherit;
+  font-family: inherit;
   font-weight: 500;
   color: var(--ink);
   transition: border-color 0.15s, background 0.15s, transform 0.1s, box-shadow 0.15s;
@@ -1083,7 +1084,7 @@ body.dark .concept-card.slate  { background:#0f172a; border-color:#334155; }
   align-items: center;
   justify-content: space-between;
 }
-.mock-timer-val { font-size: 1.8rem; font-weight: 900; }
+.mock-timer-val { font-size: 1.8rem; font-weight: 900; font-family: 'DM Sans', sans-serif; font-variant-numeric: tabular-nums; }
 .mock-timer-lbl { font-size: 0.8rem; opacity: 0.8; }
 
 /* ── DASHBOARD ───────────────────────── */
@@ -1127,7 +1128,7 @@ body.dark .concept-card.slate  { background:#0f172a; border-color:#334155; }
 .lb-info   { flex: 1; }
 .lb-name   { font-weight: 700; font-size: 0.95rem; }
 .lb-sub    { font-size: 0.78rem; color: var(--muted); }
-.lb-score  { font-size: 1.2rem; font-weight: 900; color: var(--accent); }
+.lb-score  { font-size: 1.2rem; font-weight: 900; color: var(--accent); font-family: 'DM Sans', sans-serif; font-variant-numeric: tabular-nums; }
 .lb-you    { font-size: 0.75rem; color: var(--accent); font-weight: 600; }
 .lb-loading, .lb-empty, .lb-signin, .lb-error { text-align: center; color: var(--muted); padding: 20px; font-size: 0.9rem; }
 
@@ -1351,7 +1352,7 @@ body.dark select.filter-select { background: #1c1209; border-color: #3a2010; col
   border-bottom: 1px solid var(--line); margin-bottom: 24px;
 }
 .past-res-icon { font-size: 4rem; margin-bottom: 10px; }
-.past-score-num { font-size: 3rem; font-weight: 800; color: var(--accent); line-height: 1.1; }
+.past-score-num { font-size: 3rem; font-weight: 800; color: var(--accent); line-height: 1.1; font-family: 'DM Sans', sans-serif; font-variant-numeric: tabular-nums; }
 .past-score-pct { font-size: 1.4rem; font-weight: 700; color: var(--muted); margin-bottom: 10px; }
 .past-score-msg { font-size: 1.05rem; margin-bottom: 14px; }
 .past-best-row {
@@ -1849,7 +1850,7 @@ body:not(.dark) {
   font-weight: 600;
   cursor: pointer;
   transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
-  font-family: 'Inter', inherit;
+  font-family: inherit;
   letter-spacing: 0.02em;
 }
 .dark-toggle:hover {
@@ -2092,7 +2093,7 @@ body:not(.dark) {
   position: relative;
   overflow: hidden;
   animation: optionPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-  font-family: 'Inter', inherit;
+  font-family: inherit;
   overflow-wrap: break-word;
   word-wrap: break-word;
 }
@@ -2866,7 +2867,7 @@ h2 {
   border-radius: 4px;
   padding: 8px 12px 8px 10px;
   background: rgba(13,148,136,0.09);
-  font-family: 'Cairo', 'Noto Kufi Arabic', 'Arabic UI Text', system-ui, sans-serif;
+  font-family: 'Noto Naskh Arabic', 'Arabic UI Text', serif;
   font-weight: 500;
   font-size: 0.95em;
   line-height: 1.7;
@@ -3079,7 +3080,7 @@ body.theme-rose .ar-line {
   border-right-color: #be123c !important;
   background: rgba(225,29,72,0.09) !important;
   color: #9f1239 !important;
-  font-family: 'Cairo', 'Noto Kufi Arabic', 'Arabic UI Text', system-ui, sans-serif !important;
+  font-family: 'Noto Naskh Arabic', 'Arabic UI Text', serif !important;
   font-weight: 600 !important;
 }
 
@@ -3271,7 +3272,7 @@ body.dark.theme-rose .ar-line {
   background: rgba(225,29,72,0.13) !important;
   border-right-color: #fb7185 !important;
   color: #fda4af !important;
-  font-family: 'Cairo', 'Noto Kufi Arabic', 'Arabic UI Text', system-ui, sans-serif !important;
+  font-family: 'Noto Naskh Arabic', 'Arabic UI Text', serif !important;
   font-weight: 500 !important;
 }
 body.dark.theme-rose .ar-line,
@@ -3343,7 +3344,7 @@ body.theme-rose .start-btn {
   padding: 20px;
 }
 .theme-picker-title {
-  font-family: 'Inter', sans-serif;
+  font-family: inherit;
   font-size: clamp(1.6rem, 4vw, 2.2rem);
   font-weight: 900;
   color: #fff;
@@ -3408,7 +3409,7 @@ body.theme-rose .start-btn {
   font-size: 1.3rem;
   font-weight: 900;
   color: #fff;
-  font-family: 'Inter', sans-serif;
+  font-family: inherit;
   letter-spacing: -0.03em;
 }
 .theme-mini-bar {
@@ -3440,7 +3441,7 @@ body.theme-rose .start-btn {
 .theme-option-name {
   font-weight: 800;
   font-size: 1rem;
-  font-family: 'Inter', sans-serif;
+  font-family: inherit;
   margin-bottom: 3px;
 }
 .theme-option-tags {
