@@ -666,6 +666,13 @@ const allQuestions = [
   { ch:"ch5", diff:"easy", q:"TRUE or FALSE: Ed purchased electronic devices such as a smartphone, and tablet after many people he knew already owned the devices. Ed belongs to the adopter group called lagging adopters.", opts:["True","False"], ans:0, exp:"صح. Ed اشترى بعد أن امتلك معظم معارفيه الأجهزة = lagging adopters (آخر 16%). مقاومون للتغيير ويتبنون فقط عندما يصبح المنتج تقليداً." },
   { ch:"ch5", diff:"easy", q:"TRUE or FALSE: Viviana wants to be the first to own the new fashion style of shoes. Viviana is an early mainstream adopter.", opts:["True","False"], ans:1, exp:"خطأ. Viviana تريد أن تكون الأولى = innovator (أول 2.5%). Early mainstream adopters يتبعون الأوائل ولا يكونون الأوائل." },
   { ch:"ch5", diff:"easy", q:"TRUE or FALSE: Two of the characteristics that are especially important in influencing an innovation's rate of adoption are relative advantage and compatibility.", opts:["True","False"], ans:0, exp:"صح. Relative advantage (الميزة النسبية) وCompatibility (التوافق) هما من أهم خصائص تحديد سرعة تبني المنتج الجديد." },
+
+  // ── Customer Journey (19th Edition) ──
+  { ch:"ch5", diff:"medium", q:"The ________ is defined as the sum of the ongoing experiences consumers have with a brand that affect their buying behavior, engagement, and brand advocacy over time.", opts:["buyer decision process","customer journey","adoption process","consumer behavior model","postpurchase evaluation"], ans:1, exp:"Customer journey = مجموع التجارب المستمرة التي يمر بها المستهلك مع العلامة التجارية — تؤثر على سلوك الشراء والتفاعل والدفاع عن العلامة بمرور الوقت.", expW:{0:"Buyer decision process = الخطوات الخمس لاتخاذ قرار شراء محدد",2:"Adoption process = مراحل تبني منتج جديد",3:"Consumer behavior model = نموذج للعوامل المؤثرة في السلوك",4:"Postpurchase evaluation = تقييم ما بعد الشراء فقط"} },
+  { ch:"ch5", diff:"medium", q:"Which of the following best describes the purpose of understanding the customer journey?", opts:["To identify the cheapest marketing channels","To create brand experiences that result in positive purchase behavior and brand advocacy","To reduce the number of steps in the buying process","To eliminate postpurchase dissonance","To track competitors' marketing activities"], ans:1, exp:"فهم رحلة العميل يُمكِّن المسوقين من تصميم تجارب علامة تجارية تُحقق: سلوك شراء إيجابي، تفاعل مستمر، ودفاع المستهلك عن العلامة.", expW:{0:"المسارات الأرخص هدف تشغيلي لا علاقة له برحلة العميل",2:"تقليل خطوات الشراء ليس هدف رحلة العميل",3:"التنافر بعد الشراء جزء من الرحلة لا يُزال",4:"متابعة المنافسين هدف مختلف"} },
+  { ch:"ch5", diff:"hard", q:"A brand manager wants to improve long-term customer loyalty and advocacy. According to the customer journey concept introduced in the 19th edition, what should she focus on?", opts:["Offering the lowest price in the market","Understanding and shaping the sum of ongoing consumer experiences with the brand over time","Launching more aggressive advertising campaigns","Increasing the number of product variants","Reducing delivery times only"], ans:1, exp:"Customer journey: التركيز على مجموع التجارب المستمرة مع العلامة بمرور الوقت — لا على عامل واحد كالسعر أو الإعلان — هو ما يبني الولاء والدفاع عن العلامة على المدى البعيد.", expW:{0:"السعر الأدنى قد يجذب لكنه لا يبني الولاء طويل الأمد",2:"الإعلان المكثف لا يضمن تجربة إيجابية متكاملة",3:"تنوع المنتجات لا يعالج رحلة العميل",4:"سرعة التوصيل عامل واحد فقط من الرحلة"} },
+  { ch:"ch5", diff:"easy", q:"TRUE or FALSE: The customer journey refers only to the moment of purchase and nothing else.", opts:["True","False"], ans:1, exp:"خطأ. Customer journey = مجموع التجارب المستمرة قبل الشراء وأثناءه وبعده — تشمل الوعي، التفاعل، الشراء، الاستخدام، والدفاع عن العلامة." },
+  { ch:"ch5", diff:"easy", q:"TRUE or FALSE: By understanding the customer journey, marketers can work to create brand experiences that result in positive purchase behavior, engagement, and brand advocacy over time.", opts:["True","False"], ans:0, exp:"صح. هذا هو الهدف الرئيسي من فهم رحلة العميل — تصميم تجارب إيجابية في كل نقطة تماس مع العلامة لبناء ولاء مستدام." },
 ];
 
 // ══════════════════════════════════════════════
@@ -734,7 +741,19 @@ async function authSubmit() {
     }
     err.textContent = '';
   } catch(e) {
-    err.textContent = e.message.replace('Firebase: ','').replace(/ \(auth\/.*\)/,'');
+    const firebaseErrors = {
+      'auth/wrong-password': 'كلمة السر غلط، حاول مرة ثانية',
+      'auth/invalid-credential': 'البريد أو كلمة السر غلط',
+      'auth/user-not-found': 'ما لقينا حساب بهالبريد',
+      'auth/email-already-in-use': 'البريد مستخدم من قبل، جرب تسجّل دخول',
+      'auth/weak-password': 'كلمة السر ضعيفة — لازم ٦ أحرف على الأقل',
+      'auth/invalid-email': 'البريد الإلكتروني غير صالح',
+      'auth/too-many-requests': 'محاولات كثيرة، انتظر شوي وحاول مرة ثانية',
+      'auth/network-request-failed': 'مشكلة بالاتصال، تأكد من الانترنت',
+      'auth/user-disabled': 'الحساب موقوف، تواصل مع الدعم',
+      'auth/operation-not-allowed': 'العملية غير مسموحة حالياً',
+    };
+    err.textContent = firebaseErrors[e.code] || e.message.replace('Firebase: ','').replace(/ \(auth\/.*\)/,'');
     document.getElementById('auth-submit').textContent = mode === 'login' ? 'دخول' : 'إنشاء حساب';
   }
 }
@@ -878,6 +897,7 @@ async function renderLeaderboard() {
 // ══════════════════════════════════════════════
 //  PAGE NAVIGATION
 // ══════════════════════════════════════════════
+let _skipHashChange = false;
 function showPage(id) {
   // Clear mock exam timer when navigating away
   try { if (mockState && mockState.timer) { clearInterval(mockState.timer); mockState.timer = null; } } catch(e) {}
@@ -886,6 +906,10 @@ function showPage(id) {
   if (target) {
     target.classList.add('active');
     window.scrollTo({ top: 0, behavior: 'instant' });
+  }
+  // Deep linking: update URL hash
+  if (!_skipHashChange) {
+    history.pushState(null, '', '#' + id.replace('page-', ''));
   }
   if (id === 'page-home') { renderMasteryBars(); updateTodayCard(); renderReadinessCard(); renderWeakSpots(); }
   if (id === 'page-quiz') { updateSessionBadge(); }
@@ -906,6 +930,24 @@ function showPage(id) {
     }
   });
 }
+// Deep linking: handle browser back/forward and direct URL access
+window.addEventListener('hashchange', () => {
+  const hash = location.hash.replace('#', '');
+  if (hash) {
+    const pageId = 'page-' + hash;
+    if (document.getElementById(pageId)) {
+      _skipHashChange = true;
+      showPage(pageId);
+      _skipHashChange = false;
+    }
+  }
+});
+window.addEventListener('DOMContentLoaded', () => {
+  const hash = location.hash.replace('#', '');
+  if (hash && document.getElementById('page-' + hash)) {
+    showPage('page-' + hash);
+  }
+}, { once: true });
 
 // ── PAST EXAM QUESTIONS (تجميعات) ──
 const pastQuestions = [
@@ -1913,17 +1955,22 @@ const kwConcepts = [
   'marketing plan','marketing audit',
 ];
 
+// Pre-compile keyword regexes once (was rebuilding 470+ regexes per question)
+const _kwAllSorted = [
+  ...kwConcepts.map(w => ({ w, cls:'kw-concept' })),
+  ...kwDanger.map(w   => ({ w, cls:'kw-danger'  })),
+].sort((a,b) => b.w.length - a.w.length);
+const _kwCompiled = _kwAllSorted.map(({ w, cls }) => ({
+  regex: new RegExp(`(${w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi'),
+  cls
+}));
+
 function highlightKeywords(text) {
   let result = text;
   const replacements = [];
-  // Sort longest first to avoid partial matches
-  const allWords = [
-    ...kwConcepts.map(w => ({ w, cls:'kw-concept' })),
-    ...kwDanger.map(w   => ({ w, cls:'kw-danger'  })),
-  ].sort((a,b) => b.w.length - a.w.length);
 
-  for (const { w, cls } of allWords) {
-    const regex = new RegExp(`(${w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi');
+  for (const { regex, cls } of _kwCompiled) {
+    regex.lastIndex = 0;
     result = result.replace(regex, match => {
       const id = `__KW${replacements.length}__`;
       replacements.push(`<mark class="${cls}">${match}</mark>`);
@@ -4581,7 +4628,7 @@ function exportChapterPDF(pageId, chapterName) {
     <div style="padding:28px 32px 20px;border-bottom:4px solid ${p.c1};margin-bottom:24px;">
       <div style="display:inline-block;border:1.5px solid ${p.c1};color:${p.c1};padding:4px 14px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px;">MKT 201 — Principles of Marketing</div>
       <h1 style="font-size:1.5rem;font-weight:900;color:${isDark ? p.c1 : p.c3};margin:0 0 6px;line-height:1.3;">${chapterName}</h1>
-      <div style="font-size:.88rem;color:#64748b;">Kotler & Armstrong · Principles of Marketing · 18th Edition</div>
+      <div style="font-size:.88rem;color:#64748b;">Kotler & Armstrong · Principles of Marketing · 19th Edition</div>
       <div style="margin-top:12px;padding-top:10px;border-top:1px solid ${p.line};display:flex;gap:20px;font-size:.78rem;color:#94a3b8;">
         <span>📅 ${dateStr}</span>
         <span>📖 ملخص شامل</span>

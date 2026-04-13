@@ -27,26 +27,32 @@
     .badge-locked .badge-icon    { opacity:0.28 !important; filter:grayscale(1) !important; }
     .badge-locked .badge-name    { color:#1f2937 !important; font-weight:700 !important; font-size:.85rem !important; }
     body.dark .badge-locked .badge-name { color:#d1fae5 !important; }
+    .lucide-icon { width: 1em; height: 1em; display: inline-block; vertical-align: -0.125em; stroke-width: 2; }
+    .sidebar-icon .lucide-icon, .sidebar-icon i[data-lucide] { width: 18px; height: 18px; }
+    i[data-lucide] { display: inline-flex; width: 1em; height: 1em; vertical-align: -0.125em; }
   </style>
   <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
 
+<!-- SKIP TO CONTENT -->
+<a href="#main-content" class="skip-to-content">Skip to main content</a>
+
 <!-- GAME HUD -->
 <div class="game-hud" id="game-hud">
-  <div class="hud-item" id="hud-level">🌱 مبتدئ</div>
+  <div class="hud-item" id="hud-level"><i data-lucide="sprout" aria-hidden="true"></i> مبتدئ</div>
   <div class="hud-xp-wrap">
     <div class="hud-xp-track"><div class="hud-xp-fill" id="hud-xp-bar" style="width:0%"></div></div>
     <span id="hud-xp" style="font-size:.7rem;color:var(--muted);">0 XP</span>
   </div>
-  <div class="hud-item" id="hud-streak">🔥 0</div>
-  <div class="hud-item hud-combo" id="hud-combo" style="display:none;">⚡ x1</div>
+  <div class="hud-item" id="hud-streak"><i data-lucide="flame" aria-hidden="true"></i> 0</div>
+  <div class="hud-item hud-combo" id="hud-combo" style="display:none;"><i data-lucide="zap" aria-hidden="true"></i> x1</div>
 </div>
 
 <!-- ── THEME PICKER OVERLAY ─────────────────── -->
 <div id="theme-picker" style="display:none;">
   <div class="theme-picker-wrap">
-    <div style="font-size:2.8rem;margin-bottom:14px;">🎨</div>
+    <div style="font-size:2.8rem;margin-bottom:14px;"><i data-lucide="palette" aria-hidden="true" style="width:48px;height:48px;"></i></div>
     <h2 class="theme-picker-title">Choose Your Theme</h2>
     <p class="theme-picker-sub">Your preference is saved automatically — you can change it anytime from the sidebar</p>
     <div class="theme-options-grid">
@@ -114,61 +120,64 @@
 <div id="auth-overlay" style="position:fixed;inset:0;background:rgba(8,8,12,0.94);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);z-index:99999;display:flex;align-items:center;justify-content:center;overflow-y:auto;">
   <div id="auth-box" style="background:#111116;border:1px solid rgba(255,255,255,0.1);border-radius:24px;padding:32px 28px;width:90%;max-width:420px;box-shadow:0 40px 80px rgba(0,0,0,0.6),0 0 0 1px rgba(255,255,255,0.06);margin:16px auto;">
     <div style="text-align:center;margin-bottom:20px;">
-      <div style="font-size:2.2rem;margin-bottom:6px;">🛒</div>
+      <div style="font-size:2.2rem;margin-bottom:6px;"><i data-lucide="shopping-cart" aria-hidden="true" style="width:36px;height:36px;color:#14b8a6;"></i></div>
       <h2 style="color:#fff;margin:0 0 4px;font-size:1.4rem;letter-spacing:-0.02em;">MKT 201 Study Hub</h2>
-      <p style="color:rgba(255,255,255,0.4);margin:0;font-size:.85rem;">سجّل دخولك لحفظ تقدمك من أي جهاز</p>
+      <p style="color:rgba(255,255,255,0.65);margin:0;font-size:.85rem;">سجّل دخولك لحفظ تقدمك من أي جهاز</p>
     </div>
     <div style="display:flex;gap:8px;margin-bottom:16px;background:rgba(255,255,255,0.06);border-radius:14px;padding:4px;">
       <button id="tab-login"    onclick="authTab('login')"    style="flex:1;padding:10px;border-radius:10px;font-weight:700;cursor:pointer;font-size:.9rem;background:#fff;color:#111;border:none;transition:all .2s;">دخول</button>
       <button id="tab-register" onclick="authTab('register')" style="flex:1;padding:10px;border-radius:10px;font-weight:700;cursor:pointer;font-size:.9rem;background:transparent;color:rgba(255,255,255,0.45);border:none;transition:all .2s;">حساب جديد</button>
     </div>
     <div id="auth-name-wrap" style="display:none;">
-      <input id="auth-name" type="text" placeholder="اسمك (مثال: Hosam)" style="width:100%;padding:12px 16px;border-radius:12px;border:1.5px solid rgba(255,255,255,0.12);font-size:.95rem;box-sizing:border-box;margin-bottom:10px;background:rgba(255,255,255,0.05);color:#fff;outline:none;transition:border-color .2s;">
+      <label for="auth-name" class="sr-only">الاسم</label>
+      <input id="auth-name" type="text" placeholder="اسمك (مثال: Hosam)" autocomplete="name" style="width:100%;padding:12px 16px;border-radius:12px;border:1.5px solid rgba(255,255,255,0.12);font-size:.95rem;box-sizing:border-box;margin-bottom:10px;background:rgba(255,255,255,0.05);color:#fff;outline:none;transition:border-color .2s;">
     </div>
-    <input id="auth-email" type="email"    placeholder="البريد الإلكتروني" style="width:100%;padding:12px 16px;border-radius:12px;border:1.5px solid rgba(255,255,255,0.12);font-size:.92rem;box-sizing:border-box;margin-bottom:10px;background:rgba(255,255,255,0.05);color:#fff;outline:none;transition:border-color .2s;">
-    <input id="auth-pass"  type="password" placeholder="كلمة السر"          style="width:100%;padding:12px 16px;border-radius:12px;border:1.5px solid rgba(255,255,255,0.12);font-size:.92rem;box-sizing:border-box;margin-bottom:10px;background:rgba(255,255,255,0.05);color:#fff;outline:none;transition:border-color .2s;">
-    <div id="auth-err" style="color:#f87171;font-size:.8rem;text-align:center;min-height:16px;margin-bottom:8px;"></div>
+    <label for="auth-email" class="sr-only">البريد الإلكتروني</label>
+    <input id="auth-email" type="email"    placeholder="البريد الإلكتروني" autocomplete="email" style="width:100%;padding:12px 16px;border-radius:12px;border:1.5px solid rgba(255,255,255,0.12);font-size:.92rem;box-sizing:border-box;margin-bottom:10px;background:rgba(255,255,255,0.05);color:#fff;outline:none;transition:border-color .2s;">
+    <label for="auth-pass" class="sr-only">كلمة السر</label>
+    <input id="auth-pass"  type="password" placeholder="كلمة السر"          autocomplete="current-password" style="width:100%;padding:12px 16px;border-radius:12px;border:1.5px solid rgba(255,255,255,0.12);font-size:.92rem;box-sizing:border-box;margin-bottom:10px;background:rgba(255,255,255,0.05);color:#fff;outline:none;transition:border-color .2s;">
+    <div id="auth-err" role="alert" aria-live="polite" style="color:#f87171;font-size:.8rem;text-align:center;min-height:16px;margin-bottom:8px;"></div>
     <button id="auth-submit" onclick="authSubmit()" data-mode="login" style="width:100%;padding:14px;border-radius:14px;border:none;background:#fff;color:#111;font-size:1rem;font-weight:700;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,0.3);transition:transform .15s,box-shadow .15s;">دخول</button>
     <div style="text-align:center;margin-top:10px;">
-      <button onclick="forgotPassword()" id="auth-forgot" style="background:transparent;border:none;color:rgba(255,255,255,0.4);font-size:.8rem;cursor:pointer;padding:4px 8px;text-decoration:underline;display:none;">نسيت كلمة السر؟</button>
+      <button onclick="forgotPassword()" id="auth-forgot" style="background:transparent;border:none;color:rgba(255,255,255,0.6);font-size:.8rem;cursor:pointer;padding:8px 12px;text-decoration:underline;display:none;">نسيت كلمة السر؟</button>
     </div>
     <div style="margin-top:6px;">
-      <button onclick="skipAuth()" style="width:100%;padding:12px;border-radius:14px;border:1.5px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.35);font-size:.85rem;cursor:pointer;transition:all .2s;">تصفح بدون حساب</button>
+      <button onclick="skipAuth()" style="width:100%;padding:12px;border-radius:14px;border:1.5px solid rgba(255,255,255,0.15);background:transparent;color:rgba(255,255,255,0.6);font-size:.85rem;cursor:pointer;transition:all .2s;">تصفح بدون حساب</button>
     </div>
   </div>
 </div>
 
 <!-- ── SIDEBAR OVERLAY ───────────────────────── -->
-<div id="sidebar-overlay" onclick="toggleSidebar()"></div>
+<div id="sidebar-overlay" onclick="toggleSidebar()" role="presentation" aria-hidden="true"></div>
 
 <!-- ── SIDEBAR ───────────────────────────────── -->
 <nav class="sidebar-nav" id="sidebar">
   <div class="sidebar-header">
-    <div class="sidebar-logo">🛒 MKT 201</div>
+    <div class="sidebar-logo"><i data-lucide="shopping-cart" aria-hidden="true"></i> MKT 201</div>
     <div class="sidebar-subtitle">HOSAM Study Hub</div>
   </div>
   <ul class="sidebar-menu">
-    <li><a href="#" onclick="showPage('page-home');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🏠</span> Home</a></li>
+    <li><a href="#" onclick="showPage('page-home');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="home" aria-hidden="true"></i></span> Home</a></li>
     <li class="sidebar-divider"></li>
-    <li class="sidebar-label">📖 Chapters</li>
-    <li><a href="#" onclick="showPage('page-ch1');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🎯</span> Ch 1 — Customer Value</a></li>
-    <li><a href="#" onclick="showPage('page-ch2');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">📊</span> Ch 2 — Company Strategy</a></li>
-    <li><a href="#" onclick="showPage('page-ch3');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🌍</span> Ch 3 — Marketing Environment</a></li>
-    <li><a href="#" onclick="showPage('page-ch5');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🧠</span> Ch 5 — Consumer Behavior</a></li>
+    <li class="sidebar-label"><i data-lucide="book-open" aria-hidden="true"></i> Chapters</li>
+    <li><a href="#" onclick="showPage('page-ch1');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="target" aria-hidden="true"></i></span> Ch 1 — Customer Value</a></li>
+    <li><a href="#" onclick="showPage('page-ch2');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="bar-chart-2" aria-hidden="true"></i></span> Ch 2 — Company Strategy</a></li>
+    <li><a href="#" onclick="showPage('page-ch3');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="globe" aria-hidden="true"></i></span> Ch 3 — Marketing Environment</a></li>
+    <li><a href="#" onclick="showPage('page-ch5');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="brain" aria-hidden="true"></i></span> Ch 5 — Consumer Behavior</a></li>
     <li class="sidebar-divider"></li>
-    <li class="sidebar-label">🔍 Review</li>
-    <li><a href="#" onclick="showPage('page-quick');renderQuickReview('all');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">⚡</span> Quick Review</a></li>
-    <li><a href="#" onclick="showPage('page-flash');initFlashCards();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🃏</span> Flash Cards</a></li>
+    <li class="sidebar-label"><i data-lucide="search" aria-hidden="true"></i> Review</li>
+    <li><a href="#" onclick="showPage('page-quick');renderQuickReview('all');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="zap" aria-hidden="true"></i></span> Quick Review</a></li>
+    <li><a href="#" onclick="showPage('page-flash');initFlashCards();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="layers" aria-hidden="true"></i></span> Flash Cards</a></li>
     <li class="sidebar-divider"></li>
-    <li class="sidebar-label">✏️ Practice</li>
-    <li><a href="#" onclick="showPage('page-levels');renderLevels();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🎖️</span> المستويات</a></li>
-    <li><a href="#" onclick="showPage('page-quiz');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🎯</span> Quiz Mode</a></li>
-    <li><a href="#" onclick="showPage('page-mock');checkMockExamLock();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">📋</span> Mock Exam</a></li>
-    <li><a href="#" onclick="showPage('page-match');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🔗</span> لعبة الربط</a></li>
-    <li><a href="#" onclick="showPage('page-past');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">📋</span> تجميعات</a></li>
-    <li><a href="#" onclick="showPage('page-dashboard');renderDashboard();renderStreakCalendar();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">📈</span> Dashboard</a></li>
-    <li><a href="#" onclick="showPage('page-leaderboard');renderLeaderboard();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🏆</span> Leaderboard</a></li>
-    <li><a href="#" onclick="showPage('page-badges');renderBadgesPage();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🏅</span> الشارات</a></li>
+    <li class="sidebar-label"><i data-lucide="pencil" aria-hidden="true"></i> Practice</li>
+    <li><a href="#" onclick="showPage('page-levels');renderLevels();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="award" aria-hidden="true"></i></span> المستويات</a></li>
+    <li><a href="#" onclick="showPage('page-quiz');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="target" aria-hidden="true"></i></span> Quiz Mode</a></li>
+    <li><a href="#" onclick="showPage('page-mock');checkMockExamLock();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="clipboard" aria-hidden="true"></i></span> Mock Exam</a></li>
+    <li><a href="#" onclick="showPage('page-match');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="link" aria-hidden="true"></i></span> لعبة الربط</a></li>
+    <li><a href="#" onclick="showPage('page-past');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="clipboard" aria-hidden="true"></i></span> تجميعات</a></li>
+    <li><a href="#" onclick="showPage('page-dashboard');renderDashboard();renderStreakCalendar();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="trending-up" aria-hidden="true"></i></span> Dashboard</a></li>
+    <li><a href="#" onclick="showPage('page-leaderboard');renderLeaderboard();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="trophy" aria-hidden="true"></i></span> Leaderboard</a></li>
+    <li><a href="#" onclick="showPage('page-badges');renderBadgesPage();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="medal" aria-hidden="true"></i></span> الشارات</a></li>
   </ul>
   <div id="fb-user-info" class="fb-user-info" style="display:none;">
     <div class="fb-user-name" id="fb-user-name"></div>
@@ -181,18 +190,18 @@
 </nav>
 
 <!-- ── SIDEBAR TOGGLE ─────────────────────────── -->
-<button class="sidebar-toggle" id="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+<button class="sidebar-toggle" id="sidebar-toggle" onclick="toggleSidebar()"><i data-lucide="menu" aria-hidden="true"></i></button>
 
 <!-- ── FLOATING BUTTONS ──────────────────────── -->
-<button id="dark-btn-float"   onclick="toggleDark()"   title="Dark / Light Mode"     aria-label="Toggle dark mode"   class="fab fab-dark-float">🌙</button>
-<button id="search-btn-float" onclick="openSearch()"    title="بحث / Search"          aria-label="Open search"        class="fab fab-search">🔍</button>
+<button id="dark-btn-float"   onclick="toggleDark()"   title="Dark / Light Mode"     aria-label="Toggle dark mode"   class="fab fab-dark-float"><i data-lucide="moon" aria-hidden="true"></i></button>
+<button id="search-btn-float" onclick="openSearch()"    title="بحث / Search"          aria-label="Open search"        class="fab fab-search"><i data-lucide="search" aria-hidden="true"></i></button>
 <button id="ar-btn-float"     onclick="toggleArabic()"  title="Toggle Arabic"         aria-label="Toggle Arabic translation" class="fab fab-ar">ع</button>
 
 <!-- ── SEARCH OVERLAY ───────────────────────── -->
 <div id="search-overlay" onclick="if(event.target===this)closeSearch()" style="display:none;position:fixed;inset:0;background:rgba(5,19,18,0.65);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:9999;align-items:flex-start;justify-content:center;padding-top:72px;">
   <div style="background:var(--paper,#fff);border-radius:22px;padding:20px 24px;width:90%;max-width:580px;box-shadow:0 32px 80px rgba(0,0,0,0.28),0 0 0 1px rgba(13,148,136,0.12);border:1px solid var(--line,#d1f0ec);">
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--line,#d1f0ec);">
-      <span style="font-size:1.1rem;opacity:.6;">🔍</span>
+      <span style="font-size:1.1rem;opacity:.6;"><i data-lucide="search" aria-hidden="true"></i></span>
       <input id="search-input" type="text" placeholder="Search content... (ابحث في الفصول)" oninput="runSearch(this.value)" style="flex:1;border:none;outline:none;font-size:1rem;background:transparent;color:var(--ink,#0f1f1d);font-weight:500;" autofocus>
       <button onclick="closeSearch()" style="border:none;background:rgba(0,0,0,0.06);border-radius:8px;font-size:1rem;cursor:pointer;color:var(--muted);width:30px;height:30px;display:flex;align-items:center;justify-content:center;">✕</button>
     </div>
@@ -319,7 +328,7 @@
 
   <section class="chapter" style="margin-top:16px;">
     <h2>📚 Course Overview</h2>
-    <p>MKT 201 — Principles of Marketing (Kotler &amp; Armstrong, 18th Edition). Midterm covers Chapters 1, 2, 3, and 5.</p>
+    <p>MKT 201 — Principles of Marketing (Kotler &amp; Armstrong, 19th Edition). Midterm covers Chapters 1, 2, 3, and 5.</p>
     <div class="master-grid" style="margin-top:14px;">
       <div class="master-card"><strong>📖 Chapter 1</strong>Marketing — Creating Customer Value &amp; Engagement. Core concepts, 4Ps, CRM, Customer Equity.</div>
       <div class="master-card"><strong>📊 Chapter 2</strong>Company &amp; Marketing Strategy. BCG Matrix, Ansoff Matrix, SWOT, Strategic Planning.</div>
@@ -345,7 +354,7 @@
   <section class="hero">
     <div class="tag">Chapter 1</div>
     <h1>🎯 Marketing: Creating Customer Value &amp; Engagement</h1>
-    <p>Kotler &amp; Armstrong, 18th Edition • Chapter 1</p>
+    <p>Kotler &amp; Armstrong, 19th Edition • Chapter 1</p>
   </section>
 
   <!-- ── LEARNING OBJECTIVES ─────────────────────────────── -->
@@ -840,7 +849,7 @@
   <section class="hero">
     <div class="tag">Chapter 2</div>
     <h1>🗺️ Company &amp; Marketing Strategy: Partnering to Build Customer Engagement</h1>
-    <p>Kotler &amp; Armstrong, 18th Edition • Chapter 2</p>
+    <p>Kotler &amp; Armstrong, 19th Edition • Chapter 2</p>
   </section>
 
   <!-- ── LEARNING OBJECTIVES ─────────────────────────────── -->
@@ -1376,7 +1385,7 @@
   <section class="hero">
     <div class="tag">Chapter 3</div>
     <h1>🌍 Analyzing the Marketing Environment</h1>
-    <p>Kotler &amp; Armstrong, 18th Edition &bull; Chapter 3
+    <p>Kotler &amp; Armstrong, 19th Edition &bull; Chapter 3
       <span class="ar-line">تحليل البيئة التسويقية — الفصل الثالث</span>
     </p>
   </section>
@@ -1824,7 +1833,7 @@
   <section class="hero">
     <div class="tag">Chapter 5</div>
     <h1>🧠 Understanding Consumer Buyer Behavior</h1>
-    <p>Kotler &amp; Armstrong, 18th Edition &bull; Chapter 5
+    <p>Kotler &amp; Armstrong, 19th Edition &bull; Chapter 5
       <span class="ar-line">فهم سلوك المشتري المستهلك — الفصل الخامس</span>
     </p>
   </section>
@@ -2958,11 +2967,12 @@
 </div>
 
 <!-- ── FIREBASE SDK ───────────────────────────── -->
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script src="mkt201_scripts.js"></script>
-<script defer src="/_vercel/insights/script.js"></script>
+<script>document.addEventListener('DOMContentLoaded', () => { if (window.lucide) lucide.createIcons(); });</script>
 
 </body>
 </html>
