@@ -145,6 +145,7 @@ body {
   font-weight: 900;
   color: var(--accent2);
   letter-spacing: -0.3px;
+  font-family: 'Satoshi', sans-serif;
 }
 .sidebar-subtitle {
   font-size: 0.78rem;
