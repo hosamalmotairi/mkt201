@@ -1632,8 +1632,9 @@ body.dark select.filter-select { background: #1c1209; border-color: #3a2010; col
 .notes-area::placeholder { color:var(--muted); }
 
 /* ── CHAPTER NOTES ── */
-.notes-binder-btn { display:flex; align-items:center; justify-content:center; gap:8px; width:100%; background:var(--accent); color:#fff; border:none; border-radius:12px; padding:12px 20px; font-size:.92rem; font-weight:700; cursor:pointer; margin-bottom:12px; transition:opacity .15s; font-family:var(--font-body,inherit); }
-.notes-binder-btn:hover { opacity:.88; }
+.notes-binder-btn { display:inline-flex; align-items:center; gap:6px; background:rgba(15,118,110,.07); color:var(--accent); border:1.5px solid rgba(15,118,110,.25); border-radius:99px; padding:6px 16px; font-size:.8rem; font-weight:600; cursor:pointer; margin-bottom:12px; transition:.15s; font-family:var(--font-body,inherit); width:auto; }
+.notes-binder-btn:hover { background:rgba(15,118,110,.14); border-color:var(--accent); }
+.dark .notes-binder-btn { background:rgba(13,148,136,.12); color:#5eead4; border-color:rgba(13,148,136,.3); }
 .ch-notes-box { background:linear-gradient(135deg,#f0fdfa,#e0f2fe); border:2px solid var(--accent); border-radius:20px; padding:28px; margin-top:8px; }
 .dark .ch-notes-box { background:linear-gradient(135deg,rgba(13,148,136,.1),rgba(14,165,233,.1)); border-color:var(--accent); }
 .ch-notes-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; }
