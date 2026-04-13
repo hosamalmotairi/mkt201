@@ -3288,7 +3288,7 @@ function toggleQuizReview() {
   const el = document.getElementById('quiz-review-list');
   const btn = document.getElementById('quiz-review-btn');
   if (!el) return;
-  if (el.style.display === 'none') {
+  if (el.style.display !== 'block') {
     if (!el.innerHTML) el.innerHTML = buildReviewHTML(quizState.questions, quizState.answers);
     el.style.display = 'block';
     if (btn) btn.textContent = '✕ إخفاء المراجعة';
@@ -5547,170 +5547,334 @@ function pomoToggleWidget() {
 //  CHAPTER BINDER PDF EXPORT
 // ═══════════════════════════════════════════════
 function exportChapterBinder(pageId, chapterTitle) {
-  var page = document.getElementById(pageId);
+  const page = document.getElementById(pageId);
   if (!page) return;
 
-  // Clone and prepare DOM
-  var clone = page.cloneNode(true);
-  clone.querySelectorAll('.lo-body').forEach(function(el){ el.style.display='block'; });
-  clone.querySelectorAll('.lo-arrow, button, input, select, .notes-binder-btn').forEach(function(el){ el.remove(); });
-  clone.querySelectorAll('.note-ar').forEach(function(el){ el.style.display='block'; });
-  clone.querySelectorAll('.ar-line').forEach(function(el){ el.style.display='inline'; });
-  clone.querySelectorAll('.hero, section.hero').forEach(function(el){ el.remove(); });
+  const dateStr = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
 
-  var dateStr = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  // ── Color palette (teal-adapted from BUS 214) ──────────────────
+  const C = {
+    c1:'#0F766E', c2:'#0D9488',
+    bg1:'#F0FDFA', bg2:'#CCFBF1', line:'#99F6E4',
+    ink:'#1C1917', muted:'#78716C',
+    tipBg:'#FFFBEB', tipBorder:'#FDE68A', tipAccent:'#D97706', tipText:'#92400E',
+    memoBg:'#F0FDFA', memoBorder:'#99F6E4', memoAccent:'#0F766E', memoText:'#134E4A',
+    shadow:'rgba(0,0,0,.06)', shadowSm:'rgba(0,0,0,.03)'
+  };
 
-  var css = [
-    '@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap");',
-    '@page{size:A4;margin:10mm 12mm;}',
-    '*{box-sizing:border-box;margin:0;padding:0;}',
+  // ── Helpers ────────────────────────────────────────────────────
+  // Extract .ar-line spans from a cloned element, return {mainHtml, arText}
+  function extractAr(el) {
+    const c = el.cloneNode(true);
+    c.querySelectorAll('[data-lucide], i[class*="lucide"]').forEach(e => e.remove());
+    const arLines = c.querySelectorAll('.ar-line');
+    const arParts = [];
+    arLines.forEach(a => { arParts.push(a.textContent.trim()); a.remove(); });
+    return { mainHtml: c.innerHTML, arText: arParts.join(' ') };
+  }
 
-    /* ── Base ── */
-    'body{font-family:"Plus Jakarta Sans",system-ui,sans-serif;color:#1C1917;background:#fff;font-size:9.5px;line-height:1.45;-webkit-font-smoothing:antialiased;}',
-    'strong{font-weight:700;}',
-    'em{font-style:italic;color:#78716C;}',
-    'p{margin:2px 0;}',
-    'ul,ol{padding-right:0;padding-left:14px;margin:2px 0;}',
-    'li{margin:1px 0;font-size:.95em;}',
+  function arDiv(text) {
+    if (!text || !text.trim()) return '';
+    return `<div class="ar">${text}</div>`;
+  }
 
-    /* ── Toolbar ── */
-    '.toolbar{position:sticky;top:0;z-index:100;background:#fff;border-bottom:2px solid #0F766E;padding:10px 20px;display:flex;align-items:center;gap:12px;}',
-    '.print-btn{background:#0F766E;color:#fff;border:none;padding:8px 20px;border-radius:8px;font-weight:700;font-size:.85rem;cursor:pointer;font-family:inherit;}',
-    '.print-btn:hover{background:#0D9488;}',
-    '.toolbar-hint{color:#78716C;font-size:.75rem;}',
+  // ── DOM walker: converts children of a container to PDF HTML ───
+  function walkChildren(container) {
+    let html = '';
+    for (const el of container.children) {
+      const tag = el.tagName;
+      const cls = el.className || '';
 
-    /* ── Cover ── */
-    '.binder-cover{padding:12px 0 10px;border-bottom:2px solid #0F766E;margin-bottom:12px;}',
-    '.binder-tag{display:inline-block;background:#0F766E;color:#fff;padding:2px 10px;border-radius:4px;font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;}',
-    '.binder-cover h1{font-size:1.1rem;font-weight:800;color:#1C1917;margin:0 0 2px;line-height:1.25;}',
-    '.binder-sub{font-size:.75rem;color:#78716C;}',
-    '.binder-meta{display:flex;gap:14px;font-size:.65rem;color:#A8A29E;margin-top:6px;padding-top:6px;border-top:1px solid #E7E5E4;}',
+      // Skip interactive / header elements
+      if (tag === 'BUTTON' || cls.includes('lo-arrow') || cls.includes('notes-binder-btn')) continue;
+      if (tag === 'SECTION' || cls.includes('hero')) continue;
 
-    /* ── Wrapper ── */
-    '.wrap{padding:0 14px 20px;}',
-    '.page{display:block!important;}',
+      if (tag === 'H3') {
+        const { mainHtml, arText } = extractAr(el);
+        html += `<h3>${mainHtml}${arText ? ` <span class="ar-inline">${arText}</span>` : ''}</h3>`;
+      }
 
-    /* ── Chapter sections ── */
-    '.chapter{margin-bottom:10px;}',
-    '.chapter>h2{font-size:.88rem;font-weight:800;color:#0F766E;border-bottom:1.5px solid #0F766E;padding-bottom:4px;margin-bottom:8px;display:flex;align-items:center;gap:6px;}',
-    '.chapter>h2 i,.chapter>h2 svg{display:none;}',
-    '.chapter>h3{font-size:.8rem;font-weight:700;color:#1C1917;margin:8px 0 4px;padding-left:8px;border-left:3px solid #0F766E;}',
+      else if (cls.includes('def-spotlight')) {
+        const termEl = el.querySelector('.def-term');
+        const bodyEl = el.querySelector('.def-body');
+        const arSpan = el.querySelector('.ar-line');
+        const termHtml = termEl ? termEl.innerHTML : '';
+        let bodyHtml = '';
+        if (bodyEl) {
+          const bc = bodyEl.cloneNode(true);
+          bc.querySelectorAll('.ar-line').forEach(a => a.remove());
+          bodyHtml = bc.innerHTML;
+        }
+        const arText = arSpan ? arSpan.textContent.trim() : '';
+        html += `<div class="block"><div class="block-term">${termHtml}</div><div class="block-body">${bodyHtml}</div>${arDiv(arText)}</div>`;
+      }
 
-    /* ── AR line ── */
-    '.ar-line{display:block!important;font-family:"Noto Naskh Arabic",serif;color:#0F766E;font-size:.82em;font-weight:600;direction:rtl;text-align:right;margin-top:2px;line-height:1.6;}',
+      else if (cls.includes('concept-row')) {
+        html += '<div class="concept-row">';
+        for (const card of el.querySelectorAll('.concept-card')) {
+          const color = ['teal','blue','purple','amber','rose','green'].find(c => card.classList.contains(c)) || '';
+          const { mainHtml, arText } = extractAr(card);
+          html += `<div class="block concept-block ${color}">${mainHtml}${arDiv(arText)}</div>`;
+        }
+        html += '</div>';
+      }
 
-    /* ── LO sections ── */
-    '.lo-section{border:1px solid #E7E5E4;border-radius:6px;margin-bottom:5px;overflow:hidden;}',
-    '.lo-header{display:flex;align-items:flex-start;gap:8px;padding:6px 10px;background:#F9F9F8;border-bottom:1px solid #E7E5E4;}',
-    '.lo-badge{background:#0F766E;color:#fff;font-size:.6rem;font-weight:800;padding:1px 7px;border-radius:3px;white-space:nowrap;flex-shrink:0;margin-top:2px;}',
-    '.lo-title{font-weight:600;font-size:.8rem;color:#1C1917;flex:1;line-height:1.4;}',
-    '.lo-arrow{display:none!important;}',
-    '.lo-body{display:block!important;padding:6px 10px;font-size:.78rem;color:#44403C;line-height:1.5;}',
+      else if (cls.includes('concept-card')) {
+        const color = ['teal','blue','purple','amber','rose','green'].find(c => el.classList.contains(c)) || '';
+        const { mainHtml, arText } = extractAr(el);
+        html += `<div class="block concept-block ${color}">${mainHtml}${arDiv(arText)}</div>`;
+      }
 
-    /* ── Process flow ── */
-    '.process-flow{display:flex;flex-direction:column;gap:4px;margin:5px 0;}',
-    '.process-step{display:flex;gap:8px;align-items:flex-start;padding:5px 9px;background:#F9F9F8;border-left:3px solid #0F766E;border-radius:0 5px 5px 0;page-break-inside:avoid;}',
-    '.process-num{background:#0F766E;color:#fff;min-width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.62rem;flex-shrink:0;margin-top:1px;}',
-    '.process-content{flex:1;font-size:.78rem;line-height:1.5;}',
-    '.process-content strong{color:#0F766E;display:block;margin-bottom:1px;}',
+      else if (cls.includes('process-flow')) {
+        for (const step of el.querySelectorAll('.process-step')) {
+          const numEl = step.querySelector('.process-num');
+          const contentEl = step.querySelector('.process-content') || step;
+          const numText = numEl ? numEl.textContent.trim() : '';
+          const cc = contentEl.cloneNode(true);
+          cc.querySelectorAll('.process-num, .ar-line').forEach(a => a.remove());
+          const arSpan = contentEl.querySelector('.ar-line');
+          const arText = arSpan ? arSpan.textContent.trim() : '';
+          html += `<div class="step-card"><div class="step-badge">${numText}</div><div class="step-body">${cc.innerHTML}${arDiv(arText)}</div></div>`;
+        }
+      }
 
-    /* ── Memory box ── */
-    '.memory-box{background:#FFFBEB;border-left:3px solid #D97706;border-radius:0 6px 6px 0;padding:6px 10px;margin:5px 0;page-break-inside:avoid;font-size:.78rem;line-height:1.5;color:#1C1917;}',
+      else if (cls.includes('process-step')) {
+        const numEl = el.querySelector('.process-num');
+        const contentEl = el.querySelector('.process-content') || el;
+        const numText = numEl ? numEl.textContent.trim() : '';
+        const cc = contentEl.cloneNode(true);
+        cc.querySelectorAll('.process-num, .ar-line').forEach(a => a.remove());
+        const arSpan = contentEl.querySelector('.ar-line');
+        const arText = arSpan ? arSpan.textContent.trim() : '';
+        html += `<div class="step-card"><div class="step-badge">${numText}</div><div class="step-body">${cc.innerHTML}${arDiv(arText)}</div></div>`;
+      }
 
-    /* ── Exam tip ── */
-    '.exam-tip{background:#F0FDFA;border-left:3px solid #0F766E;border-radius:0 6px 6px 0;padding:6px 10px;margin:5px 0;page-break-inside:avoid;font-size:.78rem;line-height:1.5;}',
-    '.exam-tip strong,.exam-tip b{color:#0F766E;}',
+      else if (cls.includes('memory-box')) {
+        const { mainHtml, arText } = extractAr(el);
+        html += `<div class="memo">💡 ${mainHtml}${arDiv(arText)}</div>`;
+      }
 
-    /* ── Master card ── */
-    '.master-card{background:#F5F5F4;border-left:3px solid #0F766E;border-radius:0 6px 6px 0;padding:6px 10px;margin:5px 0;page-break-inside:avoid;font-size:.78rem;}',
+      else if (cls.includes('exam-tip')) {
+        const { mainHtml, arText } = extractAr(el);
+        html += `<div class="tip">⭐ ${mainHtml}${arDiv(arText)}</div>`;
+      }
 
-    /* ── Concept cards ── */
-    '.concept-row{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin:5px 0;}',
-    '.concept-card{border:1px solid #E7E5E4;border-radius:6px;padding:6px 9px;font-size:.77rem;}',
-    '.concept-card strong{display:block;font-weight:700;margin-bottom:2px;font-size:.78rem;}',
-    '.concept-card p{color:#44403C;margin:0;}',
-    '.concept-card.teal{border-left:3px solid #0F766E;}',
-    '.concept-card.teal strong{color:#0F766E;}',
-    '.concept-card.blue{border-left:3px solid #3B82F6;}',
-    '.concept-card.blue strong{color:#1D4ED8;}',
-    '.concept-card.amber{border-left:3px solid #D97706;}',
-    '.concept-card.amber strong{color:#92400E;}',
-    '.concept-card.purple{border-left:3px solid #7C3AED;}',
-    '.concept-card.purple strong{color:#5B21B6;}',
+      else if (cls.includes('master-card')) {
+        const { mainHtml, arText } = extractAr(el);
+        html += `<div class="block">${mainHtml}${arDiv(arText)}</div>`;
+      }
 
-    /* ── Definition spotlight ── */
-    '.def-spotlight{border-left:3px solid #0F766E;background:#F9FAFB;border-radius:0 6px 6px 0;padding:5px 10px;margin:4px 0;page-break-inside:avoid;}',
-    '.def-term{font-weight:800;color:#0F766E;font-size:.78rem;margin-bottom:2px;}',
-    '.def-body{font-size:.77rem;color:#44403C;line-height:1.5;}',
+      else if (tag === 'TABLE') {
+        html += el.outerHTML;
+      }
 
-    /* ── Tables ── */
-    'table{width:100%;border-collapse:collapse;margin:5px 0;font-size:.74rem;page-break-inside:avoid;table-layout:fixed;word-wrap:break-word;}',
-    'th{background:#0F766E;color:#fff;padding:5px 8px;text-align:left;font-weight:700;font-size:.71rem;word-wrap:break-word;}',
-    'td{padding:4px 8px;border-bottom:1px solid #E7E5E4;border-right:1px solid #F0F0EF;color:#44403C;vertical-align:top;word-wrap:break-word;line-height:1.4;}',
-    'td:last-child{border-right:none;}',
-    'tr:nth-child(even) td{background:#F9F9F8;}',
-    'tr:last-child td{border-bottom:none;}',
+      else if (cls.includes('bcg-grid') || cls.includes('swot-grid')) {
+        html += '<div class="two-col">';
+        for (const cell of el.children) {
+          const { mainHtml, arText } = extractAr(cell);
+          html += `<div class="hbox">${mainHtml}${arDiv(arText)}</div>`;
+        }
+        html += '</div>';
+      }
 
-    /* ── Slide bullets ── */
-    '.slide-bullets{margin:4px 0;padding-left:13px;}',
-    '.slide-bullets li{font-size:.77rem;color:#44403C;margin:2px 0;}',
+      else if (tag === 'UL' || tag === 'OL') {
+        const { mainHtml } = extractAr(el);
+        html += `<div class="block">${mainHtml}</div>`;
+      }
 
-    /* ── Key Takeaways ── */
-    '.ch-notes-box{border:1.5px solid #0F766E;border-radius:8px;padding:10px;margin-top:8px;background:#F0FDFA;}',
-    '.ch-notes-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}',
-    '.ch-notes-title{font-weight:800;color:#0F766E;font-size:.83rem;}',
-    '.ch-notes-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;}',
-    '.ch-note-item{display:flex;gap:6px;background:#fff;border-left:3px solid #0F766E;border-radius:0 6px 6px 0;padding:6px 8px;page-break-inside:avoid;}',
-    '.ch-note-num{background:#0F766E;color:#fff;min-width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.62rem;font-weight:800;flex-shrink:0;margin-top:1px;}',
-    '.ch-note-item>div{flex:1;font-size:.77rem;line-height:1.45;}',
-    '.ch-note-item strong{display:block;font-weight:700;color:#1C1917;margin-bottom:1px;}',
-    '.note-ar{display:block!important;direction:rtl;text-align:right;font-family:"Noto Naskh Arabic",serif;font-size:.75rem;font-weight:600;color:#0F766E;background:#CCFBF1;border-radius:4px;padding:2px 6px;margin-top:3px;line-height:1.7;}',
+      else if (tag === 'P') {
+        const { mainHtml, arText } = extractAr(el);
+        if (mainHtml.trim()) html += `<p>${mainHtml}${arDiv(arText)}</p>`;
+      }
+    }
+    return html;
+  }
 
-    /* ── BCG / SWOT ── */
-    '.bcg-grid,.swot-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin:5px 0;}',
-    '.bcg-cell,.swot-cell{border:1px solid #E7E5E4;border-radius:6px;padding:6px 9px;page-break-inside:avoid;font-size:.77rem;}',
-    '.bcg-cell strong,.swot-cell strong{display:block;font-weight:700;margin-bottom:2px;}',
+  // ── Build content by walking top-level page children ──────────
+  let contentHtml = '';
+  for (const el of page.children) {
+    const tag = el.tagName;
+    const cls = el.className || '';
 
-    /* ── Footer ── */
-    '.binder-footer{text-align:center;color:#A8A29E;font-size:.62rem;padding:10px 0;border-top:1px solid #E7E5E4;margin-top:12px;}',
+    if (tag === 'SECTION' || cls.includes('hero')) continue;
+    if (tag === 'BUTTON' || cls.includes('notes-binder-btn')) continue;
 
-    /* ── Hide ── */
-    '.sidebar,.topbar,.fab,.dark-toggle,.hero,section.hero,.notes-binder-btn,[data-lucide]{display:none!important;}',
+    if (cls.includes('chapter')) {
+      // Check if this is the Key Takeaways wrapper (contains ch-notes-box)
+      const notesBox = el.querySelector('.ch-notes-box');
+      if (notesBox) {
+        const titleEl = notesBox.querySelector('.ch-notes-title');
+        const titleText = titleEl ? titleEl.textContent.trim() : '📌 Key Takeaways';
+        contentHtml += `<div class="section notes-section"><h3>${titleText}</h3><div class="two-col">`;
+        for (const item of notesBox.querySelectorAll('.ch-note-item')) {
+          const numEl = item.querySelector('.ch-note-num');
+          const numText = numEl ? numEl.textContent.trim() : '';
+          const noteAr = item.querySelector('.note-ar');
+          const arText = noteAr ? noteAr.textContent.trim() : '';
+          const ic = item.cloneNode(true);
+          ic.querySelectorAll('.ch-note-num, .note-ar').forEach(a => a.remove());
+          contentHtml += `<div class="step-card"><div class="step-badge">${numText}</div><div class="step-body">${ic.innerHTML}${arDiv(arText)}</div></div>`;
+        }
+        contentHtml += '</div></div>';
+      } else {
+        // Learning Objectives block
+        const h2 = el.querySelector('h2');
+        let h2Text = 'Learning Objectives';
+        let h2Ar = '';
+        if (h2) {
+          const arSpan = h2.querySelector('.ar-line');
+          h2Ar = arSpan ? arSpan.textContent.trim() : '';
+          const hc = h2.cloneNode(true);
+          hc.querySelectorAll('.ar-line, i, svg').forEach(a => a.remove());
+          h2Text = hc.textContent.trim();
+        }
+        contentHtml += `<div class="section"><h3>${h2Text}${h2Ar ? ` <span class="ar-inline">${h2Ar}</span>` : ''}</h3>`;
+        contentHtml += walkChildren(el);
+        contentHtml += '</div>';
+      }
+    }
 
-    /* ── Print ── */
-    '@media print{',
-    '.toolbar{display:none!important;}',
-    'body{font-size:9px;}',
-    '.binder-cover{padding:0 0 8px;margin-bottom:8px;}',
-    '.chapter{margin-bottom:7px;}',
-    '}'
-  ].join('\n');
+    else if (cls.includes('lo-section')) {
+      const header = el.querySelector('.lo-header');
+      const body   = el.querySelector('.lo-body');
+      const badge  = header ? header.querySelector('.lo-badge') : null;
+      const titleEl = header ? header.querySelector('.lo-title') : null;
+      const badgeText = badge ? badge.textContent.trim() : '';
+      // lo-title may contain inline Arabic span — just grab textContent
+      const titleText = titleEl ? titleEl.textContent.trim() : '';
+      contentHtml += '<div class="section">';
+      contentHtml += `<h3><span class="lo-badge-pdf">${badgeText}</span> ${titleText}</h3>`;
+      if (body) contentHtml += walkChildren(body);
+      contentHtml += '</div>';
+    }
 
-  var html = '<!DOCTYPE html><html dir="ltr"><head>'
-    + '<meta charset="UTF-8"><title>MKT 201 — ' + chapterTitle + '</title>'
-    + '<style>' + css + '</style>'
-    + '</head><body>'
-    + '<div class="toolbar">'
-    + '<button class="print-btn" onclick="window.print()">🖨️ طباعة / حفظ كـ PDF</button>'
-    + '<span class="toolbar-hint">اختر "Save as PDF" في خيارات الطابعة</span>'
-    + '</div>'
-    + '<div class="wrap">'
-    + '<div class="binder-cover">'
-    + '<div class="binder-tag">MKT 201 — Principles of Marketing</div>'
-    + '<h1>' + chapterTitle + '</h1>'
-    + '<div class="binder-sub">Kotler &amp; Armstrong, 19th Edition</div>'
-    + '<div class="binder-meta"><span>📅 ' + dateStr + '</span><span>📖 ملخص شامل</span><span>🌐 mkt201.vercel.app</span></div>'
-    + '</div>'
-    + clone.innerHTML
-    + '<div class="binder-footer">MKT 201 Study Hub &nbsp;·&nbsp; mkt201.vercel.app &nbsp;·&nbsp; ' + dateStr + '</div>'
-    + '</div>'
-    + '</body></html>';
+  }
 
-  var blob = new Blob([html], {type:'text/html'});
-  var url = URL.createObjectURL(blob);
-  var w = window.open(url, '_blank');
-  if (!w) alert('السماح بالنوافذ المنبثقة لتصدير PDF');
-  setTimeout(function(){ URL.revokeObjectURL(url); }, 60000);
+  // ── Open window and write ──────────────────────────────────────
+  const w = window.open('', '_blank');
+  if (!w) { alert('السماح بالنوافذ المنبثقة لتصدير PDF'); return; }
+
+  w.document.write(`<!DOCTYPE html><html dir="ltr"><head>
+<meta charset="UTF-8">
+<title>MKT 201 — ${chapterTitle}</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+@page { size: A4; margin: 12mm 14mm; }
+:root { --c1:${C.c1};--c2:${C.c2};--bg1:${C.bg1};--bg2:${C.bg2};--line:${C.line};--ink:${C.ink};--muted:${C.muted}; }
+* { box-sizing:border-box;margin:0;padding:0; }
+body { font-family:'Inter',system-ui,sans-serif;color:var(--ink);line-height:1.55;font-size:11px;max-width:790px;margin:0 auto;background:#fff;-webkit-font-smoothing:antialiased; }
+p { margin:3px 0; }
+ul,ol { padding-left:16px;margin:3px 0; }
+li { margin:2px 0; }
+strong { font-weight:700; }
+em { font-style:italic;color:var(--muted); }
+
+/* ── Toolbar ── */
+.toolbar { position:sticky;top:0;z-index:100;background:#fff;padding:12px 28px;border-bottom:2px solid var(--c1);display:flex;align-items:center;gap:14px;box-shadow:0 2px 8px ${C.shadow}; }
+.toolbar-btn { background:var(--c1);color:#fff;border:none;padding:9px 24px;border-radius:9px;font-weight:700;cursor:pointer;font-size:.9rem;font-family:inherit; }
+.toolbar .hint { color:var(--muted);font-size:.8rem; }
+
+/* ── Content wrapper ── */
+.content { padding:20px 28px 36px; }
+
+/* ── Cover ── */
+.binder-cover { padding:14px 0 12px;border-bottom:3px solid var(--c1);margin-bottom:20px; }
+.binder-tag { display:inline-block;background:var(--c1);color:#fff;padding:3px 12px;border-radius:20px;font-size:.68rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px; }
+.binder-cover h1 { font-size:1.45rem;font-weight:900;color:var(--ink);margin:0 0 4px;line-height:1.3; }
+.binder-sub { font-size:.82rem;color:var(--muted); }
+.binder-meta { display:flex;gap:18px;font-size:.72rem;color:#A8A29E;margin-top:8px;padding-top:8px;border-top:1px solid #E7E5E4; }
+
+/* ── Section ── */
+.section { margin-bottom:18px; }
+.section h3 { font-size:.96rem;font-weight:700;color:var(--c2);margin:14px 0 8px;padding-bottom:5px;border-bottom:1.5px solid var(--line); }
+.lo-badge-pdf { display:inline-block;background:var(--c1);color:#fff;padding:1px 8px;border-radius:4px;font-size:.7rem;font-weight:800;margin-right:6px;vertical-align:middle; }
+.ar-inline { font-family:'Cairo',sans-serif;color:var(--c1);font-size:.78rem;font-weight:600;direction:rtl; }
+.notes-section h3 { color:var(--c1); }
+
+/* ── Block card ── */
+.block { background:#fff;border:1.5px solid var(--line);border-left:5px solid var(--c1);border-radius:12px;padding:10px 14px;margin:7px 0;page-break-inside:avoid;box-shadow:0 3px 12px ${C.shadow},0 1px 3px ${C.shadowSm}; }
+.block strong { color:var(--c1); }
+.block em { color:var(--muted);font-style:italic; }
+.block-term { font-weight:800;color:var(--c1);font-size:.9rem;margin-bottom:5px; }
+.block-body { font-size:.88rem;color:var(--ink);line-height:1.55; }
+
+/* ── Concept grid ── */
+.concept-row { display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:7px 0; }
+.concept-block p { color:#44403C;margin:2px 0;font-size:.86rem; }
+.concept-block.teal { border-left-color:#0F766E; }
+.concept-block.teal strong { color:#0F766E; }
+.concept-block.blue { border-left-color:#3B82F6; }
+.concept-block.blue strong { color:#1D4ED8; }
+.concept-block.purple { border-left-color:#7C3AED; }
+.concept-block.purple strong { color:#5B21B6; }
+.concept-block.amber { border-left-color:#D97706; }
+.concept-block.amber strong { color:#92400E; }
+.concept-block.rose { border-left-color:#E11D48; }
+.concept-block.rose strong { color:#9F1239; }
+.concept-block.green { border-left-color:#16A34A; }
+.concept-block.green strong { color:#14532D; }
+
+/* ── Arabic block ── */
+.ar { direction:rtl;text-align:right;font-family:'Cairo',sans-serif;color:var(--c2);font-size:.84rem;font-weight:600;line-height:1.8;margin-top:6px;padding:5px 11px;background:var(--bg1);border-radius:8px;border-right:3px solid var(--c1); }
+
+/* ── Tip (exam-tip) ── */
+.tip { background:${C.tipBg};border:1.5px solid ${C.tipBorder};border-left:5px solid ${C.tipAccent};border-radius:12px;padding:9px 14px;margin:7px 0;font-size:.88rem;page-break-inside:avoid;color:${C.tipText};box-shadow:0 3px 12px ${C.shadow}; }
+.tip strong,.tip b { color:${C.tipAccent};font-weight:700; }
+.tip em { color:${C.tipText};opacity:.75; }
+
+/* ── Memo (memory-box) ── */
+.memo { background:${C.memoBg};border:1.5px solid ${C.memoBorder};border-left:5px solid ${C.memoAccent};border-radius:12px;padding:9px 14px;margin:7px 0;font-size:.88rem;page-break-inside:avoid;color:${C.memoText};box-shadow:0 3px 12px ${C.shadow}; }
+.memo strong,.memo b { color:${C.memoAccent};font-weight:700; }
+
+/* ── Step card ── */
+.step-card { display:flex;align-items:flex-start;gap:12px;background:#fff;border:1.5px solid var(--line);border-left:5px solid var(--c1);border-radius:12px;padding:10px 14px;margin:6px 0;page-break-inside:avoid;box-shadow:0 3px 12px ${C.shadow}; }
+.step-badge { background:var(--c1);color:#fff;min-width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.78rem;flex-shrink:0;margin-top:1px; }
+.step-body { flex:1;font-size:.88rem;line-height:1.5; }
+.step-body strong { color:var(--c1); }
+
+/* ── Hbox ── */
+.hbox { background:var(--bg1);border:1.5px solid var(--line);border-radius:12px;padding:10px 14px;margin:6px 0;page-break-inside:avoid;font-size:.88rem; }
+.hbox strong { color:var(--c2); }
+
+/* ── Two-column grid ── */
+.two-col { display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:7px 0; }
+
+/* ── Tables ── */
+table { width:100%;border-collapse:separate;border-spacing:0;margin:7px 0;font-size:.84rem;border-radius:12px;overflow:hidden;border:1.5px solid var(--line);box-shadow:0 3px 12px ${C.shadow};table-layout:fixed;word-wrap:break-word; }
+th { background:var(--c2);color:#fff;padding:9px 13px;text-align:left;font-weight:700;font-size:.79rem;word-wrap:break-word; }
+td { padding:8px 13px;border-bottom:1px solid #E5E7EB;color:#334155;vertical-align:top;word-wrap:break-word;line-height:1.45; }
+tr:nth-child(even) td { background:var(--bg1); }
+tr:last-child td { border-bottom:none; }
+
+/* ── Footer ── */
+.footer { text-align:center;color:var(--muted);font-size:.72rem;padding:20px 0;border-top:1.5px solid #E2E8F0;margin-top:20px; }
+
+/* ── Print ── */
+@media print {
+  .toolbar { display:none !important; }
+  body { font-size:10.5px;max-width:none; }
+  .content { padding:14px 0 28px; }
+  .block,.tip,.memo,.step-card,.hbox { break-inside:avoid;box-shadow:none!important; }
+  table { box-shadow:none!important; }
+  td { color:#334155 !important; }
+}
+</style></head><body>
+<div class="toolbar">
+  <button class="toolbar-btn" onclick="window.print()">🖨️ طباعة / حفظ كـ PDF</button>
+  <span class="hint">اختر "Save as PDF" في خيارات الطابعة</span>
+</div>
+<div class="content">
+  <div class="binder-cover">
+    <div class="binder-tag">MKT 201 — Principles of Marketing</div>
+    <h1>${chapterTitle}</h1>
+    <div class="binder-sub">Kotler &amp; Armstrong, 19th Edition</div>
+    <div class="binder-meta"><span>📅 ${dateStr}</span><span>📖 ملخص شامل</span><span>🌐 mkt201.vercel.app</span></div>
+  </div>
+  ${contentHtml}
+  <div class="footer">MKT 201 Study Hub &nbsp;·&nbsp; mkt201.vercel.app &nbsp;·&nbsp; ${dateStr}</div>
+</div>
+</body></html>`);
+  w.document.close();
 }
 
 // ═══════════════════════════════════════════════
