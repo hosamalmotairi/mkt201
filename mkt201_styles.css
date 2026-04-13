@@ -6,17 +6,40 @@
 @import url('https://fonts.googleapis.com/css2?family=Satoshi:wght@400;500;600;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap');
 
 :root {
-  --bg: #f4faf9;
+  /* ── DESIGN SYSTEM — Focused Warmth ─────────────────────────── */
+  /* Primary (Teal) */
+  --color-primary:        #0F766E;
+  --color-primary-hover:  #0D9488;
+  --color-primary-tint:   #F0FDFA;
+  --color-primary-border: #CCFBF1;
+  /* Accent (Amber — achievements, scores, personal bests) */
+  --color-accent:         #D97706;
+  --color-accent-light:   #F59E0B;
+  --color-accent-tint:    #FFFBEB;
+  --color-accent-border:  #FEF3C7;
+  /* Feedback */
+  --color-correct:        #16A34A;
+  --color-wrong:          #DC2626;
+  /* Surfaces */
+  --color-bg:             #FAFAF9;
+  --color-surface:        #FFFFFF;
+  --color-border:         #E7E5E4;
+  /* Text */
+  --color-text:           #1C1917;
+  --color-text-muted:     #78716C;
+  --color-text-faint:     #A8A29E;
+  /* ── LEGACY ALIASES (keep for backward compat) ──────────────── */
+  --bg: #FAFAF9;
   --paper: #ffffff;
-  --ink: #0f1f1d;
-  --muted: #5c7a76;
-  --accent: #0d9488;
-  --accent2: #14b8a6;
-  --accent-soft: #f0fdfa;
-  --line: #d1f0ec;
-  --good: #15803d;
-  --bad: #b91c1c;
-  --shadow: 0 12px 32px rgba(13, 148, 136, 0.07);
+  --ink: #1C1917;
+  --muted: #78716C;
+  --accent: #0F766E;
+  --accent2: #0D9488;
+  --accent-soft: #F0FDFA;
+  --line: #E7E5E4;
+  --good: #16A34A;
+  --bad: #DC2626;
+  --shadow: 0 12px 32px rgba(15, 118, 110, 0.07);
   --accent-dark: #0f766e;
   --accent-darker: #134e4a;
   --accent-bright: #2dd4bf;
@@ -32,7 +55,8 @@
   --bad-bg: #fee2e2;
   --bad-bg-soft: #fff1f2;
   --bad-ink: #7f1d1d;
-  --warning: #f59e0b;
+  --warning: #D97706;       /* amber — also used for achievements/scores */
+  --reward: #D97706;        /* alias: achievement/score color per DESIGN.md */
   --warning-bg: #fffbeb;
   --warning-border: #fcd34d;
   --warning-ink: #92400e;
@@ -62,9 +86,7 @@ body {
   max-width: 100vw;
   margin: 0;
   font-family: 'Plus Jakarta Sans', "Segoe UI", Tahoma, sans-serif;
-  background:
-    radial-gradient(circle at top right, rgba(13,148,136,0.06), transparent 30%),
-    linear-gradient(180deg, #f4faf9 0%, #f0fdfa 100%);
+  background: #FAFAF9;
   color: var(--ink);
   line-height: 1.8;
 }
@@ -2547,19 +2569,34 @@ body:not(.dark) {
    DARK MODE — More immersive
 ══════════════════════════════════════════════════════════ */
 body.dark {
-  --bg:         #030d0c;
-  --paper:      #0a1c1a;
-  --line:       #0d2c29;
-  --ink:        #e4f5f3;
-  --muted:      #6aada8;
-  --accent:     #14b8a6;
-  --accent2:    var(--accent-bright);
-  --accent-soft: #061714;
-  --good:       #4ade80;
-  background:
-    radial-gradient(ellipse at top, rgba(13,148,136,0.14), transparent 60%),
-    radial-gradient(ellipse at bottom right, rgba(20,184,166,0.07), transparent 50%),
-    #030d0c;
+  /* ── DARK MODE — Focused Warmth ─────────────── */
+  --color-primary:        #0D9488;
+  --color-primary-tint:   rgba(13,148,136,0.15);
+  --color-primary-border: rgba(13,148,136,0.30);
+  --color-accent:         #F59E0B;
+  --color-accent-tint:    rgba(217,119,6,0.12);
+  --color-accent-border:  rgba(217,119,6,0.25);
+  --color-correct:        #22C55E;
+  --color-wrong:          #EF4444;
+  --color-bg:             #1C1917;
+  --color-surface:        #292524;
+  --color-border:         #44403C;
+  --color-text:           #FAFAF9;
+  --color-text-muted:     #A8A29E;
+  --color-text-faint:     #78716C;
+  /* Legacy aliases */
+  --bg:         #1C1917;
+  --paper:      #292524;
+  --line:       #44403C;
+  --ink:        #FAFAF9;
+  --muted:      #A8A29E;
+  --accent:     #0D9488;
+  --accent2:    #0D9488;
+  --accent-soft: rgba(13,148,136,0.12);
+  --good:       #22C55E;
+  --warning:    #F59E0B;
+  --reward:     #F59E0B;
+  background: #1C1917;
 }
 
 /* Dark mode — HUD */
