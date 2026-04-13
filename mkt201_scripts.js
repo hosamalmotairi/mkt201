@@ -813,6 +813,25 @@ async function syncUserProgress(user) {
       });
       mergedTotal   = Math.max(localTotal,   data.totalQuizzes  || 0);
       mergedCorrect = Math.max(localCorrect, data.totalCorrect  || 0);
+      // Sync mastery from Firebase
+      if (data.mastery) {
+        try {
+          const localMastery = JSON.parse(localStorage.getItem('mkt201_mastery') || '{}');
+          const remoteMastery = JSON.parse(data.mastery);
+          const merged = { ...remoteMastery };
+          Object.keys(localMastery).forEach(key => {
+            if (!merged[key]) {
+              merged[key] = localMastery[key];
+            } else {
+              merged[key] = {
+                correct: Math.max(merged[key].correct || 0, localMastery[key].correct || 0),
+                wrong:   Math.max(merged[key].wrong   || 0, localMastery[key].wrong   || 0),
+              };
+            }
+          });
+          localStorage.setItem('mkt201_mastery', JSON.stringify(merged));
+        } catch(e) {}
+      }
     }
     localStorage.setItem('mkt201_bestScores',   JSON.stringify(mergedBest));
     localStorage.setItem('mkt201_totalQuizzes', mergedTotal);
@@ -853,8 +872,10 @@ async function saveQuizResult(ch, score, correct, wrong, elapsed) {
       ch, score, correct, wrong, elapsed,
       date: firebase.firestore.FieldValue.serverTimestamp()
     });
+    const masteryRaw = localStorage.getItem('mkt201_mastery') || '{}';
     await db.collection('mkt201_users').doc(uid).set({
       bestScores: localBest, totalQuizzes: newTotal, totalCorrect: newCorrect,
+      mastery: masteryRaw,
       lastSeen: firebase.firestore.FieldValue.serverTimestamp()
     }, { merge: true });
     renderLeaderboard();
