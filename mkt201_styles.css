@@ -303,6 +303,11 @@ body.theme-rose .fb-signout-btn:hover {
   font-size: 1.15rem;
 }
 .fab-dark-float:hover { box-shadow: 0 10px 28px rgba(0,0,0,0.45); }
+/* moon shows in light mode, sun shows in dark mode */
+.fab-dark-float .icon-sun  { display: none; }
+.fab-dark-float .icon-moon { display: inline-flex; }
+body.dark .fab-dark-float .icon-sun  { display: inline-flex; }
+body.dark .fab-dark-float .icon-moon { display: none; }
 .fab-search { bottom: 84px; background: var(--accent); color: #fff; }
 .fab-ar     { bottom: 26px; background: #fff; color: var(--accent); border: 2px solid var(--accent); font-weight: 900; font-size: 0.95rem; }
 .fab-pomo   { bottom: 200px; }

@@ -2265,8 +2265,7 @@ function toggleDark() {
   document.querySelectorAll('.dark-toggle').forEach(btn => {
     btn.textContent = isDark ? '☀️ Light Mode' : '🌙 Dark Mode';
   });
-  const floatBtn = document.getElementById('dark-btn-float');
-  if (floatBtn) floatBtn.textContent = isDark ? '☀️' : '🌙';
+  // icon handled by CSS (.icon-moon / .icon-sun)
 }
 
 // ── ARABIC TOGGLE ─────────────────────────────
@@ -3470,8 +3469,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (localStorage.getItem('mkt201_dark') === '1') {
     document.body.classList.add('dark');
     document.querySelectorAll('.dark-toggle').forEach(b => b.textContent = '☀️ Light Mode');
-    const f = document.getElementById('dark-btn-float');
-    if (f) f.textContent = '☀️';
+    // float button icon handled by CSS
   }
   // Restore Arabic pref
   if (localStorage.getItem('mkt201_arabic') === '0') {
