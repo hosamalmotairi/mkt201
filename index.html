@@ -31,26 +31,32 @@
     .badge-locked .badge-icon    { opacity:0.28 !important; filter:grayscale(1) !important; }
     .badge-locked .badge-name    { color:#1f2937 !important; font-weight:700 !important; font-size:.85rem !important; }
     body.dark .badge-locked .badge-name { color:#d1fae5 !important; }
+    .lucide-icon { width: 1em; height: 1em; display: inline-block; vertical-align: -0.125em; stroke-width: 2; }
+    .sidebar-icon .lucide-icon, .sidebar-icon i[data-lucide] { width: 18px; height: 18px; }
+    i[data-lucide] { display: inline-flex; width: 1em; height: 1em; vertical-align: -0.125em; }
   </style>
   <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
 
+<!-- SKIP TO CONTENT -->
+<a href="#main-content" class="skip-to-content">Skip to main content</a>
+
 <!-- GAME HUD -->
 <div class="game-hud" id="game-hud">
-  <div class="hud-item" id="hud-level">🌱 مبتدئ</div>
+  <div class="hud-item" id="hud-level"><i data-lucide="sprout" aria-hidden="true"></i> مبتدئ</div>
   <div class="hud-xp-wrap">
     <div class="hud-xp-track"><div class="hud-xp-fill" id="hud-xp-bar" style="width:0%"></div></div>
     <span id="hud-xp" style="font-size:.7rem;color:var(--muted);">0 XP</span>
   </div>
-  <div class="hud-item" id="hud-streak">🔥 0</div>
-  <div class="hud-item hud-combo" id="hud-combo" style="display:none;">⚡ x1</div>
+  <div class="hud-item" id="hud-streak"><i data-lucide="flame" aria-hidden="true"></i> 0</div>
+  <div class="hud-item hud-combo" id="hud-combo" style="display:none;"><i data-lucide="zap" aria-hidden="true"></i> x1</div>
 </div>
 
 <!-- ── THEME PICKER OVERLAY ─────────────────── -->
 <div id="theme-picker" style="display:none;">
   <div class="theme-picker-wrap">
-    <div style="font-size:2.8rem;margin-bottom:14px;">🎨</div>
+    <div style="font-size:2.8rem;margin-bottom:14px;"><i data-lucide="palette" aria-hidden="true" style="width:48px;height:48px;"></i></div>
     <h2 class="theme-picker-title">Choose Your Theme</h2>
     <p class="theme-picker-sub">Your preference is saved automatically — you can change it anytime from the sidebar</p>
     <div class="theme-options-grid">
@@ -118,64 +124,64 @@
 <div id="auth-overlay" style="position:fixed;inset:0;background:rgba(8,8,12,0.94);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);z-index:99999;display:flex;align-items:center;justify-content:center;overflow-y:auto;">
   <div id="auth-box" style="background:#111116;border:1px solid rgba(255,255,255,0.1);border-radius:24px;padding:32px 28px;width:90%;max-width:420px;box-shadow:0 40px 80px rgba(0,0,0,0.6),0 0 0 1px rgba(255,255,255,0.06);margin:16px auto;">
     <div style="text-align:center;margin-bottom:20px;">
-      <div style="font-size:2.2rem;margin-bottom:6px;">🛒</div>
+      <div style="font-size:2.2rem;margin-bottom:6px;"><i data-lucide="shopping-cart" aria-hidden="true" style="width:36px;height:36px;color:#14b8a6;"></i></div>
       <h2 style="color:#fff;margin:0 0 4px;font-size:1.4rem;letter-spacing:-0.02em;">MKT 201 Study Hub</h2>
-      <p style="color:rgba(255,255,255,0.4);margin:0;font-size:.85rem;">سجّل دخولك لحفظ تقدمك من أي جهاز</p>
+      <p style="color:rgba(255,255,255,0.65);margin:0;font-size:.85rem;">سجّل دخولك لحفظ تقدمك من أي جهاز</p>
     </div>
     <div style="display:flex;gap:8px;margin-bottom:16px;background:rgba(255,255,255,0.06);border-radius:14px;padding:4px;">
       <button id="tab-login"    onclick="authTab('login')"    style="flex:1;padding:10px;border-radius:10px;font-weight:700;cursor:pointer;font-size:.9rem;background:#fff;color:#111;border:none;transition:all .2s;">دخول</button>
       <button id="tab-register" onclick="authTab('register')" style="flex:1;padding:10px;border-radius:10px;font-weight:700;cursor:pointer;font-size:.9rem;background:transparent;color:rgba(255,255,255,0.45);border:none;transition:all .2s;">حساب جديد</button>
     </div>
     <div id="auth-name-wrap" style="display:none;">
-      <input id="auth-name" type="text" placeholder="اسمك (مثال: Hosam)" style="width:100%;padding:12px 16px;border-radius:12px;border:1.5px solid rgba(255,255,255,0.12);font-size:.95rem;box-sizing:border-box;margin-bottom:10px;background:rgba(255,255,255,0.05);color:#fff;outline:none;transition:border-color .2s;">
+      <label for="auth-name" class="sr-only">الاسم</label>
+      <input id="auth-name" type="text" placeholder="اسمك (مثال: Hosam)" autocomplete="name" style="width:100%;padding:12px 16px;border-radius:12px;border:1.5px solid rgba(255,255,255,0.12);font-size:.95rem;box-sizing:border-box;margin-bottom:10px;background:rgba(255,255,255,0.05);color:#fff;outline:none;transition:border-color .2s;">
     </div>
-    <input id="auth-email" type="email"    placeholder="البريد الإلكتروني" style="width:100%;padding:12px 16px;border-radius:12px;border:1.5px solid rgba(255,255,255,0.12);font-size:.92rem;box-sizing:border-box;margin-bottom:10px;background:rgba(255,255,255,0.05);color:#fff;outline:none;transition:border-color .2s;">
-    <input id="auth-pass"  type="password" placeholder="كلمة السر"          style="width:100%;padding:12px 16px;border-radius:12px;border:1.5px solid rgba(255,255,255,0.12);font-size:.92rem;box-sizing:border-box;margin-bottom:10px;background:rgba(255,255,255,0.05);color:#fff;outline:none;transition:border-color .2s;">
-    <div id="auth-err" style="color:#f87171;font-size:.8rem;text-align:center;min-height:16px;margin-bottom:8px;"></div>
+    <label for="auth-email" class="sr-only">البريد الإلكتروني</label>
+    <input id="auth-email" type="email"    placeholder="البريد الإلكتروني" autocomplete="email" style="width:100%;padding:12px 16px;border-radius:12px;border:1.5px solid rgba(255,255,255,0.12);font-size:.92rem;box-sizing:border-box;margin-bottom:10px;background:rgba(255,255,255,0.05);color:#fff;outline:none;transition:border-color .2s;">
+    <label for="auth-pass" class="sr-only">كلمة السر</label>
+    <input id="auth-pass"  type="password" placeholder="كلمة السر"          autocomplete="current-password" style="width:100%;padding:12px 16px;border-radius:12px;border:1.5px solid rgba(255,255,255,0.12);font-size:.92rem;box-sizing:border-box;margin-bottom:10px;background:rgba(255,255,255,0.05);color:#fff;outline:none;transition:border-color .2s;">
+    <div id="auth-err" role="alert" aria-live="polite" style="color:#f87171;font-size:.8rem;text-align:center;min-height:16px;margin-bottom:8px;"></div>
     <button id="auth-submit" onclick="authSubmit()" data-mode="login" style="width:100%;padding:14px;border-radius:14px;border:none;background:#fff;color:#111;font-size:1rem;font-weight:700;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,0.3);transition:transform .15s,box-shadow .15s;">دخول</button>
     <div style="text-align:center;margin-top:10px;">
-      <button onclick="forgotPassword()" id="auth-forgot" style="background:transparent;border:none;color:rgba(255,255,255,0.4);font-size:.8rem;cursor:pointer;padding:4px 8px;text-decoration:underline;display:none;">نسيت كلمة السر؟</button>
+      <button onclick="forgotPassword()" id="auth-forgot" style="background:transparent;border:none;color:rgba(255,255,255,0.6);font-size:.8rem;cursor:pointer;padding:8px 12px;text-decoration:underline;display:none;">نسيت كلمة السر؟</button>
     </div>
     <div style="margin-top:6px;">
-      <button onclick="skipAuth()" style="width:100%;padding:12px;border-radius:14px;border:1.5px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.35);font-size:.85rem;cursor:pointer;transition:all .2s;">تصفح بدون حساب</button>
+      <button onclick="skipAuth()" style="width:100%;padding:12px;border-radius:14px;border:1.5px solid rgba(255,255,255,0.15);background:transparent;color:rgba(255,255,255,0.6);font-size:.85rem;cursor:pointer;transition:all .2s;">تصفح بدون حساب</button>
     </div>
   </div>
 </div>
 
 <!-- ── SIDEBAR OVERLAY ───────────────────────── -->
-<div id="sidebar-overlay" onclick="toggleSidebar()"></div>
+<div id="sidebar-overlay" onclick="toggleSidebar()" role="presentation" aria-hidden="true"></div>
 
 <!-- ── SIDEBAR ───────────────────────────────── -->
 <nav class="sidebar-nav" id="sidebar">
   <div class="sidebar-header">
-    <div class="sidebar-logo">🛒 MKT 201</div>
+    <div class="sidebar-logo"><i data-lucide="shopping-cart" aria-hidden="true"></i> MKT 201</div>
     <div class="sidebar-subtitle">HOSAM Study Hub</div>
   </div>
   <ul class="sidebar-menu">
-    <li><a href="#" onclick="showPage('page-home');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🏠</span> Home</a></li>
+    <li><a href="#" onclick="showPage('page-home');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="home" aria-hidden="true"></i></span> Home</a></li>
     <li class="sidebar-divider"></li>
-    <li class="sidebar-label">📖 Chapters</li>
-    <li><a href="#" onclick="showPage('page-ch1');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🎯</span> Ch 1 — Customer Value</a></li>
-    <li><a href="#" onclick="showPage('page-ch2');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">📊</span> Ch 2 — Company Strategy</a></li>
-    <li><a href="#" onclick="showPage('page-ch3');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🌍</span> Ch 3 — Marketing Environment</a></li>
-    <li><a href="#" onclick="showPage('page-ch5');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🧠</span> Ch 5 — Consumer Behavior</a></li>
+    <li class="sidebar-label"><i data-lucide="book-open" aria-hidden="true"></i> Chapters</li>
+    <li><a href="#" onclick="showPage('page-ch1');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="target" aria-hidden="true"></i></span> Ch 1 — Customer Value</a></li>
+    <li><a href="#" onclick="showPage('page-ch2');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="bar-chart-2" aria-hidden="true"></i></span> Ch 2 — Company Strategy</a></li>
+    <li><a href="#" onclick="showPage('page-ch3');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="globe" aria-hidden="true"></i></span> Ch 3 — Marketing Environment</a></li>
+    <li><a href="#" onclick="showPage('page-ch5');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="brain" aria-hidden="true"></i></span> Ch 5 — Consumer Behavior</a></li>
     <li class="sidebar-divider"></li>
-    <li class="sidebar-label">🔍 Review</li>
-    <li><a href="#" onclick="showPage('page-quick');renderQuickReview('all');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">⚡</span> Quick Review</a></li>
-    <li><a href="#" onclick="showPage('page-flash');initFlashCards();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🃏</span> Flash Cards</a></li>
+    <li class="sidebar-label"><i data-lucide="search" aria-hidden="true"></i> Review</li>
+    <li><a href="#" onclick="showPage('page-quick');renderQuickReview('all');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="zap" aria-hidden="true"></i></span> Quick Review</a></li>
+    <li><a href="#" onclick="showPage('page-flash');initFlashCards();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="layers" aria-hidden="true"></i></span> Flash Cards</a></li>
     <li class="sidebar-divider"></li>
-    <li class="sidebar-label">✏️ Practice</li>
-    <li><a href="#" onclick="showPage('page-levels');renderLevels();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🎖️</span> المستويات</a></li>
-    <li><a href="#" onclick="showPage('page-quiz');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🎯</span> Quiz Mode</a></li>
-    <li><a href="#" onclick="showPage('page-mock');checkMockExamLock();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">📋</span> Mock Exam</a></li>
-    <li><a href="#" onclick="showPage('page-match');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🔗</span> لعبة الربط</a></li>
-    <li><a href="#" onclick="showPage('page-past');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">📋</span> تجميعات</a></li>
-    <li><a href="#" onclick="showPage('page-spaced');renderSpacedPage();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🧠</span> مراجعة ذكية</a></li>
-    <li><a href="#" onclick="showPage('page-challenge');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">⚔️</span> تحدّي زميلك</a></li>
-    <li><a href="#" onclick="showPage('page-dashboard');renderDashboard();renderStreakCalendar();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">📈</span> Dashboard</a></li>
-    <li><a href="#" onclick="showPage('page-performance');renderPerformancePage();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">📊</span> تحليل الأداء</a></li>
-    <li><a href="#" onclick="showPage('page-leaderboard');renderLeaderboard();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🏆</span> Leaderboard</a></li>
-    <li><a href="#" onclick="showPage('page-badges');renderBadgesPage();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🏅</span> الشارات</a></li>
+    <li class="sidebar-label"><i data-lucide="pencil" aria-hidden="true"></i> Practice</li>
+    <li><a href="#" onclick="showPage('page-levels');renderLevels();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="award" aria-hidden="true"></i></span> المستويات</a></li>
+    <li><a href="#" onclick="showPage('page-quiz');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="target" aria-hidden="true"></i></span> Quiz Mode</a></li>
+    <li><a href="#" onclick="showPage('page-mock');checkMockExamLock();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="clipboard" aria-hidden="true"></i></span> Mock Exam</a></li>
+    <li><a href="#" onclick="showPage('page-match');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="link" aria-hidden="true"></i></span> لعبة الربط</a></li>
+    <li><a href="#" onclick="showPage('page-past');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="clipboard" aria-hidden="true"></i></span> تجميعات</a></li>
+    <li><a href="#" onclick="showPage('page-dashboard');renderDashboard();renderStreakCalendar();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="trending-up" aria-hidden="true"></i></span> Dashboard</a></li>
+    <li><a href="#" onclick="showPage('page-leaderboard');renderLeaderboard();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="trophy" aria-hidden="true"></i></span> Leaderboard</a></li>
+    <li><a href="#" onclick="showPage('page-badges');renderBadgesPage();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="medal" aria-hidden="true"></i></span> الشارات</a></li>
   </ul>
   <div id="fb-user-info" class="fb-user-info" style="display:none;">
     <div class="fb-user-name" id="fb-user-name"></div>
@@ -188,18 +194,18 @@
 </nav>
 
 <!-- ── SIDEBAR TOGGLE ─────────────────────────── -->
-<button class="sidebar-toggle" id="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+<button class="sidebar-toggle" id="sidebar-toggle" onclick="toggleSidebar()"><i data-lucide="menu" aria-hidden="true"></i></button>
 
 <!-- ── FLOATING BUTTONS ──────────────────────── -->
-<button id="dark-btn-float"   onclick="toggleDark()"   title="Dark / Light Mode"     aria-label="Toggle dark mode"   class="fab fab-dark-float">🌙</button>
-<button id="search-btn-float" onclick="openSearch()"    title="بحث / Search"          aria-label="Open search"        class="fab fab-search">🔍</button>
+<button id="dark-btn-float"   onclick="toggleDark()"   title="Dark / Light Mode"     aria-label="Toggle dark mode"   class="fab fab-dark-float"><i data-lucide="moon" aria-hidden="true"></i></button>
+<button id="search-btn-float" onclick="openSearch()"    title="بحث / Search"          aria-label="Open search"        class="fab fab-search"><i data-lucide="search" aria-hidden="true"></i></button>
 <button id="ar-btn-float"     onclick="toggleArabic()"  title="Toggle Arabic"         aria-label="Toggle Arabic translation" class="fab fab-ar">ع</button>
 
 <!-- ── SEARCH OVERLAY ───────────────────────── -->
 <div id="search-overlay" onclick="if(event.target===this)closeSearch()" style="display:none;position:fixed;inset:0;background:rgba(5,19,18,0.65);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:9999;align-items:flex-start;justify-content:center;padding-top:72px;">
   <div style="background:var(--paper,#fff);border-radius:22px;padding:20px 24px;width:90%;max-width:580px;box-shadow:0 32px 80px rgba(0,0,0,0.28),0 0 0 1px rgba(13,148,136,0.12);border:1px solid var(--line,#d1f0ec);">
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--line,#d1f0ec);">
-      <span style="font-size:1.1rem;opacity:.6;">🔍</span>
+      <span style="font-size:1.1rem;opacity:.6;"><i data-lucide="search" aria-hidden="true"></i></span>
       <input id="search-input" type="text" placeholder="Search content... (ابحث في الفصول)" oninput="runSearch(this.value)" style="flex:1;border:none;outline:none;font-size:1rem;background:transparent;color:var(--ink,#0f1f1d);font-weight:500;" autofocus>
       <button onclick="closeSearch()" style="border:none;background:rgba(0,0,0,0.06);border-radius:8px;font-size:1rem;cursor:pointer;color:var(--muted);width:30px;height:30px;display:flex;align-items:center;justify-content:center;">✕</button>
     </div>
@@ -226,7 +232,7 @@
 
   <section class="hero">
     <div class="tag">MKT 201 • Midterm Study Hub</div>
-    <h1>🛒 MKT 201 — HOSAM Study Hub</h1>
+    <h1><i data-lucide="shopping-cart" aria-hidden="true" style="width:32px;height:32px;vertical-align:-4px;"></i> MKT 201 — HOSAM Study Hub</h1>
     <p>كل اللي تحتاجه للاختبار في مكان واحد — نوتس، فلاش كاردز، تدريب، واختبارات تفاعلية | Chapters 1, 2, 3, 5</p>
     <div class="cover-meta">
       <div class="cover-box"><span class="cover-label">Course</span><span class="cover-value">MKT 201</span></div>
@@ -235,52 +241,18 @@
     </div>
   </section>
 
-  <!-- Install App Banner -->
-  <div id="install-banner" style="background:linear-gradient(135deg,#0f766e,#0d9488);border-radius:14px;padding:16px 20px;margin-bottom:14px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;box-shadow:0 4px 16px rgba(13,148,136,.2);cursor:pointer;" onclick="document.getElementById('install-guide').style.display=document.getElementById('install-guide').style.display==='none'?'block':'none'">
-    <span style="font-size:1.8rem;">📲</span>
-    <div style="flex:1;min-width:180px;">
-      <div style="font-weight:800;color:#fff;font-size:.92rem;">حمّل التطبيق على جوالك!</div>
-      <div style="color:rgba(255,255,255,.7);font-size:.78rem;">يشتغل بدون نت — اضغط هنا للشرح</div>
-    </div>
-    <span style="color:rgba(255,255,255,.5);font-size:1.2rem;">▼</span>
-  </div>
-  <div id="install-guide" style="display:none;background:var(--paper);border:1.5px solid var(--line);border-radius:14px;padding:20px;margin-bottom:14px;">
-    <h3 style="color:var(--accent);font-size:.95rem;margin-bottom:14px;">📲 طريقة التحميل</h3>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-      <div style="background:var(--accent-soft);border-radius:12px;padding:14px;">
-        <div style="font-weight:800;font-size:.85rem;margin-bottom:8px;">🍎 آيفون / آيباد</div>
-        <ol style="font-size:.78rem;color:var(--muted);padding-right:16px;margin:0;line-height:1.8;direction:rtl;">
-          <li>افتح الموقع في <strong>Safari</strong></li>
-          <li>اضغط زر المشاركة <strong>(⬆️)</strong></li>
-          <li>اختر <strong>"Add to Home Screen"</strong></li>
-          <li>اضغط <strong>"Add"</strong> ✅</li>
-        </ol>
-      </div>
-      <div style="background:var(--accent-soft);border-radius:12px;padding:14px;">
-        <div style="font-weight:800;font-size:.85rem;margin-bottom:8px;">🤖 أندرويد</div>
-        <ol style="font-size:.78rem;color:var(--muted);padding-right:16px;margin:0;line-height:1.8;direction:rtl;">
-          <li>افتح الموقع في <strong>Chrome</strong></li>
-          <li>اضغط النقاط الثلاث <strong>(⋮)</strong></li>
-          <li>اختر <strong>"Install App"</strong> أو <strong>"Add to Home Screen"</strong></li>
-          <li>اضغط <strong>"Install"</strong> ✅</li>
-        </ol>
-      </div>
-    </div>
-    <p style="text-align:center;font-size:.75rem;color:var(--muted);margin-top:12px;">بعد التحميل يشتغل بدون انترنت 🔥</p>
-  </div>
-
   <!-- Quick Nav -->
   <div class="quick-nav-grid">
-    <button class="qn-card" onclick="showPage('page-ch1')"><div class="qn-icon">🎯</div><div class="qn-label">Chapter 1</div><div class="qn-sub">قيمة العميل — ⭐ الأكثر في الامتحانات</div></button>
-    <button class="qn-card" onclick="showPage('page-ch2')"><div class="qn-icon">📊</div><div class="qn-label">Chapter 2</div><div class="qn-sub">التخطيط الاستراتيجي — BCG & More</div></button>
-    <button class="qn-card" onclick="showPage('page-ch3')"><div class="qn-icon">🌍</div><div class="qn-label">Chapter 3</div><div class="qn-sub">البيئة التسويقية — Macro & Micro</div></button>
-    <button class="qn-card" onclick="showPage('page-ch5')"><div class="qn-icon">🧠</div><div class="qn-label">Chapter 5</div><div class="qn-sub">سلوك المستهلك — Buying Behavior</div></button>
-    <button class="qn-card" onclick="quickStart20()"><div class="qn-icon">⚡</div><div class="qn-label">جلسة سريعة</div><div class="qn-sub">20 سؤال · 10 دقائق</div></button>
-    <button class="qn-card" onclick="showPage('page-past')"><div class="qn-icon">⭐</div><div class="qn-label">التجميعات</div><div class="qn-sub">84 سؤال من التجميعات</div></button>
-    <button class="qn-card" onclick="showPage('page-mock');checkMockExamLock()"><div class="qn-icon">📋</div><div class="qn-label">اختبار تجريبي</div><div class="qn-sub">30 سؤال · 30 دقيقة</div></button>
-    <button class="qn-card" onclick="showPage('page-flash');initFlashCards()"><div class="qn-icon">🃏</div><div class="qn-label">Flash Cards</div><div class="qn-sub">60 مصطلح أساسي</div></button>
-    <button class="qn-card" onclick="showPage('page-levels');renderLevels()"><div class="qn-icon">🎖️</div><div class="qn-label">المستويات</div><div class="qn-sub">تدرّج من السهل للصعب</div></button>
-    <button class="qn-card" onclick="startCramSession()"><div class="qn-icon">🔥</div><div class="qn-label">Cram Mode</div><div class="qn-sub">آخر لحظة — الأسئلة الصعبة والأخطاء</div></button>
+    <button class="qn-card" onclick="showPage('page-ch1')"><div class="qn-icon"><i data-lucide="target" aria-hidden="true"></i></div><div class="qn-label">Chapter 1</div><div class="qn-sub">قيمة العميل — الأكثر في الامتحانات</div></button>
+    <button class="qn-card" onclick="showPage('page-ch2')"><div class="qn-icon"><i data-lucide="bar-chart-2" aria-hidden="true"></i></div><div class="qn-label">Chapter 2</div><div class="qn-sub">التخطيط الاستراتيجي — BCG & More</div></button>
+    <button class="qn-card" onclick="showPage('page-ch3')"><div class="qn-icon"><i data-lucide="globe" aria-hidden="true"></i></div><div class="qn-label">Chapter 3</div><div class="qn-sub">البيئة التسويقية — Macro & Micro</div></button>
+    <button class="qn-card" onclick="showPage('page-ch5')"><div class="qn-icon"><i data-lucide="brain" aria-hidden="true"></i></div><div class="qn-label">Chapter 5</div><div class="qn-sub">سلوك المستهلك — Buying Behavior</div></button>
+    <button class="qn-card" onclick="quickStart20()"><div class="qn-icon"><i data-lucide="zap" aria-hidden="true"></i></div><div class="qn-label">جلسة سريعة</div><div class="qn-sub">20 سؤال · 10 دقائق</div></button>
+    <button class="qn-card" onclick="showPage('page-past')"><div class="qn-icon"><i data-lucide="star" aria-hidden="true"></i></div><div class="qn-label">التجميعات</div><div class="qn-sub">84 سؤال من التجميعات</div></button>
+    <button class="qn-card" onclick="showPage('page-mock');checkMockExamLock()"><div class="qn-icon"><i data-lucide="clipboard" aria-hidden="true"></i></div><div class="qn-label">اختبار تجريبي</div><div class="qn-sub">30 سؤال · 30 دقيقة</div></button>
+    <button class="qn-card" onclick="showPage('page-flash');initFlashCards()"><div class="qn-icon"><i data-lucide="layers" aria-hidden="true"></i></div><div class="qn-label">Flash Cards</div><div class="qn-sub">60 مصطلح أساسي</div></button>
+    <button class="qn-card" onclick="showPage('page-levels');renderLevels()"><div class="qn-icon"><i data-lucide="award" aria-hidden="true"></i></div><div class="qn-label">المستويات</div><div class="qn-sub">تدرّج من السهل للصعب</div></button>
+    <button class="qn-card" onclick="startCramSession()"><div class="qn-icon"><i data-lucide="flame" aria-hidden="true"></i></div><div class="qn-label">Cram Mode</div><div class="qn-sub">آخر لحظة — الأسئلة الصعبة والأخطاء</div></button>
   </div>
 
 
@@ -306,7 +278,7 @@
   <!-- Mastery Progress -->
   <div class="chapter mastery-section" style="margin-top:24px;">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-      <h3 style="margin:0;font-size:1.1rem;font-weight:700;">📊 تقدمك</h3>
+      <h3 style="margin:0;font-size:1.1rem;font-weight:700;"><i data-lucide="bar-chart-3" aria-hidden="true"></i> تقدمك</h3>
       <button onclick="toggleMasteryDisplay()" id="mastery-toggle-btn"
         style="font-size:.75rem;padding:3px 10px;border-radius:20px;border:1.5px solid var(--accent);
                background:transparent;color:var(--accent);cursor:pointer;font-weight:600;transition:.2s;">
@@ -359,8 +331,8 @@
   <div id="home-weak-spots"></div>
 
   <section class="chapter" style="margin-top:16px;">
-    <h2>📚 Course Overview</h2>
-    <p>MKT 201 — Principles of Marketing (Kotler &amp; Armstrong, 18th Edition). Midterm covers Chapters 1, 2, 3, and 5.</p>
+    <h2><i data-lucide="library" aria-hidden="true"></i> Course Overview</h2>
+    <p>MKT 201 — Principles of Marketing (Kotler &amp; Armstrong, 19th Edition). Midterm covers Chapters 1, 2, 3, and 5.</p>
     <div class="master-grid" style="margin-top:14px;">
       <div class="master-card"><strong>📖 Chapter 1</strong>Marketing — Creating Customer Value &amp; Engagement. Core concepts, 4Ps, CRM, Customer Equity.</div>
       <div class="master-card"><strong>📊 Chapter 2</strong>Company &amp; Marketing Strategy. BCG Matrix, Ansoff Matrix, SWOT, Strategic Planning.</div>
@@ -368,7 +340,7 @@
       <div class="master-card"><strong>🧠 Chapter 5</strong>Consumer Markets &amp; Buyer Behavior. Cultural, Social, Personal, Psychological factors.</div>
     </div>
     <div class="pro-tip" style="margin-top:16px;">
-      <div class="pro-tip-head">💡 Exam Tips</div>
+      <div class="pro-tip-head"><i data-lucide="lightbulb" aria-hidden="true"></i> Exam Tips</div>
       <ul class="point-list">
         <li>Know the difference between Needs, Wants, and Demands — very likely to appear.</li>
         <li>Memorize all 4 BCG matrix quadrants and Ansoff's 4 growth strategies.</li>
@@ -385,14 +357,13 @@
 
   <section class="hero">
     <div class="tag">Chapter 1</div>
-    <h1>🎯 Marketing: Creating Customer Value &amp; Engagement</h1>
-    <p>Kotler &amp; Armstrong, 18th Edition • Chapter 1</p>
-    <button class="ch-pdf-btn" onclick="exportChapterPDF('page-ch1','Chapter 1 — Marketing: Creating Customer Value')">📄 تصدير الملخص كـ PDF</button>
+    <h1><i data-lucide="target" aria-hidden="true"></i> Marketing: Creating Customer Value &amp; Engagement</h1>
+    <p>Kotler &amp; Armstrong, 19th Edition • Chapter 1</p>
   </section>
 
   <!-- ── LEARNING OBJECTIVES ─────────────────────────────── -->
   <div class="chapter">
-    <h2>📋 Learning Objectives <span class="ar-line" style="font-size:.85rem;">أهداف التعلم</span></h2>
+    <h2><i data-lucide="clipboard" aria-hidden="true"></i> Learning Objectives <span class="ar-line" style="font-size:.85rem;">أهداف التعلم</span></h2>
     <div class="process-flow">
 
       <div class="process-step">
@@ -841,31 +812,34 @@
   <!-- Notes -->
   <div class="chapter">
     <div class="ch-notes-box">
-      <div class="ch-notes-title">📌 أهم نقاط الفصل الأول</div>
+      <div class="ch-notes-header">
+        <div class="ch-notes-title">📌 Key Takeaways — Ch1</div>
+        <button class="notes-translate-btn" onclick="toggleNotesTranslation(this)">🌐 ترجمة</button>
+      </div>
       <div class="ch-notes-grid">
         <div class="ch-note-item">
           <span class="ch-note-num">1</span>
-          <div><strong>Needs vs Wants vs Demands</strong><br>Needs = basic (food, shelter). Wants = shaped by culture. Demands = wants backed by buying power.</div>
+          <div><strong>Needs vs Wants vs Demands</strong><br>Needs = basic (food, shelter). Wants = shaped by culture. Demands = wants backed by buying power.<span class="note-ar">الاحتياجات = أساسية. الرغبات = تشكّلها الثقافة. الطلب = رغبة + قدرة شرائية.</span></div>
         </div>
         <div class="ch-note-item">
           <span class="ch-note-num">2</span>
-          <div><strong>5 Marketing Orientations</strong><br>Production → Product → Selling → <span style="color:var(--accent)">Marketing</span> → Societal. الامتحان يحب الفرق بين Selling (inside-out) و Marketing (outside-in).</div>
+          <div><strong>5 Marketing Orientations</strong><br>Production → Product → Selling → <span style="color:var(--accent)">Marketing</span> → Societal.<span class="note-ar">الامتحان يحب الفرق بين Selling (inside-out) و Marketing (outside-in).</span></div>
         </div>
         <div class="ch-note-item">
           <span class="ch-note-num">3</span>
-          <div><strong>Customer Value = Benefits − Costs</strong><br>Customer-perceived value = الفرق بين كل المنافع وكل التكاليف مقارنةً بالمنافسين.</div>
+          <div><strong>Customer Value = Benefits − Costs</strong><br>Customer-perceived value = difference between all benefits and all costs vs. competitors.<span class="note-ar">الفرق بين كل المنافع وكل التكاليف مقارنةً بالمنافسين.</span></div>
         </div>
         <div class="ch-note-item">
           <span class="ch-note-num">4</span>
-          <div><strong>4 Customer Groups</strong><br>Strangers (low profit, low loyalty) · Butterflies (high profit, low loyalty) · Barnacles (low profit, high loyalty) · <span style="color:var(--accent)">True Friends</span> (high profit, high loyalty) ← الهدف.</div>
+          <div><strong>4 Customer Groups</strong><br>Strangers (low profit, low loyalty) · Butterflies (high profit, low loyalty) · Barnacles (low profit, high loyalty) · <span style="color:var(--accent)">True Friends</span> (high profit, high loyalty) ← Goal.<span class="note-ar">True Friends = الهدف الأمثل: ربح عالٍ + ولاء عالٍ.</span></div>
         </div>
         <div class="ch-note-item">
           <span class="ch-note-num">5</span>
-          <div><strong>Customer Equity</strong><br>مجموع القيمة الكاملة لكل العملاء الحاليين والمستقبليين. أفضل مقياس لأداء الشركة على المدى البعيد.</div>
+          <div><strong>Customer Equity</strong><br>Total combined customer lifetime values of all customers. Best measure of long-term performance.<span class="note-ar">مجموع القيمة الكاملة لكل العملاء الحاليين والمستقبليين. أفضل مقياس للأداء على المدى البعيد.</span></div>
         </div>
         <div class="ch-note-item">
           <span class="ch-note-num">6</span>
-          <div><strong>Societal Marketing</strong><br>يوازن: رغبات المستهلك + أرباح الشركة + مصلحة المجتمع. مثال: شركة fast food تفكر في الصحة العامة.</div>
+          <div><strong>Societal Marketing</strong><br>Balances: consumer wants + company profits + society's long-term interests.<span class="note-ar">يوازن: رغبات المستهلك + أرباح الشركة + مصلحة المجتمع. مثال: شركة fast food تفكر في الصحة العامة.</span></div>
         </div>
       </div>
     </div>
@@ -878,14 +852,13 @@
 
   <section class="hero">
     <div class="tag">Chapter 2</div>
-    <h1>🗺️ Company &amp; Marketing Strategy: Partnering to Build Customer Engagement</h1>
-    <p>Kotler &amp; Armstrong, 18th Edition • Chapter 2</p>
-    <button class="ch-pdf-btn" onclick="exportChapterPDF('page-ch2','Chapter 2 — Company & Marketing Strategy')">📄 تصدير الملخص كـ PDF</button>
+    <h1><i data-lucide="map" aria-hidden="true"></i> Company &amp; Marketing Strategy: Partnering to Build Customer Engagement</h1>
+    <p>Kotler &amp; Armstrong, 19th Edition • Chapter 2</p>
   </section>
 
   <!-- ── LEARNING OBJECTIVES ─────────────────────────────── -->
   <div class="chapter">
-    <h2>📋 Learning Objectives <span class="ar-line" style="font-size:.85rem;">أهداف التعلم</span></h2>
+    <h2><i data-lucide="clipboard" aria-hidden="true"></i> Learning Objectives <span class="ar-line" style="font-size:.85rem;">أهداف التعلم</span></h2>
     <div class="process-flow">
 
       <div class="process-step">
@@ -1375,31 +1348,34 @@
   <!-- Notes -->
   <div class="chapter">
     <div class="ch-notes-box">
-      <div class="ch-notes-title">📌 أهم نقاط الفصل الثاني</div>
+      <div class="ch-notes-header">
+        <div class="ch-notes-title">📌 Key Takeaways — Ch2</div>
+        <button class="notes-translate-btn" onclick="toggleNotesTranslation(this)">🌐 ترجمة</button>
+      </div>
       <div class="ch-notes-grid">
         <div class="ch-note-item">
           <span class="ch-note-num">1</span>
-          <div><strong>BCG Matrix — 4 أرباع</strong><br>Stars (high growth, high share) · Cash Cows (low growth, high share) · Question Marks (high growth, low share) · Dogs (low growth, low share).</div>
+          <div><strong>BCG Matrix — 4 Quadrants</strong><br>Stars (high growth, high share) · Cash Cows (low growth, high share) · Question Marks (high growth, low share) · Dogs (low growth, low share).<span class="note-ar">النجوم · الأبقار النقدية · علامات الاستفهام · الكلاب.</span></div>
         </div>
         <div class="ch-note-item">
           <span class="ch-note-num">2</span>
-          <div><strong>Ansoff Matrix — 4 استراتيجيات</strong><br>Market Penetration (نفس المنتج، نفس السوق) · Market Development (نفس المنتج، سوق جديد) · Product Development (منتج جديد، نفس السوق) · Diversification (كل شيء جديد).</div>
+          <div><strong>Ansoff Matrix — 4 Strategies</strong><br>Market Penetration (same product, same market) · Market Development (same product, new market) · Product Development (new product, same market) · Diversification (all new).<span class="note-ar">اختصار: نفس/نفس → نفس/جديد → جديد/نفس → جديد/جديد.</span></div>
         </div>
         <div class="ch-note-item">
           <span class="ch-note-num">3</span>
-          <div><strong>Marketing Mix — 4Ps</strong><br>Product · Price · Place · Promotion. من منظور المستهلك: 4Cs = Customer solution · Cost · Convenience · Communication.</div>
+          <div><strong>Marketing Mix — 4Ps</strong><br>Product · Price · Place · Promotion. From consumer view: 4Cs = Customer solution · Cost · Convenience · Communication.<span class="note-ar">من منظور المستهلك: حل العميل · التكلفة · السهولة · التواصل.</span></div>
         </div>
         <div class="ch-note-item">
           <span class="ch-note-num">4</span>
-          <div><strong>Marketing Control — 4 خطوات</strong><br>① Set goals → ② Measure performance → ③ Evaluate causes → ④ Take corrective action. لا يشمل زيادة الموظفين!</div>
+          <div><strong>Marketing Control — 4 Steps</strong><br>① Set goals → ② Measure performance → ③ Evaluate causes → ④ Take corrective action.<span class="note-ar">لا يشمل زيادة الموظفين! الامتحان يحب هذه النقطة.</span></div>
         </div>
         <div class="ch-note-item">
           <span class="ch-note-num">5</span>
-          <div><strong>ROI on Marketing</strong><br>= Net return من الاستثمار التسويقي ÷ تكاليف الاستثمار التسويقي. يقيس الربحية لا حجم المبيعات.</div>
+          <div><strong>ROI on Marketing</strong><br>= Net return from marketing investment ÷ costs of marketing investment. Measures profitability, not sales volume.<span class="note-ar">يقيس الربحية من الاستثمار التسويقي، لا حجم المبيعات.</span></div>
         </div>
         <div class="ch-note-item">
           <span class="ch-note-num">6</span>
-          <div><strong>Mission Statement</strong><br>يجب أن يكون: market-oriented (لا product-oriented) · وطويل الأمد · يحدد غرض الشركة. ليس عن الأرباح.</div>
+          <div><strong>Mission Statement</strong><br>Must be: market-oriented (not product-oriented) · long-term · defines company purpose. Not about profits.<span class="note-ar">يحدد غرض الشركة، موجّه للسوق لا للمنتج، وليس عن الأرباح.</span></div>
         </div>
       </div>
     </div>
@@ -1412,16 +1388,15 @@
 
   <section class="hero">
     <div class="tag">Chapter 3</div>
-    <h1>🌍 Analyzing the Marketing Environment</h1>
-    <p>Kotler &amp; Armstrong, 18th Edition &bull; Chapter 3
+    <h1><i data-lucide="globe" aria-hidden="true"></i> Analyzing the Marketing Environment</h1>
+    <p>Kotler &amp; Armstrong, 19th Edition &bull; Chapter 3
       <span class="ar-line">تحليل البيئة التسويقية — الفصل الثالث</span>
     </p>
-    <button class="ch-pdf-btn" onclick="exportChapterPDF('page-ch3','Chapter 3 — Analyzing the Marketing Environment')">📄 تصدير الملخص كـ PDF</button>
   </section>
 
   <!-- Learning Objectives -->
   <div class="chapter">
-    <h2>📋 Learning Objectives <span class="ar-line" style="font-size:.85rem;font-weight:600;">أهداف التعلم</span></h2>
+    <h2><i data-lucide="clipboard" aria-hidden="true"></i> Learning Objectives <span class="ar-line" style="font-size:.85rem;font-weight:600;">أهداف التعلم</span></h2>
     <div class="process-flow">
       <div class="process-step">
         <div class="process-num">3-1</div>
@@ -1821,31 +1796,34 @@
   <!-- Notes -->
   <div class="chapter">
     <div class="ch-notes-box">
-      <div class="ch-notes-title">📌 أهم نقاط الفصل الثالث</div>
+      <div class="ch-notes-header">
+        <div class="ch-notes-title">📌 Key Takeaways — Ch3</div>
+        <button class="notes-translate-btn" onclick="toggleNotesTranslation(this)">🌐 ترجمة</button>
+      </div>
       <div class="ch-notes-grid">
         <div class="ch-note-item">
           <span class="ch-note-num">1</span>
-          <div><strong>Micro vs Macro Environment</strong><br><span style="color:var(--accent)">Micro</span> = قريبة (Suppliers, Intermediaries, Customers, Competitors, Publics, Company). <span style="color:#8b5cf6">Macro</span> = أوسع (DCTENP). الـ Macro لا تتحكم فيها الشركة.</div>
+          <div><strong>Micro vs Macro Environment</strong><br><span style="color:var(--accent)">Micro</span> = close forces (Suppliers, Intermediaries, Customers, Competitors, Publics, Company). <span style="color:#8b5cf6">Macro</span> = broader forces (DCTENP) — uncontrollable.<span class="note-ar">Micro = قريبة يمكن التأثير عليها. Macro = أوسع لا تتحكم فيها الشركة.</span></div>
         </div>
         <div class="ch-note-item">
           <span class="ch-note-num">2</span>
-          <div><strong>DCTENP — الـ 6 بيئات الكبرى</strong><br>Demographic · Cultural · Technological · Economic · Natural · Political/Legal. الامتحان يحب تحديد أي بيئة ينتمي إليها السيناريو.</div>
+          <div><strong>DCTENP — 6 Macro Environments</strong><br>Demographic · Cultural · Technological · Economic · Natural · Political/Legal.<span class="note-ar">الامتحان يحب تحديد أي بيئة ينتمي إليها السيناريو.</span></div>
         </div>
         <div class="ch-note-item">
           <span class="ch-note-num">3</span>
-          <div><strong>Demographic Environment</strong><br>يدرس: الحجم · الكثافة · الموقع · العمر · الجنس · العرق · المهنة. أهم متغير = Baby Boomers vs Millennials.</div>
+          <div><strong>Demographic Environment</strong><br>Studies: size · density · location · age · gender · race · occupation. Key variable = generational differences (Baby Boomers vs Millennials).<span class="note-ar">أهم متغير = الفروق بين الأجيال. Baby Boomers vs Millennials.</span></div>
         </div>
         <div class="ch-note-item">
           <span class="ch-note-num">4</span>
-          <div><strong>Economic Environment</strong><br>يؤثر على قدرة المستهلك الشرائية. Industrial economies (أسواق غنية) vs Subsistence economies (أسواق فقيرة).</div>
+          <div><strong>Economic Environment</strong><br>Affects consumer purchasing power. Industrial economies (wealthy markets) vs Subsistence economies (poor markets).<span class="note-ar">يؤثر على قدرة المستهلك الشرائية ونمط الإنفاق.</span></div>
         </div>
         <div class="ch-note-item">
           <span class="ch-note-num">5</span>
-          <div><strong>Cultural Values</strong><br>Core values = صعبة التغيير. Secondary values = قابلة للتأثير. المسوق يستهدف الثانية. تعبّر عن كيف ينظر الناس لأنفسهم والمجتمع.</div>
+          <div><strong>Cultural Values</strong><br>Core values = hard to change. Secondary values = open to influence. Marketers target secondary values.<span class="note-ar">القيم الأساسية صعبة التغيير. القيم الثانوية قابلة للتأثير — يستهدفها المسوّق.</span></div>
         </div>
         <div class="ch-note-item">
           <span class="ch-note-num">6</span>
-          <div><strong>Publics — 7 أنواع</strong><br>Financial · Media · Government · Citizen-action · Local · General · Internal. الامتحان يسأل عن تصنيف أي مجموعة.</div>
+          <div><strong>Publics — 7 Types</strong><br>Financial · Media · Government · Citizen-action · Local · General · Internal.<span class="note-ar">الامتحان يسأل عن تصنيف أي مجموعة في النوع الصحيح.</span></div>
         </div>
       </div>
     </div>
@@ -1858,16 +1836,15 @@
 
   <section class="hero">
     <div class="tag">Chapter 5</div>
-    <h1>🧠 Understanding Consumer Buyer Behavior</h1>
-    <p>Kotler &amp; Armstrong, 18th Edition &bull; Chapter 5
+    <h1><i data-lucide="brain" aria-hidden="true"></i> Understanding Consumer Buyer Behavior</h1>
+    <p>Kotler &amp; Armstrong, 19th Edition &bull; Chapter 5
       <span class="ar-line">فهم سلوك المشتري المستهلك — الفصل الخامس</span>
     </p>
-    <button class="ch-pdf-btn" onclick="exportChapterPDF('page-ch5','Chapter 5 — Understanding Consumer Buyer Behavior')">📄 تصدير الملخص كـ PDF</button>
   </section>
 
   <!-- Learning Objectives -->
   <div class="chapter">
-    <h2>📋 Learning Objectives <span class="ar-line" style="font-size:.85rem;font-weight:600;">أهداف التعلم</span></h2>
+    <h2><i data-lucide="clipboard" aria-hidden="true"></i> Learning Objectives <span class="ar-line" style="font-size:.85rem;font-weight:600;">أهداف التعلم</span></h2>
     <div class="process-flow">
       <div class="process-step">
         <div class="process-num">5-1</div>
@@ -2412,31 +2389,34 @@
   <!-- Notes -->
   <div class="chapter">
     <div class="ch-notes-box">
-      <div class="ch-notes-title">📌 أهم نقاط الفصل الخامس</div>
+      <div class="ch-notes-header">
+        <div class="ch-notes-title">📌 Key Takeaways — Ch5</div>
+        <button class="notes-translate-btn" onclick="toggleNotesTranslation(this)">🌐 ترجمة</button>
+      </div>
       <div class="ch-notes-grid">
         <div class="ch-note-item">
           <span class="ch-note-num">1</span>
-          <div><strong>4 عوامل تؤثر على سلوك المشتري</strong><br>Cultural (أقوى تأثير) · Social · Personal · Psychological. الثقافة = أشمل وأعمق مؤثر.</div>
+          <div><strong>4 Factors Influencing Buyer Behavior</strong><br>Cultural (strongest) · Social · Personal · Psychological.<span class="note-ar">الثقافة = أشمل وأعمق مؤثر. تليها الاجتماعية ثم الشخصية ثم النفسية.</span></div>
         </div>
         <div class="ch-note-item">
           <span class="ch-note-num">2</span>
-          <div><strong>Maslow's Hierarchy</strong><br>Physiological → Safety → Social → Esteem → Self-actualization. الشركات تستهدف المستوى الذي يسعى إليه العميل.</div>
+          <div><strong>Maslow's Hierarchy</strong><br>Physiological → Safety → Social → Esteem → Self-actualization.<span class="note-ar">الشركات تستهدف المستوى الذي يسعى إليه العميل حالياً.</span></div>
         </div>
         <div class="ch-note-item">
           <span class="ch-note-num">3</span>
-          <div><strong>Buyer Decision Process — 5 خطوات</strong><br>① Need Recognition → ② Info Search → ③ Evaluation of Alternatives → ④ Purchase Decision → ⑤ Post-purchase Behavior.</div>
+          <div><strong>Buyer Decision Process — 5 Steps</strong><br>① Need Recognition → ② Info Search → ③ Evaluation of Alternatives → ④ Purchase Decision → ⑤ Post-purchase Behavior.<span class="note-ar">إدراك الحاجة ← البحث عن معلومات ← تقييم البدائل ← قرار الشراء ← ما بعد الشراء.</span></div>
         </div>
         <div class="ch-note-item">
           <span class="ch-note-num">4</span>
-          <div><strong>4 أنواع سلوك الشراء</strong><br>Complex (غالي+مختلف) · Dissonance-reducing (غالي+متشابه) · Habitual (رخيص+متشابه) · Variety-seeking (رخيص+مختلف).</div>
+          <div><strong>4 Types of Buying Behavior</strong><br>Complex (expensive+different) · Dissonance-reducing (expensive+similar) · Habitual (cheap+similar) · Variety-seeking (cheap+different).<span class="note-ar">غالي+مختلف · غالي+متشابه · رخيص+متشابه · رخيص+مختلف.</span></div>
         </div>
         <div class="ch-note-item">
           <span class="ch-note-num">5</span>
-          <div><strong>Adoption Process — 5 مراحل</strong><br>Awareness → Interest → Evaluation → Trial → Adoption. يختلف عن Buyer Decision Process!</div>
+          <div><strong>Adoption Process — 5 Stages</strong><br>Awareness → Interest → Evaluation → Trial → Adoption. Different from Buyer Decision Process!<span class="note-ar">يختلف عن عملية قرار الشراء — هذا خاص بالمنتجات الجديدة.</span></div>
         </div>
         <div class="ch-note-item">
           <span class="ch-note-num">6</span>
-          <div><strong>5 فئات المتبنين</strong><br>Innovators (2.5%) · Early Adopters (13.5%) · Early Mainstream (34%) · Late Mainstream (34%) · Laggards (16%). الامتحان يحب النسب والخصائص.</div>
+          <div><strong>5 Adopter Categories</strong><br>Innovators (2.5%) · Early Adopters (13.5%) · Early Mainstream (34%) · Late Mainstream (34%) · Laggards (16%).<span class="note-ar">الامتحان يحب النسب والخصائص لكل فئة.</span></div>
         </div>
       </div>
     </div>
@@ -2448,7 +2428,7 @@
 <div id="page-past" class="page">
   <section class="hero">
     <div class="tag">تجميعات</div>
-    <h1>📋 Past Exams — تجميعات</h1>
+    <h1><i data-lucide="clipboard" aria-hidden="true"></i> Past Exams — تجميعات</h1>
     <p>Real questions from previous MKT 201 midterms — with correct answers ✅</p>
   </section>
 
@@ -2524,7 +2504,7 @@
 <div id="page-badges" class="page">
   <section class="hero">
     <div class="tag">الإنجازات</div>
-    <h1>🏆 الشارات والإنجازات</h1>
+    <h1><i data-lucide="medal" aria-hidden="true"></i> الشارات والإنجازات</h1>
     <p>اجمع الشارات بالمذاكرة والمثابرة</p>
   </section>
   <div class="chapter">
@@ -2536,7 +2516,7 @@
 <div id="page-match" class="page">
   <section class="hero">
     <div class="tag">لعبة الربط</div>
-    <h1>🔗 ربط المصطلح بالتعريف</h1>
+    <h1><i data-lucide="link" aria-hidden="true"></i> ربط المصطلح بالتعريف</h1>
     <p>اضغط مصطلحاً ثم اضغط تعريفه الصحيح — 8 أزواج عشوائية في كل جلسة</p>
   </section>
 
@@ -2593,7 +2573,7 @@
 <div id="page-quick" class="page">
   <section class="hero">
     <div class="tag">Quick Review</div>
-    <h1>⚡ All Key Terms — Quick Review</h1>
+    <h1><i data-lucide="zap" aria-hidden="true"></i> All Key Terms — Quick Review</h1>
     <p>60 key terms across all 4 chapters</p>
   </section>
   <div class="chapter">
@@ -2612,7 +2592,7 @@
 <div id="page-flash" class="page">
   <section class="hero">
     <div class="tag">Flash Cards</div>
-    <h1>🃏 Flash Cards — 60 Key Terms</h1>
+    <h1><i data-lucide="layers" aria-hidden="true"></i> Flash Cards — 60 Key Terms</h1>
     <p>Click the card to flip it · Use arrow keys or buttons to navigate</p>
   </section>
   <div class="chapter">
@@ -2654,7 +2634,7 @@
 <div id="page-quiz" class="page">
   <section class="hero">
     <div class="tag">Quiz Mode</div>
-    <h1>🎯 جلستك اليوم</h1>
+    <h1><i data-lucide="target" aria-hidden="true"></i> جلستك اليوم</h1>
     <p>20 سؤال = 10 دقيقة = يوم مذاكرة ✅ — كل إجابة تُحفظ وتُبنى عليها جلستك القادمة 🧠</p>
   </section>
 
@@ -2668,7 +2648,7 @@
         <button class="quiz-mode-btn qmode-train-btn" id="qmode-train" onclick="setQuizMode('train',this)">🧘 وضع تدريب</button>
       </div>
       <input type="hidden" id="quiz-mode-select" value="normal">
-      <h2 style="margin:0 0 6px;">📖 اختار الفصل</h2>
+      <h2 style="margin:0 0 6px;"><i data-lucide="book-open" aria-hidden="true"></i> اختار الفصل</h2>
       <p style="color:var(--muted);margin:0 0 14px;font-size:.9rem;">ابدأ بفصل واحد أو اختار الكل — <strong>20 سؤال</strong> تكفي لجلسة ممتازة</p>
       <div class="quiz-ch-grid">
         <label class="quiz-ch-item">
@@ -2794,8 +2774,6 @@
         <button id="result-back-levels" class="quiz-nav-btn primary" style="display:none;" onclick="backToLevels()">🎖️ المستويات</button>
         <button class="quiz-nav-btn primary" id="result-new-session-btn" onclick="resetQuiz()">🔄 جلسة جديدة</button>
         <button class="quiz-nav-btn" id="quiz-review-btn" onclick="toggleQuizReview()">📋 مراجعة الإجابات</button>
-        <button class="quiz-nav-btn" onclick="shareResult('quiz')">📤 مشاركة النتيجة</button>
-        <button class="quiz-nav-btn" onclick="exportWrongAnswersPDF('quiz')">📄 تصدير PDF</button>
         <button class="quiz-nav-btn" onclick="showPage('page-home')">🏠 الرئيسية</button>
       </div>
       <div id="quiz-review-list" style="display:none;margin-top:24px;"></div>
@@ -2807,7 +2785,7 @@
 <div id="page-levels" class="page">
   <section class="hero">
     <div class="tag">Content Levels</div>
-    <h1>🎖️ المستويات</h1>
+    <h1><i data-lucide="award" aria-hidden="true"></i> المستويات</h1>
     <p class="hero-sub">كل جلسة = 20 سؤال — تقدم خطوة خطوة</p>
   </section>
   <div class="content-wrap">
@@ -2824,7 +2802,7 @@
 <div id="page-mock" class="page">
   <section class="hero">
     <div class="tag">Mock Exam</div>
-    <h1>📋 Mock Exam</h1>
+    <h1><i data-lucide="clipboard" aria-hidden="true"></i> Mock Exam</h1>
     <p>30 questions · 30 minutes · All 4 chapters — simulated exam conditions</p>
   </section>
 
@@ -2889,8 +2867,6 @@
       <div style="display:flex;gap:12px;justify-content:center;margin-top:20px;flex-wrap:wrap;">
         <button class="quiz-nav-btn primary" onclick="resetMock()">Try Again</button>
         <button class="quiz-nav-btn" id="mock-review-btn" onclick="toggleMockReview()">📋 Review Answers</button>
-        <button class="quiz-nav-btn" onclick="shareResult('mock')">📤 مشاركة النتيجة</button>
-        <button class="quiz-nav-btn" onclick="exportWrongAnswersPDF('mock')">📄 تصدير PDF</button>
         <button class="quiz-nav-btn" onclick="showPage('page-home')">Home</button>
       </div>
       <div id="mock-review-list" style="display:none;margin-top:24px;"></div>
@@ -2902,7 +2878,7 @@
 <div id="page-dashboard" class="page">
   <section class="hero">
     <div class="tag">Dashboard</div>
-    <h1>📈 Your Progress Dashboard</h1>
+    <h1><i data-lucide="trending-up" aria-hidden="true"></i> Your Progress Dashboard</h1>
     <p>Track your performance across all chapters</p>
   </section>
   <div class="chapter">
@@ -2947,143 +2923,11 @@
   </div>
 </div>
 
-<!-- ═══════════ PERFORMANCE ANALYSIS ══════════ -->
-<div id="page-performance" class="page">
-  <section class="hero">
-    <div class="tag">تحليل الأداء</div>
-    <h1>📊 تحليل أعمق للأداء</h1>
-    <p>تطور مستواك مع الوقت وأضعف المفاهيم عندك</p>
-  </section>
-  <div class="chapter">
-    <h3>📈 تطور الدرجات</h3>
-    <canvas id="perf-chart" width="700" height="300" style="width:100%;max-width:700px;margin:0 auto;display:block;border-radius:12px;background:var(--paper);border:1px solid var(--line);"></canvas>
-    <h3 style="margin-top:32px;">🎯 أضعف المفاهيم</h3>
-    <div id="perf-weak-concepts"></div>
-    <h3 style="margin-top:32px;">📋 سجل الجلسات</h3>
-    <div id="perf-session-log"></div>
-  </div>
-</div>
-
-<!-- ═══════════ SPACED REPETITION ═════════════ -->
-<div id="page-spaced" class="page">
-  <section class="hero">
-    <div class="tag">المراجعة الذكية</div>
-    <h1>🧠 التكرار المتباعد</h1>
-    <p>أسئلة تحتاج مراجعة بناءً على أدائك السابق</p>
-  </section>
-  <div class="chapter">
-    <div id="spaced-due-count" style="text-align:center;margin-bottom:20px;font-size:1.1rem;font-weight:700;color:var(--accent);"></div>
-    <div id="spaced-cards" style="display:flex;flex-direction:column;gap:12px;"></div>
-    <div id="spaced-empty" style="display:none;text-align:center;padding:40px 20px;color:var(--muted);">
-      <div style="font-size:3rem;margin-bottom:12px;">✅</div>
-      <p style="font-size:1.1rem;font-weight:600;">لا يوجد أسئلة للمراجعة حالياً</p>
-      <p style="font-size:.9rem;">أجب على كويزات وستظهر هنا الأسئلة اللي تحتاج تراجعها</p>
-    </div>
-    <div style="text-align:center;margin-top:20px;">
-      <button class="quiz-start-btn" style="max-width:300px;" onclick="startSpacedQuiz()" id="spaced-start-btn">🚀 ابدأ مراجعة الأسئلة المستحقة</button>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════ CHALLENGE MODE ════════════════ -->
-<div id="page-challenge" class="page">
-  <section class="hero">
-    <div class="tag">وضع المنافسة</div>
-    <h1>⚔️ تحدّي زميلك</h1>
-    <p>أرسل رابط لزميلك وشوفوا مين يجيب أعلى درجة</p>
-  </section>
-  <div class="chapter">
-    <div id="challenge-setup">
-      <h3>⚙️ إعدادات التحدي</h3>
-      <div style="display:grid;gap:16px;max-width:400px;margin:0 auto;">
-        <div>
-          <label style="font-weight:600;font-size:.9rem;color:var(--muted);display:block;margin-bottom:6px;">عدد الأسئلة</label>
-          <select id="challenge-count" class="form-input" style="padding:10px 14px;border-radius:10px;">
-            <option value="10">10 أسئلة</option>
-            <option value="15" selected>15 سؤال</option>
-            <option value="20">20 سؤال</option>
-            <option value="30">30 سؤال</option>
-          </select>
-        </div>
-        <div>
-          <label style="font-weight:600;font-size:.9rem;color:var(--muted);display:block;margin-bottom:6px;">الوقت (دقائق)</label>
-          <select id="challenge-time" class="form-input" style="padding:10px 14px;border-radius:10px;">
-            <option value="5">5 دقائق</option>
-            <option value="10" selected>10 دقائق</option>
-            <option value="15">15 دقيقة</option>
-            <option value="0">بدون وقت</option>
-          </select>
-        </div>
-        <button class="quiz-start-btn" onclick="createChallenge()">🔗 إنشاء رابط التحدي</button>
-      </div>
-      <div id="challenge-link-box" style="display:none;margin-top:20px;text-align:center;">
-        <p style="font-weight:700;color:var(--accent);margin-bottom:8px;">🔗 رابط التحدي جاهز!</p>
-        <input type="text" id="challenge-link-input" readonly class="form-input" style="text-align:center;font-size:.85rem;direction:ltr;">
-        <div style="display:flex;gap:8px;justify-content:center;margin-top:12px;">
-          <button class="quiz-nav-btn primary" onclick="copyChallengeLink()">📋 نسخ الرابط</button>
-          <button class="quiz-nav-btn" onclick="shareChallengeLink()">📤 مشاركة</button>
-        </div>
-      </div>
-    </div>
-    <div id="challenge-run" style="display:none;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
-        <span id="challenge-counter" style="font-weight:700;color:var(--accent);"></span>
-        <span id="challenge-timer" style="font-weight:700;font-size:1.2rem;color:var(--accent);"></span>
-      </div>
-      <div id="challenge-q-text" style="font-size:1.05rem;font-weight:600;line-height:1.7;margin-bottom:16px;padding:20px;background:var(--paper);border:1px solid var(--line);border-radius:14px;"></div>
-      <div id="challenge-options"></div>
-    </div>
-    <div id="challenge-result" style="display:none;text-align:center;">
-      <div class="result-circle" id="challenge-result-circle">
-        <div id="challenge-result-pct" class="result-pct">—</div>
-        <div class="result-label">Score</div>
-      </div>
-      <div id="challenge-result-msg" style="font-size:1.1rem;font-weight:700;margin:16px 0;"></div>
-      <div class="result-stats">
-        <div class="result-stat"><div id="challenge-result-correct" class="result-stat-val">—</div><div class="result-stat-lbl">Correct</div></div>
-        <div class="result-stat"><div id="challenge-result-wrong" class="result-stat-val">—</div><div class="result-stat-lbl">Wrong</div></div>
-        <div class="result-stat"><div id="challenge-result-time" class="result-stat-val">—</div><div class="result-stat-lbl">Time</div></div>
-      </div>
-      <div style="display:flex;gap:12px;justify-content:center;margin-top:16px;flex-wrap:wrap;">
-        <button class="quiz-nav-btn primary" onclick="createChallenge()">⚔️ تحدي جديد</button>
-        <button class="quiz-nav-btn" onclick="shareResult('challenge')">📤 مشاركة النتيجة</button>
-        <button class="quiz-nav-btn" onclick="showPage('page-home')">🏠 الرئيسية</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════ POMODORO FLOATING WIDGET ═══════ -->
-<button id="pomo-fab" class="fab fab-pomo" onclick="pomoToggleWidget()">🍅</button>
-<div id="pomo-widget" style="display:none;position:fixed;bottom:258px;right:20px;width:260px;background:var(--paper);border:1.5px solid var(--line);border-radius:18px;padding:18px;z-index:9998;box-shadow:0 12px 40px rgba(0,0,0,.15);text-align:center;">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-    <span id="pomo-status" style="font-size:.72rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;">جاهز للدراسة</span>
-    <button onclick="pomoToggleWidget()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:1rem;">✕</button>
-  </div>
-  <div id="pomo-time" style="font-size:3rem;font-weight:900;color:var(--ink);font-variant-numeric:tabular-nums;line-height:1;">25:00</div>
-  <div id="pomo-session-count" style="font-size:.72rem;color:var(--muted);margin-top:4px;">الجلسة 1 من 4</div>
-  <div style="display:flex;justify-content:center;gap:5px;margin-top:8px;" id="pomo-dots"></div>
-  <div style="display:flex;gap:8px;justify-content:center;margin-top:14px;">
-    <button onclick="pomoToggle()" id="pomo-start-btn" style="background:var(--accent);color:#fff;border:none;padding:7px 20px;border-radius:8px;font-weight:700;font-size:.82rem;cursor:pointer;font-family:inherit;">▶️ ابدأ</button>
-    <button onclick="pomoReset()" style="background:none;border:1px solid var(--line);color:var(--muted);padding:7px 12px;border-radius:8px;font-size:.82rem;cursor:pointer;font-family:inherit;">🔄</button>
-  </div>
-  <div style="display:flex;gap:4px;justify-content:center;margin-top:10px;">
-    <button onclick="pomoSetMode('work')" id="pomo-btn-work" style="font-size:.68rem;padding:3px 8px;border-radius:6px;border:1px solid var(--accent);color:var(--accent);background:none;cursor:pointer;font-family:inherit;">25د</button>
-    <button onclick="pomoSetMode('short')" id="pomo-btn-short" style="font-size:.68rem;padding:3px 8px;border-radius:6px;border:1px solid var(--line);color:var(--muted);background:none;cursor:pointer;font-family:inherit;">5د</button>
-    <button onclick="pomoSetMode('long')" id="pomo-btn-long" style="font-size:.68rem;padding:3px 8px;border-radius:6px;border:1px solid var(--line);color:var(--muted);background:none;cursor:pointer;font-family:inherit;">15د</button>
-  </div>
-  <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--line);display:flex;justify-content:center;gap:16px;">
-    <div><span id="pomo-today-sessions" style="font-weight:800;color:var(--accent);">0</span> <span style="font-size:.68rem;color:var(--muted);">جلسات</span></div>
-    <div><span id="pomo-today-minutes" style="font-weight:800;color:var(--accent);">0</span> <span style="font-size:.68rem;color:var(--muted);">دقيقة</span></div>
-  </div>
-  <div id="pomo-total-sessions" style="display:none;">0</div>
-</div>
-
 <!-- ═══════════ LEADERBOARD ════════════════════ -->
 <div id="page-leaderboard" class="page">
   <section class="hero">
     <div class="tag">Leaderboard</div>
-    <h1>🏆 Top Students Leaderboard</h1>
+    <h1><i data-lucide="trophy" aria-hidden="true"></i> Top Students Leaderboard</h1>
     <p>سجّل دخولك لتظهر في الترتيب وتتنافس مع زملائك</p>
   </section>
   <div class="chapter">
@@ -3099,7 +2943,7 @@
 <!-- ═══════════ FEEDBACK SECTION ════════════════ -->
 <div style="padding:24px 16px 40px;">
   <div style="max-width:720px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:36px 40px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,0.06);">
-    <div style="font-size:1.3rem;font-weight:900;color:var(--ink);margin-bottom:6px;">تواصل مع المطوّر 👋</div>
+    <div style="font-size:1.3rem;font-weight:900;color:var(--ink);margin-bottom:6px;"><i data-lucide="hand" aria-hidden="true" style="width:24px;height:24px;"></i> تواصل مع المطوّر</div>
     <div style="font-size:.88rem;color:var(--muted);margin-bottom:20px;">
       للاستفسارات، الملاحظات، أو الإبلاغ عن خطأ في سؤال
     </div>
@@ -3126,20 +2970,13 @@
   <div id="onboarding-modal" class="onboarding-modal"></div>
 </div>
 
-<!-- ── REMINDER TOAST ─────────────────────────── -->
-<div id="reminder-toast" class="reminder-toast" style="display:none;">
-  <div id="reminder-toast-text"></div>
-  <button onclick="document.getElementById('reminder-toast').style.display='none'" style="background:none;border:none;color:inherit;font-size:1.2rem;cursor:pointer;padding:4px;">✕</button>
-</div>
-
-<!-- ── SHARE CANVAS (hidden) ─────────────────── -->
-<canvas id="share-canvas" width="600" height="400" style="display:none;"></canvas>
-
 <!-- ── FIREBASE SDK ───────────────────────────── -->
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script src="mkt201_scripts.js"></script>
+<script>document.addEventListener('DOMContentLoaded', () => { if (window.lucide) lucide.createIcons(); });</script>
 
 </body>
 </html>
