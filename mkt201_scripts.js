@@ -2539,7 +2539,14 @@ function startQuiz() {
 
   const qCount = parseInt(document.getElementById('quiz-count-select')?.value) || 20;
   const finalPool = quizMode === 'smart' ? pool : shuffle(pool);
-  quizState.questions    = qCount === 9999 ? finalPool : finalPool.slice(0, Math.min(qCount, finalPool.length));
+  const seenQKeys = new Set();
+  const dedupedPool = finalPool.filter(q => {
+    const key = q.q.slice(0, 80);
+    if (seenQKeys.has(key)) return false;
+    seenQKeys.add(key);
+    return true;
+  });
+  quizState.questions    = qCount === 9999 ? dedupedPool : dedupedPool.slice(0, Math.min(qCount, dedupedPool.length));
   quizState.current      = 0;
   quizState.answers      = new Array(quizState.questions.length).fill(null);
   quizState.startTime    = Date.now();
