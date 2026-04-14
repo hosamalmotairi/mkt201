@@ -10,7 +10,7 @@
   <meta name="theme-color" content="#0d9488">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:slnt,wght@-10,200..1000&display=swap">
   <link rel="stylesheet" href="mkt201_styles.css">
   <style>
     /* ── REPORT button on questions ── */
@@ -155,29 +155,31 @@
   <div class="sidebar-header">
     <div class="sidebar-logo"><i data-lucide="shopping-cart" aria-hidden="true"></i> MKT 201</div>
     <div class="sidebar-subtitle">HOSAM Study Hub</div>
+    <button class="sidebar-close-btn" onclick="toggleSidebar()" aria-label="إغلاق القائمة"><i data-lucide="menu"></i></button>
   </div>
   <ul class="sidebar-menu">
     <li><a href="#" onclick="showPage('page-home');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="home" aria-hidden="true"></i></span> Home</a></li>
     <li class="sidebar-divider"></li>
-    <li class="sidebar-label"><i data-lucide="book-open" aria-hidden="true"></i> Chapters</li>
+    <li class="sidebar-label"><i data-lucide="book-open" aria-hidden="true"></i> Content</li>
     <li><a href="#" onclick="showPage('page-ch1');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="target" aria-hidden="true"></i></span> Ch 1 — Customer Value</a></li>
-    <li><a href="#" onclick="showPage('page-ch2');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="bar-chart-2" aria-hidden="true"></i></span> Ch 2 — Company Strategy</a></li>
+    <li><a href="#" onclick="showPage('page-ch2');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="bar-chart-2" aria-hidden="true"></i></span> Ch 2 — Marketing Strategy</a></li>
     <li><a href="#" onclick="showPage('page-ch3');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="globe" aria-hidden="true"></i></span> Ch 3 — Marketing Environment</a></li>
     <li><a href="#" onclick="showPage('page-ch5');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="brain" aria-hidden="true"></i></span> Ch 5 — Consumer Behavior</a></li>
     <li class="sidebar-divider"></li>
-    <li class="sidebar-label"><i data-lucide="search" aria-hidden="true"></i> Review</li>
+    <li class="sidebar-label"><i data-lucide="pencil" aria-hidden="true"></i> Practice</li>
     <li><a href="#" onclick="showPage('page-quick');renderQuickReview('all');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="zap" aria-hidden="true"></i></span> Quick Review</a></li>
     <li><a href="#" onclick="showPage('page-flash');initFlashCards();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="layers" aria-hidden="true"></i></span> Flash Cards</a></li>
-    <li class="sidebar-divider"></li>
-    <li class="sidebar-label"><i data-lucide="pencil" aria-hidden="true"></i> Practice</li>
-    <li><a href="#" onclick="showPage('page-levels');renderLevels();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="award" aria-hidden="true"></i></span> المستويات</a></li>
     <li><a href="#" onclick="showPage('page-quiz');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="target" aria-hidden="true"></i></span> Quiz Mode</a></li>
     <li><a href="#" onclick="showPage('page-mock');checkMockExamLock();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="clipboard" aria-hidden="true"></i></span> Mock Exam</a></li>
-    <li><a href="#" onclick="showPage('page-match');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="link" aria-hidden="true"></i></span> لعبة الربط</a></li>
-    <li><a href="#" onclick="showPage('page-past');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="clipboard" aria-hidden="true"></i></span> تجميعات</a></li>
+    <li><a href="#" onclick="showPage('page-match');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="link" aria-hidden="true"></i></span> Matching Game</a></li>
+    <li><a href="#" onclick="showPage('page-past');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="clipboard" aria-hidden="true"></i></span> Past Exams</a></li>
+    <li><a href="#" onclick="showPage('page-tb');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="database" aria-hidden="true"></i></span> Test Bank</a></li>
+    <li><a href="#" onclick="showPage('page-levels');renderLevels();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="award" aria-hidden="true"></i></span> Levels</a></li>
+    <li class="sidebar-divider"></li>
+    <li class="sidebar-label"><i data-lucide="trending-up" aria-hidden="true"></i> Stats</li>
     <li><a href="#" onclick="showPage('page-dashboard');renderDashboard();renderStreakCalendar();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="trending-up" aria-hidden="true"></i></span> Dashboard</a></li>
     <li><a href="#" onclick="showPage('page-leaderboard');renderLeaderboard();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="trophy" aria-hidden="true"></i></span> Leaderboard</a></li>
-    <li><a href="#" onclick="showPage('page-badges');renderBadgesPage();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="medal" aria-hidden="true"></i></span> الشارات</a></li>
+    <li><a href="#" onclick="showPage('page-badges');renderBadgesPage();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="medal" aria-hidden="true"></i></span> Badges</a></li>
   </ul>
   <div id="fb-user-info" class="fb-user-info" style="display:none;">
     <div class="fb-user-name" id="fb-user-name"></div>
@@ -241,7 +243,7 @@
   <section class="reference-section" style="margin-top:16px;">
     <div class="ref-header"><i data-lucide="monitor" aria-hidden="true"></i> <span>Course Slides</span> <span class="ar-line">سلايدات المادة — المرجع الأساسي</span></div>
     <div class="ref-list">
-      <a class="ref-row ref-row--featured" href="chapter%201.pdf" target="_blank" rel="noopener">
+      <a class="ref-row" href="chapter%201.pdf" target="_blank" rel="noopener">
         <div class="ref-book ref-book--1">📘</div>
         <div class="ref-body">
           <div class="ref-title">Chapter 1 — Creating Customer Value &amp; Engagement</div>
@@ -284,18 +286,18 @@
     <button class="qn-card" onclick="showPage('page-ch5')"><div class="qn-icon"><i data-lucide="brain" aria-hidden="true"></i></div><div class="qn-label">Chapter 5</div><div class="qn-sub">سلوك المستهلك — Buying Behavior</div></button>
     <button class="qn-card" onclick="showPage('page-flash');initFlashCards()"><div class="qn-icon"><i data-lucide="layers" aria-hidden="true"></i></div><div class="qn-label">Flash Cards</div><div class="qn-sub">60 مصطلح أساسي</div></button>
     <button class="qn-card" onclick="showPage('page-mock');checkMockExamLock()"><div class="qn-icon"><i data-lucide="clipboard" aria-hidden="true"></i></div><div class="qn-label">اختبار تجريبي</div><div class="qn-sub">30 سؤال · 30 دقيقة</div></button>
+    <button class="qn-card" onclick="showPage('page-tb')"><div class="qn-icon"><i data-lucide="database" aria-hidden="true"></i></div><div class="qn-label">Test Bank</div><div class="qn-sub">434 سؤال من بنك الأسئلة</div></button>
     <button class="qn-card" onclick="startCramSession()"><div class="qn-icon"><i data-lucide="flame" aria-hidden="true"></i></div><div class="qn-label">Cram Mode</div><div class="qn-sub">آخر لحظة — الأسئلة الصعبة والأخطاء</div></button>
   </div>
 
-
   <!-- Today's Session Card (compact inline CTA) -->
-  <div id="today-session-card" style="display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px 20px;background:rgba(15,118,110,0.06);border:1px solid rgba(15,118,110,0.18);border-radius:14px;margin:24px 0;flex-wrap:wrap;">
+  <div id="today-session-card" style="display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px 20px;background:linear-gradient(135deg,#0f766e,#0d9488);border:none;border-radius:14px;margin:24px 0;flex-wrap:wrap;">
     <div style="flex:1;min-width:200px;">
-      <div id="today-streak" style="font-size:.72rem;font-weight:700;color:var(--accent);letter-spacing:.04em;margin-bottom:4px;"></div>
-      <div id="today-msg" style="font-size:1rem;font-weight:700;color:var(--ink,#0f1f1d);line-height:1.4;">جاهز تذاكر؟ 10 دقائق تكفي</div>
-      <div id="today-sessions-done" style="font-size:.75rem;color:var(--muted);font-weight:500;margin-top:3px;"></div>
+      <div id="today-streak" style="font-size:.72rem;font-weight:700;color:rgba(255,255,255,0.8);letter-spacing:.04em;margin-bottom:4px;"></div>
+      <div id="today-msg" style="font-size:1rem;font-weight:700;color:#fff;line-height:1.4;">جاهز تذاكر؟ 10 دقائق تكفي</div>
+      <div id="today-sessions-done" style="font-size:.75rem;color:rgba(255,255,255,0.7);font-weight:500;margin-top:3px;"></div>
     </div>
-    <button onclick="quickStart20()" class="today-start-btn" style="background:var(--accent);color:#fff;border:none;border-radius:10px;padding:11px 22px;font-weight:800;font-size:.92rem;cursor:pointer;flex-shrink:0;">ابدأ الآن ←</button>
+    <button onclick="quickStart20()" class="today-start-btn" style="background:#fff;color:#0f766e;border:none;border-radius:10px;padding:11px 22px;font-weight:800;font-size:.92rem;cursor:pointer;flex-shrink:0;">ابدأ الآن ←</button>
   </div>
 
 
@@ -912,6 +914,96 @@
     </div>
   </div>
   <div id="ch1-highlights"></div>
+
+  <!-- ── CH1 QUIZ ── -->
+  <div class="ch-quiz-block">
+    <div class="chq-header">❓ Chapter 1 Quiz — Creating Customer Value &amp; Engagement</div>
+    <div class="chq-list">
+      <div class="chq-item">
+        <div class="chq-q">1. According to Kotler, marketing is best defined as:</div>
+        <div class="chq-opts">
+          <button class="chq-btn" onclick="handleChQ(this,false)">Advertising products to increase sales</button>
+          <button class="chq-btn" onclick="handleChQ(this,true)">The process by which companies create value for customers and build strong customer relationships</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Selling products at a profit</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Distributing products across markets</button>
+        </div>
+      </div>
+      <div class="chq-item">
+        <div class="chq-q">2. True or False: Marketing is only about advertising and selling.</div>
+        <div class="chq-opts">
+          <button class="chq-btn" onclick="handleChQ(this,false)">True</button>
+          <button class="chq-btn" onclick="handleChQ(this,true)">False</button>
+        </div>
+      </div>
+      <div class="chq-item">
+        <div class="chq-q">3. Which marketing concept holds that consumers favor products that are widely available and low in cost?</div>
+        <div class="chq-opts">
+          <button class="chq-btn" onclick="handleChQ(this,false)">Product concept</button>
+          <button class="chq-btn" onclick="handleChQ(this,true)">Production concept</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Selling concept</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Marketing concept</button>
+        </div>
+      </div>
+      <div class="chq-item">
+        <div class="chq-q">4. True or False: Wants are shaped by culture and individual personality.</div>
+        <div class="chq-opts">
+          <button class="chq-btn" onclick="handleChQ(this,true)">True</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">False</button>
+        </div>
+      </div>
+      <div class="chq-item">
+        <div class="chq-q">5. A need is a state of felt deprivation, while a want is:</div>
+        <div class="chq-opts">
+          <button class="chq-btn" onclick="handleChQ(this,false)">The same as a need</button>
+          <button class="chq-btn" onclick="handleChQ(this,true)">The form a need takes as shaped by culture and individual personality</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">A demand backed by purchasing power</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Determined solely by the company</button>
+        </div>
+      </div>
+      <div class="chq-item">
+        <div class="chq-q">6. The 4Ps of the marketing mix are:</div>
+        <div class="chq-opts">
+          <button class="chq-btn" onclick="handleChQ(this,true)">Product, Price, Place, Promotion</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">People, Price, Place, Promotion</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Product, Profit, Place, Promotion</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Product, Price, Public, Promotion</button>
+        </div>
+      </div>
+      <div class="chq-item">
+        <div class="chq-q">7. True or False: Demarketing refers to efforts to temporarily or permanently reduce demand for a product.</div>
+        <div class="chq-opts">
+          <button class="chq-btn" onclick="handleChQ(this,true)">True</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">False</button>
+        </div>
+      </div>
+      <div class="chq-item">
+        <div class="chq-q">8. Which concept holds that customers favor products with the most quality, performance, and features?</div>
+        <div class="chq-opts">
+          <button class="chq-btn" onclick="handleChQ(this,false)">Production concept</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Marketing concept</button>
+          <button class="chq-btn" onclick="handleChQ(this,true)">Product concept</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Selling concept</button>
+        </div>
+      </div>
+      <div class="chq-item">
+        <div class="chq-q">9. True or False: The selling concept focuses on building long-term customer relationships.</div>
+        <div class="chq-opts">
+          <button class="chq-btn" onclick="handleChQ(this,false)">True</button>
+          <button class="chq-btn" onclick="handleChQ(this,true)">False</button>
+        </div>
+      </div>
+      <div class="chq-item">
+        <div class="chq-q">10. CRM stands for:</div>
+        <div class="chq-opts">
+          <button class="chq-btn" onclick="handleChQ(this,false)">Customer Revenue Management</button>
+          <button class="chq-btn" onclick="handleChQ(this,true)">Customer Relationship Management</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Corporate Resource Management</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Consumer Retail Marketing</button>
+        </div>
+      </div>
+    </div>
+    <div class="chq-score"></div>
+  </div>
 
 </div>
 <!-- ═══════════ CHAPTER 2 ═══════════════════ -->
@@ -1587,6 +1679,96 @@
   </div>
   <div id="ch2-highlights"></div>
 
+  <!-- ── CH2 QUIZ ── -->
+  <div class="ch-quiz-block">
+    <div class="chq-header">❓ Chapter 2 Quiz — Company &amp; Marketing Strategy</div>
+    <div class="chq-list">
+      <div class="chq-item">
+        <div class="chq-q">1. A Strategic Business Unit (SBU) is best described as:</div>
+        <div class="chq-opts">
+          <button class="chq-btn" onclick="handleChQ(this,true)">A unit that operates independently with its own mission and objectives</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">The accounting department of a company</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">A geographic expansion strategy</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">An inventory management system</button>
+        </div>
+      </div>
+      <div class="chq-item">
+        <div class="chq-q">2. True or False: The BCG matrix classifies business units into four categories.</div>
+        <div class="chq-opts">
+          <button class="chq-btn" onclick="handleChQ(this,true)">True</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">False</button>
+        </div>
+      </div>
+      <div class="chq-item">
+        <div class="chq-q">3. In the BCG matrix, a "Star" has:</div>
+        <div class="chq-opts">
+          <button class="chq-btn" onclick="handleChQ(this,false)">High market share and low growth</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Low market share and high growth</button>
+          <button class="chq-btn" onclick="handleChQ(this,true)">High market share and high growth</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Low market share and low growth</button>
+        </div>
+      </div>
+      <div class="chq-item">
+        <div class="chq-q">4. The "Market Penetration" strategy in Ansoff's matrix involves:</div>
+        <div class="chq-opts">
+          <button class="chq-btn" onclick="handleChQ(this,false)">New products in new markets</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Existing products in new markets</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">New products in existing markets</button>
+          <button class="chq-btn" onclick="handleChQ(this,true)">Existing products in existing markets</button>
+        </div>
+      </div>
+      <div class="chq-item">
+        <div class="chq-q">5. True or False: A "Cash Cow" in the BCG matrix requires heavy investment to maintain its position.</div>
+        <div class="chq-opts">
+          <button class="chq-btn" onclick="handleChQ(this,false)">True</button>
+          <button class="chq-btn" onclick="handleChQ(this,true)">False</button>
+        </div>
+      </div>
+      <div class="chq-item">
+        <div class="chq-q">6. Marketing's primary role in strategic planning is to:</div>
+        <div class="chq-opts">
+          <button class="chq-btn" onclick="handleChQ(this,false)">Set prices only</button>
+          <button class="chq-btn" onclick="handleChQ(this,true)">Guide company strategy by focusing on customer needs</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Manage the supply chain</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Handle human resources</button>
+        </div>
+      </div>
+      <div class="chq-item">
+        <div class="chq-q">7. True or False: A company's mission statement should be product-focused rather than market-focused.</div>
+        <div class="chq-opts">
+          <button class="chq-btn" onclick="handleChQ(this,false)">True</button>
+          <button class="chq-btn" onclick="handleChQ(this,true)">False</button>
+        </div>
+      </div>
+      <div class="chq-item">
+        <div class="chq-q">8. SWOT stands for:</div>
+        <div class="chq-opts">
+          <button class="chq-btn" onclick="handleChQ(this,true)">Strengths, Weaknesses, Opportunities, Threats</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Sales, Wants, Operations, Targets</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Strategy, Work, Output, Technology</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Segments, Wants, Objectives, Tactics</button>
+        </div>
+      </div>
+      <div class="chq-item">
+        <div class="chq-q">9. Which BCG category has low market share and low market growth?</div>
+        <div class="chq-opts">
+          <button class="chq-btn" onclick="handleChQ(this,false)">Star</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Cash Cow</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Question Mark</button>
+          <button class="chq-btn" onclick="handleChQ(this,true)">Dog</button>
+        </div>
+      </div>
+      <div class="chq-item">
+        <div class="chq-q">10. True or False: The value chain refers to a series of activities that create value for customers.</div>
+        <div class="chq-opts">
+          <button class="chq-btn" onclick="handleChQ(this,true)">True</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">False</button>
+        </div>
+      </div>
+    </div>
+    <div class="chq-score"></div>
+  </div>
+
 </div>
 <!-- ═══════════ CHAPTER 3 ═══════════════════ -->
 <div id="page-ch3" class="page">
@@ -2119,6 +2301,96 @@
     </div>
   </div>
   <div id="ch3-highlights"></div>
+
+  <!-- ── CH3 QUIZ ── -->
+  <div class="ch-quiz-block">
+    <div class="chq-header">❓ Chapter 3 Quiz — Analyzing the Marketing Environment</div>
+    <div class="chq-list">
+      <div class="chq-item">
+        <div class="chq-q">1. The microenvironment includes:</div>
+        <div class="chq-opts">
+          <button class="chq-btn" onclick="handleChQ(this,false)">Economic and political forces</button>
+          <button class="chq-btn" onclick="handleChQ(this,true)">The company, suppliers, competitors, and customers</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Technological and social changes</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Climate and the natural environment</button>
+        </div>
+      </div>
+      <div class="chq-item">
+        <div class="chq-q">2. True or False: Demographic forces are part of the macroenvironment.</div>
+        <div class="chq-opts">
+          <button class="chq-btn" onclick="handleChQ(this,true)">True</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">False</button>
+        </div>
+      </div>
+      <div class="chq-item">
+        <div class="chq-q">3. PESTEL stands for:</div>
+        <div class="chq-opts">
+          <button class="chq-btn" onclick="handleChQ(this,true)">Political, Economic, Social, Technological, Environmental, Legal</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">People, Economy, Sales, Technology, Environment, Leadership</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Product, Economy, Segment, Trade, Ethics, Law</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Price, Efficiency, Supply, Trend, Export, Labor</button>
+        </div>
+      </div>
+      <div class="chq-item">
+        <div class="chq-q">4. Which of the following is NOT part of the microenvironment?</div>
+        <div class="chq-opts">
+          <button class="chq-btn" onclick="handleChQ(this,false)">Suppliers</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Customers</button>
+          <button class="chq-btn" onclick="handleChQ(this,true)">Economic inflation rate</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Competitors</button>
+        </div>
+      </div>
+      <div class="chq-item">
+        <div class="chq-q">5. True or False: Baby Boomers were born between 1946 and 1964.</div>
+        <div class="chq-opts">
+          <button class="chq-btn" onclick="handleChQ(this,true)">True</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">False</button>
+        </div>
+      </div>
+      <div class="chq-item">
+        <div class="chq-q">6. The natural environment in marketing includes:</div>
+        <div class="chq-opts">
+          <button class="chq-btn" onclick="handleChQ(this,false)">Government laws and regulations</button>
+          <button class="chq-btn" onclick="handleChQ(this,true)">Natural resources, weather, and climate concerns</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Cultural shifts in society</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Digital technologies</button>
+        </div>
+      </div>
+      <div class="chq-item">
+        <div class="chq-q">7. True or False: The technological environment creates both opportunities and threats for marketers.</div>
+        <div class="chq-opts">
+          <button class="chq-btn" onclick="handleChQ(this,true)">True</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">False</button>
+        </div>
+      </div>
+      <div class="chq-item">
+        <div class="chq-q">8. Which generation is considered the most digitally native from birth?</div>
+        <div class="chq-opts">
+          <button class="chq-btn" onclick="handleChQ(this,false)">Baby Boomers</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Generation X</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Millennials</button>
+          <button class="chq-btn" onclick="handleChQ(this,true)">Generation Z</button>
+        </div>
+      </div>
+      <div class="chq-item">
+        <div class="chq-q">9. Cultural factors that affect marketing include:</div>
+        <div class="chq-opts">
+          <button class="chq-btn" onclick="handleChQ(this,false)">Income and wealth levels</button>
+          <button class="chq-btn" onclick="handleChQ(this,true)">Values, perceptions, and preferences</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Interest rates and inflation</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Government legislation</button>
+        </div>
+      </div>
+      <div class="chq-item">
+        <div class="chq-q">10. True or False: Publics are any group that has an actual or potential interest in or impact on the company.</div>
+        <div class="chq-opts">
+          <button class="chq-btn" onclick="handleChQ(this,true)">True</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">False</button>
+        </div>
+      </div>
+    </div>
+    <div class="chq-score"></div>
+  </div>
 
 </div>
 <!-- ═══════════ CHAPTER 5 ═══════════════════ -->
@@ -2740,6 +3012,96 @@
   </div>
   <div id="ch5-highlights"></div>
 
+  <!-- ── CH5 QUIZ ── -->
+  <div class="ch-quiz-block">
+    <div class="chq-header">❓ Chapter 5 Quiz — Consumer Markets &amp; Buyer Behavior</div>
+    <div class="chq-list">
+      <div class="chq-item">
+        <div class="chq-q">1. The first stage in the buyer decision process is:</div>
+        <div class="chq-opts">
+          <button class="chq-btn" onclick="handleChQ(this,false)">Information search</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Evaluation of alternatives</button>
+          <button class="chq-btn" onclick="handleChQ(this,true)">Need recognition</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Purchase decision</button>
+        </div>
+      </div>
+      <div class="chq-item">
+        <div class="chq-q">2. True or False: Post-purchase behavior is the final stage in the buyer decision process.</div>
+        <div class="chq-opts">
+          <button class="chq-btn" onclick="handleChQ(this,true)">True</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">False</button>
+        </div>
+      </div>
+      <div class="chq-item">
+        <div class="chq-q">3. According to Maslow's hierarchy of needs, the base level (most basic) is:</div>
+        <div class="chq-opts">
+          <button class="chq-btn" onclick="handleChQ(this,false)">Social needs</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Safety needs</button>
+          <button class="chq-btn" onclick="handleChQ(this,true)">Physiological needs</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Esteem needs</button>
+        </div>
+      </div>
+      <div class="chq-item">
+        <div class="chq-q">4. Dissonance-Reducing buying behavior is characterized by:</div>
+        <div class="chq-opts">
+          <button class="chq-btn" onclick="handleChQ(this,false)">Low involvement and significant differences between brands</button>
+          <button class="chq-btn" onclick="handleChQ(this,true)">High involvement and few differences between brands</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Low involvement and few differences between brands</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">High involvement and significant differences between brands</button>
+        </div>
+      </div>
+      <div class="chq-item">
+        <div class="chq-q">5. True or False: Social factors influencing consumer behavior include family, roles, and social status.</div>
+        <div class="chq-opts">
+          <button class="chq-btn" onclick="handleChQ(this,true)">True</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">False</button>
+        </div>
+      </div>
+      <div class="chq-item">
+        <div class="chq-q">6. Cognitive dissonance occurs when a consumer:</div>
+        <div class="chq-opts">
+          <button class="chq-btn" onclick="handleChQ(this,false)">Feels complete satisfaction after purchase</button>
+          <button class="chq-btn" onclick="handleChQ(this,true)">Feels doubt or discomfort after making a purchase</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Rejects a product before buying it</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Finds the product matches all expectations</button>
+        </div>
+      </div>
+      <div class="chq-item">
+        <div class="chq-q">7. Opinion leaders belong to which category of factors influencing consumer behavior?</div>
+        <div class="chq-opts">
+          <button class="chq-btn" onclick="handleChQ(this,false)">Personal factors</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Psychological factors</button>
+          <button class="chq-btn" onclick="handleChQ(this,true)">Social factors</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Cultural factors</button>
+        </div>
+      </div>
+      <div class="chq-item">
+        <div class="chq-q">8. True or False: Perception is the process by which people select, organize, and interpret information to form a picture of the world.</div>
+        <div class="chq-opts">
+          <button class="chq-btn" onclick="handleChQ(this,true)">True</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">False</button>
+        </div>
+      </div>
+      <div class="chq-item">
+        <div class="chq-q">9. Complex buying behavior involves:</div>
+        <div class="chq-opts">
+          <button class="chq-btn" onclick="handleChQ(this,false)">Low involvement and few brand differences</button>
+          <button class="chq-btn" onclick="handleChQ(this,true)">High involvement and significant differences between brands</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Routine repeat purchases</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">Impulse purchase decisions</button>
+        </div>
+      </div>
+      <div class="chq-item">
+        <div class="chq-q">10. True or False: Cultural factors have the broadest and deepest influence on consumer behavior.</div>
+        <div class="chq-opts">
+          <button class="chq-btn" onclick="handleChQ(this,true)">True</button>
+          <button class="chq-btn" onclick="handleChQ(this,false)">False</button>
+        </div>
+      </div>
+    </div>
+    <div class="chq-score"></div>
+  </div>
+
 </div>
 <!-- ═══════════ PAST EXAMS ═══════════════════ -->
 <div id="page-past" class="page">
@@ -2813,6 +3175,113 @@
       <div class="past-res-btns">
         <button class="quiz-start-btn" onclick="resetPastExam()">↺ حاول مجدداً</button>
         <button class="quiz-nav-btn past-review-btn" id="past-review-btn" style="display:none;" onclick="reviewWrongAnswers()">🔴 راجع أخطاءك</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ═══════════ TEST BANK PAGE ════════════════ -->
+<div id="page-tb" class="page">
+  <section class="hero">
+    <div class="tag">Test Bank</div>
+    <h1><i data-lucide="database" aria-hidden="true"></i> Test Bank — بنك الأسئلة</h1>
+    <p>434 سؤال من بنك أسئلة Pearson — Chapters 1, 2, 3 &amp; 5</p>
+  </section>
+
+  <div class="chapter">
+    <!-- Setup -->
+    <div class="tb-setup">
+      <div class="past-intro-bar">
+        <div class="past-intro-stats">
+          <span class="past-intro-num">434</span><span class="past-intro-label">سؤال</span>
+          <span class="past-intro-sep">·</span>
+          <span class="past-intro-num">4</span><span class="past-intro-label">فصول</span>
+          <span class="past-intro-sep">·</span>
+          <span class="past-intro-num">5</span><span class="past-intro-label">خيارات (A–E)</span>
+        </div>
+        <p class="past-intro-hint">📖 أسئلة رسمية من Pearson Test Bank — Kotler 17e</p>
+      </div>
+
+      <!-- فلتر الفصول -->
+      <div class="past-filter-section">
+        <h3 style="margin:0 0 12px;font-size:1rem;">📚 اختر الفصل:</h3>
+        <div class="past-filter-btns" id="tb-ch-btns">
+          <button class="past-filter-btn active" onclick="setTbFilter('ch','all',this)">الكل (434)</button>
+          <button class="past-filter-btn" onclick="setTbFilter('ch','ch1',this)">Ch 1 <span class="past-filter-count">102</span></button>
+          <button class="past-filter-btn" onclick="setTbFilter('ch','ch2',this)">Ch 2 <span class="past-filter-count">113</span></button>
+          <button class="past-filter-btn" onclick="setTbFilter('ch','ch3',this)">Ch 3 <span class="past-filter-count">105</span></button>
+          <button class="past-filter-btn" onclick="setTbFilter('ch','ch5',this)">Ch 5 <span class="past-filter-count">114</span></button>
+        </div>
+      </div>
+
+      <!-- فلتر الصعوبة -->
+      <div class="past-filter-section">
+        <h3 style="margin:0 0 12px;font-size:1rem;">💪 مستوى الصعوبة:</h3>
+        <div class="past-filter-btns" id="tb-diff-btns">
+          <button class="past-filter-btn active" onclick="setTbFilter('diff','all',this)">الكل</button>
+          <button class="past-filter-btn" onclick="setTbFilter('diff','e',this)">🟢 Easy</button>
+          <button class="past-filter-btn" onclick="setTbFilter('diff','m',this)">🟡 Moderate</button>
+        </div>
+      </div>
+
+      <!-- وضع التشغيل -->
+      <div class="past-filter-section">
+        <h3 style="margin:0 0 12px;font-size:1rem;">⚙️ وضع التشغيل:</h3>
+        <div class="past-filter-btns" id="tb-mode-btns">
+          <button class="past-filter-btn active" onclick="setTbFilter('mode','practice',this)">📝 مذاكرة (تصحيح فوري)</button>
+          <button class="past-filter-btn" onclick="setTbFilter('mode','exam',this)">🎯 وضع امتحان (بدون تصحيح)</button>
+        </div>
+      </div>
+
+      <!-- عدد الأسئلة -->
+      <div class="past-filter-section">
+        <h3 style="margin:0 0 12px;font-size:1rem;">🔢 عدد الأسئلة:</h3>
+        <div class="past-filter-btns" id="tb-count-btns">
+          <button class="past-filter-btn" onclick="setTbFilter('count',20,this)">20</button>
+          <button class="past-filter-btn active" onclick="setTbFilter('count',50,this)">50</button>
+          <button class="past-filter-btn" onclick="setTbFilter('count',100,this)">100</button>
+          <button class="past-filter-btn" onclick="setTbFilter('count',9999,this)">الكل</button>
+        </div>
+      </div>
+
+      <div id="tb-pool-count" style="text-align:center;font-size:.85rem;color:var(--muted);margin:12px 0;font-weight:600;"></div>
+      <button class="quiz-start-btn" onclick="startTbQuiz()">ابدأ بنك الأسئلة →</button>
+    </div>
+
+    <!-- Running -->
+    <div class="tb-run" style="display:none;">
+      <div class="quiz-progress-bar"><div class="tb-progress-fill quiz-progress-fill" style="width:0%"></div></div>
+      <div class="past-run-header">
+        <span class="tb-q-counter"></span>
+        <span class="tb-ch-badge"></span>
+        <span class="tb-diff-badge"></span>
+      </div>
+      <div class="tb-q-text" style="font-size:1.05rem;font-weight:600;line-height:1.6;margin:18px 0;"></div>
+      <div class="tb-opts"></div>
+      <div class="tb-feedback past-feedback" style="display:none;"></div>
+      <div class="past-nav-row">
+        <button class="tb-next-btn quiz-nav-btn primary" style="display:none;" onclick="nextTbQuestion()">التالي ←</button>
+      </div>
+    </div>
+
+    <!-- Exam Review (for exam mode) -->
+    <div class="tb-exam-review" style="display:none;"></div>
+
+    <!-- Results -->
+    <div class="tb-results" style="display:none;">
+      <div class="past-res-hero">
+        <div class="past-res-icon">📊</div>
+        <div class="tb-score-num"></div>
+        <div class="tb-score-pct"></div>
+        <div class="tb-score-msg"></div>
+        <div class="tb-best-row" style="display:none;">
+          <span>🏆 أفضل نتيجة: </span><span class="tb-best-val"></span>
+        </div>
+      </div>
+      <div class="tb-ch-breakdown"></div>
+      <div class="past-res-btns">
+        <button class="quiz-start-btn" onclick="resetTbQuiz()">↺ حاول مجدداً</button>
+        <button class="quiz-nav-btn past-review-btn tb-review-btn" style="display:none;" onclick="reviewTbWrong()">🔴 راجع أخطاءك</button>
+        <button class="quiz-nav-btn past-review-btn tb-exam-review-btn" style="display:none;" onclick="showTbExamReview()">📋 راجع كل الأسئلة</button>
       </div>
     </div>
   </div>
@@ -3292,6 +3761,7 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="tb_questions.js"></script>
 <script src="mkt201_scripts.js"></script>
 <script>document.addEventListener('DOMContentLoaded', () => { if (window.lucide) lucide.createIcons(); });</script>
 

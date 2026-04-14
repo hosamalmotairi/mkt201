@@ -1303,6 +1303,339 @@ function resetPastExam() {
   document.querySelector('.past-results').style.display = 'none';
 }
 
+// ── TEST BANK ──
+const TB_KEYWORDS = /\b(NOT|EXCEPT|LEAST|BEST|MOST|TRUE|FALSE|FIRST|LAST|FINAL|ONLY|ALL|NEVER|ALWAYS|UNLIKELY|MOST LIKELY|PRIMARILY|CANNOT|DOES NOT|IS NOT|ARE NOT|WITHOUT|INCORRECT|CORRECT|MAIN|PRIMARY|KEY|MAJOR|IMPORTANT)\b/g;
+const TB_TERM_KEYWORDS = /\b(marketing myopia|value proposition|market offering|customer equity|customer lifetime value|share of customer|customer relationship management|CRM|marketing mix|4Ps|4Cs|STP|segmentation|targeting|positioning|SWOT|BCG|market penetration|market development|product development|diversification|mission statement|strategic planning|value chain|value delivery network|marketing ROI|microenvironment|macroenvironment|demographic|economic|natural|technological|political|cultural|environmental sustainability|publics|marketing intermediaries|consumer buyer behavior|consumer market|black box|subculture|cross-cultural|opinion leader|buzz marketing|word-of-mouth|reference group|aspirational|lifestyle|psychographics|AIO|motivation|perception|selective attention|selective distortion|selective retention|cognitive dissonance|Maslow|complex buying|dissonance-reducing|habitual buying|variety-seeking|need recognition|information search|postpurchase|adoption process|innovators|early adopters|early majority|late majority|laggards|relative advantage|compatibility|complexity|trialability|observability|brand personality|influencer)\b/gi;
+
+function highlightTbKeywords(text) {
+  // First escape HTML entities
+  let safe = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  // Highlight signal words (red/warning — these change the meaning)
+  safe = safe.replace(TB_KEYWORDS, '<span class="tb-kw-signal">$1</span>');
+  // Highlight marketing terms (teal — helps identify the concept)
+  safe = safe.replace(TB_TERM_KEYWORDS, function(match) {
+    // Don't double-wrap if already inside a span
+    return '<span class="tb-kw-term">' + match + '</span>';
+  });
+  return safe;
+}
+
+const tbState = {
+  filterCh: 'all',
+  filterDiff: 'all',
+  mode: 'practice',
+  count: 50,
+  questions: [],
+  current: 0,
+  score: 0,
+  answered: false,
+  wrongAnswers: [],
+  chapterScores: {},
+  examAnswers: [],
+  isReview: false
+};
+
+function setTbFilter(type, val, btn) {
+  if (type === 'ch') {
+    tbState.filterCh = val;
+    document.querySelectorAll('#tb-ch-btns .past-filter-btn').forEach(b => b.classList.remove('active'));
+  } else if (type === 'diff') {
+    tbState.filterDiff = val;
+    document.querySelectorAll('#tb-diff-btns .past-filter-btn').forEach(b => b.classList.remove('active'));
+  } else if (type === 'mode') {
+    tbState.mode = val;
+    document.querySelectorAll('#tb-mode-btns .past-filter-btn').forEach(b => b.classList.remove('active'));
+  } else if (type === 'count') {
+    tbState.count = val;
+    document.querySelectorAll('#tb-count-btns .past-filter-btn').forEach(b => b.classList.remove('active'));
+  }
+  btn.classList.add('active');
+  updateTbPoolCount();
+}
+
+function getTbPool() {
+  let pool = typeof tbQuestions !== 'undefined' ? tbQuestions : [];
+  if (tbState.filterCh !== 'all') pool = pool.filter(q => q.ch === tbState.filterCh);
+  if (tbState.filterDiff !== 'all') pool = pool.filter(q => q.diff === tbState.filterDiff);
+  return pool;
+}
+
+function updateTbPoolCount() {
+  const pool = getTbPool();
+  const el = document.getElementById('tb-pool-count');
+  if (el) el.textContent = pool.length + ' سؤال متاح';
+}
+
+function startTbQuiz(isReview) {
+  let pool;
+  if (isReview) {
+    pool = tbState.wrongAnswers;
+    tbState.isReview = true;
+  } else {
+    pool = getTbPool();
+    tbState.isReview = false;
+  }
+  const shuffled = [...pool].sort(() => Math.random() - 0.5);
+  const count = tbState.count === 9999 ? shuffled.length : Math.min(tbState.count, shuffled.length);
+  tbState.questions = shuffled.slice(0, count);
+  tbState.current = 0;
+  tbState.score = 0;
+  tbState.answered = false;
+  tbState.wrongAnswers = [];
+  tbState.chapterScores = {};
+  tbState.examAnswers = tbState.mode === 'exam' ? new Array(tbState.questions.length).fill(null) : [];
+
+  document.querySelector('.tb-setup').style.display = 'none';
+  document.querySelector('.tb-run').style.display = 'block';
+  document.querySelector('.tb-results').style.display = 'none';
+  const examRev = document.querySelector('.tb-exam-review');
+  if (examRev) examRev.style.display = 'none';
+  renderTbQuestion();
+}
+
+function renderTbQuestion() {
+  const q = tbState.questions[tbState.current];
+  const total = tbState.questions.length;
+  const pct = ((tbState.current) / total * 100).toFixed(0);
+  const chNames = { ch1: 'Ch 1', ch2: 'Ch 2', ch3: 'Ch 3', ch5: 'Ch 5' };
+  const diffNames = { e: '🟢 Easy', m: '🟡 Moderate', d: '🔴 Difficult' };
+
+  document.querySelector('.tb-progress-fill').style.width = pct + '%';
+  document.querySelector('.tb-q-counter').textContent =
+    (tbState.isReview ? '🔴 مراجعة — ' : '') + 'سؤال ' + (tbState.current + 1) + ' / ' + total;
+  document.querySelector('.tb-ch-badge').textContent = chNames[q.ch] || '';
+  document.querySelector('.tb-diff-badge').textContent = diffNames[q.diff] || '';
+
+  // Highlight keywords in question - safe because we escape HTML first in highlightTbKeywords
+  const qTextEl = document.querySelector('.tb-q-text');
+  qTextEl.innerHTML = highlightTbKeywords(q.q);
+
+  const optsEl = document.querySelector('.tb-opts');
+  const prevSelected = tbState.mode === 'exam' ? tbState.examAnswers[tbState.current] : null;
+  optsEl.textContent = '';
+  q.opts.forEach((o, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'past-opt-btn' + (prevSelected === i ? ' tb-exam-selected' : '');
+    btn.textContent = String.fromCharCode(65 + i) + '. ' + o;
+    btn.addEventListener('click', () => selectTbOpt(i));
+    optsEl.appendChild(btn);
+  });
+
+  document.querySelector('.tb-feedback').style.display = 'none';
+  const nextBtn = document.querySelector('.tb-next-btn');
+
+  if (tbState.mode === 'exam') {
+    nextBtn.style.display = 'block';
+    nextBtn.textContent = tbState.current === tbState.questions.length - 1 ? 'إنهاء الامتحان ✓' : 'التالي ←';
+    tbState.answered = false;
+  } else {
+    nextBtn.style.display = 'none';
+    tbState.answered = false;
+  }
+}
+
+function selectTbOpt(idx) {
+  const q = tbState.questions[tbState.current];
+
+  if (tbState.mode === 'exam') {
+    tbState.examAnswers[tbState.current] = idx;
+    const btns = document.querySelectorAll('.tb-opts .past-opt-btn');
+    btns.forEach((b, i) => {
+      b.classList.toggle('tb-exam-selected', i === idx);
+    });
+    return;
+  }
+
+  if (tbState.answered) return;
+  tbState.answered = true;
+  const correct = idx === q.ans;
+
+  if (correct) tbState.score++;
+  else tbState.wrongAnswers.push(q);
+
+  if (q.ch) {
+    if (!tbState.chapterScores[q.ch]) tbState.chapterScores[q.ch] = { correct: 0, total: 0 };
+    tbState.chapterScores[q.ch].total++;
+    if (correct) tbState.chapterScores[q.ch].correct++;
+  }
+
+  if (typeof showQuizEncouragement === 'function') showQuizEncouragement(correct);
+
+  const btns = document.querySelectorAll('.tb-opts .past-opt-btn');
+  btns.forEach((b, i) => {
+    if (i === q.ans) b.classList.add('past-correct');
+    else if (i === idx && !correct) b.classList.add('past-wrong');
+    b.disabled = true;
+  });
+
+  const fb = document.querySelector('.tb-feedback');
+  fb.style.display = 'block';
+  fb.className = 'tb-feedback past-feedback ' + (correct ? 'past-fb-correct' : 'past-fb-wrong');
+  fb.textContent = correct
+    ? '✅ صح! أحسنت'
+    : '❌ خطأ — الإجابة الصحيحة: ' + String.fromCharCode(65 + q.ans) + '. ' + q.opts[q.ans];
+
+  document.querySelector('.tb-next-btn').style.display = 'block';
+}
+
+function nextTbQuestion() {
+  tbState.current++;
+  if (tbState.current >= tbState.questions.length) {
+    if (tbState.mode === 'exam') {
+      tbState.score = 0;
+      tbState.wrongAnswers = [];
+      tbState.chapterScores = {};
+      tbState.questions.forEach((q, i) => {
+        const sel = tbState.examAnswers[i];
+        if (q.ch) {
+          if (!tbState.chapterScores[q.ch]) tbState.chapterScores[q.ch] = { correct: 0, total: 0 };
+          tbState.chapterScores[q.ch].total++;
+        }
+        if (sel === q.ans) {
+          tbState.score++;
+          if (q.ch) tbState.chapterScores[q.ch].correct++;
+        } else {
+          tbState.wrongAnswers.push(q);
+        }
+      });
+    }
+    showTbResults();
+  } else {
+    renderTbQuestion();
+  }
+}
+
+function showTbResults() {
+  document.querySelector('.tb-run').style.display = 'none';
+  document.querySelector('.tb-results').style.display = 'block';
+  const total = tbState.questions.length;
+  const pct = Math.round(tbState.score / total * 100);
+
+  document.querySelector('.tb-score-num').textContent = tbState.score + ' / ' + total;
+  document.querySelector('.tb-score-pct').textContent = pct + '%';
+  document.querySelector('.tb-score-msg').textContent =
+    pct >= 80 ? '🎉 ممتاز! أداء رائع!'
+    : pct >= 60 ? '👍 جيد! واصل المذاكرة'
+    : '📚 تحتاج مراجعة — راجع الفصول وحاول مجدداً';
+
+  const bestKey = 'mkt201_tb_best_' + tbState.filterCh + '_' + tbState.filterDiff;
+  const prevBest = parseInt(localStorage.getItem(bestKey) || '0');
+  if (pct > prevBest) localStorage.setItem(bestKey, pct);
+  const best = Math.max(pct, prevBest);
+  const bestRow = document.querySelector('.tb-best-row');
+  const bestVal = document.querySelector('.tb-best-val');
+  if (bestRow && bestVal) {
+    bestRow.style.display = 'flex';
+    bestVal.textContent = best + '%' + (pct >= prevBest && prevBest > 0 ? ' 🆕 رقم جديد!' : '');
+  }
+
+  const chNames = { ch1: 'الفصل 1', ch2: 'الفصل 2', ch3: 'الفصل 3', ch5: 'الفصل 5' };
+  const breakdown = document.querySelector('.tb-ch-breakdown');
+  if (breakdown && Object.keys(tbState.chapterScores).length > 0) {
+    breakdown.textContent = '';
+    const h3 = document.createElement('h3');
+    h3.style.cssText = 'margin:0 0 14px;font-size:1rem;font-weight:700;';
+    h3.textContent = '📊 نتيجتك بالفصل';
+    breakdown.appendChild(h3);
+    Object.entries(tbState.chapterScores).forEach(([ch, s]) => {
+      const p = Math.round(s.correct / s.total * 100);
+      const color = p >= 80 ? '#10b981' : p >= 60 ? '#f59e0b' : '#f43f5e';
+      const row = document.createElement('div');
+      row.className = 'past-ch-row';
+      const label = document.createElement('div');
+      label.className = 'past-ch-row-label';
+      const nameSpan = document.createElement('span');
+      nameSpan.textContent = chNames[ch] || ch;
+      const scoreSpan = document.createElement('span');
+      scoreSpan.style.cssText = 'font-weight:800;color:' + color + ';';
+      scoreSpan.textContent = s.correct + '/' + s.total + ' (' + p + '%)';
+      label.appendChild(nameSpan);
+      label.appendChild(scoreSpan);
+      const track = document.createElement('div');
+      track.className = 'past-ch-bar-track';
+      const fill = document.createElement('div');
+      fill.className = 'past-ch-bar-fill';
+      fill.style.cssText = 'width:' + p + '%;background:' + color + ';';
+      track.appendChild(fill);
+      row.appendChild(label);
+      row.appendChild(track);
+      breakdown.appendChild(row);
+    });
+    breakdown.style.display = 'block';
+  } else if (breakdown) {
+    breakdown.style.display = 'none';
+  }
+
+  const reviewBtn = document.querySelector('.tb-review-btn');
+  if (reviewBtn) reviewBtn.style.display = tbState.wrongAnswers.length && tbState.mode === 'practice' ? 'inline-block' : 'none';
+  const examReviewBtn = document.querySelector('.tb-exam-review-btn');
+  if (examReviewBtn) examReviewBtn.style.display = tbState.mode === 'exam' ? 'inline-block' : 'none';
+}
+
+function showTbExamReview() {
+  document.querySelector('.tb-results').style.display = 'none';
+  const reviewEl = document.querySelector('.tb-exam-review');
+  reviewEl.style.display = 'block';
+  reviewEl.textContent = '';
+
+  const h2 = document.createElement('h2');
+  h2.style.cssText = 'margin:0 0 20px;font-size:1.2rem;';
+  h2.textContent = '📋 مراجعة الامتحان';
+  reviewEl.appendChild(h2);
+
+  tbState.questions.forEach((q, i) => {
+    const userAns = tbState.examAnswers[i];
+    const correct = userAns === q.ans;
+    const icon = userAns === null ? '⬜' : correct ? '✅' : '❌';
+    const card = document.createElement('div');
+    card.style.cssText = 'padding:16px;margin-bottom:12px;border-radius:12px;border:1px solid var(--line);background:' +
+      (correct ? 'rgba(16,185,129,0.05)' : userAns === null ? 'rgba(0,0,0,0.02)' : 'rgba(244,63,94,0.05)') + ';';
+    const header = document.createElement('div');
+    header.style.cssText = 'font-weight:700;margin-bottom:8px;';
+    header.textContent = icon + ' سؤال ' + (i + 1);
+    card.appendChild(header);
+    const qText = document.createElement('div');
+    qText.style.cssText = 'margin-bottom:10px;line-height:1.6;';
+    qText.textContent = q.q;
+    card.appendChild(qText);
+    q.opts.forEach((o, j) => {
+      const optDiv = document.createElement('div');
+      let bgStyle = 'padding:6px 10px;margin:3px 0;border-radius:8px;';
+      if (j === q.ans) bgStyle += 'background:rgba(16,185,129,0.15);font-weight:700;';
+      else if (j === userAns && !correct) bgStyle += 'background:rgba(244,63,94,0.15);text-decoration:line-through;';
+      optDiv.style.cssText = bgStyle;
+      optDiv.textContent = String.fromCharCode(65 + j) + '. ' + o;
+      card.appendChild(optDiv);
+    });
+    reviewEl.appendChild(card);
+  });
+
+  const btnWrap = document.createElement('div');
+  btnWrap.style.cssText = 'text-align:center;margin-top:20px;';
+  const backBtn = document.createElement('button');
+  backBtn.className = 'quiz-start-btn';
+  backBtn.textContent = '↺ ارجع للإعداد';
+  backBtn.addEventListener('click', resetTbQuiz);
+  btnWrap.appendChild(backBtn);
+  reviewEl.appendChild(btnWrap);
+}
+
+function reviewTbWrong() {
+  tbState.mode = 'practice';
+  startTbQuiz(true);
+}
+
+function resetTbQuiz() {
+  document.querySelector('.tb-setup').style.display = 'block';
+  document.querySelector('.tb-run').style.display = 'none';
+  document.querySelector('.tb-results').style.display = 'none';
+  const examRev = document.querySelector('.tb-exam-review');
+  if (examRev) examRev.style.display = 'none';
+  updateTbPoolCount();
+}
+
+document.addEventListener('DOMContentLoaded', function() { updateTbPoolCount(); });
+
 // ── GAMIFICATION ──
 const GAME_KEY = 'mkt201_game';
 
@@ -2232,11 +2565,40 @@ document.addEventListener('DOMContentLoaded', () => {
 function toggleSidebar() {
   const sb  = document.getElementById('sidebar');
   const ov  = document.getElementById('sidebar-overlay');
-  const tog = document.getElementById('sidebar-toggle');
   if (!sb) return;
-  const open = sb.classList.toggle('open');
-  if (ov) ov.classList.toggle('visible', open);
-  if (tog) tog.textContent = open ? '✕' : '☰';
+  if (window.innerWidth > 768) {
+    document.body.classList.toggle('sidebar-collapsed');
+  } else {
+    const open = sb.classList.toggle('open');
+    if (ov) ov.classList.toggle('visible', open);
+  }
+}
+
+// ── CHAPTER QUIZ (BUS214 style) ───────────────
+function handleChQ(btn, isCorrect) {
+  const item = btn.closest('.chq-item');
+  if (item.dataset.answered) return;
+  item.dataset.answered = '1';
+  if (isCorrect) item.dataset.correct = '1';
+  item.querySelectorAll('.chq-btn').forEach(b => {
+    b.disabled = true;
+    if (b === btn) b.classList.add(isCorrect ? 'chq-correct' : 'chq-wrong');
+  });
+  if (!isCorrect) {
+    item.querySelectorAll('.chq-btn').forEach(b => {
+      if (b.getAttribute('onclick') && b.getAttribute('onclick').includes('true')) b.classList.add('chq-correct');
+    });
+  }
+  const block    = item.closest('.ch-quiz-block');
+  const items    = block.querySelectorAll('.chq-item');
+  const answered = block.querySelectorAll('.chq-item[data-answered]');
+  if (answered.length === items.length) {
+    const correct = block.querySelectorAll('.chq-item[data-correct]').length;
+    const scoreEl = block.querySelector('.chq-score');
+    const pct     = Math.round(correct / items.length * 100);
+    scoreEl.textContent = 'Score: ' + correct + '/' + items.length + ' — ' + pct + '% ' + (pct===100?'🏆':pct>=80?'🥇':pct>=60?'👍':'📚');
+    scoreEl.style.display = 'block';
+  }
 }
 
 // ── THEME SYSTEM ──────────────────────────────
