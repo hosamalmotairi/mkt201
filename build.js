@@ -6,9 +6,13 @@ const dist = path.join(__dirname, 'dist');
 fs.mkdirSync(dist, { recursive: true });
 
 // Copy static files as-is
-['mkt201_midterm.html', 'manifest.json', 'sw.js'].forEach(f => {
-  fs.copyFileSync(f, path.join(dist, f));
-  console.log(`Copied ${f}`);
+['mkt201_midterm.html', 'manifest.json', 'sw.js', 'tb_questions.js'].forEach(f => {
+  if (fs.existsSync(f)) {
+    fs.copyFileSync(f, path.join(dist, f));
+    console.log(`Copied ${f}`);
+  } else {
+    console.log(`Skipped (not found): ${f}`);
+  }
 });
 
 // index.html → tiny redirect (was 219 KB duplicate)
