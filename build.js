@@ -6,7 +6,8 @@ const dist = path.join(__dirname, 'dist');
 fs.mkdirSync(dist, { recursive: true });
 
 // Copy static files as-is
-['mkt201_midterm.html', 'manifest.json', 'sw.js', 'tb_questions.js'].forEach(f => {
+['mkt201_midterm.html', 'manifest.json', 'sw.js', 'tb_questions.js',
+ 'chapter 1.pdf', 'chapter 2.pdf', 'chapter 3.pdf', 'chapter 5.pdf'].forEach(f => {
   if (fs.existsSync(f)) {
     fs.copyFileSync(f, path.join(dist, f));
     console.log(`Copied ${f}`);

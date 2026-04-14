@@ -1,4 +1,8 @@
 *.pdf
+!chapter 1.pdf
+!chapter 2.pdf
+!chapter 3.pdf
+!chapter 5.pdf
 *.pptx
 *.docx
 *.bak
