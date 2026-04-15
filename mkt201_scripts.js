@@ -3898,6 +3898,148 @@ function filterQuickReview(ch) {
 }
 
 // ══════════════════════════════════════════════
+//  TERMS QUIZ ENGINE
+// ══════════════════════════════════════════════
+let tqState = {
+  ch: 'all', mode: 'def', count: 10,
+  questions: [], current: 0, correct: 0, wrong: 0,
+  answered: false, startTime: null
+};
+
+function tqSetCh(ch, btn) {
+  tqState.ch = ch;
+  document.querySelectorAll('.tq-ch-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function tqSetMode(mode, btn) {
+  tqState.mode = mode;
+  ['tqmode-def','tqmode-term','tqmode-mix'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.classList.remove('active');
+  });
+  btn.classList.add('active');
+}
+
+function tqSetCount(n, btn) {
+  tqState.count = n;
+  ['tqcount-10','tqcount-20','tqcount-all'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.classList.remove('active');
+  });
+  btn.classList.add('active');
+}
+
+function startTermsQuiz() {
+  const pool = tqState.ch === 'all' ? flashCards : flashCards.filter(c => c.ch === tqState.ch);
+  if (pool.length < 4) { alert('مب عندك كروت كافية لهذا الفصل!'); return; }
+
+  const shuffled = shuffle(pool);
+  const count = Math.min(tqState.count, shuffled.length);
+
+  tqState.questions = shuffled.slice(0, count).map(card => {
+    let qMode = tqState.mode === 'mix' ? (Math.random() < 0.5 ? 'def' : 'term') : tqState.mode;
+    const others = shuffle(pool.filter(c => c.front !== card.front)).slice(0, 3);
+
+    if (qMode === 'def') {
+      // Show definition → pick term
+      const opts = shuffle([card.front, ...others.map(c => c.front)]);
+      return { question: card.back, correct: card.front, options: opts, type: 'def', ch: card.ch };
+    } else {
+      // Show term → pick definition (truncated)
+      const trunc = s => s.length > 130 ? s.slice(0, 127) + '…' : s;
+      const opts = shuffle([trunc(card.back), ...others.map(c => trunc(c.back))]);
+      return { question: card.front, correct: trunc(card.back), options: opts, type: 'term', ch: card.ch };
+    }
+  });
+
+  tqState.current = 0; tqState.correct = 0; tqState.wrong = 0;
+  tqState.startTime = Date.now();
+  document.getElementById('tq-setup').style.display = 'none';
+  document.getElementById('tq-run').style.display   = '';
+  document.getElementById('tq-result').style.display = 'none';
+  tqRenderQuestion();
+}
+
+function tqRenderQuestion() {
+  const q = tqState.questions[tqState.current];
+  const total = tqState.questions.length;
+  document.getElementById('tq-progress-fill').style.width = (tqState.current / total * 100) + '%';
+  document.getElementById('tq-counter').textContent = (tqState.current + 1) + ' / ' + total;
+  document.getElementById('tq-badge').textContent =
+    q.ch.toUpperCase() + ' · ' + (q.type === 'def' ? 'ما هو هذا المصطلح؟' : 'ما هو التعريف الصحيح؟');
+  document.getElementById('tq-question').textContent = q.question;
+  document.getElementById('tq-explanation').style.display = 'none';
+  document.getElementById('tq-next-btn').style.display = 'none';
+  tqState.answered = false;
+
+  document.getElementById('tq-options').innerHTML = q.options.map((opt, i) =>
+    `<button class="quiz-opt-btn" onclick="tqAnswer(${i})" style="text-align:left;">${opt}</button>`
+  ).join('');
+}
+
+function tqAnswer(idx) {
+  if (tqState.answered) return;
+  tqState.answered = true;
+  const q = tqState.questions[tqState.current];
+  const isCorrect = q.options[idx] === q.correct;
+
+  if (isCorrect) { tqState.correct++; if (typeof addXP === 'function') addXP(5); }
+  else            { tqState.wrong++; }
+
+  document.querySelectorAll('#tq-options .quiz-opt-btn').forEach((btn, i) => {
+    btn.disabled = true;
+    if (q.options[i] === q.correct) btn.classList.add('correct');
+    else if (i === idx && !isCorrect) btn.classList.add('wrong');
+  });
+
+  if (!isCorrect) {
+    const exp = document.getElementById('tq-explanation');
+    exp.style.display = '';
+    exp.innerHTML = '<strong>✅ الجواب الصح:</strong><br>' + q.correct;
+  }
+
+  document.getElementById('tq-next-btn').style.display = '';
+  if (isCorrect && tqState.current < tqState.questions.length - 1) {
+    setTimeout(() => { if (tqState.answered) tqNext(); }, 1300);
+  }
+}
+
+function tqNext() {
+  tqState.current++;
+  if (tqState.current >= tqState.questions.length) tqShowResult();
+  else tqRenderQuestion();
+}
+
+function tqShowResult() {
+  const total = tqState.questions.length;
+  const pct   = Math.round(tqState.correct / total * 100);
+  const secs  = Math.round((Date.now() - tqState.startTime) / 1000);
+
+  document.getElementById('tq-run').style.display    = 'none';
+  document.getElementById('tq-result').style.display = '';
+  document.getElementById('tq-result-pct').textContent = pct + '%';
+  document.getElementById('tq-correct').textContent  = tqState.correct;
+  document.getElementById('tq-wrong').textContent    = tqState.wrong;
+  document.getElementById('tq-time').textContent     = formatTime(secs);
+
+  const msgs = [[90,'🔥 ممتاز! مصطلحاتك قوية جداً!'],[70,'👍 كويس! راجع اللي غلطت فيه'],[50,'📚 ذاكر أكثر وارجع حاول'],[0,'💪 راجع الكويك ريفيو وحاول مرة ثانية']];
+  document.getElementById('tq-result-msg').textContent = msgs.find(([m]) => pct >= m)[1];
+
+  const key = 'mkt201_tq_best_' + tqState.ch;
+  if (pct > parseInt(localStorage.getItem(key) || '0')) localStorage.setItem(key, pct);
+  if (typeof addXP === 'function') addXP(Math.round(pct / 10));
+}
+
+function tqRestart() {
+  document.getElementById('tq-result').style.display = 'none';
+  document.getElementById('tq-setup').style.display  = '';
+}
+
+function tqQuit() {
+  document.getElementById('tq-run').style.display   = 'none';
+  document.getElementById('tq-setup').style.display = '';
+}
+
+// ══════════════════════════════════════════════
 //  UTILITIES
 // ══════════════════════════════════════════════
 function shuffle(arr) {

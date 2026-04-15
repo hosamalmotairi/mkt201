@@ -195,6 +195,7 @@
     <li class="sidebar-label"><i data-lucide="pencil" aria-hidden="true"></i> Practice</li>
     <li><a href="#" onclick="showPage('page-quick');renderQuickReview('all');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="zap" aria-hidden="true"></i></span> Quick Review</a></li>
     <li><a href="#" onclick="showPage('page-flash');initFlashCards();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="layers" aria-hidden="true"></i></span> Flash Cards</a></li>
+    <li><a href="#" onclick="showPage('page-terms-quiz');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="spell-check" aria-hidden="true"></i></span> Terms Quiz</a></li>
     <li><a href="#" onclick="showPage('page-quiz');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="target" aria-hidden="true"></i></span> Quiz Mode</a></li>
     <li><a href="#" onclick="showPage('page-mock');checkMockExamLock();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="clipboard" aria-hidden="true"></i></span> Mock Exam</a></li>
     <li><a href="#" onclick="showPage('page-match');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><i data-lucide="link" aria-hidden="true"></i></span> Matching Game</a></li>
@@ -311,6 +312,7 @@
     <button class="qn-card" onclick="showPage('page-ch3')"><div class="qn-icon"><i data-lucide="globe" aria-hidden="true"></i></div><div class="qn-label">Chapter 3</div><div class="qn-sub">البيئة التسويقية — Macro & Micro</div></button>
     <button class="qn-card" onclick="showPage('page-ch5')"><div class="qn-icon"><i data-lucide="brain" aria-hidden="true"></i></div><div class="qn-label">Chapter 5</div><div class="qn-sub">سلوك المستهلك — Buying Behavior</div></button>
     <button class="qn-card" onclick="showPage('page-flash');initFlashCards()"><div class="qn-icon"><i data-lucide="layers" aria-hidden="true"></i></div><div class="qn-label">Flash Cards</div><div class="qn-sub">100 مصطلح أساسي</div></button>
+    <button class="qn-card" onclick="showPage('page-terms-quiz')"><div class="qn-icon"><i data-lucide="spell-check" aria-hidden="true"></i></div><div class="qn-label">Terms Quiz</div><div class="qn-sub">كويز المصطلحات — 4 خيارات</div></button>
     <button class="qn-card" onclick="showPage('page-mock');checkMockExamLock()"><div class="qn-icon"><i data-lucide="clipboard" aria-hidden="true"></i></div><div class="qn-label">اختبار تجريبي</div><div class="qn-sub">30 سؤال · 30 دقيقة</div></button>
     <button class="qn-card" onclick="showPage('page-tb')"><div class="qn-icon"><i data-lucide="database" aria-hidden="true"></i></div><div class="qn-label">Test Bank</div><div class="qn-sub">434 سؤال من بنك الأسئلة</div></button>
     <button class="qn-card" onclick="startCramSession()"><div class="qn-icon"><i data-lucide="flame" aria-hidden="true"></i></div><div class="qn-label">Cram Mode</div><div class="qn-sub">آخر لحظة — الأسئلة الصعبة والأخطاء</div></button>
@@ -4671,7 +4673,7 @@
   <section class="hero">
     <div class="tag">Quick Review</div>
     <h1><i data-lucide="zap" aria-hidden="true"></i> All Key Terms — Quick Review</h1>
-    <p>60 key terms across all 4 chapters</p>
+    <p>100 key terms across all 4 chapters</p>
   </section>
   <div class="chapter">
     <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;">
@@ -4682,6 +4684,86 @@
       <button class="flash-filter-btn quick-filter-btn" data-ch="ch5" onclick="filterQuickReview('ch5')">Chapter 5</button>
     </div>
     <div id="quick-terms-grid" class="quick-term-grid"></div>
+  </div>
+</div>
+
+<!-- ═══════════ TERMS QUIZ ══════════════════ -->
+<div id="page-terms-quiz" class="page">
+  <section class="hero">
+    <div class="tag">Terms Quiz</div>
+    <h1><i data-lucide="spell-check" aria-hidden="true"></i> كويز المصطلحات</h1>
+    <p>100 مصطلح · اختار الجواب الصح من 4 خيارات</p>
+  </section>
+
+  <div class="chapter">
+
+    <!-- ── SETUP ── -->
+    <div id="tq-setup">
+
+      <h2 style="margin:0 0 10px;font-size:1rem;font-weight:700;">اختار الفصل</h2>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px;">
+        <button class="flash-filter-btn tq-ch-btn active" data-ch="all"  onclick="tqSetCh('all',this)">الكل (100)</button>
+        <button class="flash-filter-btn tq-ch-btn" data-ch="ch1" onclick="tqSetCh('ch1',this)">Ch 1 (27)</button>
+        <button class="flash-filter-btn tq-ch-btn" data-ch="ch2" onclick="tqSetCh('ch2',this)">Ch 2 (26)</button>
+        <button class="flash-filter-btn tq-ch-btn" data-ch="ch3" onclick="tqSetCh('ch3',this)">Ch 3 (21)</button>
+        <button class="flash-filter-btn tq-ch-btn" data-ch="ch5" onclick="tqSetCh('ch5',this)">Ch 5 (26)</button>
+      </div>
+
+      <h2 style="margin:0 0 10px;font-size:1rem;font-weight:700;">نوع السؤال</h2>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px;">
+        <button class="quiz-mode-btn active" id="tqmode-def"  onclick="tqSetMode('def',this)">📖 التعريف ← المصطلح</button>
+        <button class="quiz-mode-btn"        id="tqmode-term" onclick="tqSetMode('term',this)">🏷️ المصطلح ← التعريف</button>
+        <button class="quiz-mode-btn"        id="tqmode-mix"  onclick="tqSetMode('mix',this)">🎲 مختلط</button>
+      </div>
+
+      <h2 style="margin:0 0 10px;font-size:1rem;font-weight:700;">كم سؤال؟</h2>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:24px;">
+        <button class="quiz-count-btn active" id="tqcount-10"  onclick="tqSetCount(10,this)"  style="padding:12px 8px;text-align:center;line-height:1.4;"><div style="font-size:1.3rem;font-weight:900;">10</div><div style="font-size:.72rem;opacity:.8;">~5 دقائق</div></button>
+        <button class="quiz-count-btn"        id="tqcount-20"  onclick="tqSetCount(20,this)"  style="padding:12px 8px;text-align:center;line-height:1.4;"><div style="font-size:1.3rem;font-weight:900;">20</div><div style="font-size:.72rem;opacity:.8;">~10 دقائق</div></button>
+        <button class="quiz-count-btn"        id="tqcount-all" onclick="tqSetCount(999,this)" style="padding:12px 8px;text-align:center;line-height:1.4;"><div style="font-size:1.3rem;font-weight:900;">الكل</div><div style="font-size:.72rem;opacity:.8;">اتحدى نفسك 💪</div></button>
+      </div>
+
+      <button class="quiz-start-btn" onclick="startTermsQuiz()" style="width:100%;padding:16px;font-size:1.1rem;letter-spacing:.02em;">ابدأ الكويز ⚡</button>
+    </div>
+
+    <!-- ── RUNNING ── -->
+    <div id="tq-run" style="display:none;">
+      <div class="quiz-progress-bar"><div id="tq-progress-fill" class="quiz-progress-fill" style="width:0%"></div></div>
+      <div id="tq-counter" style="text-align:center;font-size:.85rem;color:var(--muted);margin-bottom:12px;">1 / 10</div>
+
+      <div class="quiz-q-card">
+        <div id="tq-badge" style="font-size:.72rem;font-weight:700;color:var(--accent);margin-bottom:8px;text-transform:uppercase;letter-spacing:.06em;"></div>
+        <div id="tq-question" class="quiz-q-text" style="font-size:.97rem;line-height:1.65;"></div>
+        <div id="tq-options" class="quiz-options" style="margin-top:16px;"></div>
+        <div id="tq-explanation" style="display:none;margin-top:12px;padding:12px 14px;background:var(--accent-soft);border-radius:10px;font-size:.88rem;color:var(--ink);line-height:1.55;border-left:3px solid var(--accent);"></div>
+      </div>
+
+      <div style="display:flex;justify-content:center;margin-top:16px;">
+        <button id="tq-next-btn" class="quiz-nav-btn primary" onclick="tqNext()" style="display:none;padding:12px 28px;">التالي ←</button>
+      </div>
+      <div style="text-align:center;margin-top:10px;">
+        <button class="quiz-nav-btn" onclick="tqQuit()" style="font-size:.82rem;padding:8px 16px;">✕ إنهاء</button>
+      </div>
+    </div>
+
+    <!-- ── RESULT ── -->
+    <div id="tq-result" style="display:none;">
+      <div class="result-circle">
+        <div id="tq-result-pct" class="result-pct">—</div>
+        <div class="result-label">Score</div>
+      </div>
+      <div id="tq-result-msg" style="text-align:center;font-size:1.1rem;font-weight:700;margin:12px 0 20px;"></div>
+      <div class="result-stats">
+        <div class="result-stat"><div id="tq-correct" class="result-stat-val">—</div><div class="result-stat-lbl">✅ صح</div></div>
+        <div class="result-stat"><div id="tq-wrong"   class="result-stat-val">—</div><div class="result-stat-lbl">❌ غلط</div></div>
+        <div class="result-stat"><div id="tq-time"    class="result-stat-val">—</div><div class="result-stat-lbl">⏱️ وقت</div></div>
+      </div>
+      <div style="display:flex;gap:12px;justify-content:center;margin-top:22px;flex-wrap:wrap;">
+        <button class="quiz-nav-btn primary" onclick="tqRestart()">🔄 مرة ثانية</button>
+        <button class="quiz-nav-btn" onclick="showPage('page-home')">🏠 الرئيسية</button>
+      </div>
+    </div>
+
   </div>
 </div>
 
