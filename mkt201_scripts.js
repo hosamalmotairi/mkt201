@@ -6438,4 +6438,169 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   // initOnboarding() is called from pickTheme() after theme selection
   // so new users see: login → theme → onboarding
+
+  // Show tour banner for first-time visitors
+  setTimeout(() => {
+    if (!localStorage.getItem('mkt201_tour_seen')) {
+      const banner = document.getElementById('tour-banner');
+      if (banner) banner.style.display = 'flex';
+    }
+  }, 1200);
 });
+
+// ═══════════════════════════════════════════════
+//  INTERACTIVE TOUR
+// ═══════════════════════════════════════════════
+
+const TOUR_STEPS = [
+  {
+    selector: null,
+    title: '👋 أهلاً بك في MKT 201 Study Hub!',
+    body: 'هذا الموقع صُمِّم خصيصاً عشان تذاكر بكفاءة. خليني أريك كيف تستفيد من كل أداة خلال دقيقتين.',
+    position: 'center'
+  },
+  {
+    selector: '.quick-nav-grid',
+    title: '⚡ لوحة الانطلاق السريع',
+    body: 'من هنا تصل لكل شيء بضغطة واحدة — الفصول، الفلاش كاردز، الكويز، Cram Mode، وأكثر.',
+    position: 'bottom'
+  },
+  {
+    selector: '.qn-card:first-child',
+    title: '📖 ابدأ بالمحتوى (الفصول)',
+    body: 'كل فصل مرتّب بنفس ترتيب السلايدات — LO بـ LO. فيه تعريفات، أمثلة، وتلميحات الامتحان الصفراء.',
+    position: 'bottom'
+  },
+  {
+    selector: '.qn-card:nth-child(5)',
+    title: '🃏 الفلاش كاردز',
+    body: '60 مصطلح أساسي. اضغط الكارد ترى الإجابة. مثالي للمراجعة السريعة بعد قراءة كل فصل.',
+    position: 'bottom'
+  },
+  {
+    selector: '.qn-card:nth-child(7)',
+    title: '🏦 Test Bank — 434 سؤال',
+    body: 'بنك الأسئلة الكامل مرتّب بالفصول. اختبر نفسك بعد ما تنهي الكويز العادي.',
+    position: 'bottom'
+  },
+  {
+    selector: '.qn-card:nth-child(8)',
+    title: '🔥 Cram Mode',
+    body: 'يجمع الأسئلة الصعبة + الأخطاء السابقة. مثالي لآخر يومين قبل الامتحان.',
+    position: 'bottom'
+  },
+  {
+    selector: '.qn-lastnight',
+    title: '🌙 الليلة قبل الامتحان',
+    body: '40 سؤال مُختار من الامتحانات السابقة الحقيقية. استخدمه فقط في ليلة الامتحان.',
+    position: 'top'
+  },
+  {
+    selector: '#study-plan-card',
+    title: '📅 خطة المراجعة',
+    body: 'خطتك اليومية من الآن حتى يوم الامتحان. اضغط على أي يوم للانتقال لمحتواه مباشرةً.',
+    position: 'top'
+  },
+  {
+    selector: null,
+    title: '🎓 جاهز تذاكر!',
+    body: 'المسار المقترح:\n① اقرأ نوتس الفصل\n② راجع بالفلاش كاردز\n③ اختبر نفسك بالكويز\n④ كرر الأخطاء بـ Cram\n⑤ ليلة الامتحان — 40 سؤال مضمون',
+    position: 'center',
+    isLast: true
+  }
+];
+
+let _tourStep = 0;
+
+function startTour() {
+  showPage('page-home');
+  _tourStep = 0;
+  document.getElementById('tour-overlay').style.display = 'block';
+  document.getElementById('tour-banner') && (document.getElementById('tour-banner').style.display = 'none');
+  _renderTourStep();
+}
+
+function _tourNext() {
+  if (_tourStep < TOUR_STEPS.length - 1) { _tourStep++; _renderTourStep(); }
+  else _endTour();
+}
+
+function _tourPrev() {
+  if (_tourStep > 0) { _tourStep--; _renderTourStep(); }
+}
+
+function _endTour() {
+  document.getElementById('tour-overlay').style.display = 'none';
+  const sp = document.getElementById('tour-spotlight');
+  if (sp) sp.style.display = 'none';
+  localStorage.setItem('mkt201_tour_seen', '1');
+}
+
+function _renderTourStep() {
+  const step = TOUR_STEPS[_tourStep];
+  const spotlight = document.getElementById('tour-spotlight');
+  const card = document.getElementById('tour-card');
+  const isFirst = _tourStep === 0;
+  const isLast = step.isLast || _tourStep === TOUR_STEPS.length - 1;
+
+  card.innerHTML = `
+    <div class="tour-step-count">${_tourStep + 1} / ${TOUR_STEPS.length}</div>
+    <div class="tour-title">${step.title}</div>
+    <div class="tour-body">${step.body.replace(/\n/g, '<br>')}</div>
+    <div class="tour-actions">
+      ${isFirst
+        ? `<button class="tour-btn tour-btn-sec" onclick="_endTour()">تخطي</button>`
+        : `<button class="tour-btn tour-btn-sec" onclick="_tourPrev()">← السابق</button>`}
+      <button class="tour-btn tour-btn-pri" onclick="${isLast ? '_endTour()' : '_tourNext()'}">${isLast ? '🚀 ابدأ الدراسة!' : 'التالي →'}</button>
+    </div>`;
+
+  if (step.selector && step.position !== 'center') {
+    const target = document.querySelector(step.selector);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(() => {
+        const r = target.getBoundingClientRect();
+        const pad = 8;
+        spotlight.style.cssText = `display:block;position:fixed;border-radius:12px;
+          box-shadow:0 0 0 9999px rgba(0,0,0,.72),0 0 0 3px var(--accent);
+          transition:all .35s cubic-bezier(.25,.46,.45,.94);pointer-events:none;z-index:9998;
+          left:${r.left - pad}px;top:${r.top - pad}px;
+          width:${r.width + pad * 2}px;height:${r.height + pad * 2}px;`;
+        _positionTourCard(card, r, step.position);
+      }, 420);
+      return;
+    }
+  }
+  spotlight.style.display = 'none';
+  _centerTourCard(card);
+}
+
+function _positionTourCard(card, r, pos) {
+  const cw = Math.min(320, window.innerWidth - 32);
+  const margin = 16;
+  let left = r.left + r.width / 2 - cw / 2;
+  left = Math.max(margin, Math.min(left, window.innerWidth - cw - margin));
+  card.style.maxWidth = cw + 'px';
+  card.style.left = left + 'px';
+  card.style.transform = '';
+
+  const cardH = card.offsetHeight || 180;
+  if (pos === 'bottom') {
+    let top = r.bottom + 16;
+    if (top + cardH > window.innerHeight - 20) top = r.top - cardH - 16;
+    if (top < 20) top = window.innerHeight / 2 - cardH / 2;
+    card.style.top = top + 'px';
+  } else {
+    let top = r.top - cardH - 16;
+    if (top < 20) top = r.bottom + 16;
+    if (top + cardH > window.innerHeight - 20) top = window.innerHeight / 2 - cardH / 2;
+    card.style.top = top + 'px';
+  }
+}
+
+function _centerTourCard(card) {
+  card.style.left = '50%';
+  card.style.top = '50%';
+  card.style.transform = 'translate(-50%, -50%)';
+  card.style.maxWidth = '340px';
+}
