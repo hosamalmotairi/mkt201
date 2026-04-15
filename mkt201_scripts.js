@@ -125,7 +125,23 @@ const flashCards = [
   { ch:"ch5", front:"Variety-Seeking Buying Behavior", back:"Low consumer involvement but significant perceived brand differences. Consumers frequently switch brands — not from dissatisfaction but for variety. Example: cookies, snacks." },
   { ch:"ch5", front:"5-Stage Buyer Decision Process", back:"(1) Need Recognition → (2) Information Search → (3) Evaluation of Alternatives → (4) Purchase Decision → (5) Postpurchase Behavior. Process starts before purchase and continues after." },
   { ch:"ch5", front:"Product Adoption Process", back:"Mental process from first learning about an innovation to adoption: (1) Awareness → (2) Interest → (3) Evaluation → (4) Trial → (5) Adoption." },
-  { ch:"ch5", front:"5 Adopter Categories", back:"Innovators (2.5% — risk takers), Early Adopters (13.5% — opinion leaders), Early Majority (34%), Late Majority (34% — skeptical), Laggards (16% — tradition-bound, last to adopt)." }
+  { ch:"ch5", front:"5 Adopter Categories", back:"Innovators (2.5% — risk takers), Early Adopters (13.5% — opinion leaders), Early Majority (34%), Late Majority (34% — skeptical), Laggards (16% — tradition-bound, last to adopt)." },
+
+  // ── CHAPTER 1 — Added from slides content ─────────────────
+  { ch:"ch1", front:"Five-Step Marketing Process", back:"(1) Understand marketplace & customer needs → (2) Design a customer value-driven marketing strategy → (3) Construct an integrated marketing program (4 Ps) → (4) Engage customers & build profitable relationships → (5) Capture value from customers in return. ⭐ Step 5 is the ONLY step that captures value — all others create value FOR customers." },
+  { ch:"ch1", front:"Shared Value", back:"The concept that companies should create economic value while ALSO creating value for society by addressing its needs and challenges. Societal needs, not just economic needs, define markets. Goes beyond the Societal Marketing Concept by embedding social value creation into the core business model." },
+
+  // ── CHAPTER 2 — Added from slides content ─────────────────
+  { ch:"ch2", front:"Marketing Strategy", back:"The marketing logic by which a company hopes to create customer value and achieve profitable customer relationships. Involves two key decisions: (1) Which customers to serve? → segmentation & targeting. (2) How to serve them best? → differentiation & positioning (value proposition)." },
+  { ch:"ch2", front:"Market Targeting", back:"The process of evaluating each market segment's attractiveness and selecting one or more segments to enter. A market segment is a group of consumers who respond in a similar way to a given set of marketing efforts. Links segmentation (divide) → targeting (select) → positioning (place)." },
+  { ch:"ch2", front:"BCG Investment Strategies", back:"Four strategies for managing SBUs based on BCG matrix position: (1) Build — invest more to grow share (promising Question Marks → Stars); (2) Hold — maintain current share (strong Cash Cows); (3) Harvest — milk short-term cash without concern for long-term effect (weak Cash Cows, Dogs); (4) Divest — sell or discontinue (Dogs & losing Question Marks)." },
+  { ch:"ch2", front:"Marketing Control", back:"Measuring and evaluating results of marketing strategies and taking corrective action. Four steps: (1) Set goals → (2) Measure performance → (3) Evaluate causes of gaps → (4) Take corrective action. Two types: operating control (checking ongoing performance vs. plan) and strategic control (checking whether strategy fits the environment)." },
+
+  // ── CHAPTER 3 — Added from slides content ─────────────────
+  { ch:"ch3", front:"Generational Marketing", back:"Segmenting people by lifestyle or life stage rather than age alone. Four major U.S. generational cohorts: Baby Boomers (born 1946–64) — largest, most affluent; Generation X (1965–76); Millennials/Gen Y (1977–2000) — digital natives, largest group; Generation Z (2001+) — true digital natives. Each cohort shares values shaped by shared world events." },
+
+  // ── CHAPTER 5 — Added from slides content ─────────────────
+  { ch:"ch5", front:"5 Product Characteristics Affecting Adoption Rate", back:"(1) Relative Advantage — degree to which innovation appears superior to existing products; (2) Compatibility — consistent with values & experiences of potential adopters; (3) Complexity — difficulty of understanding or using; (4) Divisibility / Trialability — can be tried on a limited basis before full commitment; (5) Communicability / Observability — results visible and describable to others. Higher relative advantage, compatibility, trialability, and communicability → faster adoption." }
 ];
 
 // ══════════════════════════════════════════════
