@@ -6487,8 +6487,8 @@ document.addEventListener('DOMContentLoaded', () => {
 const TOUR_STEPS = [
   {
     selector: null,
-    title: '👋 أهلاً بك في MKT 201 Study Hub!',
-    body: 'هذا الموقع من حسام المطيري، صُمِّم خصيصاً عشان تذاكر بكفاءة. خليني أوضح لك كيف تستفيد من كل أداة خلال دقيقتين.',
+    title: '👋 أهلاً بك في Hosam Study Hub!',
+    body: 'هذا الموقع صُمِّم خصيصاً عشان تذاكر بكفاءة. خليني أوضح لك كيف تستفيد من كل أداة خلال دقيقتين.',
     position: 'center'
   },
   {
