@@ -43,6 +43,16 @@ const flashCards = [
   { ch:"ch1", front:"Customer Relationship Management (CRM)", back:"The overall process of building and maintaining profitable customer relationships by delivering superior customer value and satisfaction." },
   { ch:"ch1", front:"Customer Equity", back:"The total combined customer lifetime values of all of the company's customers; a measure of the future value of the company's customer base." },
   { ch:"ch1", front:"Share of Customer", back:"The portion of the customer's purchasing that a company gets in its product categories; getting more business from existing customers." },
+  { ch:"ch1", front:"Value and Satisfaction", back:"Customer value = benefits gained minus costs of obtaining a market offering. Satisfaction = perceived performance matches or exceeds expectations. Delighted customers become brand evangelists." },
+  { ch:"ch1", front:"Product Concept", back:"The idea that consumers will favor products offering the most quality, performance, and features; focus on continuous product improvements. Can lead to marketing myopia." },
+  { ch:"ch1", front:"Selling Concept", back:"The idea that consumers will not buy enough unless the firm undertakes large-scale selling and promotion. Inside-out perspective. Typically used for unsought goods (e.g., insurance, blood donations)." },
+  { ch:"ch1", front:"Customer Lifetime Value (CLV)", back:"The total stream of purchases a customer will make over a lifetime of patronage. Keeping existing customers is more profitable than constantly acquiring new ones." },
+  { ch:"ch1", front:"Marketing Mix (4 Ps)", back:"The set of tactical marketing tools: Product (what you offer), Price (what you charge), Place (how you deliver), Promotion (how you communicate). Blended into an integrated program." },
+  { ch:"ch1", front:"4 Cs (Customer View)", back:"Customer-centered reframe of 4 Ps: Product → Customer Solution, Price → Customer Cost, Place → Convenience, Promotion → Communication." },
+  { ch:"ch1", front:"Customer-Engagement Marketing", back:"Making the brand a meaningful part of consumers' conversations and lives by fostering direct involvement in shaping brand experiences and community — beyond just transactions." },
+  { ch:"ch1", front:"Consumer-Generated Marketing", back:"Brand exchanges created by consumers themselves — reviews, videos, posts — that marketers invite or amplify to shape brand content." },
+  { ch:"ch1", front:"Partner Relationship Management", back:"Working closely with partners inside other company departments and outside the company to jointly bring greater value to customers." },
+  { ch:"ch1", front:"4 Customer Relationship Types", back:"Strangers (low profit, low loyalty), Butterflies (high profit, low loyalty), Barnacles (high loyalty, low profit), True Friends (high profit, high loyalty) ← goal." },
 
   // ── CHAPTER 2 ─────────────────────────────
   { ch:"ch2", front:"Strategic Planning", back:"The process of developing and maintaining a strategic fit between the organization's goals and capabilities and its changing marketing opportunities." },
@@ -60,6 +70,13 @@ const flashCards = [
   { ch:"ch2", front:"SWOT Analysis", back:"An overall evaluation of the company's Strengths, Weaknesses, Opportunities, and Threats; used for strategic planning." },
   { ch:"ch2", front:"Marketing ROI", back:"The net return from a marketing investment divided by the costs of the marketing investment; measures marketing profitability." },
   { ch:"ch2", front:"Downsizing", back:"Reducing the business portfolio by eliminating products or business units that are not profitable or that no longer fit the company's overall strategy." },
+  { ch:"ch2", front:"Strategic Business Unit (SBU)", back:"A unit of the company with a separate mission and objectives that can be planned independently. Can be a division, a product line, or a single product/brand." },
+  { ch:"ch2", front:"BCG Growth-Share Matrix", back:"Portfolio tool evaluating SBUs on two axes: market growth rate (vertical = industry attractiveness) and relative market share (horizontal = company strength). Produces Stars, Cash Cows, Question Marks, Dogs." },
+  { ch:"ch2", front:"Market Segmentation", back:"Dividing a market into distinct groups of buyers with different needs, characteristics, or behaviors who might require separate products or marketing programs." },
+  { ch:"ch2", front:"Differentiation", back:"Actually differentiating the market offering to create superior customer value compared to competitors; making a product distinct in target customers' eyes." },
+  { ch:"ch2", front:"Positioning", back:"Arranging for a product to occupy a clear, distinctive, and desirable place relative to competing products in the minds of target consumers." },
+  { ch:"ch2", front:"Value Delivery Network", back:"The company, its suppliers, distributors, and ultimately customers who partner together to improve the performance of the entire system in delivering customer value." },
+  { ch:"ch2", front:"Marketing Implementation", back:"The process that turns marketing strategies and plans into marketing actions to accomplish strategic marketing objectives — who does what, where, when, and how." },
 
   // ── CHAPTER 3 ─────────────────────────────
   { ch:"ch3", front:"Marketing Environment", back:"The actors and forces outside marketing that affect marketing management's ability to build and maintain successful relationships with target customers." , exp:"بيئة التسويق = كل القوى والعوامل خارج إدارة التسويق التي تؤثر على قدرة الشركة في بناء علاقات ناجحة مع العملاء المستهدفين." },
@@ -77,6 +94,11 @@ const flashCards = [
   { ch:"ch3", front:"Reactive Approach", back:"Passively accepting the marketing environment as an uncontrollable element and adapting strategies to it without attempting to change it." , exp:"Reactive Approach = القبول السلبي بالبيئة التسويقية كعنصر غير قابل للسيطرة والتكيف معها دون محاولة تغييرها." },
   { ch:"ch3", front:"Proactive Approach", back:"Developing strategies to change the marketing environment rather than just reacting to it; considered the better approach for competitive advantage." , exp:"Proactive Approach = تطوير استراتيجيات لتغيير البيئة التسويقية بدلاً من مجرد الاستجابة لها — يُعدّ النهج الأفضل لتحقيق الميزة التنافسية." },
   { ch:"ch3", front:"Political Environment", back:"Laws, government agencies, and pressure groups that influence and limit various organizations and individuals in a given society." , exp:"Political Environment = القوانين والجهات الحكومية وجماعات الضغط التي تؤثر وتُقيّد مختلف المنظمات والأفراد في المجتمع." },
+  { ch:"ch3", front:"Economic Environment", back:"Factors affecting consumer buying power and spending patterns — income levels, income distribution, and economic conditions (recession/growth). Key response: value marketing." },
+  { ch:"ch3", front:"Natural Environment", back:"Natural resources needed as inputs or affected by marketing. Key trends: raw material shortages, increased pollution, government intervention, and the green sustainability movement." },
+  { ch:"ch3", front:"Technological Environment", back:"The most dramatic force shaping the marketplace. Creates new products and market opportunities but also threatens existing industries. Changes rapidly — companies that don't adapt fall behind." },
+  { ch:"ch3", front:"Cause-Related Marketing", back:"Linking a company's products to a social cause to build brand image and loyalty while contributing to a good cause. Example: Warby Parker 'Buy a Pair, Give a Pair.'" },
+  { ch:"ch3", front:"5 Customer Market Types", back:"(1) Consumer markets — individuals/households, (2) Business markets — buy for production, (3) Reseller markets — buy to resell, (4) Government markets — public services, (5) International markets — foreign buyers." },
 
   // ── CHAPTER 5 ─────────────────────────────
   { ch:"ch5", front:"Consumer Buyer Behavior", back:"The buying behavior of final consumers — individuals and households that buy goods and services for personal consumption." },
@@ -93,7 +115,17 @@ const flashCards = [
   { ch:"ch5", front:"Selective Retention", back:"Consumers are likely to remember good points made about a brand they favor and to forget good points made about competing brands." },
   { ch:"ch5", front:"Cognitive Dissonance", back:"Buyer discomfort caused by post-purchase conflict; occurs when buyers regret a purchase and may return the product or seek information to comfort themselves." },
   { ch:"ch5", front:"Complex Buying Behavior", back:"Consumer buying behavior in situations characterized by high consumer involvement and significant perceived differences among brands; typically expensive, risky, or infrequent purchases." },
-  { ch:"ch5", front:"Habitual Buying Behavior", back:"Consumer buying behavior in situations characterized by low consumer involvement and few significantly perceived brand differences; routine, low-risk purchases (e.g., toothpaste)." }
+  { ch:"ch5", front:"Habitual Buying Behavior", back:"Consumer buying behavior in situations characterized by low consumer involvement and few significantly perceived brand differences; routine, low-risk purchases (e.g., toothpaste)." },
+  { ch:"ch5", front:"Social Class", back:"Relatively permanent and ordered divisions in society whose members share similar values, interests, and behaviors. Measured by occupation, income, education, and wealth." },
+  { ch:"ch5", front:"Black Box Model", back:"Marketing and other stimuli (product, price, place, promo + economic, tech, social) enter the buyer's 'black box' (mind) and produce observable responses. Marketers must understand what happens inside." },
+  { ch:"ch5", front:"Maslow's Hierarchy of Needs", back:"5 levels from most to least pressing: Physiological (food, water) → Safety → Social (belonging) → Esteem (status) → Self-actualization. People satisfy lower needs before moving up." },
+  { ch:"ch5", front:"Learning", back:"Changes in behavior arising from experience. Occurs through drives (strong internal stimuli), cues (minor stimuli that trigger response), responses, and reinforcement (rewarding experience)." },
+  { ch:"ch5", front:"Beliefs and Attitudes", back:"Belief = descriptive thought about something based on knowledge or faith. Attitude = consistently favorable or unfavorable evaluations/feelings toward an object. Attitudes are hard to change." },
+  { ch:"ch5", front:"Dissonance-Reducing Buying Behavior", back:"High consumer involvement but few perceived differences among brands. Buyer purchases quickly then seeks reassurance to reduce post-purchase doubt (cognitive dissonance). Example: flooring." },
+  { ch:"ch5", front:"Variety-Seeking Buying Behavior", back:"Low consumer involvement but significant perceived brand differences. Consumers frequently switch brands — not from dissatisfaction but for variety. Example: cookies, snacks." },
+  { ch:"ch5", front:"5-Stage Buyer Decision Process", back:"(1) Need Recognition → (2) Information Search → (3) Evaluation of Alternatives → (4) Purchase Decision → (5) Postpurchase Behavior. Process starts before purchase and continues after." },
+  { ch:"ch5", front:"Product Adoption Process", back:"Mental process from first learning about an innovation to adoption: (1) Awareness → (2) Interest → (3) Evaluation → (4) Trial → (5) Adoption." },
+  { ch:"ch5", front:"5 Adopter Categories", back:"Innovators (2.5% — risk takers), Early Adopters (13.5% — opinion leaders), Early Majority (34%), Late Majority (34% — skeptical), Laggards (16% — tradition-bound, last to adopt)." }
 ];
 
 // ══════════════════════════════════════════════
