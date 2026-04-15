@@ -93,6 +93,8 @@ body {
   color: var(--ink);
   line-height: 1.6;
   font-size: 14.5px;
+  /* Removes 300ms tap delay on mobile without disabling pinch-zoom */
+  touch-action: manipulation;
 }
 
 /* ── LAYOUT ────────────────────────────── */
@@ -1256,7 +1258,7 @@ body.dark .ref-header { color: rgba(255,255,255,0.7); border-color: rgba(15, 118
 .flash-back .flash-chapter-badge { background: rgba(255,255,255,0.2); }
 .flash-term { font-size: 1.4rem; font-weight: 800; color: #0d9488; }
 .flash-back .flash-def { font-size: 0.95rem; line-height: 1.6; color: rgba(255,255,255,0.97); }
-.flash-hint { font-size: 0.78rem; color: var(--muted); margin-top: 12px; }
+.flash-hint { font-size: 0.8rem; color: var(--muted); margin-top: 12px; }
 
 .flash-nav {
   display: flex;
@@ -1795,7 +1797,8 @@ body.dark ::-webkit-scrollbar-thumb { background: rgba(45,212,191,0.22); }
 /* #dark-btn-float { display: none !important; } — removed */
 
 /* ── Better focus ring (accessibility) ── */
-button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible {
+button:focus-visible, a:focus-visible, input:focus-visible,
+textarea:focus-visible, select:focus-visible, [tabindex]:focus-visible {
   outline: 2.5px solid var(--accent);
   outline-offset: 3px;
   border-radius: 6px;
@@ -1803,6 +1806,19 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 
 /* ── Smooth html scroll ── */
 html { scroll-behavior: smooth; }
+
+/* ── iOS Zoom Prevention: inputs below 16px trigger auto-zoom ── */
+/* Overrides inline font-size on auth inputs */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="number"],
+input[type="tel"],
+select,
+textarea {
+  font-size: max(1rem, 16px) !important;
+}
 
 /* ── Quiz question card — more visual weight ── */
 .quiz-q-card {
@@ -5224,7 +5240,7 @@ body.dark.theme-rose .bilingual {
     grid-template-columns: 1fr !important;
   }
 
-  .ref-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .ref-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; }
 }
 
 
@@ -5253,7 +5269,7 @@ body.dark .chq-btn.chq-wrong   { background: #450a0a !important; border-color: #
 body.dark .qn-lastnight { background: linear-gradient(135deg, #0f0c29, #302b63) !important; }
 
 /* ── PAST EXAM BADGE ─────────────────────────── */
-.past-exam-badge { display: inline-block; background: linear-gradient(90deg, #dc2626, #ea580c); color: #fff; font-size: .68rem; font-weight: 800; padding: 2px 10px; border-radius: 20px; margin-bottom: 8px; letter-spacing: .04em; }
+.past-exam-badge { display: inline-block; background: linear-gradient(90deg, #dc2626, #ea580c); color: #fff; font-size: .72rem; font-weight: 800; padding: 2px 10px; border-radius: 20px; margin-bottom: 8px; letter-spacing: .04em; }
 
 /* ── STUDY PLAN ──────────────────────────────── */
 .sp-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
@@ -5262,12 +5278,12 @@ body.dark .qn-lastnight { background: linear-gradient(135deg, #0f0c29, #302b63) 
 .sp-days { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
 .sp-day { background: var(--paper); border: 1.5px solid var(--line); border-radius: 10px; padding: 8px 6px; text-align: center; cursor: pointer; transition: all .15s; position: relative; min-height: 72px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; }
 .sp-day:hover:not(.sp-exam):not(.sp-past) { border-color: var(--accent); transform: translateY(-1px); }
-.sp-day-label { font-size: .62rem; color: var(--muted); font-weight: 600; }
+.sp-day-label { font-size: .72rem; color: var(--muted); font-weight: 600; }
 .sp-day-chapter { font-size: .78rem; font-weight: 800; color: var(--ink); }
-.sp-day-sub { font-size: .6rem; color: var(--muted); line-height: 1.3; }
+.sp-day-sub { font-size: .7rem; color: var(--muted); line-height: 1.3; }
 .sp-today { background: var(--accent) !important; border-color: var(--accent) !important; box-shadow: 0 4px 14px rgba(15,118,110,.35); }
 .sp-today .sp-day-label, .sp-today .sp-day-chapter, .sp-today .sp-day-sub { color: #fff !important; }
-.sp-today-badge { font-size: .6rem; font-weight: 800; color: #fff; background: rgba(255,255,255,.25); border-radius: 8px; padding: 1px 6px; margin-top: 2px; }
+.sp-today-badge { font-size: .7rem; font-weight: 800; color: #fff; background: rgba(255,255,255,.25); border-radius: 8px; padding: 1px 6px; margin-top: 2px; }
 .sp-past { opacity: .5; cursor: default; }
 .sp-done-badge { font-size: .72rem; color: #16a34a; font-weight: 800; }
 .sp-exam { background: linear-gradient(135deg, #134e4a, #0f766e) !important; border-color: var(--accent) !important; cursor: default; }
@@ -5322,7 +5338,7 @@ body.theme-rose .qn-guide .qn-sub   { color: #c4b5fd !important; }
 .howto-cta-dark { background:linear-gradient(135deg,#1e1b4b,#312e81) !important; }
 
 /* ── TOUR CARD INTERNALS ─────────────────────── */
-.tour-step-count { font-size:.72rem; font-weight:700; color:var(--accent); letter-spacing:.06em; margin-bottom:6px; }
+.tour-step-count { font-size:.78rem; font-weight:700; color:var(--accent); letter-spacing:.06em; margin-bottom:6px; }
 .tour-title { font-size:1rem; font-weight:900; color:#111; margin-bottom:8px; line-height:1.3; }
 .tour-body { font-size:.86rem; color:#444; line-height:1.65; margin-bottom:16px; }
 .tour-actions { display:flex; gap:8px; justify-content:flex-end; }

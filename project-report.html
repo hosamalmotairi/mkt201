@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تقرير مشروع — Hosam Study Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --teal:   #0F766E;
+    --teal2:  #0D9488;
+    --teal3:  #14B8A6;
+    --light:  #F0FDFA;
+    --dark:   #134E4A;
+    --gray1:  #F8FAFC;
+    --gray2:  #E2E8F0;
+    --gray3:  #94A3B8;
+    --text:   #0F172A;
+    --sub:    #475569;
+  }
+
+  @page {
+    size: A4;
+    margin: 18mm 15mm;
+  }
+
+  body {
+    font-family: 'Cairo', 'Inter', sans-serif;
+    color: var(--text);
+    background: #fff;
+    line-height: 1.7;
+    font-size: 14px;
+  }
+
+  /* ── COVER ── */
+  .cover {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: linear-gradient(145deg, #134E4A 0%, #0F766E 50%, #0D9488 100%);
+    color: #fff;
+    padding: 60px 40px;
+    page-break-after: always;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cover::before {
+    content: '';
+    position: absolute;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.05);
+    top: -100px; left: -100px;
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.04);
+    bottom: -80px; right: -80px;
+  }
+
+  .cover-badge {
+    background: rgba(255,255,255,.15);
+    border: 1px solid rgba(255,255,255,.3);
+    border-radius: 100px;
+    padding: 6px 20px;
+    font-size: 13px;
+    letter-spacing: .5px;
+    margin-bottom: 28px;
+    backdrop-filter: blur(4px);
+  }
+
+  .cover h1 {
+    font-size: 42px;
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: 8px;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .cover h2 {
+    font-size: 22px;
+    font-weight: 600;
+    opacity: .85;
+    margin-bottom: 32px;
+  }
+
+  .cover-divider {
+    width: 60px; height: 3px;
+    background: rgba(255,255,255,.4);
+    border-radius: 2px;
+    margin: 0 auto 32px;
+  }
+
+  .cover-desc {
+    max-width: 520px;
+    font-size: 16px;
+    opacity: .8;
+    margin-bottom: 48px;
+    line-height: 1.8;
+  }
+
+  .cover-meta {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    justify-content: center;
+    border-top: 1px solid rgba(255,255,255,.2);
+    padding-top: 32px;
+    width: 100%;
+    max-width: 600px;
+  }
+
+  .cover-meta-item { text-align: center; }
+  .cover-meta-item .val { font-size: 28px; font-weight: 800; font-family: 'Inter', sans-serif; }
+  .cover-meta-item .lbl { font-size: 12px; opacity: .65; margin-top: 2px; }
+
+  /* ── PAGES ── */
+  .page {
+    padding: 48px 52px;
+    page-break-after: always;
+  }
+
+  .page:last-child { page-break-after: auto; }
+
+  /* ── SECTION HEADER ── */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid var(--teal3);
+  }
+
+  .section-num {
+    width: 38px; height: 38px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--teal), var(--teal2));
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 800;
+    font-family: 'Inter', sans-serif;
+    flex-shrink: 0;
+  }
+
+  .section-title { font-size: 22px; font-weight: 800; color: var(--teal); }
+
+  /* ── OVERVIEW CARDS ── */
+  .overview-intro {
+    background: var(--light);
+    border-right: 4px solid var(--teal3);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 28px;
+    font-size: 15px;
+    color: var(--sub);
+    line-height: 1.9;
+  }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .stat-card {
+    background: var(--gray1);
+    border: 1px solid var(--gray2);
+    border-radius: 14px;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .stat-card .num {
+    font-size: 34px;
+    font-weight: 900;
+    color: var(--teal);
+    font-family: 'Inter', sans-serif;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-card .label {
+    font-size: 12px;
+    color: var(--sub);
+    font-weight: 600;
+    letter-spacing: .3px;
+  }
+
+  /* ── FEATURE TABLE ── */
+  .feature-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .feature-list li {
+    background: var(--gray1);
+    border: 1px solid var(--gray2);
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13.5px;
+  }
+
+  .feature-list li .icon {
+    width: 28px; height: 28px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--teal), var(--teal2));
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .feature-list li .text strong {
+    display: block;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 2px;
+    font-size: 13px;
+  }
+
+  .feature-list li .text span {
+    color: var(--sub);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  /* ── TECH STACK ── */
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+
+  .tech-card {
+    background: var(--gray1);
+    border: 1px solid var(--gray2);
+    border-radius: 12px;
+    padding: 18px 12px;
+    text-align: center;
+  }
+
+  .tech-card .emoji { font-size: 26px; margin-bottom: 8px; }
+  .tech-card .name { font-size: 13px; font-weight: 700; color: var(--text); }
+  .tech-card .role { font-size: 11px; color: var(--sub); margin-top: 3px; }
+
+  /* ── CONTENT COVERAGE ── */
+  .ch-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .ch-card {
+    background: var(--gray1);
+    border: 1px solid var(--gray2);
+    border-radius: 14px;
+    padding: 20px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .ch-card::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 4px; height: 100%;
+    background: linear-gradient(to bottom, var(--teal), var(--teal3));
+  }
+
+  .ch-card h3 {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--teal);
+    margin-bottom: 4px;
+  }
+
+  .ch-card .subtitle {
+    font-size: 11.5px;
+    color: var(--sub);
+    margin-bottom: 14px;
+  }
+
+  .ch-stats {
+    display: flex;
+    gap: 16px;
+  }
+
+  .ch-stat { text-align: center; }
+  .ch-stat .n { font-size: 22px; font-weight: 900; color: var(--teal); font-family: 'Inter', sans-serif; }
+  .ch-stat .l { font-size: 10px; color: var(--sub); }
+
+  .ch-topics {
+    margin-top: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .ch-topics .tag {
+    background: var(--light);
+    border: 1px solid #99F6E4;
+    color: var(--teal);
+    border-radius: 100px;
+    padding: 2px 10px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  /* ── ARCHITECTURE ── */
+  .arch-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+
+  .arch-file {
+    background: var(--gray1);
+    border: 1px solid var(--gray2);
+    border-radius: 12px;
+    padding: 16px;
+  }
+
+  .arch-file .filename {
+    font-family: 'Inter', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--teal);
+    background: var(--light);
+    padding: 4px 10px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    display: inline-block;
+  }
+
+  .arch-file .size { font-size: 18px; font-weight: 800; color: var(--text); font-family: 'Inter', sans-serif; margin-bottom: 4px; }
+  .arch-file .role { font-size: 11.5px; color: var(--sub); line-height: 1.6; }
+
+  /* ── CHALLENGES ── */
+  .challenge-list { display: flex; flex-direction: column; gap: 14px; }
+
+  .challenge-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    background: var(--gray1);
+    border: 1px solid var(--gray2);
+    border-radius: 12px;
+    padding: 16px 20px;
+  }
+
+  .challenge-item .badge {
+    background: linear-gradient(135deg, var(--teal), var(--teal2));
+    color: #fff;
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .challenge-item .body strong { display: block; font-size: 13px; font-weight: 700; margin-bottom: 3px; }
+  .challenge-item .body p { font-size: 12px; color: var(--sub); line-height: 1.6; }
+
+  /* ── RESULTS ── */
+  .result-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .result-card {
+    border-radius: 14px;
+    padding: 22px;
+    color: #fff;
+  }
+
+  .result-card.teal  { background: linear-gradient(135deg, #0F766E, #0D9488); }
+  .result-card.dark  { background: linear-gradient(135deg, #134E4A, #1E6460); }
+  .result-card.amber { background: linear-gradient(135deg, #92400E, #B45309); }
+  .result-card.blue  { background: linear-gradient(135deg, #1E3A5F, #1D4ED8); }
+
+  .result-card h3 { font-size: 13px; opacity: .75; margin-bottom: 6px; font-weight: 600; }
+  .result-card .big { font-size: 32px; font-weight: 900; font-family: 'Inter', sans-serif; line-height: 1; margin-bottom: 6px; }
+  .result-card p { font-size: 12px; opacity: .8; line-height: 1.6; }
+
+  /* ── SKILLS ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .skill-badge {
+    background: var(--light);
+    border: 1px solid #99F6E4;
+    border-radius: 10px;
+    padding: 12px 14px;
+    text-align: center;
+  }
+
+  .skill-badge .skill-name { font-size: 13px; font-weight: 700; color: var(--teal); }
+  .skill-badge .skill-type { font-size: 11px; color: var(--sub); margin-top: 2px; }
+
+  /* ── FOOTER ── */
+  .doc-footer {
+    text-align: center;
+    padding: 32px;
+    border-top: 1px solid var(--gray2);
+    color: var(--gray3);
+    font-size: 12px;
+    margin-top: 20px;
+  }
+
+  .doc-footer strong { color: var(--teal); }
+
+  /* Print helpers */
+  @media print {
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .cover { min-height: 100vh; }
+  }
+
+  /* ── TIMELINE ── */
+  .timeline { position: relative; padding-right: 28px; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    right: 8px; top: 8px; bottom: 8px;
+    width: 2px;
+    background: var(--gray2);
+  }
+
+  .tl-item {
+    position: relative;
+    margin-bottom: 22px;
+    padding-right: 24px;
+  }
+
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    right: -20px; top: 6px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--teal);
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 2px var(--teal3);
+  }
+
+  .tl-item .tl-phase {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--teal);
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    margin-bottom: 3px;
+  }
+
+  .tl-item h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .tl-item p  { font-size: 12px; color: var(--sub); line-height: 1.6; }
+
+  .url-box {
+    background: var(--light);
+    border: 1px solid #99F6E4;
+    border-radius: 10px;
+    padding: 14px 20px;
+    font-family: 'Inter', monospace;
+    font-size: 14px;
+    color: var(--teal);
+    font-weight: 700;
+    text-align: center;
+    margin: 20px 0;
+    word-break: break-all;
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════ COVER ══════════════════ -->
+<div class="cover">
+  <div class="cover-badge">📚 Project Report — Academic Portfolio</div>
+  <h1>Hosam Study Hub</h1>
+  <h2>منصة مذاكرة تفاعلية — MKT 201</h2>
+  <div class="cover-divider"></div>
+  <p class="cover-desc">
+    منصة ويب متكاملة صُمِّمت لمساعدة طلاب مادة التسويق MKT 201 على المذاكرة بكفاءة
+    من خلال أدوات تفاعلية متعددة مبنية بتقنيات الويب الحديثة.
+  </p>
+  <div class="cover-meta">
+    <div class="cover-meta-item">
+      <div class="val">561+</div>
+      <div class="lbl">سؤال اختبار</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="val">92</div>
+      <div class="lbl">فلاش كارد</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="val">4</div>
+      <div class="lbl">فصول دراسية</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="val">16K+</div>
+      <div class="lbl">سطر كود</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ PAGE 1: OVERVIEW ══════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-num">01</div>
+    <div class="section-title">نظرة عامة على المشروع</div>
+  </div>
+
+  <div class="overview-intro">
+    <strong>ما هو Hosam Study Hub؟</strong><br>
+    هو موقع ويب تعليمي تفاعلي صُمِّم خصيصاً لمادة التسويق MKT 201، يجمع في مكان واحد:
+    محتوى الفصول الدراسية الأربعة، بنك أسئلة شامل من امتحانات سابقة حقيقية، فلاش كارد،
+    ألعاب تعليمية، ونظام تتبع التقدم — كل ذلك مع دعم كامل للغة العربية والإنجليزية.
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="num">561+</div>
+      <div class="label">سؤال اختبار (Ch1/2/3/5)</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">92</div>
+      <div class="label">فلاش كارد — مصطلحات أساسية</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">4</div>
+      <div class="label">فصول دراسية مغطاة</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">20</div>
+      <div class="label">مخرجات تعلم (Learning Objectives)</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">16K+</div>
+      <div class="label">سطر كود (HTML + JS + CSS)</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">100%</div>
+      <div class="label">تغطية السلايدات الرسمية</div>
+    </div>
+  </div>
+
+  <div class="section-header" style="margin-top:32px;">
+    <div class="section-num">02</div>
+    <div class="section-title">الميزات الرئيسية</div>
+  </div>
+
+  <ul class="feature-list">
+    <li>
+      <div class="icon">📝</div>
+      <div class="text">
+        <strong>بنك أسئلة شامل</strong>
+        <span>561+ سؤال متعدد الخيارات مع شرح تفصيلي لكل إجابة، مصنّف حسب الفصل والصعوبة</span>
+      </div>
+    </li>
+    <li>
+      <div class="icon">🃏</div>
+      <div class="text">
+        <strong>Flash Cards — 92 مصطلح</strong>
+        <span>بطاقات تفاعلية لحفظ المصطلحات، مع فلترة حسب الفصل وإحصاءات الأداء</span>
+      </div>
+    </li>
+    <li>
+      <div class="icon">📄</div>
+      <div class="text">
+        <strong>محتوى الفصول التفاعلي</strong>
+        <span>شرح كامل لـ 20 مخرج تعليمي بتصميم بصري منظم مع ترجمة عربية لكل مفهوم</span>
+      </div>
+    </li>
+    <li>
+      <div class="icon">🎯</div>
+      <div class="text">
+        <strong>اختبارات من امتحانات سابقة</strong>
+        <span>أسئلة حقيقية من اختبارات سابقة مع توضيح المصدر لكل سؤال</span>
+      </div>
+    </li>
+    <li>
+      <div class="icon">🎮</div>
+      <div class="text">
+        <strong>Match Game</strong>
+        <span>لعبة مطابقة المصطلحات بالتعريفات، تحوّل المذاكرة إلى تجربة ممتعة</span>
+      </div>
+    </li>
+    <li>
+      <div class="icon">🔥</div>
+      <div class="text">
+        <strong>Gamification — نظام النقاط</strong>
+        <span>XP، كومبو، مستويات، وبادجات لتحفيز الطالب على الاستمرار</span>
+      </div>
+    </li>
+    <li>
+      <div class="icon">🌙</div>
+      <div class="text">
+        <strong>الوضع الليلي + 8 ثيمات</strong>
+        <span>Dark mode ومجموعة ثيمات ملونة لتجربة مريحة للعين في أي وقت</span>
+      </div>
+    </li>
+    <li>
+      <div class="icon">📊</div>
+      <div class="text">
+        <strong>لوحة الأداء والتقدم</strong>
+        <span>تتبع دقيق للإجابات الصحيحة، الإتقان لكل فصل، والإحصاءات الشخصية</span>
+      </div>
+    </li>
+    <li>
+      <div class="icon">🍅</div>
+      <div class="text">
+        <strong>مؤقت بومودورو</strong>
+        <span>تقنية Pomodoro مدمجة مباشرة في الموقع لإدارة وقت المذاكرة</span>
+      </div>
+    </li>
+    <li>
+      <div class="icon">🔁</div>
+      <div class="text">
+        <strong>Spaced Repetition</strong>
+        <span>نظام المراجعة المتباعدة لتذكير الطالب بالمواد في الوقت الأمثل</span>
+      </div>
+    </li>
+    <li>
+      <div class="icon">📱</div>
+      <div class="text">
+        <strong>تصميم متجاوب بالكامل</strong>
+        <span>يعمل بشكل مثالي على الجوال، التابلت، والكمبيوتر دون تطبيق منفصل</span>
+      </div>
+    </li>
+    <li>
+      <div class="icon">☁️</div>
+      <div class="text">
+        <strong>Firebase Sync</strong>
+        <span>مزامنة تلقائية للتقدم والإحصاءات عبر الأجهزة باستخدام Google Firebase</span>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<!-- ══════════════════ PAGE 2: ARCHITECTURE ══════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-num">03</div>
+    <div class="section-title">البنية التقنية</div>
+  </div>
+
+  <div class="arch-row">
+    <div class="arch-file">
+      <span class="filename">mkt201_midterm.html</span>
+      <div class="size">~5,000 سطر</div>
+      <div class="role">الهيكل الكامل للموقع — كل الصفحات كـ &lt;div&gt; يتم التنقل بينها عبر showPage(). يحتوي على محتوى الفصول الأربعة، الاختبارات، الفلاش كارد، والألعاب.</div>
+    </div>
+    <div class="arch-file">
+      <span class="filename">mkt201_scripts.js</span>
+      <div class="size">~5,900 سطر</div>
+      <div class="role">المحرك الكامل للتطبيق — بنك الأسئلة، الفلاش كارد، منطق الاختبارات، الـ Gamification، Firebase Auth، Spaced Repetition، الـ Tour.</div>
+    </div>
+    <div class="arch-file">
+      <span class="filename">mkt201_styles.css</span>
+      <div class="size">~5,200 سطر</div>
+      <div class="role">كل التصميم — Dark mode عبر body.dark، ثمانية ثيمات عبر CSS custom properties، تصميم متجاوب كامل لكل الأجهزة.</div>
+    </div>
+  </div>
+
+  <div class="section-header" style="margin-top:32px;">
+    <div class="section-num">04</div>
+    <div class="section-title">التقنيات المستخدمة</div>
+  </div>
+
+  <div class="tech-grid">
+    <div class="tech-card">
+      <div class="emoji">🌐</div>
+      <div class="name">HTML5</div>
+      <div class="role">هيكل الموقع الكامل</div>
+    </div>
+    <div class="tech-card">
+      <div class="emoji">⚡</div>
+      <div class="name">Vanilla JS</div>
+      <div class="role">بدون أي framework</div>
+    </div>
+    <div class="tech-card">
+      <div class="emoji">🎨</div>
+      <div class="name">CSS3</div>
+      <div class="role">Custom Properties + Animations</div>
+    </div>
+    <div class="tech-card">
+      <div class="emoji">🔥</div>
+      <div class="name">Firebase</div>
+      <div class="role">Auth + Firestore Sync</div>
+    </div>
+    <div class="tech-card">
+      <div class="emoji">▲</div>
+      <div class="name">Vercel</div>
+      <div class="role">استضافة + Auto Deploy</div>
+    </div>
+    <div class="tech-card">
+      <div class="emoji">📦</div>
+      <div class="name">Terser + CleanCSS</div>
+      <div class="role">Minification عند البناء</div>
+    </div>
+    <div class="tech-card">
+      <div class="emoji">🔤</div>
+      <div class="name">Lucide Icons</div>
+      <div class="role">أيقونات متجاوبة</div>
+    </div>
+    <div class="tech-card">
+      <div class="emoji">🔠</div>
+      <div class="name">Google Fonts</div>
+      <div class="role">Cairo + Inter</div>
+    </div>
+  </div>
+
+  <div class="section-header" style="margin-top:32px;">
+    <div class="section-num">05</div>
+    <div class="section-title">المحتوى الدراسي — تغطية الفصول</div>
+  </div>
+
+  <div class="ch-grid">
+    <div class="ch-card">
+      <h3>Chapter 1 — Marketing: Creating Value</h3>
+      <div class="subtitle">تعريف التسويق وخلق القيمة للعملاء</div>
+      <div class="ch-stats">
+        <div class="ch-stat"><div class="n">5</div><div class="l">LOs</div></div>
+        <div class="ch-stat"><div class="n">25</div><div class="l">Flash Card</div></div>
+        <div class="ch-stat"><div class="n">140+</div><div class="l">سؤال</div></div>
+      </div>
+      <div class="ch-topics">
+        <span class="tag">Marketing Mix (4Ps)</span>
+        <span class="tag">Customer Value</span>
+        <span class="tag">CRM</span>
+        <span class="tag">STP</span>
+        <span class="tag">CLV</span>
+      </div>
+    </div>
+    <div class="ch-card">
+      <h3>Chapter 2 — Company Strategy</h3>
+      <div class="subtitle">استراتيجية الشركة وشراكات التسويق</div>
+      <div class="ch-stats">
+        <div class="ch-stat"><div class="n">5</div><div class="l">LOs</div></div>
+        <div class="ch-stat"><div class="n">22</div><div class="l">Flash Card</div></div>
+        <div class="ch-stat"><div class="n">140+</div><div class="l">سؤال</div></div>
+      </div>
+      <div class="ch-topics">
+        <span class="tag">BCG Matrix</span>
+        <span class="tag">SWOT</span>
+        <span class="tag">SBU</span>
+        <span class="tag">Positioning</span>
+        <span class="tag">Value Chain</span>
+      </div>
+    </div>
+    <div class="ch-card">
+      <h3>Chapter 3 — Marketing Environment</h3>
+      <div class="subtitle">البيئة التسويقية والقوى المؤثرة</div>
+      <div class="ch-stats">
+        <div class="ch-stat"><div class="n">5</div><div class="l">LOs</div></div>
+        <div class="ch-stat"><div class="n">20</div><div class="l">Flash Card</div></div>
+        <div class="ch-stat"><div class="n">140+</div><div class="l">سؤال</div></div>
+      </div>
+      <div class="ch-topics">
+        <span class="tag">Microenvironment</span>
+        <span class="tag">Macroenvironment</span>
+        <span class="tag">PESTLE</span>
+        <span class="tag">Demographics</span>
+      </div>
+    </div>
+    <div class="ch-card">
+      <h3>Chapter 5 — Consumer Markets</h3>
+      <div class="subtitle">سلوك المستهلك وعملية الشراء</div>
+      <div class="ch-stats">
+        <div class="ch-stat"><div class="n">5</div><div class="l">LOs</div></div>
+        <div class="ch-stat"><div class="n">25</div><div class="l">Flash Card</div></div>
+        <div class="ch-stat"><div class="n">141+</div><div class="l">سؤال</div></div>
+      </div>
+      <div class="ch-topics">
+        <span class="tag">Black Box Model</span>
+        <span class="tag">Maslow</span>
+        <span class="tag">Buyer Decision</span>
+        <span class="tag">Adoption Process</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ PAGE 3: DEVELOPMENT ══════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-num">06</div>
+    <div class="section-title">مراحل التطوير</div>
+  </div>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-phase">Phase 1</div>
+      <h4>تأسيس البنية والمحتوى الأساسي</h4>
+      <p>بناء الهيكل الكامل للموقع (HTML/CSS/JS)، إضافة محتوى الفصول الأربعة بالكامل مع الترجمة العربية لجميع المفاهيم، وضمان تطابق 100% مع السلايدات الرسمية لـ 20 مخرج تعليمي.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-phase">Phase 2</div>
+      <h4>بنك الأسئلة والاختبارات</h4>
+      <p>إدخال 561+ سؤال مصنّف حسب الفصل والصعوبة، مع شرح تفصيلي لكل إجابة وتوضيح سبب خطأ الإجابات الأخرى. إضافة قسم الامتحانات السابقة الحقيقية.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-phase">Phase 3</div>
+      <h4>نظام Gamification والفلاش كارد</h4>
+      <p>تطوير نظام XP والكومبو والمستويات والبادجات لتحفيز الطلاب. توسيع الفلاش كارد من 15 إلى 92 بطاقة تغطي جميع المصطلحات الأساسية في الامتحان.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-phase">Phase 4</div>
+      <h4>Firebase، المزامنة، والثيمات</h4>
+      <p>تكامل Firebase Authentication و Firestore لمزامنة بيانات الطالب عبر الأجهزة. إضافة 8 ثيمات ملونة والوضع الليلي مع حفظ التفضيلات في localStorage.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-phase">Phase 5</div>
+      <h4>الميزات المتقدمة والـ UX</h4>
+      <p>إضافة Pomodoro Timer، Spaced Repetition، Challenge Mode، Match Game، Interactive Tour، وصفحة "كيف تذاكر؟" — مع تحسينات مستمرة بناءً على ملاحظات الطلاب.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-phase">Phase 6</div>
+      <h4>الإنتاج والنشر</h4>
+      <p>إعداد Pipeline للبناء (Terser + CleanCSS)، النشر على Vercel مع Auto-Deploy عبر GitHub، وتوزيع الرابط على الطلاب.</p>
+    </div>
+  </div>
+
+  <div class="section-header" style="margin-top:32px;">
+    <div class="section-num">07</div>
+    <div class="section-title">التحديات التقنية وكيفية حلها</div>
+  </div>
+
+  <div class="challenge-list">
+    <div class="challenge-item">
+      <div class="badge">تحدي #1</div>
+      <div class="body">
+        <strong>الأداء مع 16K+ سطر كود في ملف واحد</strong>
+        <p>الموقع بأكمله في 3 ملفات فقط دون bundler — الحل: Minification عند البناء يقلص الحجم بنسبة 12–28%، وتحميل الـ Icons بـ CDN بدلاً من تضمينها.</p>
+      </div>
+    </div>
+    <div class="challenge-item">
+      <div class="badge">تحدي #2</div>
+      <div class="body">
+        <strong>دعم ثمانية ثيمات + Dark mode بدون JavaScript</strong>
+        <p>استخدام CSS Custom Properties (متغيرات) وـ body class selectors بدلاً من التبديل الديناميكي — يضمن الثبات والأداء العالي دون إعادة رسم الصفحة.</p>
+      </div>
+    </div>
+    <div class="challenge-item">
+      <div class="badge">تحدي #3</div>
+      <div class="body">
+        <strong>إدارة حالة التطبيق بدون Framework</strong>
+        <p>تصميم نظام state management خفيف باستخدام global variables + localStorage، مع event-driven architecture لضمان تزامن الواجهة مع البيانات في جميع الأوقات.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ PAGE 4: RESULTS ══════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-num">08</div>
+    <div class="section-title">النتائج والإنجازات</div>
+  </div>
+
+  <div class="result-grid" style="margin-bottom:28px;">
+    <div class="result-card teal">
+      <h3>بنك الأسئلة</h3>
+      <div class="big">561+</div>
+      <p>سؤال MCQ مع شرح كامل — يغطي جميع فصول الامتحان بمستويات صعوبة متدرجة (Easy / Medium / Hard)</p>
+    </div>
+    <div class="result-card dark">
+      <h3>الفلاش كارد</h3>
+      <div class="big">92</div>
+      <p>بطاقة مصطلح شاملة موزعة بالتساوي على الفصول الأربعة مع تغطية كاملة لمصطلحات الامتحان</p>
+    </div>
+    <div class="result-card amber">
+      <h3>تغطية المحتوى</h3>
+      <div class="big">100%</div>
+      <p>جميع المخرجات التعليمية الـ 20 مغطاة بالكامل وفق تسلسل السلايدات الرسمية بدقة تامة</p>
+    </div>
+    <div class="result-card blue">
+      <h3>الكود المكتوب</h3>
+      <div class="big">16K+</div>
+      <p>سطر كود نقي بدون frameworks أو libraries ضخمة — بنية خفيفة وسريعة التحميل</p>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <div class="section-num">09</div>
+    <div class="section-title">المهارات التقنية المُطبَّقة</div>
+  </div>
+
+  <div class="skills-grid">
+    <div class="skill-badge">
+      <div class="skill-name">Frontend Development</div>
+      <div class="skill-type">HTML5 / CSS3 / JavaScript</div>
+    </div>
+    <div class="skill-badge">
+      <div class="skill-name">UI/UX Design</div>
+      <div class="skill-type">Design Systems / Dark Mode</div>
+    </div>
+    <div class="skill-badge">
+      <div class="skill-name">State Management</div>
+      <div class="skill-type">localStorage / Global State</div>
+    </div>
+    <div class="skill-badge">
+      <div class="skill-name">Firebase BaaS</div>
+      <div class="skill-type">Auth + Firestore + Sync</div>
+    </div>
+    <div class="skill-badge">
+      <div class="skill-name">Build Pipeline</div>
+      <div class="skill-type">Terser + CleanCSS + npm</div>
+    </div>
+    <div class="skill-badge">
+      <div class="skill-name">CI/CD Deployment</div>
+      <div class="skill-type">Git + GitHub + Vercel</div>
+    </div>
+    <div class="skill-badge">
+      <div class="skill-name">Responsive Design</div>
+      <div class="skill-type">Mobile-first + CSS Grid</div>
+    </div>
+    <div class="skill-badge">
+      <div class="skill-name">Algorithm Design</div>
+      <div class="skill-type">Spaced Repetition + Quiz Engine</div>
+    </div>
+    <div class="skill-badge">
+      <div class="skill-name">Bilingual Support</div>
+      <div class="skill-type">Arabic (RTL) + English</div>
+    </div>
+  </div>
+
+  <div class="section-header" style="margin-top:32px;">
+    <div class="section-num">10</div>
+    <div class="section-title">رابط المشروع</div>
+  </div>
+
+  <div class="url-box">
+    🌐 https://mkt201.vercel.app
+  </div>
+
+  <div style="background:#F0FDFA; border:1px solid #99F6E4; border-radius:12px; padding:20px 24px;">
+    <p style="font-size:13.5px; color:#134E4A; line-height:1.9;">
+      <strong>ملاحظة:</strong> الموقع مباشر وتحت التطوير المستمر. يعمل على جميع الأجهزة والمتصفحات الحديثة.
+      يتم النشر تلقائياً عند كل تحديث من خلال Vercel CI/CD Pipeline.
+      المحتوى التعليمي معتمد من السلايدات الرسمية لمادة MKT 201.
+    </p>
+  </div>
+
+  <div class="doc-footer">
+    تقرير مشروع — <strong>Hosam Study Hub</strong> · mkt201.vercel.app · أُعِدَّ هذا التقرير لأغراض التوثيق والمحفظة الأكاديمية
+  </div>
+</div>
+
+</body>
+</html>
