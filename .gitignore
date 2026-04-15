@@ -21,3 +21,7 @@ tf_js_block.txt
 .gstack/
 node_modules/
 dist/
+.env*
+study-app/
+Chapter Notes/
+node_modules/
