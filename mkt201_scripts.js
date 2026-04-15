@@ -949,7 +949,7 @@ function showPage(id) {
   if (!_skipHashChange) {
     history.pushState(null, '', '#' + id.replace('page-', ''));
   }
-  if (id === 'page-home') { renderMasteryBars(); updateTodayCard(); renderReadinessCard(); renderWeakSpots(); }
+  if (id === 'page-home') { renderMasteryBars(); updateTodayCard(); renderReadinessCard(); renderWeakSpots(); renderStudyPlan(); }
   if (id === 'page-quiz') { updateSessionBadge(); }
   if (id === 'page-flash') { initFlashCards(); }
   if (id === 'page-mock') { checkMockExamLock(); }
@@ -2992,7 +2992,9 @@ function renderQuizQuestion() {
   window._currentReportQ = q.q;
   const qTextEl = document.querySelector('.quiz-q-text');
   if (qTextEl) {
+    const pastBadge = q.past ? `<span class="past-exam-badge">🔥 من الامتحانات السابقة</span>` : '';
     qTextEl.innerHTML =
+      pastBadge +
       highlightKeywords(q.q) +
       `<button class="report-q-btn" onclick="reportQuestion(window._currentReportQ,'Quiz')">🚩 إبلاغ</button>`;
   }
@@ -4455,6 +4457,78 @@ function toggleNotesTranslation(btn) {
 // ═══════════════════════════════════════════════
 //  CRAM MODE
 // ═══════════════════════════════════════════════
+// ═══════════════════════════════════════════════
+//  LAST NIGHT SESSION — الليلة قبل الامتحان
+// ═══════════════════════════════════════════════
+function startLastNightSession() {
+  const pastPool = allQuestions.filter(q => q.past === true);
+  if (pastPool.length < 5) { showToast('ما في أسئلة كافية! 😮'); return; }
+  const shuffled = pastPool.sort(() => Math.random() - 0.5).slice(0, 40);
+  quizState.questions    = shuffled;
+  quizState.current      = 0;
+  quizState.answers      = new Array(shuffled.length).fill(null);
+  quizState.startTime    = Date.now();
+  quizState.ch           = 'all';
+  quizState.trainingMode = false;
+  quizState._levelIdx    = undefined;
+  quizState._isLastNight = true;
+  window._sessionStartXP = getGameData().xp;
+  showPage('page-quiz');
+  document.querySelector('.quiz-setup').classList.remove('active');
+  document.querySelector('.quiz-run').classList.add('active');
+  document.querySelector('.quiz-result').classList.remove('active');
+  renderQuizQuestion();
+  showToast('🔥 ' + pastPool.length + ' سؤال من الامتحانات السابقة — موفق!', 3000);
+}
+
+// ═══════════════════════════════════════════════
+//  STUDY PLAN — خطة مراجعة 5 أيام
+// ═══════════════════════════════════════════════
+function renderStudyPlan() {
+  const el = document.getElementById('study-plan-card');
+  if (!el) return;
+  const EXAM = new Date('2026-04-20T12:00:00');
+  const now  = new Date();
+  const daysLeft = Math.ceil((EXAM - now) / (1000 * 60 * 60 * 24));
+
+  const plan = [
+    { day: 'الأربعاء', label: 'Ch1', sub: 'قيمة العميل', action: "showPage('page-ch1')", ch: 'ch1' },
+    { day: 'الخميس',   label: 'Ch2', sub: 'التخطيط الاستراتيجي', action: "showPage('page-ch2')", ch: 'ch2' },
+    { day: 'الجمعة',   label: 'Ch3', sub: 'البيئة التسويقية', action: "showPage('page-ch3')", ch: 'ch3' },
+    { day: 'السبت',    label: 'Ch5', sub: 'سلوك المستهلك', action: "showPage('page-ch5')", ch: 'ch5' },
+    { day: 'الأحد',    label: 'مراجعة شاملة', sub: 'كل الفصول + أسئلة سابقة', action: 'startLastNightSession()', ch: 'all' },
+    { day: 'الاثنين',  label: '🎓 الامتحان', sub: 'الظهر — وفقك الله', action: '', ch: 'exam' },
+  ];
+
+  // Figure out today's index
+  const todayDay = now.getDay(); // 0=Sun,1=Mon,...,6=Sat
+  const dayMap = { 3: 0, 4: 1, 5: 2, 6: 3, 0: 4, 1: 5 }; // Wed=3,Thu=4,Fri=5,Sat=6,Sun=0,Mon=1
+  const todayIdx = dayMap[todayDay] ?? -1;
+
+  if (daysLeft <= 0) {
+    el.innerHTML = `<div style="text-align:center;padding:14px;font-weight:800;font-size:1rem;color:var(--accent);">🎓 يوم الامتحان — التوكل على الله ✨</div>`;
+    return;
+  }
+
+  let html = `<div class="sp-header"><span class="sp-title">📅 خطة المراجعة — باقي <strong>${daysLeft}</strong> يوم${daysLeft === 1 ? '' : 'اً'}</span></div><div class="sp-days">`;
+
+  plan.forEach((item, i) => {
+    const isToday  = i === todayIdx;
+    const isPast   = i < todayIdx;
+    const isExam   = item.ch === 'exam';
+    html += `<div class="sp-day ${isToday ? 'sp-today' : ''} ${isPast ? 'sp-past' : ''} ${isExam ? 'sp-exam' : ''}" ${item.action && !isExam ? `onclick="${item.action}"` : ''}>
+      <div class="sp-day-label">${item.day}</div>
+      <div class="sp-day-chapter">${item.label}</div>
+      <div class="sp-day-sub">${item.sub}</div>
+      ${isToday ? '<div class="sp-today-badge">اليوم ⚡</div>' : ''}
+      ${isPast  ? '<div class="sp-done-badge">✓</div>' : ''}
+    </div>`;
+  });
+
+  html += `</div>`;
+  el.innerHTML = html;
+}
+
 function startCramSession() {
   // Cram = hard questions + previously wrong answers, 20 questions
   const mastery = getMastery();
@@ -6356,6 +6430,7 @@ if ('serviceWorker' in navigator) {
 document.addEventListener('DOMContentLoaded', () => {
   renderReadinessCard();
   renderWeakSpots();
+  renderStudyPlan();
   checkReminders();
   // Check if URL has challenge params
   if (window.location.search.includes('seed=')) {

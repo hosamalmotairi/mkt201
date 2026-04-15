@@ -5243,3 +5243,54 @@ body.dark .chq-item { background: rgba(255,255,255,.04); }
 body.dark .chq-btn.chq-correct { background: #052e16 !important; border-color: #22c55e !important; color: #4ade80 !important; }
 body.dark .chq-btn.chq-wrong   { background: #450a0a !important; border-color: #ef4444 !important; color: #fca5a5 !important; }
 .chq-score { margin-top: 16px; padding: 12px 16px; border-radius: 12px; font-size: .9rem; font-weight: 700; text-align: center; background: var(--accent-soft); color: var(--accent); display: none; }
+
+
+/* ── LAST NIGHT BUTTON ───────────────────────── */
+.qn-lastnight { background: linear-gradient(135deg, #1e1b4b, #312e81) !important; border: 2px solid #6366f1 !important; position: relative; overflow: hidden; }
+.qn-lastnight .qn-label { color: #e0e7ff !important; }
+.qn-lastnight .qn-sub { color: #a5b4fc !important; }
+.qn-lastnight .qn-icon { font-size: 1.6rem; }
+body.dark .qn-lastnight { background: linear-gradient(135deg, #0f0c29, #302b63) !important; }
+
+/* ── PAST EXAM BADGE ─────────────────────────── */
+.past-exam-badge { display: inline-block; background: linear-gradient(90deg, #dc2626, #ea580c); color: #fff; font-size: .68rem; font-weight: 800; padding: 2px 10px; border-radius: 20px; margin-bottom: 8px; letter-spacing: .04em; }
+
+/* ── STUDY PLAN ──────────────────────────────── */
+.sp-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.sp-title { font-size: .88rem; font-weight: 700; color: var(--ink); }
+.sp-title strong { color: var(--accent); }
+.sp-days { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+.sp-day { background: var(--paper); border: 1.5px solid var(--line); border-radius: 10px; padding: 8px 6px; text-align: center; cursor: pointer; transition: all .15s; position: relative; min-height: 72px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; }
+.sp-day:hover:not(.sp-exam):not(.sp-past) { border-color: var(--accent); transform: translateY(-1px); }
+.sp-day-label { font-size: .62rem; color: var(--muted); font-weight: 600; }
+.sp-day-chapter { font-size: .78rem; font-weight: 800; color: var(--ink); }
+.sp-day-sub { font-size: .6rem; color: var(--muted); line-height: 1.3; }
+.sp-today { background: var(--accent) !important; border-color: var(--accent) !important; box-shadow: 0 4px 14px rgba(15,118,110,.35); }
+.sp-today .sp-day-label, .sp-today .sp-day-chapter, .sp-today .sp-day-sub { color: #fff !important; }
+.sp-today-badge { font-size: .6rem; font-weight: 800; color: #fff; background: rgba(255,255,255,.25); border-radius: 8px; padding: 1px 6px; margin-top: 2px; }
+.sp-past { opacity: .5; cursor: default; }
+.sp-done-badge { font-size: .72rem; color: #16a34a; font-weight: 800; }
+.sp-exam { background: linear-gradient(135deg, #134e4a, #0f766e) !important; border-color: var(--accent) !important; cursor: default; }
+.sp-exam .sp-day-label, .sp-exam .sp-day-chapter, .sp-exam .sp-day-sub { color: #fff !important; }
+@media (max-width: 600px) {
+  .sp-days { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ── ROSE THEME OVERRIDES — new elements ────────── */
+body.theme-rose .qn-lastnight {
+  background: linear-gradient(135deg, #4c0519, #9f1239) !important;
+  border: 2px solid #e11d48 !important;
+}
+body.theme-rose .qn-lastnight .qn-label { color: #fecdd3 !important; }
+body.theme-rose .qn-lastnight .qn-sub   { color: #fda4af !important; }
+body.dark.theme-rose .qn-lastnight {
+  background: linear-gradient(135deg, #2d0a14, #6b1226) !important;
+  border-color: #fb7185 !important;
+}
+body.theme-rose .sp-today {
+  box-shadow: 0 4px 14px rgba(225,29,72,.4) !important;
+}
+body.theme-rose .sp-exam {
+  background: linear-gradient(135deg, #7f1d1d, #be185d) !important;
+  border-color: #e11d48 !important;
+}

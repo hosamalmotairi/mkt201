@@ -313,7 +313,11 @@
     <button class="qn-card" onclick="showPage('page-mock');checkMockExamLock()"><div class="qn-icon"><i data-lucide="clipboard" aria-hidden="true"></i></div><div class="qn-label">اختبار تجريبي</div><div class="qn-sub">30 سؤال · 30 دقيقة</div></button>
     <button class="qn-card" onclick="showPage('page-tb')"><div class="qn-icon"><i data-lucide="database" aria-hidden="true"></i></div><div class="qn-label">Test Bank</div><div class="qn-sub">434 سؤال من بنك الأسئلة</div></button>
     <button class="qn-card" onclick="startCramSession()"><div class="qn-icon"><i data-lucide="flame" aria-hidden="true"></i></div><div class="qn-label">Cram Mode</div><div class="qn-sub">آخر لحظة — الأسئلة الصعبة والأخطاء</div></button>
+    <button class="qn-card qn-lastnight" onclick="startLastNightSession()"><div class="qn-icon">🌙</div><div class="qn-label">الليلة قبل الامتحان</div><div class="qn-sub">40 سؤال مضمون من الامتحانات السابقة</div></button>
   </div>
+
+  <!-- Study Plan -->
+  <div id="study-plan-card" style="margin:16px 0;"></div>
 
   <!-- Today's Session Card (compact inline CTA) -->
   <div id="today-session-card" style="display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px 20px;background:linear-gradient(135deg,#0f766e,#0d9488);border:none;border-radius:14px;margin:24px 0;flex-wrap:wrap;">
@@ -586,15 +590,21 @@
       <div class="concept-row">
         <div class="concept-card amber">
           <strong>4. Market Offerings (عروض السوق)</strong>
-          <p>Combination of products, services, information, or experiences offered to satisfy a need or want.<span class="ar-line">مزيج من المنتجات والخدمات والمعلومات أو التجارب المقدمة لإشباع حاجة أو رغبة.</span></p>
+          <p>Combination of products, services, information, or experiences offered to satisfy a need or want. Includes persons, places, organizations, information, and ideas.<span class="ar-line">مزيج من المنتجات والخدمات والمعلومات أو التجارب المقدمة لإشباع حاجة أو رغبة. تشمل الأشخاص والأماكن والمنظمات والمعلومات والأفكار.</span></p>
+        </div>
+        <div class="concept-card green">
+          <strong>5. Value &amp; Satisfaction (القيمة والرضا)</strong>
+          <p>Customers form <strong>expectations about value</strong> from market offerings. Satisfaction occurs when the offering's <strong>perceived performance matches expectations</strong>. Delivering superior value = loyal customers.<span class="ar-line">العملاء يُكوّنون توقعات عن قيمة عروض السوق. الرضا يحدث عندما يتطابق الأداء المُدرَك مع التوقعات. تقديم قيمة متفوقة = عملاء أوفياء.</span></p>
         </div>
         <div class="concept-card rose">
-          <strong>5. Exchange &amp; Markets (التبادل والأسواق)</strong>
+          <strong>6. Exchange &amp; Markets (التبادل والأسواق)</strong>
           <p><strong>Exchange:</strong> Obtaining a desired object by offering something in return.<br><strong>Markets:</strong> Set of actual and potential buyers sharing a need satisfiable through exchange.<span class="ar-line">التبادل: الحصول على شيء مرغوب مقابل تقديم شيء آخر. الأسواق: مجموعة المشترين الفعليين والمحتملين الذين تربطهم حاجة مشتركة.</span></p>
         </div>
       </div>
 
-      <div class="memory-box">ترتيب مهم: الاحتياجات → الرغبات (الثقافة تشكّلها) → الطلبات (تضاف القدرة الشرائية)<br>Needs → Wants (shaped by culture) → Demands (buying power added)</div>
+      <div class="exam-tip">⚠️ الامتحان يسأل: ما هي المفاهيم الأساسية الخمسة للسوق؟ الإجابة الصحيحة:<br>1. Needs/Wants/Demands &nbsp;·&nbsp; 2. Market Offerings &nbsp;·&nbsp; 3. Value &amp; Satisfaction &nbsp;·&nbsp; 4. Exchange &amp; Relationships &nbsp;·&nbsp; 5. Markets<span class="ar-line">الإجابة: الاحتياجات/الرغبات/الطلبات — عروض السوق — القيمة والرضا — التبادل والعلاقات — الأسواق</span></div>
+
+      <div class="memory-box">ترتيب مهم — 5 مفاهيم أساسية للسوق:<br>① Needs/Wants/Demands · ② Market Offerings · ③ Value &amp; Satisfaction · ④ Exchange &amp; Relationships · ⑤ Markets<br><span style="font-size:.8rem;opacity:.8;">الاحتياجات/الرغبات/الطلبات → عروض السوق → القيمة والرضا → التبادل والعلاقات → الأسواق</span></div>
 
       <div class="def-spotlight">
         <div class="def-term">⚠️ Marketing Myopia — قصر النظر التسويقي</div>
@@ -3073,7 +3083,7 @@
   <div class="lo-section">
     <div class="lo-header" onclick="toggleLO(this)">
       <span class="lo-badge">LO 3-4</span>
-      <span class="lo-title">Political &amp; Cultural Environments &nbsp;|&nbsp; البيئتان السياسية والثقافية</span>
+      <span class="lo-title">Political, Social &amp; Cultural Environments &nbsp;|&nbsp; البيئات السياسية والاجتماعية والثقافية</span>
       <span class="lo-arrow">▼</span>
     </div>
     <div class="lo-body">
