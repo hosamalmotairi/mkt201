@@ -3906,6 +3906,7 @@ let tqState = {
   answered: false, startTime: null,
   missed: []   // stores {question, userAnswer, correct, type, ch}
 };
+let _tqTimer = null; // Bug #1/#2/#3 fix: track auto-advance timer to cancel on manual advance/quit
 
 function tqSetCh(ch, btn) {
   tqState.ch = ch;
@@ -3964,7 +3965,7 @@ function startTermsQuiz() {
 function tqRenderQuestion() {
   const q = tqState.questions[tqState.current];
   const total = tqState.questions.length;
-  document.getElementById('tq-progress-fill').style.width = (tqState.current / total * 100) + '%';
+  document.getElementById('tq-progress-fill').style.width = ((tqState.current + 1) / total * 100) + '%';
   document.getElementById('tq-counter').textContent = (tqState.current + 1) + ' / ' + total;
   document.getElementById('tq-badge').textContent =
     q.ch.toUpperCase() + ' · ' + (q.type === 'def' ? 'ما هو هذا المصطلح؟' : 'ما هو التعريف الصحيح؟');
@@ -3995,6 +3996,8 @@ function tqAnswer(idx) {
       ch: q.ch
     });
   }
+  // Bug #5 fix: update mastery data so Terms Quiz feeds into SRS + mastery bar
+  if (typeof markQuestion === 'function') markQuestion(q.question, isCorrect);
   if (typeof showQuizEncouragement === 'function') showQuizEncouragement(isCorrect);
 
   document.querySelectorAll('#tq-options .quiz-opt-btn').forEach((btn, i) => {
@@ -4009,13 +4012,23 @@ function tqAnswer(idx) {
     exp.innerHTML = '<strong>✅ الجواب الصح:</strong><br>' + q.correct;
   }
 
-  document.getElementById('tq-next-btn').style.display = '';
-  if (isCorrect && tqState.current < tqState.questions.length - 1) {
-    setTimeout(() => { if (tqState.answered) tqNext(); }, 1300);
+  const isLast = tqState.current >= tqState.questions.length - 1;
+  // Bug #1/#2 fix: on correct non-last answers, hide the button (auto-advance handles it).
+  // Only show the button on wrong answers OR the last correct answer.
+  const nextBtn = document.getElementById('tq-next-btn');
+  nextBtn.style.display = (!isCorrect || isLast) ? '' : 'none';
+
+  if (isCorrect && !isLast) {
+    // Bug #1 fix: cancel any previous pending timer before setting a new one
+    clearTimeout(_tqTimer);
+    _tqTimer = setTimeout(() => { _tqTimer = null; tqNext(); }, 1300);
   }
 }
 
 function tqNext() {
+  // Bug #1 fix: cancel pending auto-advance timer before manually advancing
+  clearTimeout(_tqTimer);
+  _tqTimer = null;
   tqState.current++;
   if (tqState.current >= tqState.questions.length) tqShowResult();
   else tqRenderQuestion();
@@ -4039,6 +4052,8 @@ function tqShowResult() {
   const key = 'mkt201_tq_best_' + tqState.ch;
   if (pct > parseInt(localStorage.getItem(key) || '0')) localStorage.setItem(key, pct);
   if (typeof addXP === 'function') addXP(Math.round(pct / 10));
+  // Bug #6 fix: record as a daily session so streak + home card update correctly
+  if (typeof recordDailySession === 'function') recordDailySession(tqState.questions.length);
 
   // Render missed questions review
   const reviewEl = document.getElementById('tq-review-list');
@@ -4090,6 +4105,9 @@ function tqRestart() {
 }
 
 function tqQuit() {
+  // Bug #3 fix: cancel pending auto-advance timer so it doesn't fire after quitting
+  clearTimeout(_tqTimer);
+  _tqTimer = null;
   document.getElementById('tq-run').style.display   = 'none';
   document.getElementById('tq-setup').style.display = '';
 }
