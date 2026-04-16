@@ -862,8 +862,15 @@ if (auth) {
       showThemePickerIfNeeded();
     } else {
       const overlay = document.getElementById('auth-overlay');
-      // Don't re-show overlay if user already chose "تصفح بدون حساب"
-      if (overlay && localStorage.getItem('mkt201_guest') !== '1') overlay.style.display = 'flex';
+      if (overlay) {
+        // Hide overlay for returning guests, show for new visitors
+        if (localStorage.getItem('mkt201_guest') === '1') {
+          overlay.style.display = 'none';
+          showThemePickerIfNeeded();
+        } else {
+          overlay.style.display = 'flex';
+        }
+      }
       const ui = document.getElementById('fb-user-info');
       if (ui) ui.style.display = 'none';
     }
