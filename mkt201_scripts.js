@@ -824,6 +824,7 @@ async function authSubmit() {
 }
 
 function skipAuth() {
+  localStorage.setItem('mkt201_guest', '1');
   const overlay = document.getElementById('auth-overlay');
   if (overlay) overlay.style.display = 'none';
   showThemePickerIfNeeded();
@@ -854,7 +855,8 @@ if (auth) {
       showThemePickerIfNeeded();
     } else {
       const overlay = document.getElementById('auth-overlay');
-      if (overlay) overlay.style.display = 'flex';
+      // Don't re-show overlay if user already chose "تصفح بدون حساب"
+      if (overlay && localStorage.getItem('mkt201_guest') !== '1') overlay.style.display = 'flex';
       const ui = document.getElementById('fb-user-info');
       if (ui) ui.style.display = 'none';
     }
@@ -6702,9 +6704,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // initOnboarding() is called from pickTheme() after theme selection
   // so new users see: login → theme → onboarding
 
-  // Auto-start tour for first-time visitors
+  // Auto-start tour for first-time visitors (only if auth overlay is not showing)
   setTimeout(() => {
-    if (!localStorage.getItem('mkt201_tour_seen')) {
+    const authOverlay = document.getElementById('auth-overlay');
+    const authVisible = authOverlay && authOverlay.style.display !== 'none';
+    if (!localStorage.getItem('mkt201_tour_seen') && !authVisible) {
       startTour();
     }
   }, 800);
