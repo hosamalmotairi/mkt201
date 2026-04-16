@@ -3903,7 +3903,8 @@ function filterQuickReview(ch) {
 let tqState = {
   ch: 'all', mode: 'def', count: 10,
   questions: [], current: 0, correct: 0, wrong: 0,
-  answered: false, startTime: null
+  answered: false, startTime: null,
+  missed: []   // stores {question, userAnswer, correct, type, ch}
 };
 
 function tqSetCh(ch, btn) {
@@ -3952,6 +3953,7 @@ function startTermsQuiz() {
   });
 
   tqState.current = 0; tqState.correct = 0; tqState.wrong = 0;
+  tqState.missed = [];
   tqState.startTime = Date.now();
   document.getElementById('tq-setup').style.display = 'none';
   document.getElementById('tq-run').style.display   = '';
@@ -3983,7 +3985,16 @@ function tqAnswer(idx) {
   const isCorrect = q.options[idx] === q.correct;
 
   if (isCorrect) { tqState.correct++; if (typeof addXP === 'function') addXP(5); }
-  else            { tqState.wrong++; }
+  else {
+    tqState.wrong++;
+    tqState.missed.push({
+      question: q.question,
+      userAnswer: q.options[idx],
+      correct: q.correct,
+      type: q.type,
+      ch: q.ch
+    });
+  }
 
   document.querySelectorAll('#tq-options .quiz-opt-btn').forEach((btn, i) => {
     btn.disabled = true;
@@ -4027,11 +4038,54 @@ function tqShowResult() {
   const key = 'mkt201_tq_best_' + tqState.ch;
   if (pct > parseInt(localStorage.getItem(key) || '0')) localStorage.setItem(key, pct);
   if (typeof addXP === 'function') addXP(Math.round(pct / 10));
+
+  // Render missed questions review
+  const reviewEl = document.getElementById('tq-review-list');
+  const reviewWrap = document.getElementById('tq-review-wrap');
+  const reviewBtn  = document.getElementById('tq-review-toggle-btn');
+  if (!reviewEl || !reviewWrap) return;
+
+  if (tqState.missed.length === 0) {
+    reviewWrap.style.display = 'none';
+    if (reviewBtn) reviewBtn.style.display = 'none';
+  } else {
+    reviewWrap.style.display = '';
+    if (reviewBtn) { reviewBtn.style.display = ''; reviewBtn.textContent = `📋 مراجعة الأخطاء (${tqState.missed.length})`; }
+    reviewEl.innerHTML = tqState.missed.map((m, i) => `
+      <div style="border:1.5px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:10px;background:var(--paper);">
+        <div style="font-size:.72rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">
+          ${m.ch.toUpperCase()} · ${m.type === 'def' ? 'ما هو هذا المصطلح؟' : 'ما هو التعريف الصحيح؟'}
+        </div>
+        <div style="font-size:.92rem;font-weight:700;color:var(--ink);margin-bottom:10px;line-height:1.5;">${m.question}</div>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <div style="padding:8px 12px;border-radius:8px;background:rgba(239,68,68,.12);border:1.5px solid rgba(239,68,68,.35);font-size:.85rem;color:#ef4444;">
+            ❌ إجابتك: ${m.userAnswer}
+          </div>
+          <div style="padding:8px 12px;border-radius:8px;background:rgba(16,185,129,.12);border:1.5px solid rgba(16,185,129,.35);font-size:.85rem;color:#10b981;">
+            ✅ الصح: ${m.correct}
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+}
+
+function tqToggleReview() {
+  const sec = document.getElementById('tq-review-section');
+  const btn = document.getElementById('tq-review-toggle-btn');
+  if (!sec) return;
+  const showing = sec.style.display !== 'none';
+  sec.style.display = showing ? 'none' : '';
+  if (btn) btn.textContent = showing
+    ? `📋 مراجعة الأخطاء (${tqState.missed.length})`
+    : `▲ إخفاء المراجعة`;
 }
 
 function tqRestart() {
-  document.getElementById('tq-result').style.display = 'none';
-  document.getElementById('tq-setup').style.display  = '';
+  document.getElementById('tq-result').style.display  = 'none';
+  const sec = document.getElementById('tq-review-section');
+  if (sec) sec.style.display = 'none';
+  document.getElementById('tq-setup').style.display   = '';
 }
 
 function tqQuit() {
