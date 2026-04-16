@@ -327,8 +327,8 @@
       <div style="font-size:.78rem;opacity:.85;margin-top:2px;">دقيقتين وتعرف كيف تستفيد من كل أداة</div>
     </div>
     <div style="display:flex;gap:8px;flex-shrink:0;">
-      <button onclick="startTour()" style="background:#fff;color:var(--accent);border:none;border-radius:9px;padding:8px 18px;font-weight:800;font-size:.88rem;cursor:pointer;">ابدأ الجولة ←</button>
-      <button onclick="document.getElementById('tour-banner').style.display='none';localStorage.setItem('mkt201_tour_seen','1')" style="background:rgba(255,255,255,.2);color:#fff;border:none;border-radius:9px;padding:8px 14px;font-size:.82rem;cursor:pointer;">تخطي</button>
+      <button tabindex="-1" aria-hidden="true" onclick="startTour()" style="background:#fff;color:var(--accent);border:none;border-radius:9px;padding:8px 18px;font-weight:800;font-size:.88rem;cursor:pointer;">ابدأ الجولة ←</button>
+      <button tabindex="-1" aria-hidden="true" onclick="document.getElementById('tour-banner').style.display='none';localStorage.setItem('mkt201_tour_seen','1')" style="background:rgba(255,255,255,.2);color:#fff;border:none;border-radius:9px;padding:8px 14px;font-size:.82rem;cursor:pointer;">تخطي</button>
     </div>
   </div>
 
