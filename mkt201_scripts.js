@@ -6683,13 +6683,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // initOnboarding() is called from pickTheme() after theme selection
   // so new users see: login → theme → onboarding
 
-  // Show tour banner for first-time visitors
+  // Auto-start tour for first-time visitors
   setTimeout(() => {
     if (!localStorage.getItem('mkt201_tour_seen')) {
-      const banner = document.getElementById('tour-banner');
-      if (banner) banner.style.display = 'flex';
+      startTour();
     }
-  }, 1200);
+  }, 800);
 });
 
 // ═══════════════════════════════════════════════
