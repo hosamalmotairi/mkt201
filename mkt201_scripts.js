@@ -3995,6 +3995,7 @@ function tqAnswer(idx) {
       ch: q.ch
     });
   }
+  if (typeof showQuizEncouragement === 'function') showQuizEncouragement(isCorrect);
 
   document.querySelectorAll('#tq-options .quiz-opt-btn').forEach((btn, i) => {
     btn.disabled = true;
