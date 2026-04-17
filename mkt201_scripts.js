@@ -6671,6 +6671,7 @@ function exportChapterBinder(pageId, chapterTitle) {
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 @page { size: A4; margin: 10mm 12mm; }
+:root { --accent:#0F766E;--accent2:#0D9488;--paper:#ffffff;--ink:#111827;--muted:#6B7280;--line:#E5E7EB;--bg1:#F0FDFA;--bg2:#CCFBF1; }
 * { box-sizing:border-box;margin:0;padding:0; }
 body { font-family:'Inter',system-ui,sans-serif;color:${C.ink};line-height:1.5;font-size:10px;max-width:800px;margin:0 auto;background:#fff;-webkit-font-smoothing:antialiased; }
 p { margin:3px 0; }
