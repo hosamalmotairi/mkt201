@@ -1173,7 +1173,7 @@ const pastQuestions = [
   { ch:"ch3", diff:"easy", q:"Bahri Transportation and Almajdouie Warehousing help companies move and stock goods from their manufacturing plants to their destinations. These two businesses are examples of ______.", opts:["financial intermediaries","marketing services agencies","resellers","physical distribution firms"], ans:3, exp:"شركات التوزيع المادي تساعد في نقل وتخزين البضائع من المصانع إلى وجهاتها." },
   { ch:"ch1", diff:"easy", q:"A charity organization's emails and text messages sent to local community asking for their help in raising funds is an example of:", opts:["Socialism","not-for-profit marketing","societal marketing","for-profit marketing"], ans:1, exp:"التسويق غير الربحي يُستخدم من المنظمات الخيرية لجمع التبرعات وتحقيق أهداف اجتماعية." },
   { ch:"ch5", diff:"easy", q:"Opinion leaders are sometimes referred to as ______.", opts:["The middle-class","The influentials","Wholesalers","Intermediaries"], ans:1, exp:"قادة الرأي يُطلق عليهم أحيانًا 'المؤثرون' (the influentials) لقدرتهم على التأثير في قرارات الآخرين." },
-  { ch:"ch2", diff:"easy", q:"______ is the first stage of the buyer decision process, in which the consumer recognizes a problem or need:", opts:["Evaluation of alternatives","Post purchase behavior","Information search","Need recognition"], ans:3, exp:"التعرف على الحاجة هو المرحلة الأولى في عملية قرار الشراء." },
+  { ch:"ch5", diff:"easy", q:"______ is the first stage of the buyer decision process, in which the consumer recognizes a problem or need:", opts:["Evaluation of alternatives","Post purchase behavior","Information search","Need recognition"], ans:3, exp:"التعرف على الحاجة هو المرحلة الأولى في عملية قرار الشراء." },
   { ch:"ch1", diff:"medium", q:"Building, keeping, and growing profitable relationships by delivering customer value and satisfaction is called ______.", opts:["customer lifetime value","customer relationship management","database marketing","societal marketing"], ans:1, exp:"إدارة علاقات العملاء = بناء والحفاظ على وتنمية علاقات مربحة بتقديم قيمة ورضا متميزين." },
   { ch:"ch5", diff:"easy", q:"______ is a person's pattern of living as expressed in his or her activities, interests, and opinions.", opts:["Personality","Lifestyle","Social class","Subculture"], ans:1, exp:"نمط الحياة (Lifestyle) = نمط المعيشة المُعبَّر عنه في الأنشطة والاهتمامات والآراء (AIO)." },
   { ch:"ch5", diff:"easy", q:"______ is the first stage of the buyer decision process, in which the consumer recognizes a problem or need.", opts:["Evaluation of alternatives","Post purchase behavior","Information search","Need recognition"], ans:3, exp:"التعرف على الحاجة هي المرحلة الأولى: يشعر المستهلك بمشكلة أو رغبة تحتاج إشباعاً." },
@@ -1225,12 +1225,12 @@ const pastQuestions = [
   const chMap = [
     "ch3","ch2","ch3","ch1","ch2","ch2","ch1","ch3","ch2","ch2", // 0-9
     "ch2","ch2","ch1","ch3","ch3","ch1","ch2",                   // 10-16
-    "ch1","ch3","ch3","ch1","ch1","ch1","ch2","ch3","ch3","ch2", // 17-26
+    "ch1","ch3","ch3","ch1","ch1","ch3","ch2","ch3","ch3","ch2", // 17-26  (22: cause-related mktg → ch3)
     "ch1","ch1","ch1","ch1","ch1","ch1","ch1","ch1",             // 27-34 Additional Ch1
     "ch2","ch2","ch2","ch2","ch2","ch2","ch2","ch2","ch2","ch2", // 35-44 Additional Ch2
     "ch3","ch3","ch3","ch3","ch3","ch3","ch3","ch3","ch3","ch3", // 45-54 Additional Ch3
     "ch5","ch5","ch5","ch5","ch5","ch5","ch5","ch5","ch5","ch5","ch5","ch5","ch5", // 55-67 Additional Ch5
-    "ch2","ch1","ch2","ch1","ch1","ch1","ch2","ch2","ch5","ch5","ch5","ch3","ch2","ch3","ch1","ch5" // 68-83 Set 2
+    "ch2","ch1","ch2","ch1","ch2","ch1","ch2","ch2","ch5","ch5","ch5","ch3","ch2","ch3","ch1","ch5" // 68-83 Set 2  (72: target marketing → ch2)
   ];
   pastQuestions.forEach(function(q, i) { if (chMap[i]) q.ch = chMap[i]; });
 })();
