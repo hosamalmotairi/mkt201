@@ -1014,7 +1014,15 @@ function showPage(id) {
     history.pushState(null, '', '#' + id.replace('page-', ''));
   }
   if (id === 'page-home') { renderMasteryBars(); updateTodayCard(); renderReadinessCard(); renderWeakSpots(); renderStudyPlan(); }
-  if (id === 'page-quiz') { updateSessionBadge(); }
+  if (id === 'page-quiz') {
+    updateSessionBadge();
+    // إذا ما في شيء مختار (مثلاً أول مرة)، افتح على "All" تلقائياً
+    const anyChChecked = [...document.querySelectorAll('.quiz-ch-item input:checked')].length;
+    if (!anyChChecked) {
+      const allCb = document.querySelector('.quiz-ch-item input[value="all"]');
+      if (allCb) allCb.checked = true;
+    }
+  }
   if (id === 'page-flash') { initFlashCards(); }
   if (id === 'page-mock') { checkMockExamLock(); }
   if (id === 'page-dashboard') { renderStreakCalendar(); }
@@ -2976,9 +2984,7 @@ function onChapterChange(changed) {
       indCbs.forEach(cb => cb.checked = false);
     }
   }
-  // تأكد دائماً إن في شيء مختار — إذا ما في شيء، ارجع لـ "All"
-  const anyChecked = [...document.querySelectorAll('.quiz-ch-item input:checked')].length;
-  if (!anyChecked && allCb) allCb.checked = true;
+  // لا نُجبر "All" — إذا ما في شيء مختار، startQuiz() سيُظهر رسالة تنبيه
 }
 
 function setQuizCount(count, btn) {
