@@ -72,6 +72,74 @@
       display: flex;
       width: fit-content;
     }
+
+    /* ── FROM-TB BADGE (من التست بانك) ── */
+    .from-tb-badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      background: #ede9fe; color: #5b21b6;
+      border: 1px solid #c4b5fd;
+      border-radius: 20px; padding: 2px 9px;
+      font-size: .72rem; font-weight: 700;
+      letter-spacing: .02em;
+      margin-bottom: 8px;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+    body.dark .from-tb-badge {
+      background: rgba(167,139,250,.14); color: #c4b5fd;
+      border-color: rgba(167,139,250,.38);
+    }
+    .from-tb-wrap {
+      position: relative;
+      border-left: 3px solid #c4b5fd;
+      background: #faf5ff;
+      padding: 14px 16px;
+      border-radius: 10px;
+      margin: 12px 0;
+    }
+    body.dark .from-tb-wrap {
+      background: rgba(167,139,250,.06);
+      border-left-color: rgba(167,139,250,.45);
+    }
+    .from-tb-wrap > .from-tb-badge {
+      margin-bottom: 6px;
+      display: flex;
+      width: fit-content;
+    }
+
+    /* ── FROM-PAST BADGE (من التجميعات) ── */
+    .from-past-badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      background: #fce7f3; color: #9d174d;
+      border: 1px solid #f9a8d4;
+      border-radius: 20px; padding: 2px 9px;
+      font-size: .72rem; font-weight: 700;
+      letter-spacing: .02em;
+      margin-bottom: 8px;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+    body.dark .from-past-badge {
+      background: rgba(244,114,182,.14); color: #f9a8d4;
+      border-color: rgba(244,114,182,.38);
+    }
+    .from-past-wrap {
+      position: relative;
+      border-left: 3px solid #f9a8d4;
+      background: #fdf2f8;
+      padding: 14px 16px;
+      border-radius: 10px;
+      margin: 12px 0;
+    }
+    body.dark .from-past-wrap {
+      background: rgba(244,114,182,.06);
+      border-left-color: rgba(244,114,182,.45);
+    }
+    .from-past-wrap > .from-past-badge {
+      margin-bottom: 6px;
+      display: flex;
+      width: fit-content;
+    }
   </style>
   <script defer src="/_vercel/insights/script.js"></script>
 </head>
@@ -574,9 +642,9 @@
       <div class="from-notes-wrap">
         <span class="from-notes-badge">📝 من النوت</span>
 <ul class="slide-bullets">
-          <li><strong>Slide 3:</strong> Perhaps the simplest definition of marketing is <em>engaging customers and managing profitable customer relationships</em>.</li>
-          <li><strong>Slide 6:</strong> <em>Wants</em> are the form human needs take as they are shaped by one's society. Target CEO Brian Cornell makes regular unannounced visits to Target stores with local moms and loyal shoppers to stay close to customers.</li>
-          <li><strong>Slide 7:</strong> <em>Marketing experiences:</em> More than just a sports bar, Buffalo Wild Wings mission is to provide a total eating and social environment that "fuels the sports fan experience" through in-store and online engagement.</li>
+          <li><strong>Slide 3:</strong> Perhaps the simplest definition of marketing is <em>engaging customers and managing profitable customer relationships</em>.<span class="ar-line">أبسط تعريف للتسويق: إشراك العملاء وإدارة علاقات مربحة معهم.</span></li>
+          <li><strong>Slide 6:</strong> <em>Wants</em> are the form human needs take as they are shaped by one's society. Target CEO Brian Cornell makes regular unannounced visits to Target stores with local moms and loyal shoppers to stay close to customers.<span class="ar-line">الرغبات هي الشكل الذي تتخذه الاحتياجات تحت تأثير المجتمع. مدير Target يزور المتاجر فجأة مع أمهات من المنطقة وعملاء مخلصين ليبقى قريباً من العميل.</span></li>
+          <li><strong>Slide 7:</strong> <em>Marketing experiences:</em> More than just a sports bar, Buffalo Wild Wings mission is to provide a total eating and social environment that "fuels the sports fan experience" through in-store and online engagement.<span class="ar-line">التجارب التسويقية: Buffalo Wild Wings أكثر من مطعم رياضي — رسالتها توفير بيئة أكل واجتماع كاملة تغذي تجربة مشجع الرياضة داخل المتجر وعبر الإنترنت.</span></li>
         </ul>
       </div>
     </div>
@@ -727,9 +795,9 @@
       <div class="from-notes-wrap">
         <span class="from-notes-badge">📝 من النوت</span>
         <ul class="slide-bullets">
-          <li><strong>Slides 9–11:</strong> Marketing was traditionally carried out by sellers — but now also includes consumers. Marketers now ask: "How can our customers influence us?" and "How can our customers influence each other?"</li>
+          <li><strong>Slides 9–11:</strong> Marketing was traditionally carried out by sellers — but now also includes consumers. Marketers now ask: "How can our customers influence us?" and "How can our customers influence each other?"<span class="ar-line">التسويق كان تقليدياً من البائع فقط، أما الآن فالمستهلك جزء منه. المسوقون يسألون: "كيف يؤثر عملاؤنا علينا؟" و "كيف يؤثرون على بعضهم؟"</span></li>
           <li><strong>Slide 11:</strong> Marketers are no longer asking only <em>"How can we influence our customers?"</em> but also <em>"How can our customers influence us?"</em> and even <em>"How can our customers influence each other?"</em> — reflecting the shift to two-way, customer-managed relationships.<span class="ar-line">لم يعد المسوقون يسألون فقط "كيف نؤثر على عملائنا؟" بل أيضاً "كيف يمكن للعملاء أن يؤثروا علينا؟" وحتى "كيف يؤثر العملاء على بعضهم؟"</span></li>
-          <li><strong>Slide 13:</strong> Strong value proposition examples: BMW = "the ultimate driving machine," Nissan Leaf = "100% electric. Zero gas. Zero tailpipe," New Balance Minimus = "like barefoot only better," Facebook = "connect and share with the people in your life," YouTube = "a place for people to connect, inform, and inspire others."</li>
+          <li><strong>Slide 13:</strong> Strong value proposition examples: BMW = "the ultimate driving machine," Nissan Leaf = "100% electric. Zero gas. Zero tailpipe," New Balance Minimus = "like barefoot only better," Facebook = "connect and share with the people in your life," YouTube = "a place for people to connect, inform, and inspire others."<span class="ar-line">أمثلة على عرض القيمة: BMW "آلة القيادة المطلقة" · Nissan Leaf "100% كهربائية، صفر بنزين" · Facebook "تواصل وشارك مع من تحب" · YouTube "مكان للتواصل والإلهام".</span></li>
         </ul>
       </div>
     </div>
@@ -947,9 +1015,42 @@
       <div class="from-notes-wrap">
         <span class="from-notes-badge">📝 من النوت</span>
         <ul class="slide-bullets">
-          <li><strong>Slide 16:</strong> <em>Production concept:</em> consumers favor available & affordable products. <em>Product concept:</em> consumers favor most quality/features (risk: marketing myopia). <em>Selling concept:</em> used for unsought goods — focuses on transactions not relationships. <em>Marketing concept:</em> customer-centered "sense-and-respond" — find the right products for your customers.</li>
-          <li><strong>Slide 18:</strong> The <em>societal marketing concept</em> balances three considerations: company profits + consumer wants + <strong>society's interests</strong>. The <em>shared value</em> concept: societal needs, not just economic needs, define markets.</li>
+          <li><strong>Slide 16:</strong> <em>Production concept:</em> consumers favor available & affordable products. <em>Product concept:</em> consumers favor most quality/features (risk: marketing myopia). <em>Selling concept:</em> used for unsought goods — focuses on transactions not relationships. <em>Marketing concept:</em> customer-centered "sense-and-respond" — find the right products for your customers.<span class="ar-line">مفهوم الإنتاج: المستهلك يبي المتاح والرخيص. مفهوم المنتج: يبي الأعلى جودة (خطر: قصر نظر تسويقي). مفهوم البيع: للسلع غير المرغوبة، يركز على الصفقات لا العلاقات. مفهوم التسويق: مرتكز على العميل — "استشعر واستجب".</span></li>
+          <li><strong>Slide 18:</strong> The <em>societal marketing concept</em> balances three considerations: company profits + consumer wants + <strong>society's interests</strong>. The <em>shared value</em> concept: societal needs, not just economic needs, define markets.<span class="ar-line">مفهوم التسويق المجتمعي يوازن ثلاثة: أرباح الشركة + رغبات المستهلك + مصالح المجتمع. مفهوم القيمة المشتركة: احتياجات المجتمع (لا الاقتصادية فقط) هي التي تحدد الأسواق.</span></li>
         </ul>
+      </div>
+
+      <div class="from-tb-wrap">
+        <span class="from-tb-badge">🟣 من التست بانك</span>
+        <div style="display:grid;gap:12px;margin-top:8px;">
+          <div>
+            <strong>🗣️ Peter Drucker — "The aim of marketing is to make selling unnecessary."</strong>
+            <p style="margin:4px 0 0;">يرى <b>Peter Drucker</b> (أبو الإدارة الحديثة) أن هدف التسويق الحقيقي هو <b>فهم العميل جيداً</b> بحيث يبيع المنتج نفسه بدون جهد بيعي كبير. هذا هو جوهر <em>Marketing Concept</em>.</p>
+            <span class="ar-line">مقولة شهيرة: "هدف التسويق هو جعل البيع غير ضروري" — لو فهمت العميل صح، المنتج راح يبيع نفسه.</span>
+          </div>
+          <div>
+            <strong>🏭 Supply Chain &amp; Production Concept</strong>
+            <p style="margin:4px 0 0;">شركات الـ <em>Production concept</em> تركز على <b>efficiency</b> في سلسلة التوريد (Supply Chain) والإنتاج والتوزيع الواسع. مثال: <b>Lenovo</b> و <b>Haier</b> في الصين يستفيدون من تكلفة عمل منخفضة + كفاءة إنتاج عالية + توزيع مكثف.</p>
+            <span class="ar-line">Supply Chain = سلسلة التوريد. مفهوم الإنتاج يعتمد على كفاءتها لخفض التكلفة وتوسيع التوزيع.</span>
+          </div>
+          <div>
+            <strong>🎯 Customer-Driven vs Customer-Driving Marketing</strong>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px;">
+              <div style="background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:8px;">
+                <b>Customer-Driven</b><br>تفهم رغبات العميل الواضحة وتلبيها (reactive).
+              </div>
+              <div style="background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:8px;">
+                <b>Customer-Driving</b><br>تكتشف احتياجات خفية (<b>latent needs</b>) لم يدركها العميل بعد، وتقود السوق لمنتجات جديدة (proactive). مثال: iPhone.
+              </div>
+            </div>
+            <span class="ar-line">Latent Needs = احتياجات كامنة. العميل ما يعرف إنه يبيها لكن لما تجيه ينبهر. التسويق المتقدم يقود السوق مو فقط يتبعه.</span>
+          </div>
+          <div>
+            <strong>📉 The Great Recession (2008–2009)</strong>
+            <p style="margin:4px 0 0;">أزمة اقتصادية عالمية أثّرت على سلوك المستهلك: تحوّل لـ <b>value-based buying</b> (التركيز على القيمة مقابل السعر)، تقليل الإنفاق الترفيهي، وارتفاع الحساسية للسعر. الشركات ردّت بتقديم منتجات "value lines" وعروض اقتصادية.</p>
+            <span class="ar-line">الركود الكبير 2008–2009 غيّر سلوك الشراء للأبد — المستهلك صار يبحث عن القيمة، والشركات عدّلت مزيجها التسويقي.</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1093,9 +1194,9 @@
       <div class="from-notes-wrap">
         <span class="from-notes-badge">📝 من النوت</span>
         <ul class="slide-bullets">
-          <li><strong>Slide 21:</strong> The key to lasting customer relationships is to create superior customer value and satisfaction. Smart companies aim to delight customers by promising only what they can deliver and then delivering more than they promise.</li>
-          <li><strong>Slide 23:</strong> Consumer-generated marketing — Mountain Dew stirred user-generated content for a limited-time reintroduction of Baja Blast, boosting online chatter by <strong>170%</strong>.</li>
-          <li><strong>Slide 25:</strong> Customer types by profitability × loyalty: <em>Strangers</em> (low/low), <em>Butterflies</em> (profitable/not loyal), <em>True Friends</em> (profitable/loyal), <em>Barnacles</em> (loyal/not profitable). Goal: build the <em>right relationships</em> with the <em>right customers</em>.</li>
+          <li><strong>Slide 21:</strong> The key to lasting customer relationships is to create superior customer value and satisfaction. Smart companies aim to delight customers by promising only what they can deliver and then delivering more than they promise.<span class="ar-line">مفتاح العلاقات طويلة المدى: قيمة متفوقة ورضا عالي. القاعدة الذهبية: وعد بأقل مما تقدر، ثم قدّم أكثر من الوعد.</span></li>
+          <li><strong>Slide 23:</strong> Consumer-generated marketing — Mountain Dew stirred user-generated content for a limited-time reintroduction of Baja Blast, boosting online chatter by <strong>170%</strong>.<span class="ar-line">التسويق بمحتوى المستهلك — Mountain Dew حرّكت محتوى المستخدمين لإعادة إطلاق Baja Blast فزادت الأحاديث بنسبة 170%.</span></li>
+          <li><strong>Slide 25:</strong> Customer types by profitability × loyalty: <em>Strangers</em> (low/low), <em>Butterflies</em> (profitable/not loyal), <em>True Friends</em> (profitable/loyal), <em>Barnacles</em> (loyal/not profitable). Goal: build the <em>right relationships</em> with the <em>right customers</em>.<span class="ar-line">أنواع العملاء حسب الربحية × الولاء: غرباء (منخفض/منخفض) · فراشات (مربح/غير مخلص) · أصدقاء حقيقيون (مربح/مخلص) · محّارات (مخلص/غير مربح). الهدف: علاقات صحيحة مع عملاء صحيحين.</span></li>
         </ul>
       </div>
     </div>
@@ -1161,8 +1262,8 @@
       <div class="from-notes-wrap">
         <span class="from-notes-badge">📝 من النوت</span>
         <ul class="slide-bullets">
-          <li><strong>Slide 27:</strong> An estimated 3.3 billion people — 46% of the world's population — are now online. 64% of American adults own smartphones; 71% of those keep them next to them when they sleep.</li>
-          <li><strong>Slide 28:</strong> Not-for-profits face stiff competition for support. Example: Ben & Jerry's three-part "linked prosperity" mission: (1) make fantastic ice cream, (2) sustainable financial growth, (3) use the company to make the world better. Both Ben & Jerry's and its products are "Made of Something Better."</li>
+          <li><strong>Slide 27:</strong> An estimated 3.3 billion people — 46% of the world's population — are now online. 64% of American adults own smartphones; 71% of those keep them next to them when they sleep.<span class="ar-line">3.3 مليار إنسان (46% من سكان العالم) على الإنترنت. 64% من البالغين الأمريكيين عندهم سمارتفون، و 71% منهم يحطونه جنبهم وقت النوم.</span></li>
+          <li><strong>Slide 28:</strong> Not-for-profits face stiff competition for support. Example: Ben & Jerry's three-part "linked prosperity" mission: (1) make fantastic ice cream, (2) sustainable financial growth, (3) use the company to make the world better. Both Ben & Jerry's and its products are "Made of Something Better."<span class="ar-line">المنظمات غير الربحية تواجه منافسة على الدعم. Ben & Jerry's رسالتها الثلاثية "الرخاء المرتبط": آيس كريم رائع + نمو مالي مستدام + استخدام الشركة لعمل الخير.</span></li>
         </ul>
       </div>
     </div>
@@ -1510,8 +1611,8 @@
       <div class="from-notes-wrap">
         <span class="from-notes-badge">📝 من النوت</span>
         <ul class="slide-bullets">
-          <li><strong>Slide 4:</strong> Strategic planning has 4 steps: (1) Define company mission, (2) Turn mission into supporting objectives, (3) Decide the best portfolio of businesses/products, (4) Each business/product develops detailed marketing plans.</li>
-          <li><strong>Slide 5:</strong> A <em>market-oriented mission statement</em> defines the business in terms of satisfying basic customer needs — not in product terms.</li>
+          <li><strong>Slide 4:</strong> Strategic planning has 4 steps: (1) Define company mission, (2) Turn mission into supporting objectives, (3) Decide the best portfolio of businesses/products, (4) Each business/product develops detailed marketing plans.<span class="ar-line">التخطيط الاستراتيجي 4 خطوات: (1) تعريف رسالة الشركة (2) تحويل الرسالة لأهداف داعمة (3) اختيار أفضل محفظة أعمال/منتجات (4) كل منتج/عمل يطوّر خطة تسويقية تفصيلية.</span></li>
+          <li><strong>Slide 5:</strong> A <em>market-oriented mission statement</em> defines the business in terms of satisfying basic customer needs — not in product terms.<span class="ar-line">رسالة موجهة للسوق = تعرّف العمل بإشباع احتياجات العميل الأساسية، لا بوصف المنتج.</span></li>
         </ul>
       </div>
     </div>
@@ -1695,8 +1796,8 @@
       <div class="from-notes-wrap">
         <span class="from-notes-badge">📝 من النوت</span>
         <ul class="slide-bullets">
-          <li><strong>Slide 12:</strong> BCG matrix classifies SBUs into four quadrants — ask students to suggest product categories that might fit each quadrant (Stars, Cash Cows, Question Marks, Dogs).</li>
-          <li><strong>Slide 18:</strong> To increase sales, Under Armour has entered a new market (women), applying a <em>market development</em> strategy from the Ansoff matrix.</li>
+          <li><strong>Slide 12:</strong> BCG matrix classifies SBUs into four quadrants — ask students to suggest product categories that might fit each quadrant (Stars, Cash Cows, Question Marks, Dogs).<span class="ar-line">مصفوفة BCG تصنّف وحدات الأعمال الاستراتيجية في 4 أرباع: نجوم · أبقار نقدية · علامات استفهام · كلاب.</span></li>
+          <li><strong>Slide 18:</strong> To increase sales, Under Armour has entered a new market (women), applying a <em>market development</em> strategy from the Ansoff matrix.<span class="ar-line">Under Armour دخلت سوق جديد (النساء) لزيادة المبيعات — وهذه استراتيجية "تطوير السوق" من مصفوفة Ansoff.</span></li>
         </ul>
       </div>
     </div>
@@ -1737,7 +1838,7 @@
       <div class="from-notes-wrap">
         <span class="from-notes-badge">📝 من النوت</span>
         <ul class="slide-bullets">
-          <li><strong>Slide 4 (review):</strong> Marketing planning occurs at the business-unit, product, and market levels. It supports company strategic planning with more detailed plans for specific marketing opportunities.</li>
+          <li><strong>Slide 4 (review):</strong> Marketing planning occurs at the business-unit, product, and market levels. It supports company strategic planning with more detailed plans for specific marketing opportunities.<span class="ar-line">التخطيط التسويقي يتم على مستوى وحدة العمل والمنتج والسوق. يدعم التخطيط الاستراتيجي للشركة بخطط تفصيلية للفرص التسويقية.</span></li>
         </ul>
       </div>
     </div>
@@ -1853,7 +1954,7 @@
       <div class="from-notes-wrap">
         <span class="from-notes-badge">📝 من النوت</span>
         <ul class="slide-bullets">
-          <li><strong>Slide 19:</strong> The marketing program transforms strategy into action. The firm must: create a market offering (product), decide pricing (price), make it available (place), and communicate about it (promotion). The 4 Ps blend into a comprehensive integrated marketing program that delivers intended value to chosen customers.</li>
+          <li><strong>Slide 19:</strong> The marketing program transforms strategy into action. The firm must: create a market offering (product), decide pricing (price), make it available (place), and communicate about it (promotion). The 4 Ps blend into a comprehensive integrated marketing program that delivers intended value to chosen customers.<span class="ar-line">البرنامج التسويقي يحوّل الاستراتيجية لأفعال: اصنع المنتج · حدد السعر · وزّع · روّج. الـ 4Ps تتكامل في برنامج تسويقي موحد يقدم القيمة للعملاء المستهدفين.</span></li>
         </ul>
       </div>
     </div>
@@ -2063,9 +2164,31 @@
       <div class="from-notes-wrap">
         <span class="from-notes-badge">📝 من النوت</span>
         <ul class="slide-bullets">
-          <li><strong>Slide 35:</strong> Measuring return on marketing investment is a major emphasis. Companies assemble marketing performance measures into <em>marketing dashboards</em> — sets of measures in a single display to monitor strategic performance. Beyond standard measures, marketers use customer-centered measures: customer acquisition, retention, lifetime value, customer equity.</li>
-          <li><strong>Slide 36:</strong> Marketing investments → improved customer value, engagement, and satisfaction → increased customer attraction and retention → higher individual customer lifetime values → greater firm customer equity. Customer equity relative to cost of investment determines ROI.</li>
+          <li><strong>Slide 35:</strong> Measuring return on marketing investment is a major emphasis. Companies assemble marketing performance measures into <em>marketing dashboards</em> — sets of measures in a single display to monitor strategic performance. Beyond standard measures, marketers use customer-centered measures: customer acquisition, retention, lifetime value, customer equity.<span class="ar-line">قياس العائد على الاستثمار التسويقي محور مهم. الشركات تجمع مقاييس الأداء في "Marketing Dashboards" — لوحة واحدة لمتابعة الأداء الاستراتيجي. مقاييس متمركزة حول العميل: الاكتساب، الاحتفاظ، القيمة الدائمة، حقوق العملاء.</span></li>
+          <li><strong>Slide 36:</strong> Marketing investments → improved customer value, engagement, and satisfaction → increased customer attraction and retention → higher individual customer lifetime values → greater firm customer equity. Customer equity relative to cost of investment determines ROI.<span class="ar-line">الاستثمارات التسويقية → قيمة ورضا أعلى → اكتساب واحتفاظ أكبر → قيم مدى الحياة أعلى → حقوق عملاء أكبر. ROI = حقوق العملاء ÷ تكلفة الاستثمار.</span></li>
         </ul>
+      </div>
+
+      <div class="from-tb-wrap">
+        <span class="from-tb-badge">🟣 من التست بانك</span>
+        <div style="display:grid;gap:12px;margin-top:8px;">
+          <div>
+            <strong>🔍 Marketing Audit — التدقيق التسويقي</strong>
+            <p style="margin:4px 0 0;">فحص <b>comprehensive, systematic, independent, and periodic</b> لبيئة الشركة التسويقية + أهدافها + استراتيجياتها + أنشطتها. الغرض: تحديد مشاكل وفرص تسويقية + التوصية بخطة عمل لتحسين الأداء.</p>
+            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-top:6px;font-size:.85rem;">
+              <div style="background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:6px;"><b>Comprehensive</b> — شامل لكل الأنشطة</div>
+              <div style="background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:6px;"><b>Systematic</b> — منهجي متسلسل</div>
+              <div style="background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:6px;"><b>Independent</b> — مستقل (غالباً خارجي)</div>
+              <div style="background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:6px;"><b>Periodic</b> — دوري</div>
+            </div>
+            <span class="ar-line">التدقيق التسويقي = فحص شامل ومنهجي ومستقل ودوري للنشاط التسويقي. يوصي بخطة لتحسين الأداء.</span>
+          </div>
+          <div>
+            <strong>🤝 Cross-Functional Teams — فرق متعددة التخصصات</strong>
+            <p style="margin:4px 0 0;">لنجاح التنفيذ التسويقي، التسويق لازم يشتغل مع <b>بقية إدارات الشركة</b> (Finance, R&amp;D, Operations, HR, IT). الفرق متعددة التخصصات تكسر الحواجز بين الأقسام وتوصل قيمة أعلى للعميل.</p>
+            <span class="ar-line">Cross-functional = متعدد الوظائف. التسويق ما يشتغل لحاله — يحتاج تعاون مع المالية، البحث والتطوير، العمليات، الموارد البشرية.</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -2384,8 +2507,8 @@
       <div class="from-notes-wrap">
         <span class="from-notes-badge">📝 من النوت</span>
         <ul class="slide-bullets">
-          <li><strong>Slide 6:</strong> Marketing and finance integration involves budgeting. Marketing and IS integration involves market research, ordering systems, and CRM systems.</li>
-          <li><strong>Slide 8:</strong> Coke delivers value for marketing intermediaries by: (1) understanding each retailer partner's business, (2) conducting consumer research and sharing it with partners, (3) developing marketing programs and merchandising for partners.</li>
+          <li><strong>Slide 6:</strong> Marketing and finance integration involves budgeting. Marketing and IS integration involves market research, ordering systems, and CRM systems.<span class="ar-line">تكامل التسويق مع المالية = الميزانيات. تكامله مع نظم المعلومات = بحوث السوق + أنظمة الطلب + أنظمة إدارة علاقات العملاء.</span></li>
+          <li><strong>Slide 8:</strong> Coke delivers value for marketing intermediaries by: (1) understanding each retailer partner's business, (2) conducting consumer research and sharing it with partners, (3) developing marketing programs and merchandising for partners.<span class="ar-line">Coca-Cola تقدم قيمة لوسطاء التسويق بثلاث طرق: (1) فهم أعمال كل شريك تجزئة (2) إجراء بحوث المستهلك ومشاركتها (3) تطوير برامج تسويق وعرض للشركاء.</span></li>
         </ul>
       </div>
     </div>
@@ -2420,6 +2543,40 @@
                   </li>
       </ul>
 
+      <div class="from-tb-wrap">
+        <span class="from-tb-badge">🟣 من التست بانك — الأجيال الأمريكية</span>
+        <p style="margin:4px 0 8px;">من أهم التغيرات الديموغرافية: <b>generational differences</b>. كل جيل له قيم، عادات شرائية، وتفضيلات إعلامية مختلفة.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;">
+          <div style="background:var(--paper);border:1px solid var(--line);border-left:3px solid #64748b;border-radius:8px;padding:10px;">
+            <b>Silent Generation</b><br>
+            <span style="font-size:.85rem;color:var(--muted);">1928–1945</span>
+            <p style="margin:6px 0 0;font-size:.88rem;">أكبر جيل، يركزون على الاستقرار والولاء للعلامات التقليدية.</p>
+          </div>
+          <div style="background:var(--paper);border:1px solid var(--line);border-left:3px solid #0f766e;border-radius:8px;padding:10px;">
+            <b>Baby Boomers</b><br>
+            <span style="font-size:.85rem;color:var(--muted);">1946–1964</span>
+            <p style="margin:6px 0 0;font-size:.88rem;">78 مليون، القوة الشرائية الأكبر، يصرفون بسخاء على الصحة والسفر والترفيه. "Young at heart."</p>
+          </div>
+          <div style="background:var(--paper);border:1px solid var(--line);border-left:3px solid #2563eb;border-radius:8px;padding:10px;">
+            <b>Generation X</b><br>
+            <span style="font-size:.85rem;color:var(--muted);">1965–1976</span>
+            <p style="margin:6px 0 0;font-size:.88rem;">ممتلكات أسرية، متعلمون، أكثر شكاً من الإعلانات، <b>research before buy</b>، يهتمون بالبيئة والقيمة.</p>
+          </div>
+          <div style="background:var(--paper);border:1px solid var(--line);border-left:3px solid #7c3aed;border-radius:8px;padding:10px;">
+            <b>Millennials (Gen Y)</b><br>
+            <span style="font-size:.85rem;color:var(--muted);">1977–2000</span>
+            <p style="margin:6px 0 0;font-size:.88rem;">83 مليون، أول جيل <b>digital native</b>، يثقون بالـ peer reviews، يتوقعون تخصيص، يهتمون بالتجربة أكثر من الامتلاك.</p>
+          </div>
+          <div style="background:var(--paper);border:1px solid var(--line);border-left:3px solid #db2777;border-radius:8px;padding:10px;">
+            <b>Generation Z</b><br>
+            <span style="font-size:.85rem;color:var(--muted);">2001–بعدها</span>
+            <p style="margin:6px 0 0;font-size:.88rem;">ولدوا بالتكنولوجيا، mobile-first، short attention span، يفضلون فيديو قصير (TikTok, Instagram)، يهتمون بالقضايا الاجتماعية.</p>
+          </div>
+        </div>
+        <div class="memory-box" style="margin-top:10px;">تذكّر التواريخ: Silent (حتى 1945) → Boomers (46–64) → Gen X (65–76) → Millennials/Y (77–2000) → Gen Z (2001+).</div>
+        <span class="ar-line">الامتحان يحب التواريخ بالأرقام + الخصائص السلوكية لكل جيل. Baby Boomers = أكبر قوة شرائية، Millennials = digital natives، Gen Z = mobile &amp; social first.</span>
+      </div>
+
       <div class="def-spotlight">
         <div class="def-term">📌 Economic Environment — البيئة الاقتصادية</div>
         <div class="def-body">Economic factors that affect <strong>consumer purchasing power and spending patterns</strong> — income, cost of living, interest rates, savings, and borrowing patterns.</div>
@@ -2451,10 +2608,10 @@
       <div class="from-notes-wrap">
         <span class="from-notes-badge">📝 من النوت</span>
         <ul class="slide-bullets">
-          <li><strong>Slide 10:</strong> Competition is just a click away with online purchasing.</li>
-          <li><strong>Slide 15:</strong> Target shifted emphasis toward the "Pay Less" side of its "Expect More. Pay Less." slogan — practical appeals like "Our lowest prices of the season" and "Free shipping, every day."</li>
-          <li><strong>Slide 16:</strong> <em>Income distribution</em> has created a <em>tiered market</em>: Nordstrom/Neiman Marcus target the affluent; Dollar General/Family Dollar target modest means. Ford deliberately <b>tailors its market offerings across a range of markets, from the affluent to the less affluent</b> — the low-priced Fiesta ($13,200) all the way up to the luxury Lincoln Navigator SUV ($57,775). The Great Recession of 2008/2009 dashed the free-spending expectations of consumers.</li>
-          <li><strong>Slide 22 — Pre-Recession consumer psychology (verbatim):</strong> "American consumers <b>spent freely</b>, fueled by income growth, a boom in the stock market, rapid increases in housing values, and other economic good fortunes. They bought and bought, seemingly <b>without caution</b>, amassing <b>record levels of debt</b>." → Then the Recession hit and consumer spending psychology flipped overnight. This is why marketers track the economic environment: consumer mood can change faster than strategy can adapt.</li>
+          <li><strong>Slide 10:</strong> Competition is just a click away with online purchasing.<span class="ar-line">المنافسة صارت "على بُعد كبسة زر" مع الشراء عبر الإنترنت.</span></li>
+          <li><strong>Slide 15:</strong> Target shifted emphasis toward the "Pay Less" side of its "Expect More. Pay Less." slogan — practical appeals like "Our lowest prices of the season" and "Free shipping, every day."<span class="ar-line">Target غيّرت تركيزها نحو جانب "ادفع أقل" من شعارها "توقع المزيد. ادفع أقل" — رسائل عملية مثل "أقل أسعارنا هذا الموسم" و "شحن مجاني كل يوم".</span></li>
+          <li><strong>Slide 16:</strong> <em>Income distribution</em> has created a <em>tiered market</em>: Nordstrom/Neiman Marcus target the affluent; Dollar General/Family Dollar target modest means. Ford deliberately <b>tailors its market offerings across a range of markets, from the affluent to the less affluent</b> — the low-priced Fiesta ($13,200) all the way up to the luxury Lincoln Navigator SUV ($57,775). The Great Recession of 2008/2009 dashed the free-spending expectations of consumers.<span class="ar-line">توزيع الدخل خلق سوقاً "مُطبّقاً": Nordstrom للأثرياء و Dollar General لمحدودي الدخل. Ford تخصص عروضها لكل الشرائح — من Fiesta الاقتصادية ($13,200) حتى Lincoln Navigator الفاخرة ($57,775). ركود 2008–2009 حطّم توقعات الإنفاق الحر.</span></li>
+          <li><strong>Slide 22 — Pre-Recession consumer psychology (verbatim):</strong> "American consumers <b>spent freely</b>, fueled by income growth, a boom in the stock market, rapid increases in housing values, and other economic good fortunes. They bought and bought, seemingly <b>without caution</b>, amassing <b>record levels of debt</b>." → Then the Recession hit and consumer spending psychology flipped overnight. This is why marketers track the economic environment: consumer mood can change faster than strategy can adapt.<span class="ar-line">ما قبل الركود: المستهلك الأمريكي صرف بلا حذر، مدفوعاً بنمو الدخل وطفرة الأسهم والعقارات، وتراكمت عليه ديون قياسية. ثم وقع الركود وانقلب السلوك في ليلة. لهذا المسوق لازم يتابع البيئة الاقتصادية — المزاج الشرائي يتغير أسرع من الاستراتيجية.</span></li>
         </ul>
       </div>
     </div>
@@ -2557,8 +2714,8 @@
       <div class="from-notes-wrap">
         <span class="from-notes-badge">📝 من النوت</span>
         <ul class="slide-bullets">
-          <li><strong>Slide 17:</strong> Three natural environment trends: (1) growing shortages of raw materials, (2) increased pollution from industry (chemical/nuclear waste, non-biodegradable packaging), (3) increased government intervention in natural resource management. Companies developing strategies that support <em>environmental sustainability</em>.</li>
-          <li><strong>Slide 19:</strong> Many firms are using <em>RFID (radio-frequency identification)</em> technology to track products through various points in the distribution channel.</li>
+          <li><strong>Slide 17:</strong> Three natural environment trends: (1) growing shortages of raw materials, (2) increased pollution from industry (chemical/nuclear waste, non-biodegradable packaging), (3) increased government intervention in natural resource management. Companies developing strategies that support <em>environmental sustainability</em>.<span class="ar-line">ثلاث اتجاهات بيئية: (1) نقص المواد الخام (2) زيادة التلوث الصناعي (نفايات كيميائية/نووية، تغليف غير متحلل) (3) زيادة التدخل الحكومي. الشركات تطور استراتيجيات الاستدامة البيئية.</span></li>
+          <li><strong>Slide 19:</strong> Many firms are using <em>RFID (radio-frequency identification)</em> technology to track products through various points in the distribution channel.<span class="ar-line">كثير من الشركات تستخدم تقنية RFID (التعرف بالترددات اللاسلكية) لتتبع المنتجات عبر نقاط قناة التوزيع.</span></li>
         </ul>
       </div>
     </div>
@@ -2606,6 +2763,29 @@
         </div>
       </div>
 
+      <div class="from-tb-wrap">
+        <span class="from-tb-badge">🟣 من التست بانك — Key US Regulatory Agencies</span>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px;">
+          <div style="background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:10px;">
+            <b>FDA — Food and Drug Administration</b>
+            <p style="margin:4px 0 0;font-size:.88rem;">تنظّم سلامة الغذاء والدواء ومستحضرات التجميل والأجهزة الطبية. تُلزم الشركات بوضع <b>nutrition labels</b> وبيانات صحة صحيحة.</p>
+          </div>
+          <div style="background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:10px;">
+            <b>CPSC — Consumer Product Safety Commission</b>
+            <p style="margin:4px 0 0;font-size:.88rem;">تحمي المستهلك من المنتجات غير الآمنة (ألعاب أطفال، أجهزة منزلية). تستطيع فرض <b>product recalls</b>.</p>
+          </div>
+          <div style="background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:10px;">
+            <b>FTC — Federal Trade Commission</b>
+            <p style="margin:4px 0 0;font-size:.88rem;">تحمي من الإعلانات الخادعة والممارسات غير العادلة وتراقب المنافسة.</p>
+          </div>
+          <div style="background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:10px;">
+            <b>EPA — Environmental Protection Agency</b>
+            <p style="margin:4px 0 0;font-size:.88rem;">تحمي البيئة وتفرض معايير انبعاثات وتغليف.</p>
+          </div>
+        </div>
+        <span class="ar-line">الامتحان يسأل عن FDA و CPSC كوكالات تحمي المستهلك. FDA = غذاء ودواء، CPSC = سلامة المنتجات، FTC = الإعلانات والمنافسة، EPA = البيئة.</span>
+      </div>
+
       <h3>Growing Emphasis on Ethics &amp; Social Responsibility <span class="ar-line" style="font-size:.85rem;">التركيز المتزايد على الأخلاقيات والمسؤولية الاجتماعية</span></h3>
       
       <ul class="slide-bullets">
@@ -2649,10 +2829,10 @@
       <div class="from-notes-wrap">
         <span class="from-notes-badge">📝 من النوت</span>
         <ul class="slide-bullets">
-          <li><strong>Slide 20:</strong> The United States and many countries have laws covering competition, fair trade, environmental protection, product safety, truth in advertising, consumer privacy, and pricing.</li>
-          <li><strong>Slide 21:</strong> <em>Cause-related marketing</em> (Warby Parker): For every pair of glasses sold, distributes a pair to someone in need. Critics warn it can be "cause-exploitative" rather than truly charitable. Beyond laws, business is governed by social codes and professional ethics.</li>
-          <li><strong>Slide 23:</strong> <em>Core beliefs</em> have high persistence (e.g., believing in hard work, marriage). <em>Secondary beliefs</em> are more open to change (e.g., when to get married). Marketers can work to shift secondary beliefs.</li>
-          <li><strong>Slide 24:</strong> "There are three kinds of companies: those who make things happen, those who watch things happen, and those who wonder what's happened." Business history shows that firms' strategies can shape industry structure (Ford's Model T, Nintendo's Wii).</li>
+          <li><strong>Slide 20:</strong> The United States and many countries have laws covering competition, fair trade, environmental protection, product safety, truth in advertising, consumer privacy, and pricing.<span class="ar-line">أمريكا ودول كثيرة عندها قوانين تغطي: المنافسة، التجارة العادلة، حماية البيئة، سلامة المنتج، صدق الإعلان، خصوصية المستهلك، التسعير.</span></li>
+          <li><strong>Slide 21:</strong> <em>Cause-related marketing</em> (Warby Parker): For every pair of glasses sold, distributes a pair to someone in need. Critics warn it can be "cause-exploitative" rather than truly charitable. Beyond laws, business is governed by social codes and professional ethics.<span class="ar-line">التسويق المرتبط بالقضايا (Warby Parker): كل نظارة تُباع = نظارة لمحتاج. المنتقدون يحذرون أنه قد يكون "استغلال للقضية". الأعمال يحكمها قوانين + أعراف اجتماعية + أخلاقيات مهنية.</span></li>
+          <li><strong>Slide 23:</strong> <em>Core beliefs</em> have high persistence (e.g., believing in hard work, marriage). <em>Secondary beliefs</em> are more open to change (e.g., when to get married). Marketers can work to shift secondary beliefs.<span class="ar-line">القيم الجوهرية ثابتة جداً (العمل الجاد، الزواج). القيم الثانوية قابلة للتغيير (سن الزواج). المسوقون يستطيعون التأثير على الثانوية فقط.</span></li>
+          <li><strong>Slide 24:</strong> "There are three kinds of companies: those who make things happen, those who watch things happen, and those who wonder what's happened." Business history shows that firms' strategies can shape industry structure (Ford's Model T, Nintendo's Wii).<span class="ar-line">ثلاثة أنواع شركات: التي تصنع الحدث، التي تراقبه، والتي تتساءل ماذا حدث. تاريخ الأعمال يثبت أن الاستراتيجية قد تعيد تشكيل الصناعة (Ford Model T، Nintendo Wii).</span></li>
         </ul>
       </div>
     </div>
@@ -2966,8 +3146,8 @@
       <div class="from-notes-wrap">
         <span class="from-notes-badge">📝 من النوت</span>
         <ul class="slide-bullets">
-          <li><strong>Slide 5:</strong> The starting point is the <em>stimulus-response model</em> of buyer behavior — marketing and other stimuli enter the consumer's "black box" and produce certain responses. Marketers must figure out what is in the buyer's black box.</li>
-          <li><strong>Slide 6:</strong> Consumer purchases are influenced strongly by <em>cultural, social, personal, and psychological</em> characteristics (Figure 5.2). For the most part, marketers cannot control such factors, but they must take them into account.</li>
+          <li><strong>Slide 5:</strong> The starting point is the <em>stimulus-response model</em> of buyer behavior — marketing and other stimuli enter the consumer's "black box" and produce certain responses. Marketers must figure out what is in the buyer's black box.<span class="ar-line">نقطة البداية: نموذج "المثير-الاستجابة" — المثيرات التسويقية وغيرها تدخل "الصندوق الأسود" للمستهلك وتخرج استجابات. على المسوق أن يفهم ما داخل الصندوق.</span></li>
+          <li><strong>Slide 6:</strong> Consumer purchases are influenced strongly by <em>cultural, social, personal, and psychological</em> characteristics (Figure 5.2). For the most part, marketers cannot control such factors, but they must take them into account.<span class="ar-line">الشراء يتأثر بقوة بأربعة: ثقافية · اجتماعية · شخصية · نفسية (شكل 5.2). المسوق لا يتحكم بها غالباً لكن يجب أن يأخذها بالحسبان.</span></li>
         </ul>
       </div>
     </div>
@@ -3113,6 +3293,51 @@
         <div class="ar-line">الشخصية تُوصف بـ 7 سمات: ثقة بالنفس · هيمنة · اجتماعية · استقلالية · تحفّظ · تكيّف · عدوانية. هذه السمات تُطبّق على العلامة التجارية نفسها.</div>
       </div>
 
+      <div class="from-tb-wrap">
+        <span class="from-tb-badge">🟣 من التست بانك — Aaker's 5 Brand Personality Dimensions</span>
+        <p style="margin:4px 0 8px;">Jennifer Aaker حدّدت <b>5 أبعاد للشخصية التسويقية</b> يمكن قياس أي علامة عليها:</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px;">
+          <div style="background:var(--paper);border:1px solid var(--line);border-top:3px solid #f59e0b;border-radius:8px;padding:10px;">
+            <b>1. Sincerity</b><br><span style="font-size:.82rem;color:var(--muted);">الصدق</span>
+            <p style="margin:4px 0 0;font-size:.85rem;">صادقة، مُخلصة، عائلية. <em>مثال: Hallmark, Dove.</em></p>
+          </div>
+          <div style="background:var(--paper);border:1px solid var(--line);border-top:3px solid #ef4444;border-radius:8px;padding:10px;">
+            <b>2. Excitement</b><br><span style="font-size:.82rem;color:var(--muted);">الإثارة</span>
+            <p style="margin:4px 0 0;font-size:.85rem;">جريئة، مليئة بالروح، خيالية. <em>مثال: Red Bull, Nike.</em></p>
+          </div>
+          <div style="background:var(--paper);border:1px solid var(--line);border-top:3px solid #2563eb;border-radius:8px;padding:10px;">
+            <b>3. Competence</b><br><span style="font-size:.82rem;color:var(--muted);">الكفاءة</span>
+            <p style="margin:4px 0 0;font-size:.85rem;">موثوقة، ذكية، ناجحة. <em>مثال: IBM, Microsoft, Amazon.</em></p>
+          </div>
+          <div style="background:var(--paper);border:1px solid var(--line);border-top:3px solid #7c3aed;border-radius:8px;padding:10px;">
+            <b>4. Sophistication</b><br><span style="font-size:.82rem;color:var(--muted);">الرقي</span>
+            <p style="margin:4px 0 0;font-size:.85rem;">راقية، فاتنة، ساحرة. <em>مثال: Mercedes, Rolex, Chanel.</em></p>
+          </div>
+          <div style="background:var(--paper);border:1px solid var(--line);border-top:3px solid #78350f;border-radius:8px;padding:10px;">
+            <b>5. Ruggedness</b><br><span style="font-size:.82rem;color:var(--muted);">الخشونة/المتانة</span>
+            <p style="margin:4px 0 0;font-size:.85rem;">رياضية، قوية، خارجية. <em>مثال: Harley-Davidson, Jeep, Levi's.</em></p>
+          </div>
+        </div>
+        <div class="memory-box" style="margin-top:10px;">اختصار: <b>SECSR</b> → Sincerity · Excitement · Competence · Sophistication · Ruggedness.</div>
+        <span class="ar-line">الامتحان يعطيك علامة تجارية ويسأل "أي بُعد شخصية؟" — احفظ الأمثلة الكلاسيكية: Harley = Ruggedness، Mercedes = Sophistication، Apple = Excitement، IBM = Competence.</span>
+      </div>
+
+      <div class="from-tb-wrap">
+        <span class="from-tb-badge">🟣 من التست بانك — Brand Community &amp; Evangelists</span>
+        <div style="display:grid;gap:10px;margin-top:6px;">
+          <div>
+            <strong>🏍️ Brand Community</strong>
+            <p style="margin:4px 0 0;">مجموعة من المستهلكين تربطهم علاقة قوية بالعلامة وببعضهم. <b>Harley-Davidson Owners Group (HOG)</b> هو المثال الكلاسيكي — أعضاء يتشاركون نمط حياة "Ruggedness + Freedom" ويحضرون تجمعات سنوية. هذا يخلق <em>brand loyalty</em> قوية جداً وتسويق شفهي مجاني.</p>
+            <span class="ar-line">مجتمع العلامة = مستهلكون مرتبطون ببعضهم وبالعلامة. Harley's HOG مثال كلاسيكي: تجمعات، رحلات، هوية مشتركة.</span>
+          </div>
+          <div>
+            <strong>📣 Brand Evangelists</strong>
+            <p style="margin:4px 0 0;">أكثر من مجرد عملاء مخلصين — عملاء <b>متحمسون</b> يسوّقون للعلامة طوعاً وبحماس شديد لأصدقائهم وعائلاتهم ووسائل التواصل. يصفهم كوتلر بأنهم "unpaid sales force". ينتجون من <b>customer engagement</b> العميق.</p>
+            <span class="ar-line">Brand Evangelists = عملاء "مبشّرون" يسوّقون للعلامة مجاناً وبحماس. أعلى درجة من الولاء — أقوى من مجرد الشراء المتكرر.</span>
+          </div>
+        </div>
+      </div>
+
 
       <div class="memory-box">العوامل الشخصية الخمسة: العمر + المهنة + الوضع الاقتصادي + أسلوب الحياة + الشخصية</div>
 
@@ -3205,16 +3430,16 @@
       <div class="from-notes-wrap">
         <span class="from-notes-badge">📝 من النوت</span>
         <ul class="slide-bullets">
-          <li><strong>Slide 7:</strong> The cultural shift toward greater concern about health and fitness has created a huge industry for exercise equipment, organic foods, and various diets.</li>
-          <li><strong>Slide 8 — Hispanic subculture nuance:</strong> The group has subsegments (<b>Mexicans, Costa Ricans, Argentineans, Cubans</b>) with different buying behaviors. <b>Older, first-generation</b> Hispanics tend to be very <b>brand loyal</b>. <b>Younger</b> Hispanics show increasing <b>price sensitivity</b> and willingness to switch to <b>store brands</b>.</li>
-          <li><strong>Slide 8 — Asian American &amp; African American:</strong> Asian American consumers — <b>18M+, annual buying power approaching $1 billion by 2017</b> — are the <b>most affluent</b> U.S. demographic segment, the <b>most brand conscious</b>, and the <b>second-fastest-growing</b> subsegment after Hispanics. For African Americans: <b>Cover Girl's "Queen Latifah" line</b> is specially formulated "to celebrate the beauty of women of color." <em>Cross-cultural marketing</em> appeals to similarities across subcultures.</li>
-          <li><strong>Slide 14 — Nielsen PRIZM (full 7 groups):</strong> <b>Striving Singles · Young Achievers · Mainstream Families · Midlife Success · Affluent Empty Nests · Cautious Couples · Sustaining Seniors</b>. Also subsegments like <b>Young Digerati, Bohemian Mix, Young Influentials</b>. Classification criteria: age, education, income, occupation, family composition, ethnicity, housing + purchases, free-time activities, media preferences.</li>
-          <li><strong>Slide 16:</strong> KitchenAid sells much more than appliances — it sells an entire cooking and entertainment lifestyle to "Kitchenthusiasts."</li>
-          <li><strong>Slide 18:</strong> Beliefs and attitudes are difficult to change. Example: Vidalia Onion Committee's campaign made believers of children — sales of bagged Vidalia onions shot up 30%.</li>
-          <li><strong>Slide 19:</strong> Some marketers use <em>projective techniques</em> / <em>interpretive consumer research</em> to dig deeper into consumer psyches (asking consumers to describe brands as animals or cars, dream therapy, etc.).</li>
-          <li><strong>Slide 20:</strong> Maslow's hierarchy explains why people are driven by particular needs at particular times — needs arranged from most pressing (bottom) to least pressing (top).</li>
-          <li><strong>Slide 22:</strong> People are exposed to an estimated <strong>3,000–5,000 ad messages every day</strong>. They form different perceptions through: <em>selective attention</em>, <em>selective distortion</em>, and <em>selective retention</em>.</li>
-          <li><strong>Slide 24:</strong> <em>Cues</em> are minor stimuli that determine when/where/how a person responds. If experience is rewarding, the response is <em>reinforced</em> — increasing probability of repeat purchase.</li>
+          <li><strong>Slide 7:</strong> The cultural shift toward greater concern about health and fitness has created a huge industry for exercise equipment, organic foods, and various diets.<span class="ar-line">التحول الثقافي نحو الاهتمام بالصحة واللياقة خلق صناعة ضخمة لمعدات الرياضة والأطعمة العضوية والحميات.</span></li>
+          <li><strong>Slide 8 — Hispanic subculture nuance:</strong> The group has subsegments (<b>Mexicans, Costa Ricans, Argentineans, Cubans</b>) with different buying behaviors. <b>Older, first-generation</b> Hispanics tend to be very <b>brand loyal</b>. <b>Younger</b> Hispanics show increasing <b>price sensitivity</b> and willingness to switch to <b>store brands</b>.<span class="ar-line">الثقافة الفرعية Hispanic فيها مجموعات فرعية (مكسيكيون، كوبيون...) بسلوك مختلف. كبار السن من الجيل الأول مخلصون للعلامة، بينما الشباب أكثر حساسية للسعر ومستعدون لعلامات المتجر.</span></li>
+          <li><strong>Slide 8 — Asian American &amp; African American:</strong> Asian American consumers — <b>18M+, annual buying power approaching $1 billion by 2017</b> — are the <b>most affluent</b> U.S. demographic segment, the <b>most brand conscious</b>, and the <b>second-fastest-growing</b> subsegment after Hispanics. For African Americans: <b>Cover Girl's "Queen Latifah" line</b> is specially formulated "to celebrate the beauty of women of color." <em>Cross-cultural marketing</em> appeals to similarities across subcultures.<span class="ar-line">المستهلك الآسيوي الأمريكي (+18م) الأكثر ثراءً ووعياً بالعلامات. African American: خط Queen Latifah من Cover Girl مصمم للنساء ذوات البشرة الملونة. التسويق عبر الثقافات يخاطب القواسم المشتركة.</span></li>
+          <li><strong>Slide 14 — Nielsen PRIZM (full 7 groups):</strong> <b>Striving Singles · Young Achievers · Mainstream Families · Midlife Success · Affluent Empty Nests · Cautious Couples · Sustaining Seniors</b>. Also subsegments like <b>Young Digerati, Bohemian Mix, Young Influentials</b>. Classification criteria: age, education, income, occupation, family composition, ethnicity, housing + purchases, free-time activities, media preferences.<span class="ar-line">تقسيم Nielsen PRIZM لـ 7 مجموعات حسب السن والدخل والتعليم والأسرة ونمط الحياة. يستخدمه المسوقون لاستهداف دقيق.</span></li>
+          <li><strong>Slide 16:</strong> KitchenAid sells much more than appliances — it sells an entire cooking and entertainment lifestyle to "Kitchenthusiasts."<span class="ar-line">KitchenAid ما تبيع أجهزة فقط — تبيع نمط حياة طبخ وضيافة كامل لعشّاق المطبخ "Kitchenthusiasts".</span></li>
+          <li><strong>Slide 18:</strong> Beliefs and attitudes are difficult to change. Example: Vidalia Onion Committee's campaign made believers of children — sales of bagged Vidalia onions shot up 30%.<span class="ar-line">المعتقدات والاتجاهات يصعب تغييرها. مثال: حملة Vidalia Onion أقنعت الأطفال فارتفعت مبيعات البصل المعبأ 30%.</span></li>
+          <li><strong>Slide 19:</strong> Some marketers use <em>projective techniques</em> / <em>interpretive consumer research</em> to dig deeper into consumer psyches (asking consumers to describe brands as animals or cars, dream therapy, etc.).<span class="ar-line">بعض المسوقين يستخدمون تقنيات إسقاطية (اطلب من المستهلك يصف العلامة كحيوان أو سيارة، تحليل الأحلام) للوصول للدوافع العميقة.</span></li>
+          <li><strong>Slide 20:</strong> Maslow's hierarchy explains why people are driven by particular needs at particular times — needs arranged from most pressing (bottom) to least pressing (top).<span class="ar-line">هرم ماسلو يفسر لماذا يُدفع الناس لاحتياجات معينة في أوقات معينة — مرتبة من الأكثر إلحاحاً (أسفل) للأقل (أعلى).</span></li>
+          <li><strong>Slide 22:</strong> People are exposed to an estimated <strong>3,000–5,000 ad messages every day</strong>. They form different perceptions through: <em>selective attention</em>, <em>selective distortion</em>, and <em>selective retention</em>.<span class="ar-line">الناس يتعرضون لـ 3,000–5,000 رسالة إعلانية يومياً. يشكّلون إدراكهم عبر: انتباه انتقائي + تشويه انتقائي + احتفاظ انتقائي.</span></li>
+          <li><strong>Slide 24:</strong> <em>Cues</em> are minor stimuli that determine when/where/how a person responds. If experience is rewarding, the response is <em>reinforced</em> — increasing probability of repeat purchase.<span class="ar-line">الإشارات (Cues) محفزات ثانوية تحدد متى/أين/كيف يستجيب الشخص. التجربة المجزية تُعزّز الاستجابة → احتمال شراء متكرر أعلى.</span></li>
         </ul>
       </div>
     </div>
@@ -3374,12 +3599,12 @@
       <div class="from-notes-wrap">
         <span class="from-notes-badge">📝 من النوت</span>
         <ul class="slide-bullets">
-          <li><strong>Slide 28:</strong> Buying behavior differs greatly — complex decisions (new car) involve full info-gathering; low-involvement (toothpaste) consumers simply pick a familiar brand. Figure 5.5 shows types based on involvement level and brand differences.</li>
-          <li><strong>Slide 29:</strong> Consumers may pass through all 5 stages slowly or quickly. In routine purchases, consumers often skip or reverse stages.</li>
-          <li><strong>Slide 30:</strong> Need Recognition can occur because of an ad or discussion with a friend. Marketer should research what kinds of needs arise and how they led the consumer to the product.</li>
-          <li><strong>Slide 31:</strong> In information search, traditional sources (ads) <em>inform</em> buyers, but personal sources <em>legitimize</em> and <em>evaluate</em> products. Most effective sources tend to be personal.</li>
-          <li><strong>Slide 34:</strong> Consumer satisfaction lies in the relationship between <em>expectations</em> and <em>perceived performance</em>.</li>
-          <li><strong>Slide 35:</strong> Postpurchase cognitive dissonance — almost all major purchases result in discomfort caused by postpurchase conflict. Consumers feel uneasy about the drawbacks of the chosen brand.</li>
+          <li><strong>Slide 28:</strong> Buying behavior differs greatly — complex decisions (new car) involve full info-gathering; low-involvement (toothpaste) consumers simply pick a familiar brand. Figure 5.5 shows types based on involvement level and brand differences.<span class="ar-line">سلوك الشراء يختلف كثيراً — القرارات المعقدة (سيارة جديدة) تتطلب بحث كامل، بينما المنتجات منخفضة المشاركة (معجون أسنان) يأخذ فيها المستهلك العلامة المألوفة مباشرة.</span></li>
+          <li><strong>Slide 29:</strong> Consumers may pass through all 5 stages slowly or quickly. In routine purchases, consumers often skip or reverse stages.<span class="ar-line">المستهلك قد يمر بالمراحل الخمس ببطء أو بسرعة. في الشراء الروتيني يتخطى مراحل أو يعكس ترتيبها.</span></li>
+          <li><strong>Slide 30:</strong> Need Recognition can occur because of an ad or discussion with a friend. Marketer should research what kinds of needs arise and how they led the consumer to the product.<span class="ar-line">إدراك الحاجة قد يحدث بسبب إعلان أو حديث مع صديق. على المسوق أن يبحث نوع الاحتياجات التي تنشأ وكيف قادت للمنتج.</span></li>
+          <li><strong>Slide 31:</strong> In information search, traditional sources (ads) <em>inform</em> buyers, but personal sources <em>legitimize</em> and <em>evaluate</em> products. Most effective sources tend to be personal.<span class="ar-line">في البحث عن المعلومات: المصادر التقليدية (الإعلانات) تُعلم، أما المصادر الشخصية فتُضفي الشرعية وتُقيّم. الأكثر فاعلية هي الشخصية.</span></li>
+          <li><strong>Slide 34:</strong> Consumer satisfaction lies in the relationship between <em>expectations</em> and <em>perceived performance</em>.<span class="ar-line">رضا المستهلك يقع في العلاقة بين التوقعات والأداء المُدرَك.</span></li>
+          <li><strong>Slide 35:</strong> Postpurchase cognitive dissonance — almost all major purchases result in discomfort caused by postpurchase conflict. Consumers feel uneasy about the drawbacks of the chosen brand.<span class="ar-line">التنافر المعرفي بعد الشراء — أغلب المشتريات الكبيرة يعقبها إحساس بالانزعاج من عيوب العلامة المختارة.</span></li>
         </ul>
       </div>
     </div>
@@ -3513,8 +3738,8 @@
       <div class="from-notes-wrap">
         <span class="from-notes-badge">📝 من النوت</span>
         <ul class="slide-bullets">
-          <li><strong>Adoption &amp; Diffusion:</strong> Innovators are the first 2.5% to adopt; Early Adopters are opinion leaders (13.5%) who guide the rest. The Early and Late Majority together form 68%. Laggards (16%) are last — tradition-bound and suspicious of change.</li>
-          <li><strong>Product characteristics:</strong> Innovations with high relative advantage, high compatibility, low complexity, high trialability, and high observability tend to diffuse <em>faster</em> into markets.</li>
+          <li><strong>Adoption &amp; Diffusion:</strong> Innovators are the first 2.5% to adopt; Early Adopters are opinion leaders (13.5%) who guide the rest. The Early and Late Majority together form 68%. Laggards (16%) are last — tradition-bound and suspicious of change.<span class="ar-line">التبني والانتشار: المبتكرون أول 2.5% · المتبنون الأوائل 13.5% (قادة الرأي) · الأغلبية المبكرة + المتأخرة 68% · المتقاعسون 16% (تقليديون يخشون التغيير).</span></li>
+          <li><strong>Product characteristics:</strong> Innovations with high relative advantage, high compatibility, low complexity, high trialability, and high observability tend to diffuse <em>faster</em> into markets.<span class="ar-line">خصائص المنتج التي تسرّع الانتشار: ميزة نسبية عالية + توافق مع القيم + بساطة + قابلية للتجربة + قابلية للملاحظة.</span></li>
         </ul>
       </div>
     </div>
