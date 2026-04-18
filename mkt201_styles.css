@@ -1372,6 +1372,18 @@ body.dark .ref-header { color: rgba(255,255,255,0.7); border-color: rgba(15, 118
 .search-result-item:hover { border-color: var(--accent); }
 .search-result-item strong { color: var(--accent); }
 
+/* Search jump highlight — brief glow on the scrolled-to element */
+@keyframes searchPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(20,184,166,0.55), 0 0 0 0 rgba(20,184,166,0.35); background-color: rgba(20,184,166,0.22); }
+  60%  { box-shadow: 0 0 0 10px rgba(20,184,166,0), 0 0 24px 6px rgba(20,184,166,0.35); background-color: rgba(20,184,166,0.12); }
+  100% { box-shadow: 0 0 0 0 rgba(20,184,166,0), 0 0 0 0 rgba(20,184,166,0); background-color: transparent; }
+}
+.search-highlight {
+  animation: searchPulse 2.6s ease-out;
+  border-radius: 12px;
+  scroll-margin-top: 80px;
+}
+
 /* ── DARK MODE ───────────────────────── */
 /* NOTE: main body.dark variables are defined later in the file (line ~2518) */
 

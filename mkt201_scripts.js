@@ -2855,14 +2855,73 @@ function updateArFab() {
 const searchIndex = [];
 
 function buildSearchIndex() {
+  // Reset (in case called twice)
+  searchIndex.length = 0;
+  // Quiz questions
   allQuestions.forEach((q, i) => {
     const fullText = [q.q, ...(q.opts||[]), q.exp||''].join(' ');
     searchIndex.push({ type: 'quiz', ch: q.ch, text: q.q, fullText, idx: i });
   });
+  // Flashcards
   flashCards.forEach((c, i) => {
     const fullText = c.front + ' — ' + c.back + ' ' + (c.exp||'');
     searchIndex.push({ type: 'flash', ch: c.ch, text: c.front + ' — ' + c.back, fullText, idx: i });
   });
+  // Chapter content (definitions, concept cards, memory/exam boxes, notes blocks, headings)
+  const selectors = '.def-spotlight, .concept-card, .memory-box, .exam-tip, .example-box, .ref-table, .from-notes-wrap, .from-tb-wrap, .from-book-wrap, .from-past-wrap, .lo-section > .lo-header, h3, h4';
+  let contentCounter = 0;
+  ['ch1','ch2','ch3','ch5'].forEach(ch => {
+    const page = document.getElementById(`page-${ch}`);
+    if (!page) return;
+    page.querySelectorAll(selectors).forEach(el => {
+      // Strip Arabic (.ar-line) from preview so it doesn't dominate
+      const clone = el.cloneNode(true);
+      clone.querySelectorAll('.ar-line').forEach(a => a.remove());
+      const text = clone.textContent.trim().replace(/\s+/g, ' ');
+      if (text.length < 10) return;
+      let label;
+      if (el.classList.contains('def-spotlight'))       label = '📌 تعريف';
+      else if (el.classList.contains('concept-card'))   label = '🎯 مفهوم';
+      else if (el.classList.contains('memory-box'))     label = '💡 تذكر';
+      else if (el.classList.contains('exam-tip'))       label = '⭐ نصيحة امتحان';
+      else if (el.classList.contains('example-box'))    label = '📖 مثال';
+      else if (el.classList.contains('ref-table'))      label = '📊 جدول';
+      else if (el.classList.contains('from-notes-wrap'))label = '📝 من النوت';
+      else if (el.classList.contains('from-tb-wrap'))   label = '🟣 من التست بانك';
+      else if (el.classList.contains('from-book-wrap'))label = '📘 من الكتاب';
+      else if (el.classList.contains('from-past-wrap'))label = '🗂️ من التجميعات';
+      else if (el.classList.contains('lo-header'))      label = '🎯 هدف تعلم';
+      else                                               label = '📑 عنوان';
+      if (!el.id) el.id = `search-target-${contentCounter++}`;
+      // For LO headers, we want to scroll to the whole section
+      const targetEl = el.classList.contains('lo-header') ? el.parentElement : el;
+      if (!targetEl.id) targetEl.id = `search-target-${contentCounter++}`;
+      searchIndex.push({
+        type: 'content',
+        ch,
+        label,
+        text: text.substring(0, 140),
+        fullText: text + ' ' + el.textContent,
+        targetId: targetEl.id
+      });
+    });
+  });
+}
+
+function jumpToContent(ch, targetId) {
+  showPage(`page-${ch}`);
+  setTimeout(() => {
+    const el = document.getElementById(targetId);
+    if (!el) return;
+    // Open containing LO section if collapsed
+    const lo = el.closest('.lo-section');
+    if (lo && !lo.classList.contains('open')) lo.classList.add('open');
+    setTimeout(() => {
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      el.classList.add('search-highlight');
+      setTimeout(() => el.classList.remove('search-highlight'), 2800);
+    }, 120);
+  }, 180);
 }
 
 function startSingleQuestion(idx) {
@@ -2875,9 +2934,26 @@ function startSingleQuestion(idx) {
   }, 80);
 }
 function jumpToFlashCard(idx) {
-  const fc = document.getElementById('flashcard-container');
-  if (!fc) return;
+  const target = flashCards[idx];
+  if (!target) return;
   showPage('page-flash');
+  setTimeout(() => {
+    // Set filter to the card's chapter and put the target first
+    flashState.filter = target.ch;
+    const rest = flashCards.filter((c, i) => i !== idx && c.ch === target.ch);
+    flashState.cards = [target, ...shuffle(rest)];
+    flashState.current = 0;
+    document.querySelectorAll('.flash-filter-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.ch === target.ch);
+    });
+    renderFlashCard();
+    const card = document.getElementById('flash-card');
+    if (card) {
+      card.classList.add('search-highlight');
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(() => card.classList.remove('search-highlight'), 2800);
+    }
+  }, 150);
 }
 
 function openSearch() {
@@ -2898,15 +2974,33 @@ function runSearch(val) {
   const q = val.toLowerCase();
   const hits = searchIndex.filter(item => (item.fullText||item.text).toLowerCase().includes(q)).slice(0, 12);
   if (!hits.length) { res.innerHTML = '<p style="color:var(--muted);font-size:.85rem;text-align:center;margin:0;">لا توجد نتائج</p>'; return; }
-  res.innerHTML = hits.map(h => {
-    const action = h.type === 'quiz'
-      ? `closeSearch();startSingleQuestion(${h.idx})`
-      : `closeSearch();showPage('page-${h.ch}');setTimeout(()=>jumpToFlashCard(${h.idx}),200)`;
-    return `<div class="search-result-item" onclick="${action}">
-      <strong>${h.ch.toUpperCase()}</strong> · ${h.type === 'quiz' ? '❓ سؤال' : '🃏 فلاش كارد'}
-      <div style="font-size:.88rem;color:var(--ink);margin-top:2px;">${h.text.substring(0,120)}...</div>
-    </div>`;
-  }).join('');
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  res.textContent = '';
+  hits.forEach(h => {
+    const div = document.createElement('div');
+    div.className = 'search-result-item';
+    let badge;
+    if (h.type === 'quiz') {
+      div.onclick = () => { closeSearch(); startSingleQuestion(h.idx); };
+      badge = '❓ سؤال';
+    } else if (h.type === 'flash') {
+      div.onclick = () => { closeSearch(); jumpToFlashCard(h.idx); };
+      badge = '🃏 فلاش كارد';
+    } else {
+      const ch = h.ch, tid = h.targetId;
+      div.onclick = () => { closeSearch(); jumpToContent(ch, tid); };
+      badge = h.label || '📄 محتوى';
+    }
+    const title = document.createElement('strong');
+    title.textContent = h.ch.toUpperCase();
+    div.appendChild(title);
+    div.appendChild(document.createTextNode(' · ' + badge));
+    const body = document.createElement('div');
+    body.style.cssText = 'font-size:.88rem;color:var(--ink);margin-top:2px;';
+    body.textContent = h.text.substring(0,140) + (h.text.length>140?'…':'');
+    div.appendChild(body);
+    res.appendChild(div);
+  });
 }
 
 // ══════════════════════════════════════════════
