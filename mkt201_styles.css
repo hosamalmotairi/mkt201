@@ -525,11 +525,11 @@ p  { margin: 0 0 10px; }
   display: block;
   font-family: "Cairo", sans-serif;
   font-optical-sizing: auto;
-  font-weight: 700;
+  font-weight: 600;
   font-style: normal;
   font-variation-settings: "slnt" 0;
-  font-size: 0.97em;
-  line-height: 1.9;
+  font-size: 0.85em;
+  line-height: 1.85;
   letter-spacing: 0;
   color: #0c6b62;
   background: rgba(13,148,136,0.07);
@@ -549,8 +549,8 @@ body.arabic-hidden .ar-line { display: none; }
 /* ar-line inside headings — slightly smaller, still block */
 h1 .ar-line, h2 .ar-line, h3 .ar-line, h4 .ar-line, h5 .ar-line {
   display: block;
-  font-size: 0.78em;
-  font-weight: 700;
+  font-size: 0.68em;
+  font-weight: 600;
   padding: 6px 12px 6px 10px;
   margin-top: 6px;
 }
@@ -559,7 +559,8 @@ h1 .ar-line, h2 .ar-line, h3 .ar-line, h4 .ar-line, h5 .ar-line {
 li .ar-line {
   display: block;
   margin-top: 5px;
-  font-size: 0.93em;
+  font-size: 0.82em;
+  font-weight: 600;
 }
 
 /* ar-line inside <p> — block below paragraph text */
@@ -575,9 +576,9 @@ p .ar-line {
   border-radius: 4px;
   color: #ffffff;
   margin-top: 10px;
-  font-size: 0.97em;
+  font-size: 0.85em;
   font-family: "Cairo", sans-serif;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 /* ── SUMMARY / EXAMPLE / MCQ BOXES ─── */
@@ -1400,7 +1401,7 @@ body.dark .master-card { background: #051312; border-color: #0f3330; }
 body.dark .ref-table td { background: var(--paper); color: var(--ink); }
 body.dark .ref-table tr:nth-child(even) td { background: var(--bg); }
 body.dark .ref-table th { background: var(--accent-dark); }
-body.dark .ar-line { background: rgba(13,148,136,0.12); color: #5eead4; border-right-color: #14b8a6; border-left-color: rgba(20,184,166,0.2); border-top-color: rgba(20,184,166,0.15); border-bottom-color: rgba(20,184,166,0.15); font-weight: 700; }
+body.dark .ar-line { background: rgba(13,148,136,0.12); color: #5eead4; border-right-color: #14b8a6; border-left-color: rgba(20,184,166,0.2); border-top-color: rgba(20,184,166,0.15); border-bottom-color: rgba(20,184,166,0.15); font-weight: 600; }
 body.dark h4 { color: var(--accent-bright); }
 body.dark .pro-tip { background: rgba(13,148,136,0.06); border-color: rgba(13,148,136,0.18); }
 body.dark input[type=text] { background: #051312 !important; color: #e4f5f3 !important; border-color: #0d9488 !important; }
