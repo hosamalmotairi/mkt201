@@ -140,6 +140,40 @@
       display: flex;
       width: fit-content;
     }
+
+    /* ── FROM-BOOK BADGE (من الكتاب — Kotler textbook) ── */
+    .from-book-badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      background: #dbeafe; color: #1e40af;
+      border: 1px solid #93c5fd;
+      border-radius: 20px; padding: 2px 9px;
+      font-size: .72rem; font-weight: 700;
+      letter-spacing: .02em;
+      margin-bottom: 8px;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+    body.dark .from-book-badge {
+      background: rgba(96,165,250,.14); color: #93c5fd;
+      border-color: rgba(96,165,250,.38);
+    }
+    .from-book-wrap {
+      position: relative;
+      border-left: 3px solid #93c5fd;
+      background: #eff6ff;
+      padding: 14px 16px;
+      border-radius: 10px;
+      margin: 12px 0;
+    }
+    body.dark .from-book-wrap {
+      background: rgba(96,165,250,.06);
+      border-left-color: rgba(96,165,250,.45);
+    }
+    .from-book-wrap > .from-book-badge {
+      margin-bottom: 6px;
+      display: flex;
+      width: fit-content;
+    }
   </style>
   <script defer src="/_vercel/insights/script.js"></script>
 </head>
@@ -643,8 +677,8 @@
         <span class="from-notes-badge">📝 من النوت</span>
 <ul class="slide-bullets">
           <li><strong>Slide 3:</strong> Perhaps the simplest definition of marketing is <em>engaging customers and managing profitable customer relationships</em>.<span class="ar-line">أبسط تعريف للتسويق: إشراك العملاء وإدارة علاقات مربحة معهم.</span></li>
-          <li><strong>Slide 6:</strong> <em>Wants</em> are the form human needs take as they are shaped by one's society. Target CEO Brian Cornell makes regular unannounced visits to Target stores with local moms and loyal shoppers to stay close to customers.<span class="ar-line">الرغبات هي الشكل الذي تتخذه الاحتياجات تحت تأثير المجتمع. مدير Target يزور المتاجر فجأة مع أمهات من المنطقة وعملاء مخلصين ليبقى قريباً من العميل.</span></li>
-          <li><strong>Slide 7:</strong> <em>Marketing experiences:</em> More than just a sports bar, Buffalo Wild Wings mission is to provide a total eating and social environment that "fuels the sports fan experience" through in-store and online engagement.<span class="ar-line">التجارب التسويقية: Buffalo Wild Wings أكثر من مطعم رياضي — رسالتها توفير بيئة أكل واجتماع كاملة تغذي تجربة مشجع الرياضة داخل المتجر وعبر الإنترنت.</span></li>
+          <li><em>Wants</em> are the form human needs take as they are shaped by one's society. Target CEO Brian Cornell makes regular unannounced visits to Target stores with local moms and loyal shoppers to stay close to customers.<span class="ar-line">الرغبات هي الشكل الذي تتخذه الاحتياجات تحت تأثير المجتمع. مدير Target يزور المتاجر فجأة مع أمهات من المنطقة وعملاء مخلصين ليبقى قريباً من العميل.</span></li>
+          <li><em>Marketing experiences:</em> More than just a sports bar, Buffalo Wild Wings mission is to provide a total eating and social environment that "fuels the sports fan experience" through in-store and online engagement.<span class="ar-line">التجارب التسويقية: Buffalo Wild Wings أكثر من مطعم رياضي — رسالتها توفير بيئة أكل واجتماع كاملة تغذي تجربة مشجع الرياضة داخل المتجر وعبر الإنترنت.</span></li>
         </ul>
       </div>
     </div>
@@ -795,7 +829,7 @@
       <div class="from-notes-wrap">
         <span class="from-notes-badge">📝 من النوت</span>
         <ul class="slide-bullets">
-          <li><strong>Slides 9–11:</strong> Marketing was traditionally carried out by sellers — but now also includes consumers. Marketers now ask: "How can our customers influence us?" and "How can our customers influence each other?"<span class="ar-line">التسويق كان تقليدياً من البائع فقط، أما الآن فالمستهلك جزء منه. المسوقون يسألون: "كيف يؤثر عملاؤنا علينا؟" و "كيف يؤثرون على بعضهم؟"</span></li>
+          <li><strong>Slide 13:</strong> Marketing was traditionally carried out by sellers — but now also includes consumers. Marketers now ask: "How can our customers influence us?" and "How can our customers influence each other?"<span class="ar-line">التسويق كان تقليدياً من البائع فقط، أما الآن فالمستهلك جزء منه. المسوقون يسألون: "كيف يؤثر عملاؤنا علينا؟" و "كيف يؤثرون على بعضهم؟"</span></li>
           <li><strong>Slide 11:</strong> Marketers are no longer asking only <em>"How can we influence our customers?"</em> but also <em>"How can our customers influence us?"</em> and even <em>"How can our customers influence each other?"</em> — reflecting the shift to two-way, customer-managed relationships.<span class="ar-line">لم يعد المسوقون يسألون فقط "كيف نؤثر على عملائنا؟" بل أيضاً "كيف يمكن للعملاء أن يؤثروا علينا؟" وحتى "كيف يؤثر العملاء على بعضهم؟"</span></li>
           <li><strong>Slide 13:</strong> Strong value proposition examples: BMW = "the ultimate driving machine," Nissan Leaf = "100% electric. Zero gas. Zero tailpipe," New Balance Minimus = "like barefoot only better," Facebook = "connect and share with the people in your life," YouTube = "a place for people to connect, inform, and inspire others."<span class="ar-line">أمثلة على عرض القيمة: BMW "آلة القيادة المطلقة" · Nissan Leaf "100% كهربائية، صفر بنزين" · Facebook "تواصل وشارك مع من تحب" · YouTube "مكان للتواصل والإلهام".</span></li>
         </ul>
@@ -941,7 +975,7 @@
 
       <h3>The 4 Ps of the Marketing Mix <span class="ar-line" style="font-size:.85rem;">المزيج التسويقي — الـ 4Ps</span></h3>
 
-      <div class="from-notes-wrap"><span class="from-notes-badge">📘 من الكتاب — How a Marketing Program Becomes 4Ps</span>
+      <div class="from-book-wrap"><span class="from-book-badge">📘 من الكتاب — How a Marketing Program Becomes 4Ps</span>
         The firm follows this sequence to build its marketing program:
         <ol style="margin:8px 0 0;">
           <li>Create a <b>need-satisfying market offering</b> → <b>Product</b>.</li>
@@ -1072,7 +1106,7 @@
         <div class="ar-line">العملية الشاملة لبناء علاقات مربحة مع العملاء والحفاظ عليها بتقديم قيمة عالية ورضا متفوق. تشمل إدارة معلومات تفصيلية عن كل عميل، وإدارة دقيقة لـ <b>نقاط التماس (Touch Points)</b> مع العميل لتحقيق أعلى ولاء.</div>
       </div>
 
-      <div class="from-notes-wrap"><span class="from-notes-badge">📘 من الكتاب — Customer Evangelists</span>
+      <div class="from-book-wrap"><span class="from-book-badge">📘 من الكتاب — Customer Evangelists</span>
         Delighted customers become <b>willing marketing partners</b> and <b>"customer evangelists"</b> who spread the word about their good experiences to others. <br>Smart companies aim to delight customers by <b>promising only what they can deliver, then delivering MORE than they promise</b>.
         <span class="ar-line">العملاء المبهورون يتحولون لـ"مبشّرين" بالعلامة التجارية يروّجون لها مجاناً. القاعدة الذهبية: <b>وعد بأقل مما تستطيع، وقدّم أكثر مما وعدت</b>.</span>
       </div>
@@ -1194,9 +1228,10 @@
       <div class="from-notes-wrap">
         <span class="from-notes-badge">📝 من النوت</span>
         <ul class="slide-bullets">
-          <li><strong>Slide 21:</strong> The key to lasting customer relationships is to create superior customer value and satisfaction. Smart companies aim to delight customers by promising only what they can deliver and then delivering more than they promise.<span class="ar-line">مفتاح العلاقات طويلة المدى: قيمة متفوقة ورضا عالي. القاعدة الذهبية: وعد بأقل مما تقدر، ثم قدّم أكثر من الوعد.</span></li>
-          <li><strong>Slide 23:</strong> Consumer-generated marketing — Mountain Dew stirred user-generated content for a limited-time reintroduction of Baja Blast, boosting online chatter by <strong>170%</strong>.<span class="ar-line">التسويق بمحتوى المستهلك — Mountain Dew حرّكت محتوى المستخدمين لإعادة إطلاق Baja Blast فزادت الأحاديث بنسبة 170%.</span></li>
-          <li><strong>Slide 25:</strong> Customer types by profitability × loyalty: <em>Strangers</em> (low/low), <em>Butterflies</em> (profitable/not loyal), <em>True Friends</em> (profitable/loyal), <em>Barnacles</em> (loyal/not profitable). Goal: build the <em>right relationships</em> with the <em>right customers</em>.<span class="ar-line">أنواع العملاء حسب الربحية × الولاء: غرباء (منخفض/منخفض) · فراشات (مربح/غير مخلص) · أصدقاء حقيقيون (مربح/مخلص) · محّارات (مخلص/غير مربح). الهدف: علاقات صحيحة مع عملاء صحيحين.</span></li>
+          <li>The key to lasting customer relationships is to create superior customer value and satisfaction. Smart companies aim to delight customers by promising only what they can deliver and then delivering more than they promise.<span class="ar-line">مفتاح العلاقات طويلة المدى: قيمة متفوقة ورضا عالي. القاعدة الذهبية: وعد بأقل مما تقدر، ثم قدّم أكثر من الوعد.</span></li>
+          <li>Consumer-generated marketing — Mountain Dew stirred user-generated content for a limited-time reintroduction of Baja Blast, boosting online chatter by <strong>170%</strong>.<span class="ar-line">التسويق بمحتوى المستهلك — Mountain Dew حرّكت محتوى المستخدمين لإعادة إطلاق Baja Blast فزادت الأحاديث بنسبة 170%.</span></li>
+          <li><strong>Slide 31:</strong> Customer types by profitability × loyalty: <em>Strangers</em> (low/low), <em>Butterflies</em> (profitable/not loyal), <em>True Friends</em> (profitable/loyal), <em>Barnacles</em> (loyal/not profitable). Goal: build the <em>right relationships</em> with the <em>right customers</em>.<span class="ar-line">أنواع العملاء حسب الربحية × الولاء: غرباء (منخفض/منخفض) · فراشات (مربح/غير مخلص) · أصدقاء حقيقيون (مربح/مخلص) · محّارات (مخلص/غير مربح). الهدف: علاقات صحيحة مع عملاء صحيحين.</span></li>
+          <li><strong>Slide 28 — Stew Leonard's Customer Lifetime Value:</strong> Founder Stew Leonard reacts strongly to losing a single customer because each one represents <strong>$50,000 in lifetime revenue</strong>. Rules posted at the store: <em>Rule 1 — The customer is always right. Rule 2 — If the customer is ever wrong, re-read Rule 1.</em><span class="ar-line">مثال Stew Leonard: كل عميل يمثّل ٥٠٬٠٠٠ دولار إيرادات على مدى حياته — لذلك فقدان عميل واحد خسارة كبيرة. القاعدة ١: العميل دائماً على حق. القاعدة ٢: إذا أخطأ العميل، ارجع للقاعدة ١.</span></li>
         </ul>
       </div>
     </div>
@@ -1275,8 +1310,8 @@
 
       
 
-      <div class="from-notes-wrap">
-        <span class="from-notes-badge">📘 من الكتاب — Digital stats</span>
+      <div class="from-book-wrap">
+        <span class="from-book-badge">📘 من الكتاب — Digital stats</span>
         <ul class="slide-bullets">
           <li>An estimated 3.3 billion people — 46% of the world's population — are now online. 64% of American adults own smartphones; 71% of those keep them next to them when they sleep.<span class="ar-line">3.3 مليار إنسان (46% من سكان العالم) على الإنترنت. 64% من البالغين الأمريكيين عندهم سمارتفون، و 71% منهم يحطونه جنبهم وقت النوم.</span></li>
         </ul>
@@ -1286,6 +1321,17 @@
         <span class="from-notes-badge">📝 من النوت</span>
         <ul class="slide-bullets">
           <li><strong>Slide 40:</strong> Sustainable marketing — Ben & Jerry's three-part "linked prosperity" mission: (1) make fantastic ice cream (product mission), (2) sustainable financial growth (economic mission), (3) use the company to make the world a better place (social mission). Both Ben & Jerry's and its products are "Made of Something Better."<span class="ar-line">التسويق المستدام — Ben & Jerry's رسالتها الثلاثية "الرخاء المرتبط": آيس كريم رائع (مهمة المنتج) + نمو مالي مستدام (مهمة اقتصادية) + استخدام الشركة لعمل الخير (مهمة اجتماعية).</span></li>
+          <li><strong>Slide 36 — Sephora digital inclusivity:</strong> Sephora uses digital tools to be inclusive of a wide range of customers — including visually-impaired shoppers. Accessible digital experiences broaden the market reach and reinforce the brand's values.<span class="ar-line">مثال Sephora: توظّف الأدوات الرقمية لتكون شاملة لأنواع مختلفة من العملاء، بمن فيهم المستخدمون من ذوي الإعاقة البصرية — التجربة الرقمية الشاملة توسّع السوق وتعزّز قيم العلامة.</span></li>
+          <li><strong>Slide 39 — Global view of marketing:</strong> Marketers today take a <strong>global</strong>, not just local, view of the company's industry, competitors, opportunities, and threats. Firms of all sizes are now connected by global networks of customers and partners.<span class="ar-line">رؤية عالمية للتسويق: المسوّقون اليوم ينظرون للصناعة والمنافسين والفرص والتهديدات بمنظور عالمي لا محلي فقط. الشركات — صغيرها وكبيرها — مرتبطة عبر شبكات عملاء وشركاء عالمية.</span></li>
+        </ul>
+      </div>
+
+      <h3>💬 Discussion Questions — Ch1 <span class="ar-line" style="font-size:.85rem;">أسئلة نقاش نهاية الفصل</span></h3>
+      <div class="from-notes-wrap">
+        <span class="from-notes-badge">📝 من النوت — Slides 42–43</span>
+        <ul class="slide-bullets">
+          <li><strong>Q1 — Marketing Mix &amp; Value Proposition:</strong> How does a firm's marketing mix create value for its target customers? Explain a firm's value proposition and how it answers the question "Why should I buy your brand?"<span class="ar-line">كيف يخلق المزيج التسويقي للشركة قيمة لعملائها المستهدفين؟ اشرح عرض القيمة وكيف يجيب على سؤال العميل "ليش أشتري براندك؟"</span></li>
+          <li><strong>Q2 — Customer Relationships &amp; Lifetime Value:</strong> Why is it important for companies to build customer relationships? Discuss the concept of <em>customer lifetime value</em> and its role in long-term profitability.<span class="ar-line">لماذا من المهم أن تبني الشركات علاقات مع عملائها؟ ناقش مفهوم قيمة العميل مدى الحياة (CLV) ودوره في الربحية طويلة المدى.</span></li>
         </ul>
       </div>
     </div>
@@ -1574,7 +1620,7 @@
         <div class="ar-line">خطأ تركيز الشركة على المنتج نفسه بدلاً من المنافع والتجارب التي يقدمها. بيان المهمة الموجّه للمنتج يؤدي مباشرة لقصر النظر التسويقي: الشركة ترى نفسها تبيع منتجاً بدل حل حاجة للعميل.</div>
       </div>
 
-      <div class="from-notes-wrap"><span class="from-notes-badge">📘 من الكتاب — Forging a Mission</span>
+      <div class="from-book-wrap"><span class="from-book-badge">📘 من الكتاب — Forging a Mission</span>
         Peter Drucker's <b>4 foundational questions</b> to begin writing a mission:
         <ol style="margin:8px 0 0;">
           <li><b>What is our business?</b><span class="ar-line"> ما هو عملنا؟</span></li>
@@ -1800,7 +1846,7 @@
         <div class="ar-line">التخلص من الأعمال غير المربحة أو التي لا تتوافق مع استراتيجية الشركة — جزء طبيعي من تطوير المحفظة.</div>
       </div>
 
-      <div class="from-notes-wrap"><span class="from-notes-badge">📘 من الكتاب — 3 Reasons Firms Downsize</span>
+      <div class="from-book-wrap"><span class="from-book-badge">📘 من الكتاب — 3 Reasons Firms Downsize</span>
         <ol style="margin:8px 0 0;">
           <li>The firm may have <b>grown too fast</b> or entered areas where it <b>lacks experience</b>.<span class="ar-line"> الشركة نمت بسرعة أكبر من قدرتها أو دخلت مجالات ما عندها خبرة فيها.</span></li>
           <li>The <b>market environment changes</b>, making some products or markets less profitable.<span class="ar-line"> تغيرت البيئة السوقية وأصبحت المنتجات أقل ربحية.</span></li>
@@ -1860,7 +1906,7 @@
       <div class="from-notes-wrap">
         <span class="from-notes-badge">📝 من النوت</span>
         <ul class="slide-bullets">
-          <li><strong>Slide 6:</strong> Marketing planning occurs at the business-unit, product, and market levels. It supports company strategic planning with more detailed plans for specific marketing opportunities.<span class="ar-line">التخطيط التسويقي يتم على مستوى وحدة العمل والمنتج والسوق. يدعم التخطيط الاستراتيجي للشركة بخطط تفصيلية للفرص التسويقية.</span></li>
+          <li>Marketing planning occurs at the business-unit, product, and market levels. It supports company strategic planning with more detailed plans for specific marketing opportunities.<span class="ar-line">التخطيط التسويقي يتم على مستوى وحدة العمل والمنتج والسوق. يدعم التخطيط الاستراتيجي للشركة بخطط تفصيلية للفرص التسويقية.</span></li>
         </ul>
       </div>
     </div>
@@ -1973,10 +2019,12 @@
 
       <div class="memory-box">STP = من نخدم (تجزئة + استهداف) + كيف نخدمهم (تمييز + تموضع)<br>Segmentation &amp; Targeting = WHO to serve | Differentiation &amp; Positioning = HOW to serve</div>
 
-      <div class="from-notes-wrap">
-        <span class="from-notes-badge">📘 من الكتاب — 4Ps Program</span>
+      <div class="from-book-wrap">
+        <span class="from-book-badge">📘 من الكتاب — 4Ps Program</span>
         <ul class="slide-bullets">
-          <li><strong>Slide 19:</strong> The marketing program transforms strategy into action. The firm must: create a market offering (product), decide pricing (price), make it available (place), and communicate about it (promotion). The 4 Ps blend into a comprehensive integrated marketing program that delivers intended value to chosen customers.<span class="ar-line">البرنامج التسويقي يحوّل الاستراتيجية لأفعال: اصنع المنتج · حدد السعر · وزّع · روّج. الـ 4Ps تتكامل في برنامج تسويقي موحد يقدم القيمة للعملاء المستهدفين.</span></li>
+          <li><strong>Slide 21:</strong> The marketing program transforms strategy into action. The firm must: create a market offering (product), decide pricing (price), make it available (place), and communicate about it (promotion). The 4 Ps blend into a comprehensive integrated marketing program that delivers intended value to chosen customers.<span class="ar-line">البرنامج التسويقي يحوّل الاستراتيجية لأفعال: اصنع المنتج · حدد السعر · وزّع · روّج. الـ 4Ps تتكامل في برنامج تسويقي موحد يقدم القيمة للعملاء المستهدفين.</span></li>
+          <li><strong>Slide 25 — Consumers at the Center (Figure 2.4):</strong> In the customer-driven marketing strategy, the <strong>consumer stands at the center</strong>. Everything — the 4 Ps, segmentation, targeting, differentiation, positioning — revolves around creating value <em>for</em> and capturing value <em>from</em> target customers.<span class="ar-line">المستهلك في المركز: كل عناصر استراتيجية التسويق (الـ 4Ps + STP + التمييز + التموضع) تدور حول خلق القيمة للعميل المستهدف والحصول على قيمة منه في المقابل.</span></li>
+          <li><strong>Slide 32 — Planning the Marketing Mix:</strong> Once the firm has decided on its overall competitive strategy, it is ready to begin <strong>planning the details of the marketing mix</strong>. Strategy comes first (who to serve + how to serve them), then the mix turns that strategy into specific product, price, place, and promotion decisions.<span class="ar-line">بعد ما تحدد الشركة استراتيجيتها التنافسية، تبدأ بتخطيط تفاصيل المزيج التسويقي. الاستراتيجية أولاً (من نخدم + كيف نخدمه)، ثم يترجم المزيج هذا القرار لقرارات تفصيلية في المنتج والسعر والتوزيع والترويج.</span></li>
         </ul>
       </div>
     </div>
@@ -2695,6 +2743,13 @@
         <li><strong>Population Diversity</strong> — cross-cultural marketing; growing ethnic/racial diversity.<span class="ar-line">التنوع السكاني — التسويق عبر الثقافات؛ تنوع عرقي وثقافي متنامٍ.</span>
                   </li>
       </ul>
+
+      <div class="from-notes-wrap">
+        <span class="from-notes-badge">📝 من النوت — Slide 24</span>
+        <ul class="slide-bullets">
+          <li><strong>Telecommuting (العمل عن بُعد):</strong> A major market trend — millions of workers now do their work from home or remote locations instead of a central office. This shift creates new demand for home-office equipment, high-speed internet, collaboration tools, and flexible consumer services; and it changes where and when people shop.<span class="ar-line">العمل عن بُعد: اتجاه سوقي كبير — ملايين الموظفين يعملون من المنزل بدل المكتب المركزي. هذا يخلق طلب جديد على معدات المكتب المنزلي، الإنترنت السريع، أدوات التعاون، والخدمات المرنة — ويغيّر أين ومتى يتسوّق الناس.</span></li>
+        </ul>
+      </div>
 
       <div class="from-tb-wrap">
         <span class="from-tb-badge">🟣 من التست بانك — الأجيال الأمريكية</span>
@@ -3951,8 +4006,8 @@
         </div>
       </div>
 
-      <div class="from-notes-wrap">
-        <span class="from-notes-badge">📘 من الكتاب — Adoption &amp; Diffusion</span>
+      <div class="from-book-wrap">
+        <span class="from-book-badge">📘 من الكتاب — Adoption &amp; Diffusion</span>
         <ul class="slide-bullets">
           <li><strong>Adoption &amp; Diffusion:</strong> Innovators are the first 2.5% to adopt; Early Adopters are opinion leaders (13.5%) who guide the rest. The Early and Late Majority together form 68%. Laggards (16%) are last — tradition-bound and suspicious of change.<span class="ar-line">التبني والانتشار: المبتكرون أول 2.5% · المتبنون الأوائل 13.5% (قادة الرأي) · الأغلبية المبكرة + المتأخرة 68% · المتقاعسون 16% (تقليديون يخشون التغيير).</span></li>
           <li><strong>Product characteristics:</strong> Innovations with high relative advantage, high compatibility, low complexity, high divisibility, and high communicability tend to diffuse <em>faster</em> into markets.<span class="ar-line">خصائص المنتج التي تسرّع الانتشار: ميزة نسبية عالية + توافق مع القيم + بساطة + قابلية للتجزئة + قابلية للإيصال.</span></li>

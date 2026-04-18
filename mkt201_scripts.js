@@ -6663,15 +6663,23 @@ function exportChapterBinder(pageId, chapterTitle) {
         html += `<h4>${mainHtml}${arText ? ` <span class="ar-inline">${arText}</span>` : ''}</h4>`;
       }
 
-      else if (cls.includes('example-box') || cls.includes('from-notes-wrap')) {
+      else if (cls.includes('example-box') || cls.includes('from-notes-wrap') || cls.includes('from-tb-wrap') || cls.includes('from-past-wrap') || cls.includes('from-book-wrap')) {
         const isNotes = cls.includes('from-notes-wrap');
-        const blockCls = isNotes ? 'notes-block' : 'example-block';
-        const badge = isNotes ? '<span class="notes-badge">📝 من النوت — Professor\'s Notes</span>' : '<span class="ex-badge">📌 مثال</span>';
+        const isTb = cls.includes('from-tb-wrap');
+        const isPast = cls.includes('from-past-wrap');
+        const isBook = cls.includes('from-book-wrap');
+        const isProv = isNotes || isTb || isPast || isBook;
+        let blockCls, badge;
+        if (isNotes) { blockCls = 'notes-block'; badge = '<span class="notes-badge">📝 من النوت — Professor\'s Notes</span>'; }
+        else if (isTb) { blockCls = 'notes-block tb-block'; badge = '<span class="notes-badge">🟣 من التست بانك — Test Bank</span>'; }
+        else if (isPast) { blockCls = 'notes-block past-block'; badge = '<span class="notes-badge">🗂️ من التجميعات — Past Exams</span>'; }
+        else if (isBook) { blockCls = 'notes-block book-block'; badge = '<span class="notes-badge">📘 من الكتاب — Textbook</span>'; }
+        else { blockCls = 'example-block'; badge = '<span class="ex-badge">📌 مثال</span>'; }
         let inner = '';
         for (const child of el.children) {
           const ctag = child.tagName;
           const ccls = child.className || '';
-          if (ccls.includes('from-notes-badge')) continue;
+          if (ccls.includes('from-notes-badge') || ccls.includes('from-tb-badge') || ccls.includes('from-past-badge') || ccls.includes('from-book-badge')) continue;
           if (ctag === 'H4') {
             const { mainHtml, arText } = extractAr(child);
             inner += `<h4>${mainHtml}${arText ? ` <span class="ar-inline">${arText}</span>` : ''}</h4>`;
@@ -6862,6 +6870,15 @@ h4 { font-size:.88rem;font-weight:700;color:${C.c1};margin:5px 0 2px; }
 .notes-block p,.notes-block li { font-size:.85rem;color:${C.notesText}; }
 .notes-block ul,.notes-block ol { padding-left:14px; }
 .notes-block strong { color:${C.notesBorder}; }
+.tb-block { background:#FAF5FF;border-color:#E9D5FF;border-left-color:#9333EA; }
+.tb-block .notes-badge { background:#F3E8FF;color:#9333EA; }
+.tb-block strong { color:#9333EA; }
+.past-block { background:#FFF1F2;border-color:#FECDD3;border-left-color:#E11D48; }
+.past-block .notes-badge { background:#FFE4E6;color:#E11D48; }
+.past-block strong { color:#E11D48; }
+.book-block { background:#FFFBEB;border-color:#FDE68A;border-left-color:#D97706; }
+.book-block .notes-badge { background:#FEF3C7;color:#D97706; }
+.book-block strong { color:#D97706; }
 .ar { direction:rtl;text-align:right;font-family:'Cairo',sans-serif;color:#0F766E;font-size:.82rem;font-weight:600;line-height:1.65;margin-top:4px;padding:4px 10px;background:#F0FDFA;border-radius:5px;border-right:3px solid ${C.c1}; }
 .ar-inline { font-family:'Cairo',sans-serif;color:${C.c1};font-size:.75rem;font-weight:600;direction:rtl; }
 .step-card { display:flex;align-items:flex-start;gap:9px;background:#fff;border:1px solid ${C.line};border-left:4px solid ${C.c1};border-radius:7px;padding:6px 10px;margin:4px 0;page-break-inside:avoid; }
@@ -6886,7 +6903,7 @@ tr:last-child td { border-bottom:none; }
   .cover { border-radius:6px; }
   .lo-header-pdf { border-radius:6px 6px 0 0; }
   .lo-content { border-radius:0 0 6px 6px; }
-  .block,.tip,.memo,.step-card,.hbox,.example-block,.notes-block { break-inside:avoid; }
+  .block,.tip,.memo,.step-card,.hbox,.example-block,.notes-block,.tb-block,.past-block,.book-block { break-inside:avoid; }
   .lo-section-pdf + .lo-section-pdf { break-before:page; }
   td { color:#374155 !important; }
 }
@@ -6907,7 +6924,10 @@ tr:last-child td { border-bottom:none; }
     <span class="leg"><span class="leg-dot" style="background:#F59E0B;"></span> سيُسأل في الامتحان</span>
     <span class="leg"><span class="leg-dot" style="background:#7C3AED;"></span> تذكّر</span>
     <span class="leg"><span class="leg-dot" style="background:#16A34A;"></span> مثال</span>
-    <span class="leg"><span class="leg-dot" style="background:#4F46E5;"></span> من النوت</span>
+    <span class="leg"><span class="leg-dot" style="background:#4F46E5;"></span> 📝 من النوت</span>
+    <span class="leg"><span class="leg-dot" style="background:#9333EA;"></span> 🟣 من التست بانك</span>
+    <span class="leg"><span class="leg-dot" style="background:#D97706;"></span> 📘 من الكتاب</span>
+    <span class="leg"><span class="leg-dot" style="background:#E11D48;"></span> 🌸 من التجميعات</span>
     <span class="leg"><span class="leg-dot" style="background:#0F766E;"></span> مفاهيم</span>
   </div>
   ${contentHtml}
