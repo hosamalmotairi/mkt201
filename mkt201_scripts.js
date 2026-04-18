@@ -6927,7 +6927,6 @@ tr:last-child td { border-bottom:none; }
     <span class="leg"><span class="leg-dot" style="background:#4F46E5;"></span> 📝 من النوت</span>
     <span class="leg"><span class="leg-dot" style="background:#9333EA;"></span> 🟣 من التست بانك</span>
     <span class="leg"><span class="leg-dot" style="background:#D97706;"></span> 📘 من الكتاب</span>
-    <span class="leg"><span class="leg-dot" style="background:#E11D48;"></span> 🌸 من التجميعات</span>
     <span class="leg"><span class="leg-dot" style="background:#0F766E;"></span> مفاهيم</span>
   </div>
   ${contentHtml}
