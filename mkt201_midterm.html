@@ -140,6 +140,173 @@
       display: flex;
       width: fit-content;
     }
+
+    /* ═══════════════════════════════════════════════════════
+       HERO GEOMETRIC — Animated dark hero with floating shapes
+       (Vanilla CSS port of shape-landing-hero React component)
+       ═══════════════════════════════════════════════════════ */
+    .hero-geo {
+      position: relative;
+      min-height: 72vh;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: #030303;
+      border-radius: 20px;
+      margin: 0 0 18px;
+      isolation: isolate;
+    }
+    .hero-geo::before {
+      content: "";
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(99,102,241,0.05), transparent 50%, rgba(244,63,94,0.05));
+      filter: blur(48px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .hero-geo::after {
+      content: "";
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, #030303, transparent 50%, rgba(3,3,3,0.8));
+      pointer-events: none;
+      z-index: 2;
+    }
+    .hero-geo-shapes {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .hero-geo-shape {
+      position: absolute;
+      animation: heroGeoEnter 2.4s cubic-bezier(0.23, 0.86, 0.39, 0.96) var(--delay, 0s) both;
+      will-change: transform, opacity;
+    }
+    .hero-geo-shape-inner {
+      width: var(--w);
+      height: var(--h);
+      position: relative;
+      animation: heroGeoFloat 12s ease-in-out infinite;
+    }
+    .hero-geo-shape-fill {
+      position: absolute; inset: 0;
+      border-radius: 9999px;
+      background: linear-gradient(to right, var(--grad), transparent);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      border: 2px solid rgba(255,255,255,0.15);
+      box-shadow: 0 8px 32px rgba(255,255,255,0.1);
+    }
+    .hero-geo-shape-fill::after {
+      content: "";
+      position: absolute; inset: 0;
+      border-radius: 9999px;
+      background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.2), transparent 70%);
+    }
+    @keyframes heroGeoEnter {
+      0% { opacity: 0; transform: translateY(-150px) rotate(calc(var(--rot) - 15deg)); }
+      60% { opacity: 1; }
+      100% { opacity: 1; transform: translateY(0) rotate(var(--rot)); }
+    }
+    @keyframes heroGeoFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(15px); }
+    }
+    .hero-geo-content {
+      position: relative;
+      z-index: 3;
+      max-width: 760px;
+      text-align: center;
+      padding: 0 24px;
+    }
+    .hero-geo-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      margin-bottom: 32px;
+      color: rgba(255,255,255,0.65);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      opacity: 0;
+      animation: heroGeoFadeUp 1s cubic-bezier(0.25, 0.4, 0.25, 1) 0.5s forwards;
+    }
+    .hero-geo-badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(244, 63, 94, 0.8);
+      flex-shrink: 0;
+    }
+    .hero-geo-title {
+      font-size: clamp(2.2rem, 5vw + 1rem, 5rem);
+      font-weight: 800;
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+      margin: 0 0 24px;
+      opacity: 0;
+      animation: heroGeoFadeUp 1s cubic-bezier(0.25, 0.4, 0.25, 1) 0.7s forwards;
+      font-family: 'Cairo', 'Inter', system-ui, sans-serif;
+    }
+    .hero-geo-title-1 {
+      display: block;
+      background: linear-gradient(to bottom, #ffffff, rgba(255,255,255,0.8));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-geo-title-2 {
+      display: block;
+      background: linear-gradient(to right, #a5b4fc, rgba(255,255,255,0.92), #fda4af);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-geo-subtitle {
+      font-size: clamp(0.95rem, 0.4vw + 0.9rem, 1.2rem);
+      color: rgba(255,255,255,0.45);
+      line-height: 1.7;
+      font-weight: 300;
+      letter-spacing: 0.01em;
+      max-width: 580px;
+      margin: 0 auto;
+      padding: 0 16px;
+      opacity: 0;
+      animation: heroGeoFadeUp 1s cubic-bezier(0.25, 0.4, 0.25, 1) 0.9s forwards;
+      font-family: 'Cairo', 'Inter', system-ui, sans-serif;
+    }
+    @keyframes heroGeoFadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    /* Respect reduced motion preferences */
+    @media (prefers-reduced-motion: reduce) {
+      .hero-geo-shape,
+      .hero-geo-shape-inner,
+      .hero-geo-badge,
+      .hero-geo-title,
+      .hero-geo-subtitle {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
+      .hero-geo-shape {
+        transform: rotate(var(--rot));
+      }
+    }
+    /* Mobile: shift shape positions further off-screen to avoid clutter */
+    @media (max-width: 768px) {
+      .hero-geo { min-height: 60vh; border-radius: 16px; }
+      .hero-geo-content { padding: 0 16px; }
+    }
   </style>
   <script defer src="/_vercel/insights/script.js"></script>
 </head>
@@ -340,14 +507,34 @@
     </div>
   </div>
 
-  <section class="hero">
-    <div class="tag">MKT 201 • Midterm Study Hub</div>
-    <h1><i data-lucide="shopping-cart" aria-hidden="true" style="width:32px;height:32px;vertical-align:-4px;"></i> MKT 201 — HOSAM Study Hub</h1>
-    <p>كل اللي تحتاجه للاختبار في مكان واحد — نوتس، فلاش كاردز، تدريب، واختبارات تفاعلية | Chapters 1, 2, 3, 5</p>
-    <div class="cover-meta">
-      <div class="cover-box"><span class="cover-label">Course</span><span class="cover-value">MKT 201</span></div>
-      <div class="cover-box"><span class="cover-label">Chapters</span><span class="cover-value">1, 2, 3, 5</span></div>
-      <div class="cover-box"><span class="cover-label">كل جلسة</span><span class="cover-value">20 سؤال ⚡</span></div>
+  <section class="hero-geo" aria-label="MKT 201 Study Hub Hero">
+    <div class="hero-geo-shapes" aria-hidden="true">
+      <div class="hero-geo-shape" style="left:-5%; top:20%; --w:600px; --h:140px; --rot:12deg; --grad:rgba(99,102,241,0.15); --delay:0.3s;">
+        <div class="hero-geo-shape-inner"><div class="hero-geo-shape-fill"></div></div>
+      </div>
+      <div class="hero-geo-shape" style="right:0%; top:70%; --w:500px; --h:120px; --rot:-15deg; --grad:rgba(244,63,94,0.15); --delay:0.5s;">
+        <div class="hero-geo-shape-inner"><div class="hero-geo-shape-fill"></div></div>
+      </div>
+      <div class="hero-geo-shape" style="left:10%; bottom:10%; --w:300px; --h:80px; --rot:-8deg; --grad:rgba(139,92,246,0.15); --delay:0.4s;">
+        <div class="hero-geo-shape-inner"><div class="hero-geo-shape-fill"></div></div>
+      </div>
+      <div class="hero-geo-shape" style="right:20%; top:15%; --w:200px; --h:60px; --rot:20deg; --grad:rgba(245,158,11,0.15); --delay:0.6s;">
+        <div class="hero-geo-shape-inner"><div class="hero-geo-shape-fill"></div></div>
+      </div>
+      <div class="hero-geo-shape" style="left:25%; top:10%; --w:150px; --h:40px; --rot:-25deg; --grad:rgba(6,182,212,0.15); --delay:0.7s;">
+        <div class="hero-geo-shape-inner"><div class="hero-geo-shape-fill"></div></div>
+      </div>
+    </div>
+    <div class="hero-geo-content">
+      <div class="hero-geo-badge">
+        <span class="hero-geo-badge-dot"></span>
+        <span>MKT 201 · HOSAM Study Hub</span>
+      </div>
+      <h1 class="hero-geo-title">
+        <span class="hero-geo-title-1">استعد للميد تيرم</span>
+        <span class="hero-geo-title-2">بثقة وإتقان</span>
+      </h1>
+      <p class="hero-geo-subtitle">ملخصات، تجميعات، واختبارات تفاعلية من الفصول الأربعة — كل ما تحتاجه لـ MKT 201.</p>
     </div>
   </section>
 
