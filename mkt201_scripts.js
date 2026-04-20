@@ -1295,7 +1295,9 @@ function renderPastQuestion() {
 
   document.querySelector('.past-progress-fill').style.width = pct + '%';
   document.querySelector('.past-q-counter').textContent =
-    (pastState.isReview ? '🔴 مراجعة — ' : '') + `سؤال ${pastState.current + 1}`;
+    (pastState.isReview ? '🔴 مراجعة — ' : '') +
+    (q._repeated ? '🔁 إعادة — ' : '') +
+    `سؤال ${pastState.current + 1}`;
   const badge = document.querySelector('.past-ch-badge');
   if (badge) badge.textContent = chNames[q.ch] || '';
 
@@ -1328,6 +1330,17 @@ function selectPastOpt(idx) {
     pastState.score++;
   } else {
     pastState.wrongAnswers.push(q);  // للمراجعة لاحقاً
+    // 🔁 إعادة السؤال الخاطئ بعد 5-6 أسئلة لتقوية الحفظ (spaced repetition خفيف)
+    if (!q._repeated) {
+      const reinsertOffset = 5 + Math.floor(Math.random() * 2); // 5 أو 6
+      const reinsertPos = pastState.current + reinsertOffset;
+      const repeatedQ = Object.assign({}, q, { _repeated: true });
+      if (reinsertPos < pastState.questions.length) {
+        pastState.questions.splice(reinsertPos, 0, repeatedQ);
+      } else {
+        pastState.questions.push(repeatedQ); // لو قربنا للنهاية، ضيفه في الآخر
+      }
+    }
   }
   // نتيجة بالفصل
   if (q.ch) {
